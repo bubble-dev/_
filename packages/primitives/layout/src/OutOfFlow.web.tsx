@@ -22,4 +22,4 @@ export const LayoutOutOfFlow: FC<TLayoutOutOfFlow> = ({ children, floatinIndex, 
   </Block>
 )
 
-LayoutFill.displayName = 'LayoutFill'
+LayoutOutOfFlow.displayName = 'LayoutOutOfFlow'
