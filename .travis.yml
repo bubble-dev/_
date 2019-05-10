@@ -17,6 +17,7 @@ cache:
 branches:
   only:
     - master
+    - /^greenkeeper/.*$/
 matrix:
   fast_finish: true
 script: yarn start ci
