@@ -58,6 +58,8 @@
   ],
   "renovate": {
     "commitMessagePrefix": "♻️",
+    "commitMessageAction": "update",
+    "commitMessageTopic": "{{depName}}",
     "ignoreDeps": ["gradle", "puppeteer-core", "typescript", "metro-react-native-babel-preset"]
   },
   "engines": {
