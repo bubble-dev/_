@@ -60,7 +60,13 @@
     "commitMessagePrefix": "♻️",
     "commitMessageAction": "update",
     "commitMessageTopic": "{{depName}}",
-    "ignoreDeps": ["gradle", "puppeteer-core", "typescript", "metro-react-native-babel-preset"]
+    "ignoreDeps": ["gradle", "puppeteer-core", "typescript", "metro-react-native-babel-preset"],
+    "packageRules": [
+      {
+        "packageNames": ["@types/node"],
+        "allowedVersions": "<12"
+      }
+    ]
   },
   "engines": {
     "node": ">=8.6.0"
