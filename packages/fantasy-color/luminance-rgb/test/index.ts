@@ -1,6 +1,11 @@
 import test from 'blue-tape'
 import luminanceRgb from '../src'
 
+const setDecimalPointPrecision = (precision: number) => (value: number): number =>
+  Math.round(value * (10 ** precision)) / (10 ** precision)
+
+const roundTo10DecimalPoints = setDecimalPointPrecision(10)
+
 test('luminance-rgb: white', async (t) => {
   const luminance = luminanceRgb({
     red: 255,
@@ -23,8 +28,10 @@ test('luminance-rgb: grey', async (t) => {
   })
 
   await t.deepEquals(
-    luminance,
-    0.21586050011389923,
+    // rounding is necessary for platform inconsistencies
+    // https://travis-ci.org/bubble-dev/_/jobs/542343083#L3182
+    roundTo10DecimalPoints(luminance),
+    0.2158605001,
     'must return the luminance'
   )
 })
@@ -107,8 +114,10 @@ test('luminance-rgb: dark color', async (t) => {
   })
 
   await t.deepEquals(
-    luminance,
-    0.00252281044776305,
+    // rounding is necessary for platform inconsistencies
+    // https://travis-ci.org/bubble-dev/_/jobs/542343083#L3201
+    roundTo10DecimalPoints(luminance),
+    0.0025228104,
     'must return the luminance'
   )
 })
