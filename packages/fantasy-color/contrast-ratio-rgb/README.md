@@ -1,6 +1,6 @@
 # @fantasy-color/contrast-ratio-rgb
 
-Calculate the [contrast ratio](../../#contrast-ratio) between two `RGB` objects.
+Calculate the [contrast ratio](../#contrast-ratio) between two `RGB` objects.
 
 ```typescript
 type contrastRatioLuminance = (rgb1: RGB, rgb2: RGB) => number

@@ -1,6 +1,6 @@
 # @fantasy-color/contrast-ratio-luminance
 
-Calculate the [contrast ratio](../../#contrast-ratio) between two [relative luminances](../../#relative-luminance)
+Calculate the [contrast ratio](../#contrast-ratio) between two [relative luminances](../#relative-luminance)
 
 ```typescript
 type contrastRatioLuminance = (luminance1: number, luminance2: number) => number
