@@ -1,6 +1,6 @@
-import { RGB, RGBA } from '@fantasy-color/types'
+import { TRgb, TRgba } from '@fantasy-color/types'
 
-export default ({ red, green, blue }: RGBA): RGB => ({
+export default ({ red, green, blue }: TRgba): TRgb => ({
   red,
   green,
   blue,

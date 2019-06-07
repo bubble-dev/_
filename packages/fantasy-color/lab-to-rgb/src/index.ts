@@ -1,6 +1,6 @@
-import { RGB, LAB } from '@fantasy-color/types'
+import { TRgb, TLab } from '@fantasy-color/types'
 
-// from https://github.com/d3/d3-color/blob/f666cf09dc21efcf570c0cb08e2bc4c864cc3c7c/src/lab.js
+// from https://github.com/d3/d3-color/blob/f666cf09dc21efcf570c0cb08e2bc4c864cc3c7c/src/Tlab.js
 const t1 = 6 / 29
 const t2 = 3 * t1 * t1
 
@@ -11,7 +11,7 @@ const lab2xyz = (t: number): number => (
   t > t1 ? t * t * t : t2 * (t - 4 / 29)
 )
 
-export default ({ luminance, a, b }: LAB): RGB => {
+export default ({ luminance, a, b }: TLab): TRgb => {
   const baseY = (luminance + 16) / 116
   const x = 0.96422 * lab2xyz(baseY + a / 500)
   const y = Number(lab2xyz(baseY))

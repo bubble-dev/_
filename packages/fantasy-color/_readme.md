@@ -11,41 +11,41 @@ yarn add @fantasy-color/types
 ```
 
 ```typescript
-type WithAlpha = {
+type TWithAlpha = {
   alpha: number,
 }
 
-type RGB = {
+type TRgb = {
   red: number,
   green: number,
   blue: number,
 }
 
-type RGBA = RGB & WithAlpha
+type TRgba = TRgb & TWithAlpha
 
-type HSV = {
+type THsv = {
   hue: number,
   saturation: number,
   value: number,
 }
 
-type HSVA = HSV & WithAlpha
+type THsva = THsv & TWithAlpha
 
-type HCL = {
+type THcl = {
   hue: number,
   chroma: number,
   luminance: number,
 }
 
-type HCLA = HCL & WithAlpha
+type THcla = THcl & TWithAlpha
 
-type LAB = {
+type TLab = {
   luminance: number,
   a: number,
   b: number,
 }
 
-type LABA = LAB & WithAlpha
+type TLaba = TLab & TWithAlpha
 ```
 
 ### Contrast Ratio calculations

@@ -1,4 +1,4 @@
-import { RGB, LAB } from '@fantasy-color/types'
+import { TRgb, TLab } from '@fantasy-color/types'
 
 // from https://github.com/d3/d3-color/blob/f666cf09dc21efcf570c0cb08e2bc4c864cc3c7c/src/lab.js
 const t1 = 6 / 29
@@ -15,7 +15,7 @@ const xyz2lab = (t: number): number => (
   t > t3 ? Math.pow(t, 1 / 3) : t / t2 + 4 / 29
 )
 
-export default ({ red, green, blue }: RGB): LAB => {
+export default ({ red, green, blue }: TRgb): TLab => {
   const r = rgb2lrgb(red)
   const g = rgb2lrgb(green)
   const b = rgb2lrgb(blue)

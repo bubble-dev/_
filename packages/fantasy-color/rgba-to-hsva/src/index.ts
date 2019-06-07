@@ -1,7 +1,7 @@
-import { RGBA, HSVA } from '@fantasy-color/types'
+import { TRgba, THsva } from '@fantasy-color/types'
 import normalizeRgba from '@fantasy-color/normalize-rgba'
 
-export default (color: RGBA): HSVA => {
+export default (color: TRgba): THsva => {
   const { red, green, blue, alpha } = normalizeRgba(color)
 
   const min = Math.min(Math.min(red, green), blue)

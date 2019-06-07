@@ -1,8 +1,8 @@
-import { RGBA } from '@fantasy-color/types'
+import { TRgba } from '@fantasy-color/types'
 
 const rgbaRegex = /^\s*rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d?\.?\d+)\s*\)\s*$/
 
-export default (rgba: string): RGBA | null => {
+export default (rgba: string): TRgba | null => {
   const matches = rgba.match(rgbaRegex)
   if (matches === null) {
     return null

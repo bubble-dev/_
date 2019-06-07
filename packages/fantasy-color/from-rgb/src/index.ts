@@ -1,8 +1,8 @@
-import { RGB } from '@fantasy-color/types'
+import { TRgb } from '@fantasy-color/types'
 
 const rgbRegex = /^\s*rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/
 
-export default (rgb: string): RGB | null => {
+export default (rgb: string): TRgb | null => {
   const matches = rgb.match(rgbRegex)
   if (matches === null) {
     return null

@@ -1,6 +1,6 @@
-import { RGBA, HSVA } from '@fantasy-color/types'
+import { TRgba, THsva } from '@fantasy-color/types'
 
-export default ({ hue, saturation, value, alpha }: HSVA): RGBA => {
+export default ({ hue, saturation, value, alpha }: THsva): TRgba => {
   const normalizedSaturation = saturation / 100
   const normalizedValue = value / 100
 

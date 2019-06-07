@@ -1,35 +1,35 @@
-export type WithAlpha = {
+export type TWithAlpha = {
   alpha: number,
 }
 
-export type RGB = {
+export type TRgb = {
   red: number,
   green: number,
   blue: number,
 }
 
-export type RGBA = RGB & WithAlpha
+export type TRgba = TRgb & TWithAlpha
 
-export type HSV = {
+export type THsv = {
   hue: number,
   saturation: number,
   value: number,
 }
 
-export type HSVA = HSV & WithAlpha
+export type THsva = THsv & TWithAlpha
 
-export type HCL = {
+export type THcl = {
   hue: number,
   chroma: number,
   luminance: number,
 }
 
-export type HCLA = HCL & WithAlpha
+export type THcla = THcl & TWithAlpha
 
-export type LAB = {
+export type TLab = {
   luminance: number,
   a: number,
   b: number,
 }
 
-export type LABA = LAB & WithAlpha
+export type TLaba = TLab & TWithAlpha

@@ -1,7 +1,7 @@
-import { RGB, HSV } from '@fantasy-color/types/src'
+import { TRgb, THsv } from '@fantasy-color/types/src'
 import normalizeRgb from '@fantasy-color/normalize-rgb/src'
 
-export default (color: RGB): HSV => {
+export default (color: TRgb): THsv => {
   const { red, green, blue } = normalizeRgb(color)
 
   const min = Math.min(Math.min(red, green), blue)

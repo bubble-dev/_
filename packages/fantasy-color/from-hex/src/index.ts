@@ -1,6 +1,6 @@
-import { RGB } from '@fantasy-color/types'
+import { TRgb } from '@fantasy-color/types'
 
-export default (hex: string): RGB | null => {
+export default (hex: string): TRgb | null => {
   if (hex[0] !== '#' || hex.length !== 7) {
     return null
   }

@@ -1,6 +1,6 @@
-import { RGB, HSV } from '@fantasy-color/types'
+import { TRgb, THsv } from '@fantasy-color/types'
 
-export default ({ hue, saturation, value }: HSV): RGB => {
+export default ({ hue, saturation, value }: THsv): TRgb => {
   const normalizedSaturation = saturation / 100
   const normalizedValue = value / 100
 
