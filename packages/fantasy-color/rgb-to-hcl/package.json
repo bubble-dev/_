@@ -15,6 +15,7 @@
   "engines": {
     "node": ">=8.6.0"
   },
+  "sideEffects": false,
   "dependencies": {
     "@fantasy-color/types": "^0.0.0",
     "@fantasy-color/rgb-to-lab": "^0.0.0",
