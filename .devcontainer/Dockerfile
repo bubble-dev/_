@@ -35,7 +35,9 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
 # RUN apt-get autoremove --yes && apt-get clean --yes
 
 COPY gpg-agent.txt /root/.gnupg/S.gpg-agent
-RUN chmod 0700 /root/.gnupg
+RUN mkdir /root/.ssh && \
+    chmod 700 /root/.ssh /root/.gnupg && \
+    ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null
 
 ENV DEBIAN_FRONTEND=dialog
 ENV SHELL /bin/bash
