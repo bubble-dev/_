@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # based on https://github.com/uber-common/docker-ssh-agent-forward
 
 IMAGE_NAME=uber/ssh-agent-forward:latest
 CONTAINER_NAME=ssh-agent-forward
-VOLUME_NAME=ssh-agent
+VOLUME_NAME=ssh-agent-forward
 HOST_IP=127.0.0.1
 HOST_PORT=2244
 AUTHORIZED_KEYS=$(ssh-add -L | base64 | tr -d '\n')
@@ -16,8 +16,8 @@ docker volume create --name "${VOLUME_NAME}" > /dev/null
 
 docker run \
   --name "${CONTAINER_NAME}" \
-  -e AUTHORIZED_KEYS="${AUTHORIZED_KEYS}" \
-  -v ${VOLUME_NAME}:/ssh-agent \
+  -e "AUTHORIZED_KEYS=${AUTHORIZED_KEYS}" \
+  -v "${VOLUME_NAME}:/ssh-agent" \
   -d \
   -p "${HOST_PORT}:22" \
   "${IMAGE_NAME}" > /dev/null

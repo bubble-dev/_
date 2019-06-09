@@ -36,7 +36,7 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
 
 # https://wiki.gnupg.org/NFS
 RUN mkdir --mode 700 /root/.ssh /root/.gnupg && \
-    printf '%%Assuan%%\nsocket=/ssh-agent/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent && \
+    printf '%%Assuan%%\nsocket=/ssh-agent-forward/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null
 
 ENV DEBIAN_FRONTEND=dialog

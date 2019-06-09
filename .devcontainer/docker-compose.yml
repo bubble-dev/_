@@ -12,12 +12,12 @@ services:
       - $HOME/.gitconfig:/root/.gitconfig
       - $HOME/.gnupg/pubring.kbx:/root/.gnupg/pubring.kbx
       - $HOME/.gnupg/trustdb.gpg:/root/.gnupg/trustdb.gpg
-      - ssh-agent:/ssh-agent
+      - ssh-agent-forward:/ssh-agent-forward
       - workspace:/workspace
       - /workspace/node_modules
     command: sleep infinity
     environment:
-      - SSH_AUTH_SOCK=/ssh-agent/ssh-agent.sock
+      - SSH_AUTH_SOCK=/ssh-agent-forward/ssh-agent.sock
 
 volumes:
   workspace:
@@ -26,5 +26,5 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,noacl,nfsvers=3
       device: ":${PWD}"
-  ssh-agent:
+  ssh-agent-forward:
     external: true
