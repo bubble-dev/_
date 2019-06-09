@@ -1,2 +1,0 @@
-%Assuan%
-socket=/ssh-agent/S.gpg-agent

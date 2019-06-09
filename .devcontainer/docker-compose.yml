@@ -10,7 +10,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.gitconfig:/root/.gitconfig
-      # - $HOME/.gnupg:/root/.gnupg
       - $HOME/.gnupg/pubring.kbx:/root/.gnupg/pubring.kbx
       - $HOME/.gnupg/trustdb.gpg:/root/.gnupg/trustdb.gpg
       - ssh-agent:/ssh-agent
