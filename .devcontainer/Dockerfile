@@ -34,7 +34,7 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
 
 # RUN apt-get autoremove --yes && apt-get clean --yes
 
-# https://askubuntu.com/questions/777900/how-to-configure-gnupgs-s-gpg-agent-socket-location
+# https://wiki.gnupg.org/NFS
 RUN mkdir --mode 700 /root/.ssh /root/.gnupg && \
     printf '%%Assuan%%\nsocket=/ssh-agent/S.gpg-agent\n' > /root/.gnupg/S.gpg-agent && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts 2> /dev/null
