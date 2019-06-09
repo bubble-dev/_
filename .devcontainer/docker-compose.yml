@@ -9,11 +9,16 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ~/.gitconfig:/root/.gitconfig
-      - ~/.gnupg:/root/.gnupg
+      - $HOME/.gitconfig:/root/.gitconfig
+      # - $HOME/.gnupg:/root/.gnupg
+      - $HOME/.gnupg/pubring.kbx:/root/.gnupg/pubring.kbx
+      - $HOME/.gnupg/trustdb.gpg:/root/.gnupg/trustdb.gpg
+      - ssh-agent:/ssh-agent
       - workspace:/workspace
       - /workspace/node_modules
     command: sleep infinity
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent/ssh-agent.sock
 
 volumes:
   workspace:
@@ -22,3 +27,5 @@ volumes:
       type: nfs
       o: addr=host.docker.internal,rw,nolock,hard,nointr,noacl,nfsvers=3
       device: ":${PWD}"
+  ssh-agent:
+    external: true

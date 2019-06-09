@@ -11,6 +11,7 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
     git \
     procps \
     ca-certificates \
+    openssh-client \
     gnupg-agent \
     software-properties-common \
     locales
@@ -32,6 +33,9 @@ RUN apt-get update && apt-get --no-install-recommends --yes install \
     yarn
 
 # RUN apt-get autoremove --yes && apt-get clean --yes
+
+COPY gpg-agent.txt /root/.gnupg/S.gpg-agent
+RUN chmod 0700 /root/.gnupg
 
 ENV DEBIAN_FRONTEND=dialog
 ENV SHELL /bin/bash
