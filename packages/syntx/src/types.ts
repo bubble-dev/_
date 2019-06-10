@@ -16,7 +16,6 @@ export type TPath = TPathSegment[]
 
 export type TConfig = {
   indent: number,
-  maxChildrenDepth: number,
   whitespaceChar: string,
   components: {
     Root: FC<{}>,
