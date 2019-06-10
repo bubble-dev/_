@@ -6,8 +6,6 @@ export const getDisplayName = (component: ComponentClass<any> | FC<any>) => {
   return component.displayName || component.name
 }
 
-export const INITIAL_CHILD_DEPTH = 0
-
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
 
 export const isNull = (value: any): value is null => value === null
