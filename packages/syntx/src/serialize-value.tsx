@@ -4,7 +4,7 @@ import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeObject } from './serialize-object'
 import { serializeArray } from './serialize-array'
 import { serializeElement } from './serialize-element'
-import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isSymbol, getElementName } from './utils'
+import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isSymbol, getElementName, sanitizeArray } from './utils'
 
 export type TSerializeValue = {
   value: any,
@@ -59,7 +59,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   if (isFunction(value)) {
     return {
       head: (
-        <ValueFunction key="value-function">{'() => {}'}</ValueFunction>
+        <ValueFunction>{'() => {}'}</ValueFunction>
       ),
       body: null,
       tail: null,
@@ -69,7 +69,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   if (isNull(value)) {
     return {
       head: (
-        <ValueNull key="value-null">null</ValueNull>
+        <ValueNull>null</ValueNull>
       ),
       body: null,
       tail: null,
@@ -79,7 +79,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   if (isNumber(value)) {
     return {
       head: (
-        <ValueNumber key="value-number">{value}</ValueNumber>
+        <ValueNumber>{value}</ValueNumber>
       ),
       body: null,
       tail: null,
@@ -89,7 +89,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   if (isBoolean(value)) {
     return {
       head: (
-        <ValueBoolean key="value-boolean">{String(value)}</ValueBoolean>
+        <ValueBoolean>{String(value)}</ValueBoolean>
       ),
       body: null,
       tail: null,
@@ -99,7 +99,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   if (isSymbol(value)) {
     return {
       head: (
-        <ValueSymbol key="value-symbol">{value.description}</ValueSymbol>
+        <ValueSymbol>{value.description}</ValueSymbol>
       ),
       body: null,
       tail: null,
@@ -107,7 +107,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
   }
 
   return {
-    head: [
+    head: sanitizeArray([
       (
         <Quote key="quote-open">{'\''}</Quote>
       ),
@@ -117,7 +117,7 @@ export const serializeValue = ({ value, currentIndent, config, childIndex, path 
       (
         <Quote key="quote-close">{'\''}</Quote>
       ),
-    ],
+    ]),
     body: null,
     tail: null,
   }

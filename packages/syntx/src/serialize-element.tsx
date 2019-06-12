@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 import React from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
-import { filterProps, hasKeys, isValidChildren } from './utils'
+import { filterProps, hasKeys, isValidChildren, sanitizeArray } from './utils'
 import { serializeIndent } from './serialize-indent'
 import { serializeProps } from './serialize-props'
 import { serializeChildren } from './serialize-children'
@@ -51,7 +51,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
 
     return {
       head: null,
-      body: [
+      body: sanitizeArray([
         (
           <Line path={elementPath} key="element-open-line">
             {serializeIndent({ currentIndent, config })}
@@ -66,7 +66,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
             <ComponentBracket>{'/>'}</ComponentBracket>
           </Line>
         ),
-      ],
+      ]),
       tail: null,
     }
   }
@@ -81,7 +81,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
 
     return {
       head: null,
-      body: [
+      body: sanitizeArray([
         (
           <Line path={elementPath} key="element-open-line">
             {serializeIndent({ currentIndent, config })}
@@ -99,7 +99,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
             <ComponentBracket>{'>'}</ComponentBracket>
           </Line>
         ),
-      ],
+      ]),
       tail: null,
     }
   }
@@ -119,7 +119,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
 
   return {
     head: null,
-    body: [
+    body: sanitizeArray([
       (
         <Line path={elementPath} key="element-open-line-1">
           {serializeIndent({ currentIndent, config })}
@@ -143,7 +143,7 @@ export const serializeElement = ({ name, props, currentIndent, childIndex, confi
           <ComponentBracket>{'>'}</ComponentBracket>
         </Line>
       ),
-    ],
+    ]),
     tail: null,
   }
 }

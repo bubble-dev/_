@@ -1,4 +1,4 @@
-import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
+import { ReactElement, ComponentClass, FC, isValidElement, ReactNode, cloneElement } from 'react'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -61,4 +61,36 @@ export const getElementName = (element: ReactElement<any>) => {
   }
 
   return getDisplayName(element.type)
+}
+
+export const flatten = (array: any[]) => {
+  const flattened: any[] = []
+
+  const flat = (array: any[]) => {
+    array.forEach((el) => {
+      if (Array.isArray(el)) {
+        flat(el)
+      } else {
+        flattened.push(el)
+      }
+    })
+  }
+
+  flat(array)
+
+  return flattened
+}
+
+export const sanitizeArray = (array: ReactNode): ReactNode => {
+  if (!Array.isArray(array)) {
+    return array
+  }
+
+  const flattenedArray = flatten(array).filter((child) => isValidElement(child))
+
+  for (let i = 0; i < flattenedArray.length; ++i) {
+    flattenedArray[i] = cloneElement(flattenedArray[i], { key: i })
+  }
+
+  return flattenedArray
 }

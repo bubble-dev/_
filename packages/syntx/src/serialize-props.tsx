@@ -3,7 +3,7 @@ import React from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isString } from './utils'
+import { isNull, isString, sanitizeArray } from './utils'
 
 type TSerializePropertyValue = {
   value: any,
@@ -17,6 +17,16 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
   const { indent, components: { Line, Quote, PropsBrace, ValueString } } = config
 
   if (isString(value)) {
+    if (value.length === 0) {
+      return {
+        head: (
+          <Quote>{'""'}</Quote>
+        ),
+        body: null,
+        tail: null,
+      }
+    }
+
     return {
       head: [
         (
@@ -43,7 +53,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
   })
 
   return {
-    head: [
+    head: sanitizeArray([
       (
         <PropsBrace key="props-open-brace">{'{'}</PropsBrace>
       ),
@@ -51,17 +61,19 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
       isNull(body) && (
         <PropsBrace key="props-close-brace">{'}'}</PropsBrace>
       ),
-    ],
-    body: !isNull(body) && [
-      body,
-      (
-        <Line path={path} key="props-close-brace-line">
-          {serializeIndent({ currentIndent, config })}
-          {tail}
-          <PropsBrace>{'}'}</PropsBrace>
-        </Line>
-      ),
-    ],
+    ]),
+    body: !isNull(body)
+      ? sanitizeArray([
+        body,
+        (
+          <Line path={path} key="props-close-brace-line">
+            {serializeIndent({ currentIndent, config })}
+            {tail}
+            <PropsBrace>{'}'}</PropsBrace>
+          </Line>
+        ),
+      ])
+      : null,
     tail: null,
   }
 }
@@ -78,7 +90,7 @@ export const serializeProps = ({ props, currentIndent, config, path }: TSerializ
 
   return {
     head: null,
-    body: Object.entries(props)
+    body: sanitizeArray(Object.entries(props)
       .map(([key, value], i) => {
         const { head, body } = serializePropertyValue({
           value,
@@ -99,7 +111,7 @@ export const serializeProps = ({ props, currentIndent, config, path }: TSerializ
           ),
           body,
         ]
-      }),
+      })),
     tail: null,
   }
 }

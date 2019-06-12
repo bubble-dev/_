@@ -2,7 +2,7 @@
 import React, { isValidElement } from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isNumber, isString, getElementName } from './utils'
+import { isNull, isNumber, isString, getElementName, sanitizeArray } from './utils'
 import { serializeElement } from './serialize-element'
 
 type TSerializeChildrenValue = {
@@ -75,7 +75,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
       if (!isNull(body)) {
         if (line.length > 0) {
           lines.push(
-            <Line path={path} key={childIndex}>
+            <Line path={path}>
               {serializeIndent({ currentIndent, config })}
               {line}
             </Line>
@@ -91,7 +91,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
 
     if (line.length > 0) {
       lines.push((
-        <Line path={path} key={line.length}>
+        <Line path={path}>
           {serializeIndent({ currentIndent, config })}
           {line}
         </Line>
@@ -100,7 +100,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
 
     return {
       head: null,
-      body: lines.length > 0 ? lines : null,
+      body: lines.length > 0 ? sanitizeArray(lines) : null,
       tail: null,
     }
   }
@@ -115,7 +115,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
 
   return {
     head: null,
-    body: [
+    body: sanitizeArray([
       !isNull(head) && (
         <Line path={path}>
           {serializeIndent({ currentIndent, config })}
@@ -123,7 +123,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
         </Line>
       ),
       body,
-    ],
+    ]),
     tail: null,
   }
 }
