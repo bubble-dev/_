@@ -167,7 +167,7 @@ export const buildWebNode = async (dir: string) => {
   )
 }
 
-export const build = async (packageDir: string) => {
+const buildPackage = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
   const packageJsonPath = path.resolve(dir, 'package.json')
   const { default: packageJson } = await import(packageJsonPath)
@@ -201,6 +201,70 @@ export const build = async (packageDir: string) => {
     parallel(tasks)(dir),
     Reflect.has(packageJson, 'buildAssets') && buildAssets(dir, packageJson.buildAssets)
   )
+}
+
+const buildMultiplePackages = (packages: string[]) => {
+  if (packages.length === 0) {
+    return () => () => {}
+  }
+
+  return sequence(
+    // @ts-ignore
+    ...packages.map(buildPackage)
+  )
+}
+
+export const build = async () => {
+  const { default: prompts } = await import('prompts')
+  const { getWorkspacesPackages } = await import('@auto/fs')
+  const { suggestFilter, makeRegExp } = await import('@auto/utils')
+
+  const baseDir = path.resolve('packages')
+  const packages = await getWorkspacesPackages()
+  const choices = Object.keys(packages)
+    .map((name) => ({
+      title: name.replace(/^@/, ''),
+      value: path.relative(baseDir, packages[name].dir),
+    }))
+  const packageNames: string[] = []
+
+  while (true) {
+    const { packageName } = await prompts({
+      type: 'autocomplete',
+      name: 'packageName',
+      message: 'Type package name',
+      limit: 20,
+      choices: choices.filter((choice) => !packageNames.includes(choice.value)),
+      suggest: suggestFilter(packageNames.length > 0 ? '(done)' : '(no package)'),
+    }) as { packageName?: string }
+
+    if (typeof packageName === 'undefined') {
+      throw new Error('Package name is required')
+    }
+
+    if (packageName === '-') {
+      break
+    }
+
+    if (packageName.includes('*')) {
+      const regExp = makeRegExp(packageName)
+      const filteredpackages = choices
+        .map(({ value }) => value)
+        .filter((value) => regExp.test(value))
+
+      packageNames.push(...filteredpackages)
+
+      continue
+    }
+
+    if (packageName === '*') {
+      return buildMultiplePackages(choices.map(({ value }) => value))
+    }
+
+    packageNames.push(packageName)
+  }
+
+  return buildMultiplePackages(packageNames)
 }
 
 export const lint = () =>
