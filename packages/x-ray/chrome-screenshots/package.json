@@ -14,6 +14,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
+    "@types/execa": "^0.9.0",
+    "@types/graceful-fs": "^4.1.2",
+    "@types/puppeteer": "^1.9.0",
+    "@types/puppeteer-core": "^1.9.0",
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.0.9",
+    "@types/request-promise-native": "^1.0.15",
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/screenshot-utils": "^0.1.0",
     "execa": "^1.0.0",
@@ -25,14 +32,5 @@
     "react-dom": "^16.6.0",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5"
-  },
-  "devDependencies": {
-    "@types/execa": "^0.9.0",
-    "@types/graceful-fs": "^4.1.2",
-    "@types/puppeteer": "^1.9.0",
-    "@types/puppeteer-core": "^1.9.0",
-    "@types/react": "^16.8.6",
-    "@types/react-dom": "^16.0.9",
-    "@types/request-promise-native": "^1.0.15"
   }
 }
