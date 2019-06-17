@@ -1,5 +1,8 @@
 import traverse from '@babel/traverse'
-import { parse, getPackageName, detect, isString } from './utils'
+import { isString } from 'tsfn'
+import { parse } from './parse'
+import { detect } from './detect'
+import { getPackageName } from './get-package-name'
 
 export const getDependenciesInContent = (content: string): string[] => {
   const ast = parse(content)

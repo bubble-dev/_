@@ -14,13 +14,15 @@
   },
   "dependencies": {
     "@auto/fs": "^0.1.0",
+    "@auto/utils": "^0.1.0",
     "@babel/parser": "^7.3.1",
     "@babel/runtime": "^7.4.3",
     "@babel/traverse": "^7.2.3",
     "@babel/types": "^7.3.0",
     "execa": "^1.0.0",
     "globby": "^9.0.0",
-    "graceful-fs": "^4.1.15"
+    "graceful-fs": "^4.1.15",
+    "tsfn": "^0.1.2"
   },
   "devDependencies": {
     "@types/execa": "^0.9.0",

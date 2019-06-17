@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/get-dependencies-in-content'
+import { getDependenciesInContent } from '../src/utils/get-dependencies-in-content'
 
 test('require-expression: package dependency', (t) => {
   const content = `

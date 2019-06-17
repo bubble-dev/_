@@ -8,7 +8,7 @@ import {
   isImportDeclaration,
   isStringLiteral,
 } from '@babel/types'
-import { isString } from './is-string'
+import { isString } from 'tsfn'
 
 const detectExportDeclaration = (node: Node): string | null => {
   if (isExportAllDeclaration(node) || isExportNamedDeclaration(node)) {
