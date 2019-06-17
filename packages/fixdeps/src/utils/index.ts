@@ -1,7 +1,3 @@
-export * from './parse'
-export * from './get-package-name'
-export * from './detect'
-export * from './object-from-entries'
 export * from './get-deps-for-remove'
 export * from './get-dependencies-in-content'
 export * from './get-deps-versions'

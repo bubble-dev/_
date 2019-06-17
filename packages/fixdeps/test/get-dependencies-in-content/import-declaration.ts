@@ -1,25 +1,25 @@
 import test from 'blue-tape'
-import { getDependenciesInContent } from '../src/utils/get-dependencies-in-content'
+import { getDependenciesInContent } from '../../src/utils/get-dependencies-in-content'
 
-test('export declaration: package dependency', (t) => {
+test('import declaration: package dependency', (t) => {
   const content = `
-  export { default as path } from 'path'
-  export * from 'fs'
+  import path from 'path'
+  import fs from 'fs'
   `
   const deps = getDependenciesInContent(content)
 
   t.deepEquals(
     deps,
     ['path', 'fs'],
-    'should find dependencies'
+    'should find import'
   )
 
   t.end()
 })
 
-test('export declaration: package with path', (t) => {
+test('import declaration: package with path', (t) => {
   const content = `
-  export { func } from 'pkg/path/to/file'
+  import { func } from 'pkg/path/to/file'
   `
   const deps = getDependenciesInContent(content)
 
@@ -32,10 +32,10 @@ test('export declaration: package with path', (t) => {
   t.end()
 })
 
-test('export declaration: scoped package', (t) => {
+test('import declaration: scoped package', (t) => {
   const content = `
-  export { func1 } from '@scope/pkg'
-  export { func2 } from '@ns/my-package/path/to/file'
+  import { func1 } from '@scope/pkg'
+  import { func2 } from '@ns/my-package/path/to/file'
   `
   const deps = getDependenciesInContent(content)
 
@@ -51,11 +51,11 @@ test('export declaration: scoped package', (t) => {
   t.end()
 })
 
-test('export declaration: relative path', (t) => {
+test('import declaration: relative path', (t) => {
   const content = `
-  export { func1 } from '../src/path/to/file'
-  export { func2 } from './file'
-  export { func3 } from 'pkg'
+  import { func1 } from '../src/path/to/file'
+  import { func2 } from './file'
+  import { func3 } from 'pkg'
   `
   const deps = getDependenciesInContent(content)
 
