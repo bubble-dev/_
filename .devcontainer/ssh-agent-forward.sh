@@ -8,7 +8,7 @@ VOLUME_NAME=ssh-agent-forward
 HOST_IP=127.0.0.1
 HOST_PORT=2244
 AUTHORIZED_KEYS=$(ssh-add -L | base64 | tr -d '\n')
-GPG_SOCKET=$(gpgconf --list-dir agent-socket)
+GPG_SOCKET=$(gpgconf --list-dir agent-extra-socket)
 
 docker rm -f "${CONTAINER_NAME}" > /dev/null 2>&1
 
