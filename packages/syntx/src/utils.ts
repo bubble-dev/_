@@ -1,4 +1,5 @@
 import { ReactElement, ComponentClass, FC, isValidElement, ReactNode, cloneElement } from 'react'
+import { TLine } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -81,16 +82,21 @@ export const flatten = (array: any[]) => {
   return flattened
 }
 
+export const isLine = (obj: ReactNode): obj is ReactElement<TLine> => {
+  return isValidElement(obj)
+}
+
 export const sanitizeArray = (array: ReactNode): ReactNode => {
   if (!Array.isArray(array)) {
     return array
   }
 
-  const flattenedArray = flatten(array).filter((child) => isValidElement(child))
+  return flatten(array)
+    .reduce((result, child, i) => {
+      if (isLine(child)) {
+        result.push(cloneElement(child, { key: i, index: i + 1 }))
+      }
 
-  for (let i = 0; i < flattenedArray.length; ++i) {
-    flattenedArray[i] = cloneElement(flattenedArray[i], { key: i })
-  }
-
-  return flattenedArray
+      return result
+    }, [])
 }

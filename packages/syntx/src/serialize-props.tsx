@@ -53,7 +53,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
   })
 
   return {
-    head: sanitizeArray([
+    head: [
       (
         <PropsBrace key="props-open-brace">{'{'}</PropsBrace>
       ),
@@ -61,7 +61,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
       isNull(body) && (
         <PropsBrace key="props-close-brace">{'}'}</PropsBrace>
       ),
-    ]),
+    ],
     body: !isNull(body)
       ? sanitizeArray([
         body,

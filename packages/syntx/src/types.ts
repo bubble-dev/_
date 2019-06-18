@@ -14,12 +14,17 @@ export type TPathSegment = {
 
 export type TPath = TPathSegment[]
 
+export type TLine = {
+  path: TPath,
+  index?: number,
+}
+
 export type TConfig = {
   indent: number,
   whitespaceChar: string,
   components: {
     Root: FC<{}>,
-    Line: FC<{ path: TPath }>,
+    Line: FC<TLine>,
     ArrayComma: FC<{}>,
     ArrayBracket: FC<{}>,
     Comment: FC<{}>,
