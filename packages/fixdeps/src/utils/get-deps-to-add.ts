@@ -1,7 +1,7 @@
 import { TPackageJson } from '@auto/utils'
 import { isUndefined } from 'tsfn'
 
-export const getMissingDeps = (packageJson: TPackageJson, depNames: string[], ignoredPackages: string[]): string[] => {
+export const getDepsToAdd = (packageJson: TPackageJson, depNames: string[], ignoredPackages: string[]): string[] => {
   const dependenciesKeys = !isUndefined(packageJson.dependencies)
     ? Object.keys(packageJson.dependencies)
     : []

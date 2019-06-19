@@ -8,7 +8,7 @@ import {
   getDepsToRemove,
   globalIgnoreList,
   getDepsVersions,
-  getMissingDeps,
+  getDepsToAdd,
   getDependenciesInContent,
   mergeArray,
   composeDependencies,
@@ -35,9 +35,9 @@ export const fixdeps = async (options: TOptions) => {
   for (const dir of packagesDirs) {
     const packageJsonPath = path.join(dir, 'package.json')
     const packageJson = await getPackage(dir)
-    const filenamesForAdd = await globby(`${dir}/src/**/*.{ts,tsx}`, globbyOptions)
-    const filenamesForRemove = await globby(`${dir}/**/*.{ts,tsx}`, globbyOptions)
-    const mergedFilenames = mergeArray(filenamesForAdd, filenamesForRemove)
+    const filenamesToAddFrom = await globby(`${dir}/src/**/*.{ts,tsx}`, globbyOptions)
+    const filenamesToRemoveFrom = await globby(`${dir}/**/*.{ts,tsx}`, globbyOptions)
+    const mergedFilenames = mergeArray(filenamesToAddFrom, filenamesToRemoveFrom)
     const ignoredPackages = Array.isArray(options.ignoredPackages)
       ? globalIgnoreList.concat(options.ignoredPackages)
       : globalIgnoreList
@@ -56,7 +56,7 @@ export const fixdeps = async (options: TOptions) => {
             depsFromRemoveList.push(dep)
           }
 
-          if (filenamesForAdd.includes(filename)) {
+          if (filenamesToAddFrom.includes(filename)) {
             depsFromAddList.push(dep)
           }
         })
@@ -65,15 +65,16 @@ export const fixdeps = async (options: TOptions) => {
       }
     }
 
-    const depsThatShouldBeRemoved = getDepsToRemove(packageJson, depsFromRemoveList, ignoredPackages)
-    const depsThatShouldBeAdded = getMissingDeps(packageJson, depsFromAddList, ignoredPackages)
-    const addedDepEntries = await getDepsVersions(depsThatShouldBeAdded, logMessage)
+    const depsToRemove = getDepsToRemove(packageJson, depsFromRemoveList, ignoredPackages)
+    const depsToAdd = getDepsToAdd(packageJson, depsFromAddList, ignoredPackages)
+    const depsVersions = await getDepsVersions(depsToAdd, logMessage)
 
-    packageJson.dependencies = composeDependencies(packageJson, addedDepEntries, depsThatShouldBeRemoved)
-    packageJson.devDependencies = composeDevDependencies(packageJson, depsThatShouldBeRemoved, depsThatShouldBeAdded)
+    packageJson.dependencies = composeDependencies(packageJson, depsVersions, depsToRemove)
+    packageJson.devDependencies = composeDevDependencies(packageJson, depsToRemove, depsToAdd)
 
-    if (depsThatShouldBeRemoved.length > 0 || addedDepEntries.length > 0) {
+    if (depsToRemove.length > 0 || depsVersions.length > 0) {
       const packageData = `${JSON.stringify(packageJson, null, 2)}\n`
+
       await pWriteFile(packageJsonPath, packageData, { encoding: 'utf8' })
     }
   }

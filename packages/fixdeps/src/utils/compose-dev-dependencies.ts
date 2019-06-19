@@ -3,7 +3,7 @@ import { isUndefined } from 'tsfn'
 import { TDepsObject } from '../types'
 import { objectFromEntries } from './object-from-entries'
 
-export const composeDevDependencies = (packageJson: TPackageJson, removedDependenciesNames: string[], addedDependenciesNames: string[]): TDepsObject | undefined => {
+export const composeDevDependencies = (packageJson: TPackageJson, removedDepsNames: string[], addedDepsNames: string[]): TDepsObject | undefined => {
   if (isUndefined(packageJson.devDependencies)) {
     return
   }
@@ -25,7 +25,7 @@ export const composeDevDependencies = (packageJson: TPackageJson, removedDepende
           const baseName = name.substr(7)
 
           /* remove @types for deleted package */
-          if (removedDependenciesNames.includes(baseName)) {
+          if (removedDepsNames.includes(baseName)) {
             return false
           }
 
@@ -34,14 +34,14 @@ export const composeDevDependencies = (packageJson: TPackageJson, removedDepende
             dependenciesKeys.includes(baseName) ||
             devDependenciesKeys.includes(baseName) ||
             peerDependenciesKeys.includes(baseName) ||
-            addedDependenciesNames.includes(baseName)
+            addedDepsNames.includes(baseName)
           ) {
             return true
           }
         }
 
         /* remove if not included in removedDevDeps */
-        return !removedDependenciesNames.includes(name)
+        return !removedDepsNames.includes(name)
       })
   )
 }
