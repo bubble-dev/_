@@ -217,7 +217,7 @@ const buildMultiplePackages = (packages: string[]) => {
 export const build = async () => {
   const { default: prompts } = await import('prompts')
   const { getWorkspacesPackages } = await import('@auto/fs')
-  const { suggestFilter, makeRegExp } = await import('@auto/utils')
+  const { suggestFilter, makeRegExp } = await import('./utils')
 
   const baseDir = path.resolve('packages')
   const packages = await getWorkspacesPackages()
@@ -235,7 +235,7 @@ export const build = async () => {
       message: 'Type package name',
       limit: 20,
       choices: choices.filter((choice) => !packageNames.includes(choice.value)),
-      suggest: suggestFilter(packageNames.length > 0 ? '(done)' : '(no package)'),
+      suggest: suggestFilter(packageNames.length > 0 ? '(done)' : null),
     }) as { packageName?: string }
 
     if (typeof packageName === 'undefined') {
