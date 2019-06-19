@@ -203,17 +203,6 @@ const buildPackage = async (packageDir: string) => {
   )
 }
 
-const buildMultiplePackages = (packages: string[]) => {
-  if (packages.length === 0) {
-    return () => () => {}
-  }
-
-  return sequence(
-    // @ts-ignore
-    ...packages.map(buildPackage)
-  )
-}
-
 export const build = async () => {
   const { default: prompts } = await import('prompts')
   const { getWorkspacesPackages } = await import('@auto/fs')
@@ -246,6 +235,13 @@ export const build = async () => {
       break
     }
 
+    if (packageName === '*') {
+      return sequence(
+        // @ts-ignore
+        ...choices.map(({ value }) => buildPackage(value))
+      )
+    }
+
     if (packageName.includes('*')) {
       const regExp = makeRegExp(packageName)
       const filteredpackages = choices
@@ -257,14 +253,13 @@ export const build = async () => {
       continue
     }
 
-    if (packageName === '*') {
-      return buildMultiplePackages(choices.map(({ value }) => value))
-    }
-
     packageNames.push(packageName)
   }
 
-  return buildMultiplePackages(packageNames)
+  return sequence(
+    // @ts-ignore
+    ...packages.map(buildPackage)
+  )
 }
 
 export const lint = () =>
