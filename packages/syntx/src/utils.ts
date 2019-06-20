@@ -97,8 +97,8 @@ export const sanitizeNode = (node: ReactNode): ReactNode => {
     .reduce((result, child) => {
       if (isLine(child)) {
         const children = sanitizeNode(child.props.children)
+        index += 1
 
-        ++index
         result.push(cloneElement(child, { key: index, index, children }))
       }
 
