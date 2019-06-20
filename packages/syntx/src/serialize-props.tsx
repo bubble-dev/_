@@ -3,7 +3,7 @@ import React from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isString, sanitizeArray } from './utils'
+import { isNull, isString } from './utils'
 
 type TSerializePropertyValue = {
   value: any,
@@ -63,7 +63,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
       ),
     ],
     body: !isNull(body)
-      ? sanitizeArray([
+      ? [
         body,
         (
           <Line path={path} key="props-close-brace-line">
@@ -72,7 +72,7 @@ const serializePropertyValue = ({ value, currentIndent, config, childIndex, path
             <PropsBrace>{'}'}</PropsBrace>
           </Line>
         ),
-      ])
+      ]
       : null,
     tail: null,
   }
@@ -90,7 +90,7 @@ export const serializeProps = ({ props, currentIndent, config, path }: TSerializ
 
   return {
     head: null,
-    body: sanitizeArray(Object.entries(props)
+    body: Object.entries(props)
       .map(([key, value], i) => {
         const { head, body } = serializePropertyValue({
           value,
@@ -111,7 +111,7 @@ export const serializeProps = ({ props, currentIndent, config, path }: TSerializ
           ),
           body,
         ]
-      })),
+      }),
     tail: null,
   }
 }

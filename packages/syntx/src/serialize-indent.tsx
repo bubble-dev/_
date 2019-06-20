@@ -9,6 +9,10 @@ export type TSerializeIndent = {
 export const serializeIndent = ({ currentIndent, config }: TSerializeIndent) => {
   const { components: { Whitespace } } = config
 
+  if (currentIndent === 0) {
+    return null
+  }
+
   return (
     <Whitespace>
       {

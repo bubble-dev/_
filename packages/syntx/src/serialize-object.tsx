@@ -3,7 +3,7 @@ import React from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isUndefined, sanitizeArray } from './utils'
+import { isNull, isUndefined } from './utils'
 
 export type TSerializeObject = {
   obj: any,
@@ -40,7 +40,7 @@ export const serializeObject = ({ obj, currentIndent, config, path }: TSerialize
     head: (
       <ObjectBrace>{'{'}</ObjectBrace>
     ),
-    body: sanitizeArray(Object.entries(obj)
+    body: Object.entries(obj)
       .filter((entry) => !isUndefined(entry[1]))
       .map(([key, value], i, entries) => {
         const { head, body, tail } = serializeValue({
@@ -75,7 +75,7 @@ export const serializeObject = ({ obj, currentIndent, config, path }: TSerialize
             </Line>
           ),
         ]
-      })),
+      }),
     tail: (
       <ObjectBrace>{'}'}</ObjectBrace>
     ),

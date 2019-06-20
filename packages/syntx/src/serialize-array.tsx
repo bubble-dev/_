@@ -3,7 +3,7 @@ import React from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isNull, sanitizeArray } from './utils'
+import { isNull } from './utils'
 
 export type TSerializeArray = {
   arr: any[],
@@ -31,7 +31,7 @@ export const serializeArray = ({ arr, currentIndent, config, path }: TSerializeA
     head: (
       <ArrayBracket>{'['}</ArrayBracket>
     ),
-    body: sanitizeArray(arr.map((value, i) => {
+    body: arr.map((value, i) => {
       const { head, body, tail } = serializeValue({
         value,
         currentIndent: currentIndent + indent,
@@ -61,7 +61,7 @@ export const serializeArray = ({ arr, currentIndent, config, path }: TSerializeA
           </Line>
         ),
       ]
-    })),
+    }),
     tail: (
       <ArrayBracket>{']'}</ArrayBracket>
     ),

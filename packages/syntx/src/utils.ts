@@ -86,15 +86,20 @@ export const isLine = (obj: ReactNode): obj is ReactElement<TLine> => {
   return isValidElement(obj)
 }
 
-export const sanitizeArray = (array: ReactNode): ReactNode => {
-  if (!Array.isArray(array)) {
-    return array
+export const sanitizeNode = (node: ReactNode): ReactNode => {
+  if (!Array.isArray(node)) {
+    return node
   }
 
-  return flatten(array)
-    .reduce((result, child, i) => {
+  let index = 0
+
+  return flatten(node)
+    .reduce((result, child) => {
       if (isLine(child)) {
-        result.push(cloneElement(child, { key: i, index: i + 1 }))
+        const children = sanitizeNode(child.props.children)
+
+        ++index
+        result.push(cloneElement(child, { key: index, index, children }))
       }
 
       return result

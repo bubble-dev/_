@@ -17,6 +17,7 @@ export type TPath = TPathSegment[]
 export type TLine = {
   path: TPath,
   index?: number,
+  children: ReactNode,
 }
 
 export type TConfig = {

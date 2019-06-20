@@ -2,7 +2,7 @@
 import React, { isValidElement } from 'react'
 import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isNumber, isString, getElementName, sanitizeArray } from './utils'
+import { isNull, isNumber, isString, getElementName } from './utils'
 import { serializeElement } from './serialize-element'
 
 type TSerializeChildrenValue = {
@@ -100,7 +100,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
 
     return {
       head: null,
-      body: lines.length > 0 ? sanitizeArray(lines) : null,
+      body: lines.length > 0 ? lines : null,
       tail: null,
     }
   }
@@ -115,7 +115,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
 
   return {
     head: null,
-    body: sanitizeArray([
+    body: [
       !isNull(head) && (
         <Line path={path}>
           {serializeIndent({ currentIndent, config })}
@@ -123,7 +123,7 @@ export const serializeChildren = ({ children, currentIndent, config, path }: TSe
         </Line>
       ),
       body,
-    ]),
+    ],
     tail: null,
   }
 }

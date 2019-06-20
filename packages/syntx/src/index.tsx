@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { TConfig } from './types'
 import { serializeElement } from './serialize-element'
-import { getDisplayName } from './utils'
+import { getDisplayName, sanitizeNode } from './utils'
 
 export * from './types'
 
@@ -18,6 +18,6 @@ export const highlighter = (Component: FC<any>, props: any, config: TConfig) => 
   })
 
   return (
-    <Root>{body}</Root>
+    <Root>{sanitizeNode(body)}</Root>
   )
 }
