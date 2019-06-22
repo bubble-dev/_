@@ -181,6 +181,19 @@ module.exports = {
         next: 'return',
       },
       {
+        blankLine: 'never',
+        prev: [
+          'const',
+          'let',
+          'var',
+        ],
+        next: [
+          'const',
+          'let',
+          'var',
+        ],
+      },
+      {
         blankLine: 'always',
         prev: [
           'const',
@@ -189,6 +202,41 @@ module.exports = {
         ],
         next: [
           'block',
+          'block-like',
+        ],
+      },
+      {
+        blankLine: 'always',
+        prev: [
+          'block',
+          'block-like',
+        ],
+        next: [
+          'const',
+          'let',
+          'var',
+        ],
+      },
+      {
+        blankLine: 'always',
+        prev: [
+          '*',
+        ],
+        next: [
+          'break',
+        ],
+      },
+      {
+        blankLine: 'any',
+        prev: [
+          'const',
+          'let',
+          'var',
+        ],
+        next: [
+          'const',
+          'let',
+          'var',
         ],
       },
       {

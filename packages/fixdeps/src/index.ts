@@ -9,6 +9,7 @@ import { getDependenciesInContent } from './get-dependencies-in-content'
 import { getPackageVersionNpm } from './get-package-version-npm'
 import { getLocalPackageVersionYarn } from './get-local-package-version-yarn'
 
+
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
 
@@ -62,27 +63,32 @@ export const fixdeps = async (options: TOptions) => {
 
     // ENTRIES
     let packageDepEntries: TDepsEntries = []
+
     if (packageJson.dependencies) {
       packageDepEntries = Object.entries(packageJson.dependencies)
     }
 
     let packageDevDepEntries: TDepsEntries = []
+
     if (packageJson.devDependencies) {
       packageDevDepEntries = Object.entries(packageJson.devDependencies)
     }
 
     let packagePeerEntries: TDepsEntries = []
+
     if (packageJson.peerDependencies) {
       packagePeerEntries = Object.entries(packageJson.peerDependencies)
     }
 
     // Remove unused deps
     let removedDeps: string[] = []
+
     if (packageJson.dependencies) {
       removedDeps = getDepsToRemove(packageDepEntries, depsFromEverywhere, ignoredPackages)
     }
 
     let removedDevDeps: string[] = []
+
     if (packageJson.devDependencies) {
       removedDevDeps = getDepsToRemove(packageDevDepEntries, depsFromEverywhere, ignoredPackages)
     }
