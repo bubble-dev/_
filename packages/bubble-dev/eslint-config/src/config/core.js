@@ -133,7 +133,7 @@ module.exports = {
     'no-lonely-if': 2,
     'no-mixed-spaces-and-tabs': 2,
     'no-multi-assign': 2,
-    'no-multiple-empty-lines': 2,
+    'no-multiple-empty-lines': [2, { max: 1 }],
     'no-nested-ternary': 1,
     'no-new-object': 2,
     'no-trailing-spaces': 2,

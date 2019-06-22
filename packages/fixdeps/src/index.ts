@@ -9,7 +9,6 @@ import { getDependenciesInContent } from './get-dependencies-in-content'
 import { getPackageVersionNpm } from './get-package-version-npm'
 import { getLocalPackageVersionYarn } from './get-local-package-version-yarn'
 
-
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
 
