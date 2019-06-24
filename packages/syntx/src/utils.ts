@@ -1,5 +1,5 @@
-import { ReactElement, ComponentClass, FC, isValidElement, ReactNode, cloneElement } from 'react'
-import { TLine } from './types'
+import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
+import { TLine, TLineElement } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
@@ -82,26 +82,28 @@ export const flatten = (array: any[]) => {
   return flattened
 }
 
-export const isLine = (obj: ReactNode): obj is ReactElement<TLine> => {
-  return isValidElement(obj)
+export const isLine = (obj: any): obj is TLine => {
+  return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
 }
 
-export const sanitizeNode = (node: ReactNode): ReactNode => {
-  if (!Array.isArray(node)) {
-    return node
-  }
+export const isLineElement = (obj: any): obj is TLineElement => {
+  return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
+}
 
-  let index = 0
+export const sanitizeLineElements = (lineElements: any[]): TLineElement[] => {
+  return lineElements.filter(isLineElement)
+}
 
-  return flatten(node)
-    .reduce((result, child) => {
-      if (isLine(child)) {
-        const children = sanitizeNode(child.props.children)
-        index += 1
-
-        result.push(cloneElement(child, { key: index, index, children }))
+export const sanitizeLines = (lines: any[]): TLine[] => {
+  return flatten(lines)
+    .reduce((result, line) => {
+      if (isLine(line)) {
+        result.push({
+          ...line,
+          elements: sanitizeLineElements(line.elements),
+        })
       }
 
       return result
-    }, [])
+    }, [] as TLine[])
 }
