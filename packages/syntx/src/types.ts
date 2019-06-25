@@ -15,10 +15,6 @@ export type TLine = {
   elements: TLineElement[],
 }
 
-export type TRoot = {
-  lines: TLine[],
-}
-
 // no body - no tail
 export type TSerializedElement = {
   head: TLineElement[], // shared old line

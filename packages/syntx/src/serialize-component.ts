@@ -1,9 +1,9 @@
 import { FC } from 'react'
-import { TConfig, TRoot } from './types'
+import { TConfig, TLine } from './types'
 import { serializeElement } from './serialize-element'
 import { getDisplayName } from './utils'
 
-export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TRoot => {
+export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TLine[] => {
   const name = getDisplayName(Component)
   const { body } = serializeElement({
     name,
@@ -14,7 +14,5 @@ export const serializeComponent = (Component: FC<any>, props: any, config: TConf
     path: [],
   })
 
-  return {
-    lines: body,
-  }
+  return body
 }
