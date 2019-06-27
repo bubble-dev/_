@@ -1,4 +1,3 @@
-import path from 'path'
 import { createReadStream, createWriteStream } from 'graceful-fs'
 import tarStream from 'tar-stream'
 
@@ -40,6 +39,8 @@ export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reje
         pack.entry({ name }, data)
       }
 
+      pack.finalize()
+
       pack.on('error', writeReject)
       writeStream.on('error', writeReject)
       writeStream.on('finish', writeResolve)
@@ -56,9 +57,7 @@ export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reje
     })
 
     stream.on('end', () => {
-      if (header.type === 'file') {
-        files.set(header.name, data)
-      }
+      files.set(header.name, data)
 
       next()
     })
@@ -78,15 +77,3 @@ export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reje
     })
     .pipe(extract)
 })
-
-;(async () => {
-  const tarFs = await TarFs(path.resolve('packages/x-ray/next/src/test3.tar'))
-
-  // tarFs.write('file-3.txt', Buffer.from('FOO!'))
-
-  console.log(tarFs.list())
-
-  console.log(tarFs.read('file-3.txt').toString())
-
-  // await tarFs.close()
-})()
