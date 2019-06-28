@@ -2,10 +2,11 @@ import { createReadStream, createWriteStream } from 'graceful-fs'
 import tarStream from 'tar-stream'
 
 export type TTarFs = {
+  has: (filePath: string) => boolean,
   list: () => Iterable<string>,
   read: (filePath: string) => Buffer,
   write: (filePath: string, data: Buffer) => void,
-  close: () => Promise<void>,
+  save: () => Promise<void>,
 }
 
 export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reject) => {
@@ -14,6 +15,7 @@ export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reje
   let hasChanged = false
 
   const api: TTarFs = {
+    has: (filePath) => files.has(filePath),
     list: () => files.keys(),
     read: (filePath) => {
       if (!files.has(filePath)) {
@@ -27,7 +29,7 @@ export const TarFs = (tarFilePath: string) => new Promise<TTarFs>((resolve, reje
 
       files.set(filePath, data)
     },
-    close: () => new Promise((writeResolve, writeReject) => {
+    save: () => new Promise((writeResolve, writeReject) => {
       if (!hasChanged) {
         return writeResolve()
       }

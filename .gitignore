@@ -7,3 +7,4 @@ tmp/
 *.log
 .idea/
 .env
+*.tar

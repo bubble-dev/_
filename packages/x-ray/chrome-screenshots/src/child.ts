@@ -7,6 +7,7 @@ import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { TMessage } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import { TarFs } from '@x-ray/next'
 import getScreenshot from './get'
 
 const webSocketDebuggerUrl = process.argv[2]
@@ -22,9 +23,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
 ;(async () => {
   try {
-    const { setupFile, dpr, width, height } = JSON.parse(options)
-
-    await import(setupFile)
+    const { dpr, width, height } = JSON.parse(options)
 
     const browser = await puppeteer.connect({
       browserWSEndpoint: webSocketDebuggerUrl,
@@ -45,7 +44,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
     for (const targetPath of targetFiles) {
       const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'chrome-screenshots')
+      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__')
 
       if (!shouldBailout) {
         try {
@@ -55,15 +54,17 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
         }
       }
 
+      const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
+
       await pAll(
         items.map((item) => async () => {
           const page = pages.shift() as Page
           const screenshot = await getScreenshot(page, item)
-          const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
+          const screenshotName = `${item.options.name}.png`
 
           pages.push(page)
 
-          const message = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
+          const message = await checkScreenshot(screenshot, tar, screenshotName, shouldBailout)
 
           await processSend(message)
 
@@ -75,6 +76,8 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
         }),
         { concurrency: pages.length }
       )
+
+      await tar.save()
     }
 
     await browser.disconnect()

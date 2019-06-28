@@ -6,10 +6,10 @@ import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { TMessage } from '@x-ray/common-utils'
 import { checkSnapshot, TMeta } from '@x-ray/snapshot-utils'
+import { TarFs } from '@x-ray/next'
 import getSnapshot from './get'
 
-const options = process.argv[2]
-const targetFiles = process.argv.slice(3)
+const targetFiles = process.argv.slice(2)
 const pathExists = promisify(fs.access)
 
 // @ts-ignore
@@ -19,13 +19,9 @@ const CONCURRENCY = 4
 
 ;(async () => {
   try {
-    const { setupFile } = JSON.parse(options)
-
-    await import(setupFile)
-
     for (const targetPath of targetFiles) {
       const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'web-snapshots')
+      const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__')
 
       if (!shouldBailout) {
         try {
@@ -35,11 +31,13 @@ const CONCURRENCY = 4
         }
       }
 
+      const tar = await TarFs(path.join(snapshotsDir, 'web-snapshots.tar'))
+
       await pAll(
         items.map((item) => async () => {
           const snapshot = await getSnapshot(item.element)
-          const snapshotPath = path.join(snapshotsDir, `${item.options.name}.js`)
-          const message = await checkSnapshot(snapshot, snapshotPath, shouldBailout)
+          const snapshotName = `${item.options.name}.js`
+          const message = await checkSnapshot(snapshot, tar, snapshotName, shouldBailout)
 
           await processSend(message)
 
@@ -51,6 +49,8 @@ const CONCURRENCY = 4
         }),
         { concurrency: CONCURRENCY }
       )
+
+      await tar.save()
     }
 
     process.disconnect()

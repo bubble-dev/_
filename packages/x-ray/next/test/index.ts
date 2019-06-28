@@ -22,6 +22,16 @@ test('x-ray/next: TarFs', async (t) => {
   const { TarFs } = await import('../src')
   const tarFs = await TarFs('./fixtures/test.tar')
 
+  t.true(
+    tarFs.has('file-1.txt'),
+    'has: should have file'
+  )
+
+  t.false(
+    tarFs.has('file-3.txt'),
+    'has: should not have file'
+  )
+
   t.deepEqual(
     Array.from(tarFs.list()),
     ['file-1.txt', 'file-2.txt'],
@@ -59,28 +69,28 @@ test('x-ray/next: TarFs', async (t) => {
     'write: should write new file data'
   )
 
-  await tarFs.close()
+  await tarFs.save()
 
   const updatedTarFs = await TarFs('./fixtures/test.tar')
 
   t.deepEqual(
     Array.from(updatedTarFs.list()),
     ['file-1.txt', 'file-2.txt', 'file-3.txt'],
-    'close: should write new file to a list of files'
+    'save: should write new file to a list of files'
   )
 
   t.equal(
     updatedTarFs.read('file-3.txt').toString(),
     'file-3',
-    'close: should write new file data'
+    'save: should write new file data'
   )
 
-  await updatedTarFs.close()
+  await updatedTarFs.save()
 
   t.deepEqual(
     Array.from(updatedTarFs.list()),
     ['file-1.txt', 'file-2.txt', 'file-3.txt'],
-    'close: should write nothing if there were no changes'
+    'save: should write nothing if there were no changes'
   )
 
   const newTarFs = await TarFs('./fixtures/test2.tar')

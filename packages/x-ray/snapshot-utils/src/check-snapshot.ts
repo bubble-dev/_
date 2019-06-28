@@ -1,52 +1,46 @@
-import { promisify } from 'util'
-import fs from 'graceful-fs'
 import { TCheckResult } from '@x-ray/common-utils'
+import { TTarFs } from '@x-ray/next'
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
-const pathExists = promisify(fs.access)
+const checkSnapshot = async (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): Promise<TCheckResult> => {
+  if (tar.has(snapshotName)) {
+    const existingData = tar.read(snapshotName)
 
-const checkSnapshot = async (data: any, snapshotPath: string, shouldBailout: boolean): Promise<TCheckResult> => {
-  try {
-    await pathExists(snapshotPath)
-    const existingData = await readFile(snapshotPath, 'utf8')
+    const dataBuffer = Buffer.from(data)
 
-    if (data === existingData) {
+    if (Buffer.compare(dataBuffer, existingData) === 0) {
       return {
         status: 'ok',
-        path: snapshotPath,
+        path: snapshotName,
       }
     }
 
     if (shouldBailout) {
       return {
         status: 'diff',
-        path: snapshotPath,
+        path: snapshotName,
       }
     }
 
-    await writeFile(snapshotPath, data, 'utf8')
+    tar.write(snapshotName, dataBuffer)
 
     return {
       status: 'diff',
-      path: snapshotPath,
+      path: snapshotName,
     }
-  } catch (e) {
-    //
   }
 
   if (shouldBailout) {
     return {
       status: 'unknown',
-      path: snapshotPath,
+      path: snapshotName,
     }
   }
 
-  await writeFile(snapshotPath, data, 'utf8')
+  tar.write(snapshotName, Buffer.from(data))
 
   return {
     status: 'new',
-    path: snapshotPath,
+    path: snapshotName,
   }
 }
 

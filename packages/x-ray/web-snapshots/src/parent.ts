@@ -6,7 +6,7 @@ import { TOptions } from './types'
 const childFile = require.resolve('./child')
 
 const parent = async (targetFiles: string[], options: TOptions): Promise<TTotalResult> => {
-  const childProcess = execa('node', [childFile, JSON.stringify(options), ...targetFiles], {
+  const childProcess = execa('node', ['--require', options.setupFile, childFile, ...targetFiles], {
     stdio: ['ignore', process.stdout, process.stderr, 'ipc'],
     stripEof: true,
     env: {
