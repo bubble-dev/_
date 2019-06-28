@@ -1,7 +1,10 @@
 import path from 'path'
+import plugin from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import env from '@start/plugin-env'
+import remove from '@start/plugin-remove'
+import { build } from '@bubble-dev/start-preset'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
 import xRaySnapshots from './plugins/snapshots-plugin'
@@ -89,4 +92,22 @@ export const checkFirefoxScreenshots = (component = '**') =>
         ],
       })
     )
+  )
+
+export const buildXRayIos = () =>
+  sequence(
+    build('x-ray/native-screenshots'),
+    find('.rebox/ios/'),
+    remove,
+    plugin('ios', () => async () => {
+      const { buildIos } = await import('@rebox/ios')
+
+      await buildIos({
+        entryPointPath: '@x-ray/native-screenshots/build/App',
+        outputPath: '.rebox/ios/',
+        osVersion: 'latest',
+        platformName: 'iOS Simulator',
+        appName: 'Sandbox',
+      })
+    })
   )
