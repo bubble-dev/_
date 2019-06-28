@@ -1,6 +1,7 @@
+import { TOptions as TCommonOptions } from '@x-ray/common-utils'
+
 export type TOptions = {
-  setupFile: string,
   dpr?: number,
   width?: number,
   height?: number,
-}
+} & TCommonOptions

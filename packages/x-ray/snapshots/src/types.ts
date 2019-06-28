@@ -1,4 +1,4 @@
-import { ReactElement } from 'react' // eslint-disable-line
+import { ReactElement } from 'react'
 
 export type TMeta = {
   options: {

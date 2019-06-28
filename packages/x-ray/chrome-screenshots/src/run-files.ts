@@ -1,7 +1,6 @@
 import { cpus } from 'os'
 import request from 'request-promise-native'
-import { divideFiles, logTotalResults } from '@x-ray/common-utils'
-import parent from './parent'
+import { divideFiles, logTotalResults, parent } from '@x-ray/common-utils'
 import { TOptions } from './types'
 
 const DEBUGGER_ENDPOINT_HOST = 'localhost'
@@ -12,6 +11,7 @@ const defaultOptions: Partial<TOptions> = {
   width: 1024,
   height: 1024,
 }
+const childFile = require.resolve('./child')
 
 const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
   const options = {
@@ -24,8 +24,10 @@ const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
     resolveWithFullResponse: true,
   })
 
+  process.env.WEBSOCKET_DEBUGGER_URL = webSocketDebuggerUrl
+
   const totalResults = await Promise.all(
-    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(webSocketDebuggerUrl, files, options))
+    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(childFile, files, options))
   )
 
   logTotalResults(totalResults)

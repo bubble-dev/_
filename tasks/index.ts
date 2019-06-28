@@ -1,9 +1,8 @@
-import path from 'path'
 import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import env from '@start/plugin-env'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
-import xRayWebSnapshots from './plugins/web-snapshots-plugin'
+import xRaySnapshots from './plugins/snapshots-plugin'
 import withChromium from './plugins/with-chromium'
 import waitForPort from './plugins/wait-for-port'
 
@@ -14,8 +13,19 @@ export const checkWebSnapshots = (component = '**') =>
   sequence(
     find(`packages/${component}/test/snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
-    xRayWebSnapshots({
-      setupFile: path.resolve('tasks/setup/web.js'),
+    xRaySnapshots({
+      platform: 'web',
+      extensions: [
+        '.node.js',
+        '.node.ts',
+        '.node.tsx',
+        '.web.js',
+        '.web.ts',
+        '.web.tsx',
+        '.js',
+        '.ts',
+        '.tsx',
+      ],
     })
   )
 
@@ -26,7 +36,15 @@ export const checkChromeScreenshots = (component = '**') =>
       waitForPort(9222),
       env({ NODE_ENV: 'production', XRAY_SCREENSHOTS: '1' }),
       xRayChromeScreenshots({
-        setupFile: path.resolve('tasks/setup/web.js'),
+        platform: 'chrome',
+        extensions: [
+          '.web.js',
+          '.web.ts',
+          '.web.tsx',
+          '.js',
+          '.ts',
+          '.tsx',
+        ],
       })
     )
   )

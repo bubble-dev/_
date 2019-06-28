@@ -1,13 +1,12 @@
 import { cpus } from 'os'
-import { divideFiles, logTotalResults } from '@x-ray/common-utils'
-import parent from './parent'
-import { TOptions } from './types'
+import { divideFiles, logTotalResults, TOptions, parent } from '@x-ray/common-utils'
 
 const CONCURRENCY = Math.max(cpus().length - 1, 1)
+const childFilePath = require.resolve('./child')
 
 const runFiles = async (targetFiles: string[], options: TOptions) => {
   const totalResults = await Promise.all(
-    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(files, options))
+    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(childFilePath, files, options))
   )
 
   logTotalResults(totalResults)

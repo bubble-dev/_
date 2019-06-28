@@ -10,10 +10,6 @@ import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import { TarFs } from '@x-ray/next'
 import getScreenshot from './get'
 
-const webSocketDebuggerUrl = process.argv[2]
-const options = process.argv[3]
-const targetFiles = process.argv.slice(4)
-
 const pathExists = promisify(fs.access)
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const CONCURRENCY = 4
@@ -21,12 +17,12 @@ const CONCURRENCY = 4
 // @ts-ignore
 const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
 
-;(async () => {
+export default async (targetFiles: string[], options: {[k: string]: any}) => {
   try {
-    const { dpr, width, height } = JSON.parse(options)
+    const { dpr, width, height } = options
 
     const browser = await puppeteer.connect({
-      browserWSEndpoint: webSocketDebuggerUrl,
+      browserWSEndpoint: process.env.WEBSOCKET_DEBUGGER_URL,
       defaultViewport: {
         deviceScaleFactor: dpr,
         width,
@@ -92,4 +88,4 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
     process.disconnect()
     process.exit(1) // eslint-disable-line
   }
-})()
+}

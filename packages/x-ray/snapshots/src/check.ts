@@ -1,7 +1,7 @@
 import { TCheckResult } from '@x-ray/common-utils'
 import { TTarFs } from '@x-ray/next'
 
-const checkSnapshot = async (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): Promise<TCheckResult> => {
+const check = (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): TCheckResult => {
   if (tar.has(snapshotName)) {
     const existingData = tar.read(snapshotName)
 
@@ -44,4 +44,4 @@ const checkSnapshot = async (data: string, tar: TTarFs, snapshotName: string, sh
   }
 }
 
-export default checkSnapshot
+export default check

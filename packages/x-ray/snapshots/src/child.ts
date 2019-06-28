@@ -5,11 +5,11 @@ import pAll from 'p-all'
 import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { TMessage } from '@x-ray/common-utils'
-import { checkSnapshot, TMeta } from '@x-ray/snapshot-utils'
-import getSnapshot from './get'
+import { TarFs } from '@x-ray/next'
+import serialize from '@x-ray/serialize-react-tree'
+import checkSnapshot from './check'
+import { TMeta } from './types'
 
-const options = process.argv[2]
-const targetFiles = process.argv.slice(3)
 const pathExists = promisify(fs.access)
 
 // @ts-ignore
@@ -17,15 +17,13 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const CONCURRENCY = 4
 
-;(async () => {
+export default async (targetFiles: string[], options: {[k: string]: any}) => {
+  const { platform } = options
+
   try {
-    const { setupFile, platform, exportsMap } = JSON.parse(options)
-
-    await import(setupFile)
-
     for (const targetPath of targetFiles) {
       const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__', `${platform}-snapshots`)
+      const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__')
 
       if (!shouldBailout) {
         try {
@@ -35,11 +33,13 @@ const CONCURRENCY = 4
         }
       }
 
+      const tar = await TarFs(path.join(snapshotsDir, `${platform}-snapshots.tar`))
+
       await pAll(
         items.map((item) => async () => {
-          const snapshot = await getSnapshot(item.element, exportsMap)
-          const snapshotPath = path.join(snapshotsDir, `${item.options.name}.js`)
-          const message = await checkSnapshot(snapshot, snapshotPath, shouldBailout)
+          const snapshot = await serialize(item.element)
+          const snapshotName = `${item.options.name}.txt`
+          const message = checkSnapshot(snapshot, tar, snapshotName, shouldBailout)
 
           await processSend(message)
 
@@ -51,6 +51,8 @@ const CONCURRENCY = 4
         }),
         { concurrency: CONCURRENCY }
       )
+
+      await tar.save()
     }
 
     process.disconnect()
@@ -63,4 +65,4 @@ const CONCURRENCY = 4
     process.disconnect()
     process.exit(1) // eslint-disable-line
   }
-})()
+}

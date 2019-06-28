@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/no-require-imports, import/no-dynamic-require */
 const babelRegister = require('@babel/register')
 
 global.navigator = {
   userAgent: 'x-ray',
 }
+
+const options = JSON.parse(process.argv[2])
+const childFile = process.argv[3]
+const targetFiles = process.argv.slice(4)
 
 const babelConfig = {
   babelrc: false,
@@ -27,18 +32,17 @@ const babelConfig = {
   plugins: [
     '@babel/plugin-syntax-dynamic-import',
     'babel-plugin-dynamic-import-node',
+    [
+      'babel-plugin-module-resolver',
+      {
+        alias: options.mocks,
+        extensions: options.extensions,
+      },
+    ],
   ],
-  extensions: [
-    '.node.js',
-    '.node.ts',
-    '.node.tsx',
-    '.web.js',
-    '.web.ts',
-    '.web.tsx',
-    '.js',
-    '.ts',
-    '.tsx',
-  ],
+  extensions: options.extensions,
 }
 
 babelRegister(babelConfig)
+
+require(childFile).default(targetFiles, options)

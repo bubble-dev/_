@@ -15,3 +15,11 @@ export type TTotalResult = {
   diff: number,
   new: number,
 }
+
+export type TOptions = {
+  mocks?: {
+    [k: string]: string,
+  },
+  extensions: string[],
+  platform: string,
+}

@@ -1,12 +1,12 @@
 /* eslint-disable no-throw-literal */
 import execa from 'execa'
-import { makeLogger, TTotalResult } from '@x-ray/common-utils'
-import { TOptions } from './types'
+import { TTotalResult } from './types'
+import makeLogger from './make-logger'
 
-const childFile = require.resolve('./child')
+const setupFile = require.resolve('./setup')
 
-const parent = async (webSocketUrl: string, targetFiles: string[], options: TOptions): Promise<TTotalResult> => {
-  const childProcess = execa('node', ['--require', options.setupFile, childFile, webSocketUrl, JSON.stringify(options), ...targetFiles], {
+const parent = async (childFile: string, targetFiles: string[], options: {[k: string]: any}): Promise<TTotalResult> => {
+  const childProcess = execa('node', [setupFile, JSON.stringify(options), childFile, ...targetFiles], {
     stdio: ['ignore', process.stdout, process.stderr, 'ipc'],
     stripEof: true,
     env: {

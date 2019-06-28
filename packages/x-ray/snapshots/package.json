@@ -1,6 +1,6 @@
 {
-  "name": "@x-ray/native-snapshots",
-  "version": "0.1.1",
+  "name": "@x-ray/snapshots",
+  "version": "0.0.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -13,6 +13,7 @@
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/serialize-react-tree": "^0.2.0",
     "@x-ray/snapshot-utils": "^0.1.0",
+    "babel-plugin-module-resolver": "^3.2.0",
     "execa": "^1.0.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
