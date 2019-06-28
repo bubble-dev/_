@@ -9,6 +9,7 @@ import { TMessage } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import { TarFs } from '@x-ray/next'
 import getScreenshot from './get'
+import { TOptions } from './types'
 
 const pathExists = promisify(fs.access)
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -17,7 +18,7 @@ const CONCURRENCY = 4
 // @ts-ignore
 const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
 
-export default async (targetFiles: string[], options: {[k: string]: any}) => {
+export default async (targetFiles: string[], options: TOptions) => {
   try {
     const { dpr, width, height } = options
 

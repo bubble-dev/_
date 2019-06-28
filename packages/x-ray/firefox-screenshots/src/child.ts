@@ -6,10 +6,9 @@ import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { TMessage } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import { TarFs } from '@x-ray/next'
 import getScreenshot from './get'
-
-const options = process.argv[2]
-const targetFiles = process.argv.slice(3)
+import { TOptions } from './types'
 
 const pathExists = promisify(fs.access)
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -17,11 +16,9 @@ const shouldBailout = Boolean(process.env.XRAY_CI)
 // @ts-ignore
 const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
 
-;(async () => {
+export default async (targetFiles: string[], options: TOptions) => {
   try {
-    const { setupFile, width, height } = JSON.parse(options)
-
-    await import(setupFile)
+    const { width, height } = options
 
     const browser = await foxr.connect({
       defaultViewport: {
@@ -34,7 +31,7 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
 
     for (const targetPath of targetFiles) {
       const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__', 'firefox-screenshots')
+      const screenshotsDir = path.join(path.dirname(targetPath), '__x-ray__')
 
       if (!shouldBailout) {
         try {
@@ -44,10 +41,12 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
         }
       }
 
+      const tar = await TarFs(path.join(screenshotsDir, 'firefox-screenshots.tar'))
+
       for (const item of items) {
         const screenshot = await getScreenshot(page, item)
-        const screenshotPath = path.join(screenshotsDir, `${item.options.name}.png`)
-        const message = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
+        const screenshotName = `${item.options.name}.png`
+        const message = await checkScreenshot(screenshot, tar, screenshotName, shouldBailout)
 
         await processSend(message)
 
@@ -55,6 +54,8 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
           throw null
         }
       }
+
+      await tar.save()
     }
 
     await browser.disconnect()
@@ -69,4 +70,4 @@ const processSend: (message: TMessage) => Promise<void> = promisify(process.send
     process.disconnect()
     process.exit(1) // eslint-disable-line
   }
-})()
+}

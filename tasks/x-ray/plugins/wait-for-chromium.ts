@@ -3,11 +3,11 @@ import plugin from '@start/plugin'
 
 const TIMEOUT = 200
 
-const checkPort = async (port: number, host: string) => {
+const waitForChromium = async () => {
   try {
     await request({
       timeout: TIMEOUT,
-      uri: `http://${host}:${port}/json`,
+      uri: 'http://localhost:9222/json',
       json: true,
     })
 
@@ -19,11 +19,8 @@ const checkPort = async (port: number, host: string) => {
 
 const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout))
 
-export default (port: number, host = 'localhost') =>
-  plugin('wait-for-port', ({ logMessage }) => async () => {
-    while (!(await checkPort(port, host))) {
-      await sleep(200)
-    }
-
-    logMessage(String(port))
-  })
+export default plugin('wait-for-chromium', () => async () => {
+  while (!(await waitForChromium())) {
+    await sleep(200)
+  }
+})
