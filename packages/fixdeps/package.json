@@ -16,7 +16,7 @@
     "@babel/traverse": "^7.2.3",
     "@babel/types": "^7.3.0",
     "execa": "^1.0.0",
-    "globby": "^9.0.0",
+    "globby": "^10.0.0",
     "graceful-fs": "^4.1.15"
   },
   "devDependencies": {
