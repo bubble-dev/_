@@ -18,7 +18,7 @@
     "@babel/runtime": "^7.4.3",
     "babel-loader": "^8.0.5",
     "cpy": "^7.2.0",
-    "execa": "^1.0.0",
+    "execa": "^2.0.0",
     "graceful-fs": "^4.1.15",
     "haul": "^1.0.0-rc.15",
     "make-dir": "^3.0.0",
