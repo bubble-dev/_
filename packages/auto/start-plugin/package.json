@@ -1,6 +1,6 @@
 {
   "name": "@auto/start-plugin",
-  "version": "0.3.0",
+  "version": "0.5.0",
   "description": "🤖 Auto Tools",
   "keywords": "tasks, runner, start, start-plugin, auto",
   "main": "src/index.ts",
@@ -9,16 +9,13 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "dependencies": {
-    "@auto/bump": "^0.2.0",
-    "@auto/fs": "^0.1.0",
-    "@auto/git": "^0.1.0",
-    "@auto/log": "^0.2.0",
-    "@auto/npm": "^0.1.0",
-    "@auto/utils": "^0.1.0",
+    "@auto/bump": "^0.3.0",
+    "@auto/fs": "^0.2.0",
+    "@auto/git": "^0.2.0",
+    "@auto/log": "^0.3.0",
+    "@auto/npm": "^0.3.0",
+    "@auto/utils": "^0.2.0",
     "@start/plugin": "^0.3.0",
     "prompts": "^2.0.0"
   },

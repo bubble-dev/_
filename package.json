@@ -50,14 +50,15 @@
       "initialType": "minor",
       "autoNamePrefix": "@",
       "zeroBreakingChangeType": "minor",
-      "github": {
-        "username": "bubble-dev",
-        "repo": "_"
+      "npm": {
+        "publishSubDirectory": "build",
+        "access": "public"
       },
       "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
-      "shouldMakeGitHubReleases": true,
-      "shouldSendSlackMessage": false
+      "shouldMakeGitHubReleases": false,
+      "shouldSendSlackMessage": false,
+      "shouldWriteChangelogFiles": true
     }
   },
   "eslintConfig": {
