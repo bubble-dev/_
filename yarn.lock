@@ -1419,10 +1419,10 @@
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.1.tgz#42995b446db9a48a11a07ec083499a860e9138ff"
   integrity sha512-hRJD2ahnnpLgsj6KWMYSrmXkM3rm2Dl1qkx6IOFD5FnuNPXJIG5L0dhgKXCYTRMGzU4n0wImQ/xfmRc4POUFlg==
 
-"@types/istanbul-lib-hook@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-hook/-/istanbul-lib-hook-1.0.1.tgz#de82750f90353a1f2eef2c913f0a9907556d70a9"
-  integrity sha512-tFw6Ie2+YrMgCZoJ6A/oTP+JDfPefoDnLK+8VPOW6sIFEa8Ynb/Leo7nKrhVlrhSZFMzMThPp3ze0LzSr1Wx4g==
+"@types/istanbul-lib-hook@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/istanbul-lib-hook/-/istanbul-lib-hook-2.0.0.tgz#cea93cc9a7dca3cc90a60014681864bff388505c"
+  integrity sha512-oLyfxlUZBulfyyj4m3syAd43igzmkM0N5FBQ+qIoQlOaEwbgA52hQ4oIVdUsaEoqKV+PDlXZ/XG+gT1s0dH9GQ==
 
 "@types/istanbul-lib-instrument@^1.7.2":
   version "1.7.3"
