@@ -2,6 +2,7 @@ node_modules/
 build/
 coverage/
 tmp/
+.rebox/
 .npmrc
 .DS_Store
 *.log

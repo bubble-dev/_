@@ -103,7 +103,7 @@ export const buildXRayIos = () =>
       const { buildIos } = await import('@rebox/ios')
 
       await buildIos({
-        entryPointPath: '@x-ray/native-screenshots/build/App',
+        entryPointPath: '@x-ray/native-screenshots/build/node/App',
         outputPath: '.rebox/ios/',
         osVersion: 'latest',
         platformName: 'iOS Simulator',

@@ -25,8 +25,8 @@ export const buildIos = async (options: TBuildIosOptions) => {
   await execa(
     'xcodebuild',
     [
-      '-workspace',
-      'node_modules/@rebox/ios/ios/rebox.xcodeproj/project.xcworkspace',
+      '-project',
+      'node_modules/@rebox/ios/ios/rebox.xcodeproj',
       '-scheme',
       'rebox',
       '-configuration',
