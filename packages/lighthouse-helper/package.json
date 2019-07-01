@@ -6,6 +6,9 @@
   "main": "src/index.js",
   "license": "MIT",
   "dependencies": {
-    "lighthouse": "^5.1.0"
+    "axios": "^0.19.0",
+    "chalk": "^2.4.2",
+    "lighthouse": "^5.1.0",
+    "puppeteer": "^1.18.1"
   }
 }
