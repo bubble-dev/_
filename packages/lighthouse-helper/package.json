@@ -1,0 +1,7 @@
+{
+  "name": "lighthouse-helper",
+  "version": "0.0.1",
+  "description": "A Lighthouse helper to integrate against CI and run performance tests with",
+  "main": "src/index.js",
+  "license": "MIT"
+}
