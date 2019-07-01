@@ -30,7 +30,7 @@
     "packages/tsfn",
     "packages/typeon",
     "packages/x-ray/*",
-    "packages/lighthouse-helper/*"
+    "packages/lighthouse-helper"
   ],
   "devDependencies": {
     "@babel/core": "^7.4.0",
