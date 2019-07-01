@@ -5,21 +5,30 @@
     "packages/auto/*",
     "packages/autoprops",
     "packages/bubble-dev/*",
+    "packages/codecov-lite",
     "packages/colorido",
+    "packages/copie",
+    "packages/dleet",
+    "packages/ekst",
     "packages/elegir",
     "packages/fantasy-color/*",
     "packages/fixdeps",
     "packages/lada/*",
     "packages/math-playground",
+    "packages/mocku",
+    "packages/move-path",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
+    "packages/spyfn",
     "packages/spyt",
+    "packages/start/*",
     "packages/stili",
     "packages/syntx",
     "packages/tsfn",
+    "packages/typeon",
     "packages/x-ray/*"
   ],
   "devDependencies": {
@@ -34,6 +43,9 @@
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0",
     "typescript": "bubble-dev/TypeScript#ext-3.5.2"
+  },
+  "scripts": {
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",
