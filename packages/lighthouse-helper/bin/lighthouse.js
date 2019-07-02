@@ -13,6 +13,9 @@ import {
   generateDigests,
 } from './lighthouse-utils'
 
+// TODO: Make it possible to read from a lighthouse.config.js file to get some configs
+// such as baseURL
+
 const useHeadless = typeof process.argv.find((arg) => arg === '--headfull') === 'undefined'
 const isLocalRun = typeof process.argv.find((arg) => arg === '--local') !== 'undefined'
 

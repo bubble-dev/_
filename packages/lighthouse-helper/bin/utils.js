@@ -20,6 +20,7 @@ export const executeWithMessage = (message, command) => async () => {
   return { stdout, stderr }
 }
 
+// TODO: Make this part of the lighthouse.config.js
 export const config = {
   BITBUCKET_URL: '',
   TEAM_PROJECT_NAME: '',

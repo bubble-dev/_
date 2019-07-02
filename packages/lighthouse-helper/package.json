@@ -10,6 +10,7 @@
     "chalk": "^2.4.2",
     "chrome-launcher": "^0.10.7",
     "lighthouse": "^5.1.0",
-    "puppeteer": "^1.18.1"
+    "puppeteer": "^1.18.1",
+    "yargs": "^13.2.4"
   }
 }
