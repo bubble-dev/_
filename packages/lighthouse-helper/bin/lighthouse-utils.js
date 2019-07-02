@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
-import fs from 'fs'
-import { error } from './utils'
+const fs = require('fs')
+const { error } = require('./utils')
 
 const baseDir = __dirname.replace(/bin\/?$/g, '')
 
-export const getReportFolder = (hash) => `${baseDir}reports/automated-lighthouse-${hash}`.replace('\n', '')
+const getReportFolder = (hash) => `${baseDir}reports/automated-lighthouse-${hash}`.replace('\n', '')
 
-export const getReportPath = (dirName, format, fileName = 'report') => `${dirName}/${fileName}.${format}`
+const getReportPath = (dirName, format, fileName = 'report') => `${dirName}/${fileName}.${format}`
 
 /**
  * Function that will generate the report based on the results for the lighthouse run
@@ -14,7 +14,7 @@ export const getReportPath = (dirName, format, fileName = 'report') => `${dirNam
  * @param { report: object | string | array, lhr: object } results For multi format run on lighthnouse it will be an array with both formats
  * @param string reportFormat the format informed by the CLI command
  */
-export const generateReportForHash = (chrome, results, reportFormat) => ({ stdout: hash, fileName }) => {
+const generateReportForHash = (chrome, results, reportFormat) => ({ stdout: hash, fileName }) => {
   const dirName = getReportFolder(hash.replace('\n', ''))
   const reportFile = getReportPath(dirName, reportFormat, fileName)
   let JSON = results.report
@@ -47,7 +47,7 @@ export const generateReportForHash = (chrome, results, reportFormat) => ({ stdou
  * @param { regressions: RegressionDigest, improvements: ImprovementDigest }} digest
  * @param string workingBranch
  */
-export function generateDigests(digest, workingBranch) {
+function generateDigests(digest, workingBranch) {
   const digests = Object.keys(digest)
 
   return Promise.all(digests.map((digestName) => {
@@ -58,4 +58,11 @@ export function generateDigests(digest, workingBranch) {
 
     return generateReportForHash(undefined, { report: JSON.stringify(digest[digestName], null, 2) }, 'json')({ stdout: workingBranch, fileName: `${digestName}-digest` })
   }))
+}
+
+module.exports = {
+  getReportFolder,
+  getReportPath,
+  generateReportForHash,
+  generateDigests,
 }

@@ -1,33 +1,88 @@
 /* eslint-disable import/no-extraneous-dependencies, import/no-dynamic-require */
-import lighthouse from 'lighthouse'
-import { defaultSettings } from 'lighthouse/lighthouse-core/config/constants'
-import chromeLauncher from 'chrome-launcher'
-import puppetteer from 'puppeteer'
-import { green, yellow } from 'chalk'
-import lighthouseLogger from 'lighthouse-logger'
-import { log, error, executeWithMessage } from './utils'
-import {
+const lighthouse = require('lighthouse')
+const { defaultSettings } = require('lighthouse/lighthouse-core/config/constants')
+const chromeLauncher = require('chrome-launcher')
+const puppetteer = require('puppeteer')
+const { green, yellow } = require('chalk')
+const lighthouseLogger = require('lighthouse-logger')
+const y = require('yargs')
+const { log, error, executeWithMessage } = require('./utils')
+const {
   getReportFolder,
   getReportPath,
   generateReportForHash,
   generateDigests,
-} from './lighthouse-utils'
+} = require('./lighthouse-utils')
 
 // TODO: Make it possible to read from a lighthouse.config.js file to get some configs
 // such as baseURL
+const argv = y
+  .scriptName('lighthouse-helper')
+  .help('help')
+  .version()
+  .showHelpOnFail(false, 'Specify --help for available options')
 
-const useHeadless = typeof process.argv.find((arg) => arg === '--headfull') === 'undefined'
-const isLocalRun = typeof process.argv.find((arg) => arg === '--local') !== 'undefined'
+  .usage('lighthouse-helper <url> <options>')
+  .example(
+    'lighthouse <url> --use-headless=false', 'Opens a headfull chrome instance to display the lighthouse test being ran against the given url'
+  )
+  .config('config')
 
-const baseURL = process.argv.find((arg) => arg.indexOf('url=') !== -1)
-  ? process.argv.find((arg) => arg.indexOf('url=') !== -1).split('=')[1]
-  : ''
+  // List of options
+  .group(
+    [
+      'use-headless',
+      'local-run',
+      'update-remote',
+      'benchmark',
+    ],
+    'Configuration:'
+  )
+  .describe({
+    'use-headless': 'Choose between headless or headfull run',
+    'local-run': 'Indicates that the tool is making a "local" run on your computer. This is a safety mechanism to avoid unintended remote updates',
+    'update-remote': 'This flag will indicate that after the lighthouse run is performed, the script should update the remote repo with the metrics gathered on a report',
+    benchmark: 'Benchmark mode, it will perform a full lighthouse run and compare against a given rmeote HEAD',
+  })
+// set aliases
+  .alias({ 'local-run': 'L' })
 
-const updateMaster = typeof process.argv.find((arg) => arg === '--update-master') !== 'undefined'
+// boolean values
+  .boolean([
+    'use-headless',
+    'update-remote',
+  ])
+  .string('benchmark')
 
-const benchmark = process.argv.find((arg) => arg.indexOf('benchmark') !== -1)
-  ? process.argv.find((arg) => arg.indexOf('benchmark') !== -1).split('=')[1] || 'origin/master'
-  : false
+// default values
+  .default('use-headless', true)
+  .default('update-remote', false)
+  .default('benchmark', 'origin/master')
+  .check((argv) => {
+    // Lighthouse Helper won't throw if we have a config file with an URL in it
+    const hasConfigURL = argv.config && argv.config.url
+
+    if (hasConfigURL) {
+      return true
+    } else if (argv._.length > 0) {
+      return true
+    }
+
+    throw new Error('Please provide a url')
+  })
+  .epilogue(
+    'For more information on Lighthouse Helper, see https://github.com/bubble-dev/_/tree/master/packages/lighthouse-helper.'
+  )
+  .wrap(y.terminalWidth())
+  .argv
+
+const {
+  _: [baseURL],
+  'use-headless': useHeadless,
+  'local-run': isLocalRun,
+  'update-remote': updateMaster,
+  benchmark,
+} = argv
 
 const baseDir = __dirname.replace(/bin\/?$/g, '')
 
