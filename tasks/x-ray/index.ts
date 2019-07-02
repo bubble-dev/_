@@ -7,6 +7,7 @@ import remove from '@start/plugin-remove'
 import { build } from '@bubble-dev/start-preset'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
+import xRayIosScreenshots from './plugins/ios-screenshots-plugin'
 import xRaySnapshots from './plugins/snapshots-plugin'
 import withChromium from './plugins/with-chromium'
 import waitForChromium from './plugins/wait-for-chromium'
@@ -94,6 +95,13 @@ export const checkFirefoxScreenshots = (component = '**') =>
     )
   )
 
+export const checkIosScreenshots = (component = '**') =>
+  sequence(
+    find(`packages/${component}/test/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayIosScreenshots
+  )
+
 export const buildXRayIos = () =>
   sequence(
     build('x-ray/native-screenshots'),
@@ -103,11 +111,12 @@ export const buildXRayIos = () =>
       const { buildIos } = await import('@rebox/ios')
 
       await buildIos({
-        entryPointPath: '@x-ray/native-screenshots/build/node/App',
+        entryPointPath: '@x-ray/native-screenshots/build/native/App',
         outputPath: '.rebox/ios/',
         osVersion: 'latest',
         platformName: 'iOS Simulator',
-        appName: 'Sandbox',
+        appName: 'X-Ray',
+        bundleId: 'org.reactjs.native.x-ray',
       })
     })
   )

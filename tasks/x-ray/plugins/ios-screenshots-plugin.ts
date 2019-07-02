@@ -1,7 +1,7 @@
 /* eslint-disable import/named */
 import plugin, { StartFilesProps } from '@start/plugin'
 
-const APP_PATH = 'tasks/x-ray/react-native/ios/app/Debug-iphonesimulator/xray.app'
+const APP_PATH = '.rebox/ios/X-Ray.app'
 
 type TDeviceList = {
   devices: {
@@ -43,7 +43,7 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
   }
 
   const { default: execa } = await import('execa')
-  const { buildIos } = await import('@rebox/ios')
+  const { buildJsBundle } = await import('@rebox/ios')
   const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
   const deviceInfo = await getDeviceInfo()
 
@@ -54,16 +54,12 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
   logMessage(`device id ${deviceInfo.udid}`)
 
   await prepareFiles(files.map((file) => file.path))
-
-  await buildIos({
-    entryPointPath: '@x-ray/native-screenshots/build/App',
-    outputPath: '.rebox/ios/',
-    osVersion: 'latest',
-    platformName: 'iOS Simulator',
-    appName: 'X-Ray',
+  await buildJsBundle({
+    entryPointPath: '@x-ray/native-screenshots/build/native/App',
+    outputPath: APP_PATH,
   })
 
-  logMessage('x-ray app is ready')
+  logMessage('x-ray bundle is ready')
 
   try {
     if (deviceInfo.state !== 'Booted') {

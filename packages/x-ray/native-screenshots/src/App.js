@@ -8,7 +8,7 @@ const hasOwnWidthStyles = {
   alignItems: 'flex-start',
 }
 
-class App extends Component {
+export class App extends Component {
   constructor(...args) {
     super(...args)
 
@@ -22,14 +22,13 @@ class App extends Component {
     this.onCapture = this.onCapture.bind(this)
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     try {
-      const { path, content } = files[0]()
-      const { default: { default: fixture } } = await content
+      const { path, content } = files[0]
 
       this.setState(() => ({
         path,
-        fixture,
+        fixture: content,
       }))
     } catch (e) {
       console.log(e)
@@ -61,14 +60,13 @@ class App extends Component {
       }))
     } else if (this.state.fileIndex < files.length - 1) {
       const nextFileIndex = this.state.fileIndex + 1
-      const { path, content } = files[nextFileIndex]()
-      const { default: { default: fixture } } = await content
+      const { path, content } = files[nextFileIndex]
 
       this.setState(() => ({
         elementIndex: 0,
         fileIndex: nextFileIndex,
         path,
-        fixture,
+        fixture: content,
       }))
     } else {
       // finish
@@ -82,11 +80,12 @@ class App extends Component {
 
   render() {
     const { fixture, elementIndex, fileIndex } = this.state
-    const { options } = fixture[elementIndex]
 
     if (fixture === null) {
       return null
     }
+
+    const { options } = fixture[elementIndex]
 
     return (
       <View style={options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
@@ -111,5 +110,3 @@ class App extends Component {
     )
   }
 }
-
-AppRegistry.registerComponent('xray', () => App)

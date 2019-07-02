@@ -6,6 +6,8 @@ import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { makeLogger, logTotalResults } from '@x-ray/common-utils'
 import { checkScreenshot } from '@x-ray/screenshot-utils'
+import { TarFs, TTarFs } from '@x-ray/next'
+import { isUndefined } from 'tsfn'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -15,8 +17,12 @@ const runServer = (options: TOptions) => new Promise<() => Promise<void>>((serve
   const screenshotsPromise = new Promise<void>((screenshotsResolve, screenshotsReject) => {
     const logger = makeLogger()
     const existingDirs: string[] = []
+
+    let currentTarPath: string
+    let currentTar: TTarFs
+
     const server = http
-      .createServer((req, res) => {
+      .createServer(async (req, res) => {
         if (req.method === 'POST' && req.url === '/upload') {
           let body = ''
 
@@ -26,9 +32,20 @@ const runServer = (options: TOptions) => new Promise<() => Promise<void>>((serve
             })
             .on('end', async () => {
               const { data, path: filePath, name } = JSON.parse(body)
-              const screenshotsDir = path.join(path.dirname(filePath), '__x-ray__', `${options.platform}-screenshots`)
-              const screenshotPath = path.join(screenshotsDir, `${name}.png`)
+              const screenshotsDir = path.join(path.dirname(filePath), '__x-ray__')
+              const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
+              const screenshotName = path.join(`${name}.png`)
               const screenshot = Buffer.from(data, 'base64')
+
+              if (currentTarPath !== screenshotsTarPath) {
+                currentTarPath = screenshotsTarPath
+
+                if (!isUndefined(currentTar)) {
+                  await currentTar.save()
+                }
+
+                currentTar = await TarFs(currentTarPath)
+              }
 
               if (!shouldBailout) {
                 try {
@@ -42,7 +59,7 @@ const runServer = (options: TOptions) => new Promise<() => Promise<void>>((serve
                 }
               }
 
-              const result = await checkScreenshot(screenshot, screenshotPath, shouldBailout)
+              const result = await checkScreenshot(screenshot, currentTar, screenshotName, shouldBailout)
 
               logger.log(result)
 
@@ -62,6 +79,11 @@ const runServer = (options: TOptions) => new Promise<() => Promise<void>>((serve
 
           if (req.url === '/done') {
             logTotalResults([logger.totalResult()])
+
+            if (!isUndefined(currentTar)) {
+              await currentTar.save()
+            }
+
             server.close(() => {
               screenshotsResolve()
             })

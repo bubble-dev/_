@@ -4,6 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
+  "react-native": "src/App.js",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
@@ -16,7 +17,7 @@
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
-    "react-native-view-shot": "github:batata-frita/react-native-view-shot#semver:^0.1.1"
+    "react-native-view-shot": "^2.6.0"
   },
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",

@@ -13,11 +13,45 @@ const pReadDir = promisify(readdir)
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
+export type TBuildJsBundleOptions = {
+  entryPointPath: string,
+  outputPath: string,
+}
+
+export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBundleOptions) => {
+  await execa(
+    'haul',
+    [
+      'bundle',
+      '--config',
+      require.resolve('./haul.config.js'),
+      '--platform',
+      'ios',
+      '--dev',
+      'false',
+      '--minify',
+      'false',
+      '--progress',
+      'none',
+      '--bundle-output',
+      path.join(outputPath, 'main.jsbundle'),
+    ],
+    {
+      stderr: process.stderr,
+      env: {
+        FORCE_COLOR: '1',
+        REBOX_ENTRY_POINT: entryPointPath,
+      },
+    }
+  )
+}
+
 export type TBuildIosOptions = {
   entryPointPath: string,
   osVersion: string,
   platformName: string,
   appName: string,
+  bundleId: string,
   outputPath: string,
 }
 
@@ -74,32 +108,11 @@ export const buildIos = async (options: TBuildIosOptions) => {
 
   plist.CFBundleDisplayName = options.appName
   plist.CFBundleName = options.appName
+  plist.CFBundleIdentifier = options.bundleId
 
   await pPlistWrite(plistPath, plist)
-
-  await execa(
-    'haul',
-    [
-      'bundle',
-      '--config',
-      require.resolve('./haul.config.js'),
-      '--platform',
-      'ios',
-      '--dev',
-      'false',
-      '--minify',
-      'true',
-      '--progress',
-      'none',
-      '--bundle-output',
-      path.join(newAppPath, 'main.jsbundle'),
-    ],
-    {
-      stderr: process.stderr,
-      env: {
-        FORCE_COLOR: '1',
-        REBOX_ENTRY_POINT: options.entryPointPath,
-      },
-    }
-  )
+  await buildJsBundle({
+    entryPointPath: options.entryPointPath,
+    outputPath: newAppPath,
+  })
 }
