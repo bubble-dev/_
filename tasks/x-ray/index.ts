@@ -120,3 +120,13 @@ export const buildXRayIos = () =>
       })
     })
   )
+
+export const tmp = () =>
+  plugin('tmp', () => async () => {
+    const { linkLibIos } = await import('rn-link')
+
+    await linkLibIos(
+      'packages/rebox/ios/ios',
+      'node_modules/react-native-view-shot/ios/RNViewShot.xcodeproj/project.pbxproj'
+    )
+  })

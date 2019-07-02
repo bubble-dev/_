@@ -16,6 +16,7 @@
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
+    "packages/rn-link",
     "packages/spyt",
     "packages/stili",
     "packages/syntx",

@@ -1,0 +1,1 @@
+export { linkLibIos } from './ios'
