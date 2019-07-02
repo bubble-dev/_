@@ -1,0 +1,184 @@
+{
+  "data": [
+    {
+      "date": "Mon Feb 11 15:29:44 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1733.912109375,
+      "version": "6.6.8",
+      "main_dependency_load_time": 207.901,
+      "setup_time": 1.101,
+      "localization_load_time": 187.201
+    },
+    {
+      "date": "Tue Feb 12 10:08:00 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1734.0693359375,
+      "version": "6.6.9",
+      "main_dependency_load_time": 91.101,
+      "setup_time": 2,
+      "localization_load_time": 92
+    },
+    {
+      "date": "Wed Feb 13 08:56:02 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1733.927734375,
+      "version": "6.6.11",
+      "main_dependency_load_time": 81.1,
+      "setup_time": 1.1,
+      "localization_load_time": 62.5
+    },
+    {
+      "date": "Fri Feb 15 09:22:31 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1732.6318359375,
+      "version": "6.6.12",
+      "main_dependency_load_time": 90.3,
+      "setup_time": 1.101,
+      "localization_load_time": 97.899
+    },
+    {
+      "date": "Tue Feb 19 16:34:54 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1697.5380859375,
+      "version": "6.6.13",
+      "main_dependency_load_time": 116.1,
+      "setup_time": 1.1,
+      "localization_load_time": 128
+    },
+    {
+      "date": "Mon Feb 25 07:54:18 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 1701.74609375,
+      "version": "6.6.14",
+      "main_dependency_load_time": 110.601,
+      "setup_time": 1,
+      "localization_load_time": 89.4
+    },
+    {
+      "date": "Fri Mar 1 13:54:14 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2237.4384765625,
+      "version": "6.6.15",
+      "main_dependency_load_time": 399.1,
+      "setup_time": 0.999,
+      "localization_load_time": 442.8
+    },
+    {
+      "date": "Fri Mar 1 14:24:47 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2237.236328125,
+      "version": "6.7.0",
+      "main_dependency_load_time": 112,
+      "setup_time": 1.1,
+      "localization_load_time": 95.7
+    },
+    {
+      "date": "Tue Mar 5 15:46:26 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2238.7587890625,
+      "version": "6.7.1",
+      "main_dependency_load_time": 455.6,
+      "setup_time": 1.2,
+      "localization_load_time": 513.6
+    },
+    {
+      "date": "Tue Mar 12 17:06:37 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2240.681640625,
+      "version": "6.7.2",
+      "main_dependency_load_time": 192.301,
+      "setup_time": 1.099,
+      "localization_load_time": 314.701
+    },
+    {
+      "date": "Thu Mar 14 10:32:06 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2241.59765625,
+      "version": "6.7.3",
+      "main_dependency_load_time": 101.8,
+      "setup_time": 1.6,
+      "localization_load_time": 53.4
+    },
+    {
+      "date": "Mon Mar 18 12:25:27 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2229.853515625,
+      "version": "6.7.4",
+      "main_dependency_load_time": 236,
+      "setup_time": 0.9,
+      "localization_load_time": 253.9
+    },
+    {
+      "date": "Mon Mar 25 12:45:54 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2339.8447265625,
+      "version": "6.8.1-0",
+      "main_dependency_load_time": 186.2,
+      "setup_time": 1.1,
+      "localization_load_time": 147.2
+    },
+    {
+      "date": "Mon Apr 1 09:16:58 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2342.5380859375,
+      "version": "6.8.1",
+      "main_dependency_load_time": 652.401,
+      "setup_time": 1.001,
+      "localization_load_time": 346.299
+    },
+    {
+      "date": "Tue Apr 2 12:29:38 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2342.697265625,
+      "version": "6.9.0",
+      "main_dependency_load_time": 257.6,
+      "setup_time": 1.3,
+      "localization_load_time": 317.5
+    },
+    {
+      "date": "Wed Apr 3 18:34:03 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2344.1171875,
+      "version": "6.9.1",
+      "main_dependency_load_time": 201.8,
+      "setup_time": 2.3,
+      "localization_load_time": 393.7
+    },
+    {
+      "date": "Fri Apr 5 09:21:30 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2343.4013671875,
+      "version": "6.9.2",
+      "main_dependency_load_time": 250.1,
+      "setup_time": 1,
+      "localization_load_time": 340.6
+    },
+    {
+      "date": "Mon Apr 8 14:35:04 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2345.0546875,
+      "version": "6.9.4-0",
+      "main_dependency_load_time": 321.1,
+      "setup_time": 1.101,
+      "localization_load_time": 302.9
+    },
+    {
+      "date": "Tue Apr 9 12:48:49 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2343.865234375,
+      "version": "6.9.4",
+      "main_dependency_load_time": 310.5,
+      "setup_time": 1,
+      "localization_load_time": 356.1
+    },
+    {
+      "date": "Tue Apr 9 13:50:09 2019 +0000",
+      "moduleWeight": 279.05,
+      "total-weight": 2343.6142578125,
+      "version": "6.9.5",
+      "main_dependency_load_time": 412.5,
+      "setup_time": 4.9,
+      "localization_load_time": 80.001
+    }
+  ]
+}
