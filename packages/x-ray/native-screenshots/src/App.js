@@ -5,6 +5,7 @@ import files from './files' // eslint-disable-line
 
 const defaultStyles = {}
 const hasOwnWidthStyles = {
+  flexDirection: 'row',
   alignItems: 'flex-start',
 }
 

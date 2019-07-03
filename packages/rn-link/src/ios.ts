@@ -9,7 +9,8 @@ export type TLinkDependencyIos = {
 export const linkDependencyIos = ({ projectPath, dependencyPath }: TLinkDependencyIos) => {
   const projectConfig = getProjectConfig(projectPath, {})
   const depConfig = getDepConfig(dependencyPath, {})
-  const { register } = linkConfig()
+  const { register, unregister } = linkConfig()
 
+  unregister(null, depConfig, projectConfig, [])
   register(null, depConfig, null, projectConfig)
 }

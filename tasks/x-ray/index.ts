@@ -8,6 +8,7 @@ import { build } from '@bubble-dev/start-preset'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
 import xRayIosScreenshots from './plugins/ios-screenshots-plugin'
+import xRayAndroidScreenshots from './plugins/android-screenshots-plugin'
 import xRaySnapshots from './plugins/snapshots-plugin'
 import withChromium from './plugins/with-chromium'
 import waitForChromium from './plugins/wait-for-chromium'
@@ -102,9 +103,16 @@ export const checkIosScreenshots = (component = '**') =>
     xRayIosScreenshots
   )
 
+export const checkAndroidScreenshots = (component = '**') =>
+  sequence(
+    find(`packages/${component}/test/screenshots.tsx`),
+    env({ NODE_ENV: 'production' }),
+    xRayAndroidScreenshots
+  )
+
 export const buildXRayIos = () =>
   sequence(
-    build('x-ray/native-screenshots'),
+    // build('x-ray/native-screenshots'),
     find('.rebox/ios/'),
     remove,
     plugin('link', () => async () => {
@@ -116,22 +124,22 @@ export const buildXRayIos = () =>
       })
     }),
     plugin('build', () => async () => {
-      const { buildIos } = await import('@rebox/ios')
+      const { buildDebug } = await import('@rebox/ios')
 
-      await buildIos({
-        entryPointPath: '@x-ray/native-screenshots/build/native/App',
+      await buildDebug({
+        // entryPointPath: '@x-ray/native-screenshots/build/native/App',
         outputPath: '.rebox/ios/',
         osVersion: 'latest',
         platformName: 'iOS Simulator',
         appName: 'X-Ray',
-        bundleId: 'org.reactjs.native.x-ray',
+        appId: 'org.bubble-dev.xray',
       })
     })
   )
 
 export const buildXRayAndroid = () =>
   sequence(
-    build('x-ray/native-screenshots'),
+    // build('x-ray/native-screenshots'),
     find('.rebox/android/'),
     remove,
     plugin('link', () => async () => {
@@ -144,12 +152,12 @@ export const buildXRayAndroid = () =>
       })
     }),
     plugin('build', () => async () => {
-      const { buildAndroid } = await import('@rebox/android')
+      const { buildDebug } = await import('@rebox/android')
 
-      await buildAndroid({
-        entryPointPath: '@x-ray/native-screenshots/build/native/App',
+      await buildDebug({
         outputPath: '.rebox/android/',
-        appName: 'rebox',
+        appName: 'X-Ray',
+        appId: 'org.bubble_dev.xray',
       })
     })
   )

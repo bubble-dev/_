@@ -46,16 +46,16 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
   )
 }
 
-export type TBuildIosOptions = {
+export type TBuildReleaseIosOptions = {
   entryPointPath: string,
   osVersion: string,
   platformName: string,
   appName: string,
-  bundleId: string,
+  appId: string,
   outputPath: string,
 }
 
-export const buildIos = async (options: TBuildIosOptions) => {
+export const buildRelease = async (options: TBuildReleaseIosOptions) => {
   await execa(
     'xcodebuild',
     [
@@ -108,11 +108,77 @@ export const buildIos = async (options: TBuildIosOptions) => {
 
   plist.CFBundleDisplayName = options.appName
   plist.CFBundleName = options.appName
-  plist.CFBundleIdentifier = options.bundleId
+  plist.CFBundleIdentifier = options.appId
 
   await pPlistWrite(plistPath, plist)
   await buildJsBundle({
     entryPointPath: options.entryPointPath,
     outputPath: newAppPath,
   })
+}
+
+export type TBuildDebugIosOptions = {
+  osVersion: string,
+  platformName: string,
+  appName: string,
+  appId: string,
+  outputPath: string,
+}
+
+export const buildDebug = async (options: TBuildDebugIosOptions) => {
+  await execa(
+    'xcodebuild',
+    [
+      '-project',
+      'node_modules/@rebox/ios/ios/rebox.xcodeproj',
+      '-scheme',
+      'rebox',
+      '-configuration',
+      'Debug',
+      'CODE_SIGN_IDENTITY=""',
+      'CODE_SIGNING_ALLOWED="NO"',
+      '-destination',
+      `generic/platform=${options.platformName},OS=${options.osVersion}`,
+      'clean',
+      'build',
+    ],
+    {
+      stderr: process.stderr,
+      env: {
+        FORCE_COLOR: '1',
+      },
+    }
+  )
+
+  // TODO: https://stackoverflow.com/a/48889760
+  const derivedDataPath = path.join(os.homedir(), 'Library', 'Developer', 'Xcode', 'DerivedData')
+  const derivedDataFiles = await pReadDir(derivedDataPath)
+  const derivedBuildPath = derivedDataFiles.find((file) => file.startsWith('rebox-'))
+
+  if (isUndefined(derivedBuildPath)) {
+    throw new Error('Unable to find Xcode product build directory')
+  }
+
+  const productsPath = path.join(derivedDataPath, derivedBuildPath, 'Build', 'Products')
+  const productsFiles = await pReadDir(productsPath)
+  const productReleaseName = productsFiles.find((file) => file.startsWith('Debug-'))
+
+  if (isUndefined(productReleaseName)) {
+    throw new Error('Unable to find Xcode product release directory')
+  }
+
+  const originalAppPath = path.join(productsPath, productReleaseName, 'rebox.app')
+  const newAppPath = path.join(options.outputPath, `${options.appName}.app`)
+
+  await makeDir(newAppPath)
+  await cpy(`${originalAppPath}/**/*`, newAppPath)
+
+  const plistPath = path.join(newAppPath, 'Info.plist')
+  const plist = await pPlistRead(plistPath)
+
+  plist.CFBundleDisplayName = options.appName
+  plist.CFBundleName = options.appName
+  plist.CFBundleIdentifier = options.appId
+
+  await pPlistWrite(plistPath, plist)
 }

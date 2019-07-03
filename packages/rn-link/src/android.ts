@@ -10,7 +10,8 @@ export type TLinkDependencyAndroid = {
 export const linkDependencyAndroid = ({ projectPath, dependencyName, dependencyPath }: TLinkDependencyAndroid) => {
   const projectConfig = getProjectConfig(projectPath, {})
   const depConfig = getDepConfig(dependencyPath, {})
-  const { register } = linkConfig()
+  const { register, unregister } = linkConfig()
 
+  unregister(dependencyName, depConfig, projectConfig)
   register(dependencyName, depConfig, {}, projectConfig)
 }
