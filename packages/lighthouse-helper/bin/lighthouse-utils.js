@@ -14,7 +14,7 @@ const getReportPath = (dirName, format, fileName = 'report') => `${dirName}/${fi
  * @param { report: object | string | array, lhr: object } results For multi format run on lighthnouse it will be an array with both formats
  * @param string reportFormat the format informed by the CLI command
  */
-const generateReportForHash = (chrome, results, reportFormat) => ({ stdout: hash, fileName }) => {
+const generateReportForHash = (chrome, results, reportFormat) => ({ hash, fileName }) => {
   const dirName = getReportFolder(hash.replace('\n', ''))
   const reportFile = getReportPath(dirName, reportFormat, fileName)
   let JSON = results.report

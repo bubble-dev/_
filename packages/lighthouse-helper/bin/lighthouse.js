@@ -92,6 +92,7 @@ const PACKAGE_VERSION = packageJson.version
 
 const reportFormat = useHeadless ? 'json' : 'html'
 
+// TODO: Allow for user to provide perfRun setup in config file
 const perfRun = {
   extends: 'lighthouse:default',
   settings: {
@@ -128,6 +129,9 @@ const getValue = (reportData, key) => {
   return reportData.audits[key].numericValue || reportData.audits[key].rawValue
 }
 
+const revHashPromise = executeWithMessage(undefined, 'git rev-list origin/master..HEAD')()
+  .then(({ stdout: revlist }) => (revlist.replace('\n', '') === '' ? 'master' : revlist.split('\n')[0]))
+
 function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
   return chromeLauncher.launch({ chromeFlags: opts.chromeFlags, chromePath: puppetteer.executablePath() }).then((chrome) => {
     opts.port = chrome.port
@@ -137,14 +141,14 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
       // https://github.com/GoogleChrome/lighthouse/blob/master/typings/lhr.d.ts
       // use results.report for the HTML/JSON/CSV output as a string
       // use results.artifacts for the trace/screenshots/other specific case you need (rarer)
+
       if (benchmark) {
-        return executeWithMessage(undefined, 'git rev-list origin/master..HEAD')()
-          .then(({ stdout: revlist }) => (revlist.replace('\n', '') === '' ? 'master' : revlist.split('\n')[0]))
-          .then((currentBranch) => {
-            if (!isLocalRun && benchmark === 'origin/master' && currentBranch === 'master') {
+        return revHashPromise
+          .then((hash) => {
+            if (!isLocalRun && benchmark === 'origin/master' && hash === 'master') {
               log('running on master, benchmarking is skipped', yellow)
 
-              return generateReportForHash(chrome, results, reportFormat)({ stdout: currentBranch })
+              return generateReportForHash(chrome, results, reportFormat)({ hash })
             }
 
             return executeWithMessage(undefined, `git rev-parse --verify ${benchmark}`)()
@@ -308,26 +312,25 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                   error(err)
                 }
 
-                const reportFolder = getReportFolder(currentBranch)
+                const reportFolder = getReportFolder(hash)
 
                 return executeWithMessage(undefined, `yarn rimraf ${reportFolder} && mkdir ${reportFolder}`)()
                   .then(
-                    () => generateDigests({ regressions: regressionDigest, improvements: improvementDigest }, currentBranch)
+                    () => generateDigests({ regressions: regressionDigest, improvements: improvementDigest }, hash)
                       .then(() => (
-                        generateReportForHash(chrome, results, reportFormat)({ stdout: currentBranch })
+                        generateReportForHash(chrome, results, reportFormat)({ hash })
                       ))
                   )
               })
           })
       }
 
-      return executeWithMessage(undefined, 'git rev-list origin/master..HEAD')()
-        .then(({ stdout: revlist }) => ({ stdout: revlist.replace('\n', '') === '' ? 'master' : revlist.split('\n')[0] }))
-        .then(generateReportForHash(chrome, results, reportFormat))
+      return revHashPromise.then((hash) => generateReportForHash(chrome, results, reportFormat)({ hash }))
     })
   })
 }
 
+// TODO: Allow output, extraHeaders and chrome flags to be overridable from the comming config.json
 const opts = {
   chromeFlags: useHeadless
     ? [
@@ -343,26 +346,18 @@ const opts = {
     'html',
   ],
 }
+
 lighthouseLogger.setLevel(opts.logLevel)
 
-executeWithMessage('Starting lighthouse report', 'git rev-list origin/master..HEAD')()
-  .then(({ stdout: revlist }) => (revlist.replace('\n', '') === '' ? 'master' : revlist.split('\n')[0]))
+revHashPromise
   .then((hash) => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { config } = require('./utils')
-
     if (!isLocalRun && hash === 'master' && !updateMaster) {
-      log('Skipping lighthouse report on master merge')
+      log('Skipping lighthouse report')
 
-      return true
+      return false
     }
 
-    const lighthousePromise = launchChromeAndRunLighthouse(
-      baseURL === ''
-        ? `${config.BITBUCKET_URL}/pages/${config.TEAM_PROJECT_NAME}/${config.LIGHTHOUSE_APP_REPO_NAME}/${hash.replace('\n', '')}/browse/lightouse-base-app/build/index.html`
-        : baseURL,
-      opts
-    )
+    const lighthousePromise = launchChromeAndRunLighthouse(baseURL, opts)
       .then((result) => (
         useHeadless
           ? log(`Report saved to ${result}`, green)
@@ -373,22 +368,7 @@ executeWithMessage('Starting lighthouse report', 'git rev-list origin/master..HE
       ? lighthousePromise
       : lighthousePromise
         .then(() => {
-          if (hash !== 'master') {
-            return executeWithMessage('Switching to lighthouse-branch branch', `git fetch --all && git checkout -B lighthouse-base lighthouse-base/${hash}`)()
-              .then(executeWithMessage('Sending report to lighthouse-base-app remote', `git add reports/* && git commit -m "Report files for ${hash}" && git push lighthouse-base HEAD:${hash}`))
-              .then(executeWithMessage(undefined, 'git checkout -'))
-          }
-
-          return true
-        })
-        .then(() => {
-          if (updateMaster) {
-            return executeWithMessage(undefined, 'yarn build')()
-              .then(executeWithMessage('Generating webpack stats', 'yarn generate-stats'))
-              .then(executeWithMessage('Updating master report file', 'git add . && git commit -m "RELEASE: Update lighthouse report and webpack stats 🤖" && git push origin HEAD:master'))
-          }
-
-          log('Not on master, skipping commit of report')
+          // TODO: get the report and push to the configured bucket/remote with a specific hash of the current branch
 
           return true
         })
