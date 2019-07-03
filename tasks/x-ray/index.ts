@@ -107,7 +107,15 @@ export const buildXRayIos = () =>
     build('x-ray/native-screenshots'),
     find('.rebox/ios/'),
     remove,
-    plugin('ios', () => async () => {
+    plugin('link', () => async () => {
+      const { linkDependencyIos } = await import('rn-link')
+
+      linkDependencyIos({
+        projectPath: 'packages/rebox/ios/ios',
+        dependencyPath: 'node_modules/react-native-view-shot/ios',
+      })
+    }),
+    plugin('build', () => async () => {
       const { buildIos } = await import('@rebox/ios')
 
       await buildIos({
@@ -121,12 +129,27 @@ export const buildXRayIos = () =>
     })
   )
 
-export const tmp = () =>
-  plugin('tmp', () => async () => {
-    const { linkLibIos } = await import('rn-link')
+export const buildXRayAndroid = () =>
+  sequence(
+    build('x-ray/native-screenshots'),
+    find('.rebox/android/'),
+    remove,
+    plugin('link', () => async () => {
+      const { linkDependencyAndroid } = await import('rn-link')
 
-    await linkLibIos(
-      'packages/rebox/ios/ios',
-      'node_modules/react-native-view-shot/ios/RNViewShot.xcodeproj/project.pbxproj'
-    )
-  })
+      linkDependencyAndroid({
+        projectPath: 'packages/rebox/android',
+        dependencyName: 'react-native-view-shot',
+        dependencyPath: 'node_modules/react-native-view-shot',
+      })
+    }),
+    plugin('build', () => async () => {
+      const { buildAndroid } = await import('@rebox/android')
+
+      await buildAndroid({
+        entryPointPath: '@x-ray/native-screenshots/build/native/App',
+        outputPath: '.rebox/android/',
+        appName: 'rebox',
+      })
+    })
+  )

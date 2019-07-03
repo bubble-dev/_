@@ -1,5 +1,5 @@
-const path = require('path')
-const { createWebpackConfig } = require('haul')
+import path from 'path'
+import { createWebpackConfig } from 'haul'
 
 export default {
   webpack: (env) => {

@@ -62,9 +62,9 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
   logMessage('x-ray bundle is ready')
 
   try {
-    if (deviceInfo.state !== 'Booted') {
-      await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
-    }
+    // if (deviceInfo.state !== 'Booted') {
+    //   await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
+    // }
 
     // const simulatorProcess = execa('/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator', ['-CurrentDeviceUDID', iPhone7Id])
     // while ((await getDeviceInfo()).state !== 'Booted') {
@@ -76,18 +76,18 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
     // build an app:
     // react-native start --skipflow --projectRoot tasks/x-ray/react-native
     // react-native run-ios --no-packager --project-path tasks/x-ray/react-native/ios --simulator 'iPhone 7'
-    await execa('xcrun', ['simctl', 'install', deviceInfo.udid, APP_PATH])
+    await execa('xcrun', ['simctl', 'install', 'booted', APP_PATH])
 
     logMessage('x-ray app is installed')
 
     const runScreenshots = await runServer({ platform: 'ios' })
 
-    await execa('xcrun', ['simctl', 'launch', deviceInfo.udid, 'org.reactjs.native.example.xray'])
+    await execa('xcrun', ['simctl', 'launch', 'booted', 'org.reactjs.native.x-ray'])
 
     logMessage('x-ray app is launching')
 
     await runScreenshots()
   } finally {
-    await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+    // await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
   }
 })

@@ -1,1 +1,2 @@
-export { linkLibIos } from './ios'
+export { linkDependencyAndroid } from './android'
+export { linkDependencyIos } from './ios'
