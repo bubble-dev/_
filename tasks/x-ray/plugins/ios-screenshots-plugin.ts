@@ -83,25 +83,25 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
     .listen(8081, '127.0.0.1')
 
   try {
-    if (deviceInfo.state !== 'Booted') {
-      await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
-    }
+    // if (deviceInfo.state !== 'Booted') {
+    //   await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
+    // }
 
     logMessage('device is ready')
 
-    await execa('xcrun', ['simctl', 'install', deviceInfo.udid, APP_PATH])
+    await execa('xcrun', ['simctl', 'install', 'booted', APP_PATH])
 
     logMessage('x-ray app is installed')
 
     const runScreenshots = await runServer({ platform: 'ios' })
 
-    await execa('xcrun', ['simctl', 'launch', deviceInfo.udid, 'org.bubble-dev.xray'])
+    await execa('xcrun', ['simctl', 'launch', 'booted', 'org.bubble-dev.xray'])
 
     logMessage('x-ray app is launching')
 
     await runScreenshots()
   } finally {
-    await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+    // await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
     httpServer.close()
   }
 })
