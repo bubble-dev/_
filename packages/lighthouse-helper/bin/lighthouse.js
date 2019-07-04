@@ -12,6 +12,7 @@ const {
   getReportPath,
   generateReportForHash,
   generateDigests,
+  getValue,
 } = require('./lighthouse-utils')
 
 // TODO: Make it possible to read from a lighthouse.config.js file to get some configs
@@ -125,10 +126,6 @@ const perfRun = {
   },
 }
 
-const getValue = (reportData, key) => {
-  return reportData.audits[key].numericValue || reportData.audits[key].rawValue
-}
-
 const revHashPromise = executeWithMessage(undefined, 'git rev-list origin/master..HEAD')()
   .then(({ stdout: revlist }) => (revlist.replace('\n', '') === '' ? 'master' : revlist.split('\n')[0]))
 
@@ -148,12 +145,14 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
             if (!isLocalRun && benchmark === 'origin/master' && hash === 'master') {
               log('running on master, benchmarking is skipped', yellow)
 
+              // TODO: Pass config report folder when we coded that in
               return generateReportForHash(chrome, results, reportFormat)({ hash })
             }
 
             return executeWithMessage(undefined, `git rev-parse --verify ${benchmark}`)()
               .then(({ stdout: prevHash }) => {
                 const folderName = benchmark === 'origin/master' ? 'master' : prevHash.replace('\n', '')
+                // TODO: Make the reportFolder also overwritable by the config
                 const prevDirName = getReportFolder(folderName)
                 const reportFile = getReportPath(prevDirName, reportFormat)
                 const regressionDigest = {}
@@ -199,115 +198,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                     }
                   }
 
-                  if (report.audits['speed-index'].score !== null && prevReport.audits['speed-index'].score !== null) {
-                    if (report.audits['speed-index'].score < prevReport.audits['speed-index'].score) {
-                      const regressionMessage = 'This hash has regressed on speed index'
-                      const currentValue = getValue(report, 'speed-index')
-                      const prevValue = getValue(prevReport, 'speed-index')
-                      regressionDigest['speed-index'] = {
-                        regression: `${Math.floor((currentValue - prevValue))}ms`,
-                        regressionMessage,
-                      }
-                    } else if (report.audits['speed-index'].score > prevReport.audits['speed-index'].score) {
-                      const message = 'This hash has improved speed index'
-                      const currentValue = getValue(report, 'speed-index')
-                      const prevValue = getValue(prevReport, 'speed-index')
-                      improvementDigest['speed-index'] = {
-                        improvement: `${Math.floor((prevValue - currentValue))}ms`,
-                        message,
-                      }
-                    }
-                  } else if (report.audits['speed-index'].score !== null) {
-                    const message = 'This hash no previous speed index to compare to, here is what we recorded on this run'
-                    const currentValue = getValue(report, 'speed-index')
-                    improvementDigest['speed-index'] = {
-                      improvement: `${Math.floor((currentValue))}ms`,
-                      message,
-                    }
-                  } else if (report.audits['speed-index'].score === null && prevReport.audits['speed-index'].score === null) {
-                    const regressionMessage = 'No speed index recorded on previous or current run!'
-                    regressionDigest['speed-index'] = {
-                      regression: '⚠️',
-                      regressionMessage,
-                    }
-                  }
-
-                  if (report.audits['mainthread-work-breakdown'].score < prevReport.audits['mainthread-work-breakdown'].score) {
-                    const regressionMessage = 'This hash is hogging more on the main thread than benchmark'
-                    const currentValue = getValue(report, 'mainthread-work-breakdown')
-                    const prevValue = getValue(prevReport, 'mainthread-work-breakdown')
-                    regressionDigest['mainthread-work-breakdown'] = {
-                      regression: `${Math.floor((currentValue - prevValue))}ms`,
-                      regressionMessage,
-                    }
-
-                    error(`WARN: ${regressionMessage}`)
-                  } else if (report.audits['mainthread-work-breakdown'].score > prevReport.audits['mainthread-work-breakdown'].score) {
-                    const message = 'This hash has freed CPU workload compared to last release'
-                    const currentValue = getValue(report, 'mainthread-work-breakdown')
-                    const prevValue = getValue(prevReport, 'mainthread-work-breakdown')
-
-                    improvementDigest['mainthread-work-breakdown'] = {
-                      improvement: `${Math.floor(prevValue - currentValue)}ms`,
-                      message,
-                    }
-
-                    log(`INFO: ${message}`, green)
-                  }
-
-                  if (report.audits['bootup-time'].score < prevReport.audits['bootup-time'].score) {
-                    const regressionMessage = 'This hash is taking longer to parse JS than benchmark'
-                    const currentValue = getValue(report, 'mainthread-work-breakdown')
-                    const prevValue = getValue(prevReport, 'mainthread-work-breakdown')
-
-                    regressionDigest['bootup-time'] = {
-                      regression: `${Math.floor((currentValue - prevValue))}ms`,
-                      regressionMessage,
-                    }
-
-                    error(`WARN: ${regressionMessage}`)
-                  } else if (report.audits['bootup-time'].score > prevReport.audits['bootup-time'].score) {
-                    const message = 'JS parsing has improved since last version'
-                    const currentValue = getValue(report, 'mainthread-work-breakdown')
-                    const prevValue = getValue(prevReport, 'mainthread-work-breakdown')
-
-                    improvementDigest['bootup-time'] = {
-                      improvement: `${Math.floor((prevValue - currentValue))}ms`,
-                      message,
-                    }
-
-                    log(`INFO: ${message}`, green)
-                  }
-
-                  if (report.audits['total-byte-weight'].score < prevReport.audits['total-byte-weight'].score) {
-                    const difference = Math.floor(report.audits['total-byte-weight'].displayValue[1] - prevReport.audits['total-byte-weight'].displayValue[1])
-                    const regressionMessage = `The total bytes sent is now bigger by ${difference}KB`
-
-                    regressionDigest['total-byte-weight'] = {
-                      regression: difference,
-                      regressionMessage,
-                    }
-
-                    error(`WARN: ${regressionMessage}`)
-                  } else if (report.audits['total-byte-weight'].score > prevReport.audits['total-byte-weight'].score) {
-                    const difference = Math.floor(prevReport.audits['total-byte-weight'].displayValue[1] - prev.audits['total-byte-weight'].displayValue[1])
-                    const message = `The total bytest sent is now smaller by ${difference}KB`
-                    improvementDigest['total-byte-weight'] = {
-                      improvement: `${difference}kb`,
-                      message,
-                    }
-
-                    log(`INFO: ${message}`, green)
-                  }
-
-                  if (report.audits.deprecations.score === 0) {
-                    const regressionMessage = 'This hash is using deprecated APIs'
-                    regressionDigest.deprecations = {
-                      regressionMessage,
-                    }
-
-                    error(`WARN: ${regressionMessage}`)
-                  }
+                  // re-add the metrics on a for-loop reading from the utils
                 } catch (err) {
                   error(err)
                 }
@@ -318,6 +209,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                   .then(
                     () => generateDigests({ regressions: regressionDigest, improvements: improvementDigest }, hash)
                       .then(() => (
+                        // TODO: Pass config report folder when we coded that in
                         generateReportForHash(chrome, results, reportFormat)({ hash })
                       ))
                   )
@@ -325,6 +217,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
           })
       }
 
+      // TODO: Pass config report folder when we coded that in
       return revHashPromise.then((hash) => generateReportForHash(chrome, results, reportFormat)({ hash }))
     })
   })
