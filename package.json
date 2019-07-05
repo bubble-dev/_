@@ -22,6 +22,9 @@
     "packages/tsfn",
     "packages/x-ray/*"
   ],
+  "resolutions": {
+    "react": "^16.8.6"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@bubble-dev/eslint-config": "*",

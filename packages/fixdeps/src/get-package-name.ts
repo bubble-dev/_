@@ -1,4 +1,4 @@
-const relativePattern = /^(\.\/|\.\.\/)/
+const relativePattern = /^[.|/]/
 const scopePattern = /^(?:(@[^/]+)[/]+)([^/]+)[/]?/
 const basePattern = /^([^/]+)[/]?/
 
