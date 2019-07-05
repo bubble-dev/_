@@ -3,8 +3,8 @@ export type TDepsEntries = [string, string][]
 export type TDepsObject = {[k: string]: string}
 
 export type TOptions = {
-  workspacePackagesFilter: (path: string) => boolean,
+  packagePath: string,
+  dependencyFilesGlobs: string[],
+  devDependencyFilesGlobs: string[],
   ignoredPackages?: string[],
-  logMessage?: (message: string) => void,
-  logPath?: (message: string) => void,
 }

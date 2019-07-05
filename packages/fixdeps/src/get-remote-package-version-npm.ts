@@ -1,6 +1,6 @@
 import execa from 'execa'
 
-export const getPackageVersionNpm = async (packageName: string): Promise<string> => {
+export const getRemotePackageVersionNpm = async (packageName: string): Promise<string> => {
   const { stdout } = await execa(
     'npm',
     [
