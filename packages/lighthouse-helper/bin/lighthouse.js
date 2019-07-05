@@ -12,7 +12,7 @@ const {
   getReportPath,
   generateReportForHash,
   generateDigests,
-  getValue,
+  getMetricStats,
 } = require('./lighthouse-utils')
 
 // TODO: Make it possible to read from a lighthouse.config.js file to get some configs
@@ -155,10 +155,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                 // TODO: Make the reportFolder also overwritable by the config
                 const prevDirName = getReportFolder(folderName)
                 const reportFile = getReportPath(prevDirName, reportFormat)
-                const regressionDigest = {}
-                const improvementDigest = {}
-                let measures = []
-                let prevMeasures = []
+                let digests = {}
 
                 try {
                   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -166,37 +163,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
 
                   const { lhr: report } = results
 
-                  if (report.audits['user-timings']) {
-                    measures = report.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
-                    prevMeasures = prevReport.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
-
-                    for (const measure of measures) {
-                      const prevMeasure = prevMeasures.find((prevM) => prevM.name === measure.name)
-
-                      if (prevMeasure === undefined) {
-                        const message = `${measure.name} was added as a new user timming!`
-                        improvementDigest[measure.name] = {
-                          improvement: `${measure.duration}ms`,
-                          message,
-                        }
-                        log(message)
-                      } else if (measure.duration > prevMeasure.duration) {
-                        const regressionMessage = `${measure.name} user timming has regressed`
-                        regressionDigest[measure.name] = {
-                          regression: `${Math.floor(measure.duration - prevMeasure.duration)}ms`,
-                          regressionMessage,
-                        }
-                        log(regressionMessage)
-                      } else if (measure.duration < prevMeasure.duration) {
-                        const message = `${measure.name} user timming has improved`
-                        improvementDigest[measure.name] = {
-                          improvement: `${Math.floor(prevMeasure.duration - measure.duration)}ms`,
-                          message,
-                        }
-                        log(message)
-                      }
-                    }
-                  }
+                  digests = getMetricStats(report, prevReport)
 
                   // re-add the metrics on a for-loop reading from the utils
                 } catch (err) {
@@ -207,7 +174,7 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
 
                 return executeWithMessage(undefined, `yarn rimraf ${reportFolder} && mkdir ${reportFolder}`)()
                   .then(
-                    () => generateDigests({ regressions: regressionDigest, improvements: improvementDigest }, hash)
+                    () => generateDigests(digests, hash)
                       .then(() => (
                         // TODO: Pass config report folder when we coded that in
                         generateReportForHash(chrome, results, reportFormat)({ hash })

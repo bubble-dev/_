@@ -47,58 +47,98 @@ const getGenericMessages = (metric) => {
   }, {})
 }
 
-const getMetricStats = (report, prevReport) => {
-  const regressionDigest = {}
-  const improvementDigest = {}
+const getMetricStats = (report, prevReport, metrics) => {
+  const regressions = {}
+  const improvements = {}
 
-  return (metric) => {
-    const metricDef = metricsTypes[metric]
-    const genericDef = getGenericMessages(metric)
+  // Automatically check and track user-timings
+  if (report.audits['user-timings']) {
+    let measures = []
+    let prevMeasures = []
 
-    // create an object with good defaults if current metric has no definition
-    const metricMessages = { ...genericDef, ...metricDef }
+    measures = report.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
+    prevMeasures = prevReport.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
 
-    if (report.audits[metric].score !== null && prevReport.audits[metric].score !== null) {
-      if (report.audits[metric].score < prevReport.audits[metric].score) {
-        const regressionMessage = metricMessages.regressionMessage
-        const currentValue = getValue(report, metric)
-        const prevValue = getValue(prevReport, metric)
-        regressionDigest[metric] = {
-          regression: `${Math.floor((currentValue - prevValue))} ${metricMessages.unit}`,
+    for (const measure of measures) {
+      const prevMeasure = prevMeasures.find((prevM) => prevM.name === measure.name)
+
+      if (prevMeasure === undefined) {
+        const message = `${measure.name} was added as a new user timming!`
+        improvements[measure.name] = {
+          improvement: `${measure.duration}ms`,
+          message,
+        }
+        log(message)
+      } else if (measure.duration > prevMeasure.duration) {
+        const regressionMessage = `${measure.name} user timming has regressed`
+        regressions[measure.name] = {
+          regression: `${Math.floor(measure.duration - prevMeasure.duration)}ms`,
           regressionMessage,
         }
+        log(regressionMessage)
+      } else if (measure.duration < prevMeasure.duration) {
+        const message = `${measure.name} user timming has improved`
+        improvements[measure.name] = {
+          improvement: `${Math.floor(prevMeasure.duration - measure.duration)}ms`,
+          message,
+        }
+        log(message)
+      }
+    }
+  }
 
-        error(`WARN: ${regressionMessage}`)
-      } else if (report.audits[metric].score > prevReport.audits[metric].score) {
-        const message = metricMessages.improvementMessage
+  if (metrics && metrics.length) {
+    metrics.forEach((metric) => {
+      const metricDef = metricsTypes[metric]
+      const genericDef = getGenericMessages(metric)
+
+      // create an object with good defaults if current metric has no definition
+      const metricMessages = { ...genericDef, ...metricDef }
+
+      if (report.audits[metric].score !== null && prevReport.audits[metric].score !== null) {
+        if (report.audits[metric].score < prevReport.audits[metric].score) {
+          const regressionMessage = metricMessages.regressionMessage
+          const currentValue = getValue(report, metric)
+          const prevValue = getValue(prevReport, metric)
+          regressions[metric] = {
+            regression: `${Math.floor((currentValue - prevValue))} ${metricMessages.unit}`,
+            regressionMessage,
+          }
+
+          error(`WARN: ${regressionMessage}`)
+        } else if (report.audits[metric].score > prevReport.audits[metric].score) {
+          const message = metricMessages.improvementMessage
+          const currentValue = getValue(report, metric)
+          const prevValue = getValue(prevReport, metric)
+          improvements[metric] = {
+            improvement: `${Math.floor((prevValue - currentValue))} ${metricMessages.unit}`,
+            message,
+          }
+
+          log(`INFO: ${message}`, green)
+        }
+      } else if (report.audits[metric].score !== null) {
+        const message = metricMessages.noPrevValue
         const currentValue = getValue(report, metric)
-        const prevValue = getValue(prevReport, metric)
-        improvementDigest[metric] = {
-          improvement: `${Math.floor((prevValue - currentValue))} ${metricMessages.unit}`,
+        improvements[metric] = {
+          improvement: `${Math.floor((currentValue))} ${metricMessages.unit}`,
           message,
         }
 
         log(`INFO: ${message}`, green)
-      }
-    } else if (report.audits[metric].score !== null) {
-      const message = metricMessages.noPrevValue
-      const currentValue = getValue(report, metric)
-      improvementDigest[metric] = {
-        improvement: `${Math.floor((currentValue))} ${metricMessages.unit}`,
-        message,
-      }
+      } else if (report.audits[metric].score === null && prevReport.audits[metric].score === null) {
+        const regressionMessage = metricMessages.noRecordFound
+        regressions[metric] = {
+          regression: '⚠️',
+          regressionMessage,
+        }
 
-      log(`INFO: ${message}`, green)
-    } else if (report.audits[metric].score === null && prevReport.audits[metric].score === null) {
-      const regressionMessage = metricMessages.noRecordFound
-      regressionDigest[metric] = {
-        regression: '⚠️',
-        regressionMessage,
+        error(`WARN: ${regressionMessage}`)
       }
-
-      error(`WARN: ${regressionMessage}`)
-    }
+    })
   }
+
+  return { regressions, improvements }
 }
 
 const getReportFolder = (hash) => `${baseDir}reports/automated-lighthouse-${hash}`.replace('\n', '')
@@ -139,9 +179,9 @@ const generateReportForHash = (chrome, results, reportFormat, reportFolder) => (
 
 /**
  * Utility function to generate the digests
- * @typedef ImprovementDigest { [metricName: string]: { improvement: number | string, message: string | undefined }
- * @typedef RegressionDigest { [metricName: string]: { regression: number | string, message: string | undefined, infoMessage: string | undefined }
- * @param { regressions: RegressionDigest, improvements: ImprovementDigest }} digest
+ * @typedef improvements { [metricName: string]: { improvement: number | string, message: string | undefined }
+ * @typedef regressions { [metricName: string]: { regression: number | string, message: string | undefined, infoMessage: string | undefined }
+ * @param { regressions: regressions, improvements: improvements }} digest
  * @param string workingBranch
  */
 function generateDigests(digest, workingBranch) {
