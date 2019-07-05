@@ -15,7 +15,7 @@ export const getRemotePackageVersionNpm = async (packageName: string): Promise<s
   )
 
   if (stdout.length === 0) {
-    throw new Error(`Cannot find package ${packageName}`)
+    throw new Error(`Cannot find package "${packageName}"`)
   }
 
   return stdout

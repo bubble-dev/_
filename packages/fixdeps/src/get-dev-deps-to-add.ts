@@ -1,5 +1,6 @@
-import { TPackageJson } from '@auto/utils'
 import { isUndefined } from 'tsfn'
+import { TPackageJson } from './types'
+import { uniqueArray } from './unique-array'
 
 export const getDevDepsToAdd = (packageJson: TPackageJson, depNames: string[], ignoredPackages: string[]): string[] => {
   const dependenciesKeys = !isUndefined(packageJson.dependencies)
@@ -8,8 +9,15 @@ export const getDevDepsToAdd = (packageJson: TPackageJson, depNames: string[], i
   const devDependenciesKeys = !isUndefined(packageJson.devDependencies)
     ? Object.keys(packageJson.devDependencies)
     : []
+  const peerDependenciesKeys = !isUndefined(packageJson.peerDependencies)
+    ? Object.keys(packageJson.peerDependencies)
+    : []
+  const mergedNames = uniqueArray([
+    ...depNames,
+    ...peerDependenciesKeys,
+  ])
 
-  return depNames.filter((name) => (
+  return mergedNames.filter((name) => (
     !ignoredPackages.includes(name) &&
     !dependenciesKeys.includes(name) &&
     !devDependenciesKeys.includes(name)

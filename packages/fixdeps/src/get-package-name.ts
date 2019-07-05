@@ -16,11 +16,7 @@ export const getPackageName = (str: string): string | null => {
   }
 
   // normal package
-  match = basePattern.exec(str)
+  match = basePattern.exec(str) as RegExpExecArray
 
-  if (match) {
-    return match[1]
-  }
-
-  return null
+  return match[1]
 }
