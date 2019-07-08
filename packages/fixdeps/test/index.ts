@@ -18,10 +18,13 @@ const vol = Volume.fromJSON({
       '@types/react': '^16',
       '@types/tape': '^2',
       '@types/foo': '^3',
+      '@types/ns__a': '^1',
+      bar: '^2',
       execa: '^1',
     },
     peerDependencies: {
       react: '^16',
+      bar: '^3.0.0',
     },
   }),
   [`${rootDir}/src/index.ts`]: `
@@ -76,14 +79,17 @@ test('fixdeps: all', async (t) => {
       devDependencies: {
         '@types/execa': '^1',
         '@types/foo': '^3',
+        '@types/ns__a': '^1',
         '@types/react': '^16',
         '@types/tape': '^2',
+        bar: '^2',
         execa: '^1',
-        react: '^1.0.0',
+        react: '^16',
         tape: '^1.0.0',
       },
       peerDependencies: {
         react: '^16',
+        bar: '^3.0.0',
       },
     }
   )

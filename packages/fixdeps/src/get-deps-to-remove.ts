@@ -20,6 +20,10 @@ export const getDepsToRemove = (packageJson: TPackageJson, depsFoundInFiles: str
 
     if (name.startsWith('@types/')) {
       baseName = name.substr(7)
+
+      if (baseName.includes('__')) {
+        baseName = `@${baseName.replace('__', '/')}`
+      }
     }
 
     if (!ignoredDeps.includes(baseName) && !depsFoundInFiles.includes(baseName) && !peerDependenciesKeys.includes(baseName)) {

@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { getDependenciesInContent } from '../../src/get-dependencies-in-content'
 
-test('require-expression: package dependency', (t) => {
+test('fixdeps: require-expression: package dependency', (t) => {
   const content = `
   const path = require.resolve('path')
   const fs = require.resolve('fs')
@@ -17,7 +17,7 @@ test('require-expression: package dependency', (t) => {
   t.end()
 })
 
-test('require-expression: package with path', (t) => {
+test('fixdeps: require-expression: package with path', (t) => {
   const content = `
   const { func } = require.resolve('pkg/path/to/file')
   `
@@ -32,7 +32,7 @@ test('require-expression: package with path', (t) => {
   t.end()
 })
 
-test('require-expression: scoped package', (t) => {
+test('fixdeps: require-expression: scoped package', (t) => {
   const content = `
   const { func1 } = require.resolve('@scope/pkg')
   const { func2 } = require.resolve('@ns/my-package/path/to/file')
@@ -51,7 +51,7 @@ test('require-expression: scoped package', (t) => {
   t.end()
 })
 
-test('require-expression: relative paths', (t) => {
+test('fixdeps: require-expression: relative paths', (t) => {
   const content = `
   const { func1 } = require.resolve('../src/path/to/file')
   const { func2 } = require.resolve('./file')

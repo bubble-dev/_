@@ -2,13 +2,13 @@ import path from 'path'
 import { promisify } from 'util'
 import { readFile, writeFile } from 'graceful-fs'
 import fastGlob from 'fast-glob'
-import { TOptions } from './types'
+import { TOptions, TDepsEntries } from './types'
 import { uniqueArray } from './unique-array'
 import { globalIgnoreList } from './global-ignore-list'
 import { getDependenciesInContent } from './get-dependencies-in-content'
 import { getDepsToRemove } from './get-deps-to-remove'
 import { getDepsToAdd } from './get-deps-to-add'
-import { getDevDepsToAdd } from './get-dev-deps-to-add'
+import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
 import { getDepsVersions } from './get-deps-versions'
 import { composeDependencies } from './compose-dependencies'
 import { getPackage } from './get-package-json'
@@ -24,7 +24,7 @@ export const fixdeps = async ({
 }: TOptions) => {
   const fastGlobOptions = {
     ignore: ['node_modules/**'],
-    deep: 0,
+    deep: Infinity,
     onlyFiles: false,
     expandDirectories: false,
     absolute: true,
@@ -62,13 +62,15 @@ export const fixdeps = async ({
 
   const depsToRemove = getDepsToRemove(packageJson, [...dependencyList, ...devDependencyList], allIgnoredPackages)
   const depsToAdd = getDepsToAdd(packageJson, dependencyList, allIgnoredPackages)
-  const devDepsToAdd = getDevDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
+  const devDepsToAdd = getDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
+  const peerDevDepsToAdd = getPeerDevDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
 
   const depsToAddWithVersions = await getDepsVersions(depsToAdd)
   const devDepsToAddWithVersions = await getDepsVersions(devDepsToAdd)
+  const peerDevDepsToAddWithVersions = peerDevDepsToAdd.map((name) => [name, packageJson.peerDependencies![name]]) as TDepsEntries
 
   const composedDependencies = composeDependencies(packageJson.dependencies, depsToAddWithVersions, depsToRemove)
-  const composedDevDependencies = composeDependencies(packageJson.devDependencies, devDepsToAddWithVersions, depsToRemove)
+  const composedDevDependencies = composeDependencies(packageJson.devDependencies, [...devDepsToAddWithVersions, ...peerDevDepsToAddWithVersions], depsToRemove)
 
   if (Object.keys(composedDependencies).length > 0) {
     packageJson.dependencies = composedDependencies
