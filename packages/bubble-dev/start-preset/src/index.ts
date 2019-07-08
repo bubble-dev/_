@@ -206,6 +206,10 @@ const buildPackage = async (packageDir: string) => {
     tasks.push('buildAssets')
   }
 
+  if (Reflect.has(packageJson, 'buildTasks')) {
+    tasks.push(...packageJson.buildTasks)
+  }
+
   return sequence(
     env({ NODE_ENV: 'production' }),
     find(`${dir}/build/`),
