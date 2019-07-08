@@ -3,16 +3,20 @@ import { createWebpackConfig } from 'haul'
 
 export default {
   webpack: (env) => {
+    const appPath = require.resolve(process.env.REBOX_ENTRY_POINT)
     const config = createWebpackConfig({
-      entry: require.resolve('./App.js'),
+      entry: appPath,
     })(env)
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      __REBOX_ENTRY_POINT__: process.env.REBOX_ENTRY_POINT,
-    }
-
     config.module.rules = [
+      {
+        test: appPath,
+        use: [
+          {
+            loader: require.resolve('./loader.js'),
+          },
+        ],
+      },
       {
         test: /\.js$/,
         include: [

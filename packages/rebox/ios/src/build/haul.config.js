@@ -3,7 +3,7 @@ import { createWebpackConfig } from 'haul'
 
 export default {
   webpack: (env) => {
-    const appPath = require.resolve('@x-ray/native-screenshots/build/native/App')
+    const appPath = require.resolve(process.env.REBOX_ENTRY_POINT)
     const config = createWebpackConfig({
       entry: appPath,
     })(env)

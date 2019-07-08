@@ -5,7 +5,7 @@ import plugin, { StartFilesProps } from '@start/plugin'
 import execa from 'execa'
 
 const BUNDLE_PATH = '.rebox/android/index.android.bundle'
-const APP_PATH = '.rebox/android/X-Ray.apk'
+const APP_PATH = '.rebox/build/X-Ray.apk'
 
 export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ logMessage }) => async ({ files }) => {
   const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
@@ -13,7 +13,7 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
 
   await prepareFiles(files.map((file) => file.path))
   await buildJsBundle({
-    entryPointPath: '@x-ray/native-screenshots/build/native/App',
+    entryPointPath: '@x-ray/native-screenshots-app',
     outputPath: BUNDLE_PATH,
   })
 

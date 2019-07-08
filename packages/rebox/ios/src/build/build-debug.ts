@@ -23,10 +23,6 @@ export type TBuildDebugOptions = {
 }
 
 export const buildDebug = async (options: TBuildDebugOptions) => {
-  // const templatePath = path.join(options.inputPath, options.appName)
-
-  // await copyTemplate(templatePath)
-
   await execa(
     'xcodebuild',
     [
