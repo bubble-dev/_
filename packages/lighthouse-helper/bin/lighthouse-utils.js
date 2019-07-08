@@ -35,8 +35,17 @@ const metricsTypes = {
   },
 }
 
+const defaultMetrics = [
+  'speed-index',
+  'mainthread-work-breakdown',
+  'bootup-time',
+  'total-byte-weight',
+]
+
 const getValue = (reportData, key) => {
-  return reportData.audits[key].numericValue || reportData.audits[key].rawValue
+  return reportData
+    ? (reportData.audits[key].numericValue || reportData.audits[key].rawValue)
+    : null
 }
 
 const getGenericMessages = (metric) => {
@@ -47,7 +56,7 @@ const getGenericMessages = (metric) => {
   }, {})
 }
 
-const getMetricStats = (report, prevReport, metrics) => {
+const getMetricStats = (report, prevReport, metrics = defaultMetrics) => {
   const regressions = {}
   const improvements = {}
 
@@ -57,7 +66,9 @@ const getMetricStats = (report, prevReport, metrics) => {
     let prevMeasures = []
 
     measures = report.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
-    prevMeasures = prevReport.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
+    prevMeasures = prevReport
+      ? prevReport.audits['user-timings'].details.items.filter((timming) => timming.timingType.toLowerCase() === 'measure')
+      : []
 
     for (const measure of measures) {
       const prevMeasure = prevMeasures.find((prevM) => prevM.name === measure.name)
@@ -87,6 +98,7 @@ const getMetricStats = (report, prevReport, metrics) => {
     }
   }
 
+  // walk through the metrics and collect data
   if (metrics && metrics.length) {
     metrics.forEach((metric) => {
       const metricDef = metricsTypes[metric]
@@ -94,9 +106,11 @@ const getMetricStats = (report, prevReport, metrics) => {
 
       // create an object with good defaults if current metric has no definition
       const metricMessages = { ...genericDef, ...metricDef }
+      const prevScore = prevReport ? prevReport.audits[metric].score : null
+      const currentScore = report.audits[metric].score
 
-      if (report.audits[metric].score !== null && prevReport.audits[metric].score !== null) {
-        if (report.audits[metric].score < prevReport.audits[metric].score) {
+      if (currentScore !== null && prevScore !== null) {
+        if (currentScore < prevScore) {
           const regressionMessage = metricMessages.regressionMessage
           const currentValue = getValue(report, metric)
           const prevValue = getValue(prevReport, metric)
@@ -106,7 +120,7 @@ const getMetricStats = (report, prevReport, metrics) => {
           }
 
           error(`WARN: ${regressionMessage}`)
-        } else if (report.audits[metric].score > prevReport.audits[metric].score) {
+        } else if (currentScore > prevScore) {
           const message = metricMessages.improvementMessage
           const currentValue = getValue(report, metric)
           const prevValue = getValue(prevReport, metric)
@@ -117,7 +131,7 @@ const getMetricStats = (report, prevReport, metrics) => {
 
           log(`INFO: ${message}`, green)
         }
-      } else if (report.audits[metric].score !== null) {
+      } else if (currentScore !== null) {
         const message = metricMessages.noPrevValue
         const currentValue = getValue(report, metric)
         improvements[metric] = {
@@ -126,7 +140,7 @@ const getMetricStats = (report, prevReport, metrics) => {
         }
 
         log(`INFO: ${message}`, green)
-      } else if (report.audits[metric].score === null && prevReport.audits[metric].score === null) {
+      } else if (currentScore === null && prevScore === null) {
         const regressionMessage = metricMessages.noRecordFound
         regressions[metric] = {
           regression: '⚠️',

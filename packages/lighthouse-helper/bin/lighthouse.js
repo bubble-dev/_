@@ -156,16 +156,19 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                 const prevDirName = getReportFolder(folderName)
                 const reportFile = getReportPath(prevDirName, reportFormat)
                 let digests = {}
+                let prevReport
 
                 try {
-                  // eslint-disable-next-line @typescript-eslint/no-require-imports
-                  const prevReport = require(reportFile)
+                  prevReport = require(reportFile)
+                } catch (err) {
+                  error(err)
+                }
 
-                  const { lhr: report } = results
+                const { lhr: report } = results
 
+                try {
+                  // TODO: get the metrics from the given config file
                   digests = getMetricStats(report, prevReport)
-
-                  // re-add the metrics on a for-loop reading from the utils
                 } catch (err) {
                   error(err)
                 }
