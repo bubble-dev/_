@@ -15,6 +15,7 @@ const detectExportDeclaration = (node: Node): string | null => {
   if (isExportAllDeclaration(node) || isExportNamedDeclaration(node)) {
     const source = node.source
 
+    /* istanbul ignore else */
     if (source !== null) {
       return source.value
     }
@@ -30,6 +31,7 @@ const detectImportCallExpression = (node: Node): string | null => {
     if (isImport(callee)) {
       const stringArg = node.arguments[0]
 
+      /* istanbul ignore else */
       if (isStringLiteral(stringArg)) {
         return stringArg.value
       }
@@ -54,6 +56,7 @@ const detectRequireCallExpression = (node: Node): string | null => {
     if (isIdentifier(callee) && callee.name === 'require') {
       const stringArg = node.arguments[0]
 
+      /* istanbul ignore else */
       if (isStringLiteral(stringArg)) {
         return stringArg.value
       }
@@ -71,9 +74,11 @@ const detectRequireResolveCallExpression = (node: Node): string | null => {
       const isCalleeObjectName = isIdentifier(callee.object) && callee.object.name === 'require'
       const isCalleeProperty = isIdentifier(callee.property) && callee.property.name === 'resolve'
 
+      /* istanbul ignore else */
       if (isCalleeObjectName && isCalleeProperty) {
         const stringArg = node.arguments[0]
 
+        /* istanbul ignore else */
         if (isStringLiteral(stringArg)) {
           return stringArg.value
         }

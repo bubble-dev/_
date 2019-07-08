@@ -2,6 +2,7 @@
 import test from 'blue-tape'
 import { mock, unmock, deleteFromCache } from 'mocku'
 import { createFsFromVolume, Volume } from 'memfs'
+import { createSpy, getSpyCalls } from 'spyfn'
 
 const rootDir = process.cwd()
 const vol = Volume.fromJSON({
@@ -247,6 +248,72 @@ test('fixdeps: create dependencies objects', async (t) => {
         a: '^1.0.0',
       },
     }
+  )
+
+  unmock('../src/index')
+  unmock('../src/get-package-version')
+})
+
+test('fixdeps: get remote version', async (t) => {
+  const vol = Volume.fromJSON({
+    [`${rootDir}/package.json`]: JSON.stringify({
+      name: '@ns/a',
+      version: '1.0.0',
+    }),
+    [`${rootDir}/src/index.ts`]: `
+      import a from 'a'
+    `,
+    [`${rootDir}/src/index2.ts`]: `
+      import a from 'a'
+    `,
+  })
+  const fs = createFsFromVolume(vol)
+  const spy = createSpy(() => '1.0.0')
+
+  mock('../src/index', {
+    fs,
+    'graceful-fs': fs,
+  })
+  mock('../src/get-package-version', {
+    './get-local-package-version-yarn': {
+      getLocalPackageVersionYarn: () => null,
+    },
+    './get-remote-package-version-npm': {
+      getRemotePackageVersionNpm: spy,
+    },
+  })
+  deleteFromCache('fast-glob')
+
+  const { fixdeps } = await import('../src/index')
+
+  await fixdeps({
+    packagePath: rootDir,
+    dependencyFilesGlobs: ['src/**/*.ts'],
+    devDependencyFilesGlobs: ['test/**/*.ts'],
+  })
+
+  const packageJson = JSON.parse(fs.readFileSync(`${rootDir}/package.json`, 'utf8') as string)
+
+  t.deepEquals(
+    packageJson,
+    {
+      name: '@ns/a',
+      version: '1.0.0',
+      dependencies: {
+        a: '^1.0.0',
+      },
+    },
+    'should get version from npm'
+  )
+
+  t.deepEquals(
+    getSpyCalls(spy),
+    [
+      [
+        'a',
+      ],
+    ],
+    'should call npm once'
   )
 
   unmock('../src/index')
