@@ -1,2 +1,3 @@
-export * from './run-ios'
-export * from './build-ios'
+export * from './build'
+export * from './copy'
+export * from './run'

@@ -4,8 +4,6 @@ import { createReadStream } from 'fs'
 import path from 'path'
 import plugin, { StartFilesProps } from '@start/plugin'
 
-const APP_PATH = '.rebox/ios/X-Ray.app'
-
 type TDeviceList = {
   devices: {
     [k: string]: {
@@ -36,7 +34,7 @@ const getDeviceInfo = async () => {
   }
 }
 
-export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMessage }) => async ({ files }) => {
+export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMessage }) => async ({ files }) => {
   if (process.platform !== 'darwin') {
     return logMessage('BUY A MAC')
   }
@@ -58,8 +56,8 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
 
   await prepareFiles(files.map((file) => file.path))
   await buildJsBundle({
-    entryPointPath: '@x-ray/native-screenshots/build/native/App',
-    outputPath: APP_PATH,
+    entryPointPath: '@x-ray/native-screenshots-app',
+    outputPath: appPath,
   })
 
   logMessage('x-ray bundle is ready')
@@ -68,7 +66,7 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
     if (req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/javascript' })
 
-      const fileStream = createReadStream(path.join(APP_PATH, 'main.jsbundle'))
+      const fileStream = createReadStream(path.join(appPath, 'main.jsbundle'))
 
       fileStream
         .on('error', (e) => {
@@ -89,7 +87,7 @@ export default plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMess
 
     logMessage('device is ready')
 
-    await execa('xcrun', ['simctl', 'install', 'booted', APP_PATH])
+    await execa('xcrun', ['simctl', 'install', 'booted', appPath])
 
     logMessage('x-ray app is installed')
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { View } from 'react-native' // eslint-disable-line
-import ViewShot from 'react-native-view-shot'
+import { View } from 'react-native'
+import ViewShot from 'react-native-view-shot' // eslint-disable-line
 import files from './files' // eslint-disable-line
 
 const defaultStyles = {}

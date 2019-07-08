@@ -8,14 +8,13 @@ import makeDir from 'make-dir'
 import { readdir } from 'graceful-fs'
 // @ts-ignore
 import simplePlist from 'simple-plist'
-import { TEMPLATE_DIR } from '../utils'
-import { copyTemplate } from './copy-template'
 
 const pReadDir = promisify(readdir)
 const pPlistRead = promisify(simplePlist.readFile)
 const pPlistWrite = promisify(simplePlist.writeFile)
 
 export type TBuildDebugOptions = {
+  projectPath: string,
   osVersion: string,
   platformName: string,
   appName: string,
@@ -24,15 +23,15 @@ export type TBuildDebugOptions = {
 }
 
 export const buildDebug = async (options: TBuildDebugOptions) => {
-  const templatePath = path.join(TEMPLATE_DIR, options.appName)
+  // const templatePath = path.join(options.inputPath, options.appName)
 
-  await copyTemplate(templatePath)
+  // await copyTemplate(templatePath)
 
   await execa(
     'xcodebuild',
     [
       '-project',
-      path.join(templatePath, 'ios/rebox.xcodeproj'),
+      path.join(options.projectPath, 'rebox.xcodeproj'),
       '-scheme',
       'rebox',
       '-configuration',

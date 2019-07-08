@@ -4,7 +4,6 @@ import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import env from '@start/plugin-env'
 import remove from '@start/plugin-remove'
-import { build } from '@bubble-dev/start-preset'
 import xRayChromeScreenshots from './plugins/chrome-screenshots-plugin'
 import xRayFirefoxScreenshots from './plugins/firefox-screenshots-plugin'
 import xRayIosScreenshots from './plugins/ios-screenshots-plugin'
@@ -100,7 +99,7 @@ export const checkIosScreenshots = (component = '**') =>
   sequence(
     find(`packages/${component}/test/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
-    xRayIosScreenshots
+    xRayIosScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.app')
   )
 
 export const checkAndroidScreenshots = (component = '**') =>
@@ -110,25 +109,26 @@ export const checkAndroidScreenshots = (component = '**') =>
     xRayAndroidScreenshots
   )
 
-export const buildXRayIos = () =>
-  sequence(
-    // build('x-ray/native-screenshots'),
-    find('.rebox/ios/'),
+export const buildXRayIos = (packageDir: string) => {
+  const projectPath = 'node_modules/.rebox/X-Ray/ios/'
+
+  return sequence(
+    find(projectPath),
     remove,
-    plugin('link', () => async () => {
+    plugin('build', () => async () => {
+      const { copyTemplate, buildDebug } = await import('@rebox/ios')
       const { linkDependencyIos } = await import('rn-link')
 
+      await copyTemplate(projectPath)
+
       linkDependencyIos({
-        projectPath: 'packages/rebox/ios/ios',
+        projectPath,
         dependencyPath: 'node_modules/react-native-view-shot/ios',
       })
-    }),
-    plugin('build', () => async () => {
-      const { buildDebug } = await import('@rebox/ios')
 
       await buildDebug({
-        // entryPointPath: '@x-ray/native-screenshots/build/native/App',
-        outputPath: '.rebox/ios/',
+        projectPath,
+        outputPath: path.join(packageDir, 'build'),
         osVersion: 'latest',
         platformName: 'iOS Simulator',
         appName: 'X-Ray',
@@ -136,6 +136,7 @@ export const buildXRayIos = () =>
       })
     })
   )
+}
 
 export const buildXRayAndroid = () =>
   sequence(

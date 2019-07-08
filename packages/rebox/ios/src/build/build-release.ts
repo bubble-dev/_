@@ -16,6 +16,7 @@ const pPlistWrite = promisify(simplePlist.writeFile)
 
 export type TBuildReleaseOptions = {
   entryPointPath: string,
+  projectPath: string,
   osVersion: string,
   platformName: string,
   appName: string,
@@ -28,7 +29,7 @@ export const buildRelease = async (options: TBuildReleaseOptions) => {
     'xcodebuild',
     [
       '-project',
-      path.join(options.templatePath, 'rebox.xcodeproj'),
+      path.join(options.projectPath, 'rebox.xcodeproj'),
       '-scheme',
       'rebox',
       '-configuration',
@@ -69,7 +70,7 @@ export const buildRelease = async (options: TBuildReleaseOptions) => {
   const newAppPath = path.join(options.outputPath, `${options.appName}.app`)
 
   await makeDir(newAppPath)
-  await cpy(`${originalAppPath}/**/*`, newAppPath, { parents: true })
+  await cpy(`${originalAppPath}/**/*`, newAppPath)
 
   const plistPath = path.join(newAppPath, 'Info.plist')
   const plist = await pPlistRead(plistPath)

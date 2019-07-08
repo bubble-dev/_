@@ -1,5 +1,9 @@
-// @ts-ignore
-import { linkConfig, projectConfig as getProjectConfig, dependencyConfig as getDepConfig } from '@react-native-community/cli-platform-ios'
+import {
+  linkConfig,
+  projectConfig as getProjectConfig,
+  dependencyConfig as getDepConfig,
+  // @ts-ignore
+} from '@react-native-community/cli-platform-ios'
 
 export type TLinkDependencyIos = {
   projectPath: string,
