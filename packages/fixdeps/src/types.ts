@@ -22,3 +22,9 @@ export type TPackageJson = {
     [k: string]: string,
   },
 } & TJsonMap
+
+export type TResult = {
+  addedDeps: TDepsObject,
+  addedDevDeps: TDepsObject,
+  removedDeps: string[],
+} | null

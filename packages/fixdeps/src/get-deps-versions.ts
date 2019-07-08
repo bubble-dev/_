@@ -1,14 +1,15 @@
+import pAll from 'p-all'
 import { TDepsEntries } from './types'
 import { getPackageVersion } from './get-package-version'
 
-export const getDepsVersions = async (names: string[]): Promise<TDepsEntries> => {
-  const result: TDepsEntries = []
+export const getDepsVersions = (names: string[]): Promise<TDepsEntries> =>
+  pAll(
+    names.map((name) => async () => {
+      const version = await getPackageVersion(name)
 
-  for (const missingDep of names) {
-    const version = await getPackageVersion(missingDep)
-
-    result.push([missingDep, `^${version}`])
-  }
-
-  return result
-}
+      return [name, `^${version}`] as [string, string]
+    }),
+    {
+      concurrency: 4,
+    }
+  )

@@ -4,13 +4,13 @@ import plugin from '@start/plugin'
 export * from '@bubble-dev/start-preset'
 
 // custom tasks:
-export const fixDeps = () => plugin('fixDeps', () => async () => {
+export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
   const { fixdeps } = await import('fixdeps')
   const { getWorkspacesPackageDirs } = await import('@auto/fs')
   const packages = await getWorkspacesPackageDirs()
 
   for (const pkg of packages) {
-    await fixdeps({
+    const result = await fixdeps({
       ignoredPackages: [
         '@babel/core',
         '@babel/runtime',
@@ -29,5 +29,24 @@ export const fixDeps = () => plugin('fixDeps', () => async () => {
       dependencyFilesGlobs: ['src/**/*.{ts,tsx,js}'],
       devDependencyFilesGlobs: ['test/**/*.{ts,tsx,js}', 'meta.{ts,tsx}'],
     })
+
+    if (result !== null) {
+      logPath(pkg)
+
+      const addedDeps = Object.keys(result.addedDeps)
+      const addedDevDeps = Object.keys(result.addedDevDeps)
+
+      if (addedDeps.length > 0) {
+        logMessage(`added deps: ${addedDeps.join(', ')}`)
+      }
+
+      if (addedDevDeps.length > 0) {
+        logMessage(`added devDeps: ${addedDevDeps.join(', ')}`)
+      }
+
+      if (result.removedDeps.length > 0) {
+        logMessage(`removed deps: ${result.removedDeps.join(', ')}`)
+      }
+    }
   }
 })

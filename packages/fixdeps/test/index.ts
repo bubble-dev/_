@@ -5,42 +5,43 @@ import { createFsFromVolume, Volume } from 'memfs'
 import { createSpy, getSpyCalls } from 'spyfn'
 
 const rootDir = process.cwd()
-const vol = Volume.fromJSON({
-  [`${rootDir}/package.json`]: JSON.stringify({
-    name: '@ns/a',
-    version: '1.0.0',
-    dependencies: {
-      '@babel/runtime': '^17',
-      '@ns/a': '^1',
-    },
-    devDependencies: {
-      '@types/execa': '^1',
-      '@types/react': '^16',
-      '@types/tape': '^2',
-      '@types/foo': '^3',
-      '@types/ns__a': '^1',
-      bar: '^2',
-      execa: '^1',
-    },
-    peerDependencies: {
-      react: '^16',
-      bar: '^3.0.0',
-    },
-  }),
-  [`${rootDir}/src/index.ts`]: `
-    import { a } from '@ns/a'
-    import { b } from '@ns/b'
-    import foo from 'foo'
-  `,
-  [`${rootDir}/test/index.ts`]: `
-    import fs from 'fs'
-    import execa from 'execa'
-    import tape from 'tape'
-  `,
-})
-const fs = createFsFromVolume(vol)
 
 test('fixdeps: all', async (t) => {
+  const vol = Volume.fromJSON({
+    [`${rootDir}/package.json`]: JSON.stringify({
+      name: '@ns/a',
+      version: '1.0.0',
+      dependencies: {
+        '@babel/runtime': '^17',
+        '@ns/a': '^1',
+      },
+      devDependencies: {
+        '@types/execa': '^1',
+        '@types/react': '^16',
+        '@types/tape': '^2',
+        '@types/foo': '^3',
+        '@types/ns__a': '^1',
+        bar: '^2',
+        execa: '^1',
+      },
+      peerDependencies: {
+        react: '^16',
+        bar: '^3.0.0',
+      },
+    }),
+    [`${rootDir}/src/index.ts`]: `
+      import { a } from '@ns/a'
+      import { b } from '@ns/b'
+      import foo from 'foo'
+    `,
+    [`${rootDir}/test/index.ts`]: `
+      import fs from 'fs'
+      import execa from 'execa'
+      import tape from 'tape'
+    `,
+  })
+  const fs = createFsFromVolume(vol)
+
   mock('../src/index', {
     fs,
     'graceful-fs': fs,
@@ -54,7 +55,7 @@ test('fixdeps: all', async (t) => {
 
   const { fixdeps } = await import('../src/index')
 
-  await fixdeps({
+  const result = await fixdeps({
     packagePath: rootDir,
     dependencyFilesGlobs: ['src/**/*.ts'],
     devDependencyFilesGlobs: ['test/**/*.ts'],
@@ -92,6 +93,22 @@ test('fixdeps: all', async (t) => {
         bar: '^3.0.0',
       },
     }
+  )
+
+  t.deepEquals(
+    result,
+    {
+      addedDeps: {
+        '@ns/b': '^1.0.0',
+        foo: '^1.0.0',
+      },
+      addedDevDeps: {
+        react: '^16',
+        tape: '^1.0.0',
+      },
+      removedDeps: [],
+    },
+    'should return result'
   )
 
   unmock('../src/index')
@@ -186,7 +203,7 @@ test('fixdeps: nothing to do', async (t) => {
 
   const { fixdeps } = await import('../src/index')
 
-  await fixdeps({
+  const result = await fixdeps({
     packagePath: rootDir,
     dependencyFilesGlobs: ['src/**/*.ts'],
     devDependencyFilesGlobs: ['test/**/*.ts'],
@@ -208,17 +225,23 @@ test('fixdeps: nothing to do', async (t) => {
     }
   )
 
+  t.equals(
+    result,
+    null,
+    'return null if nothing to do'
+  )
+
   unmock('../src/index')
   unmock('../src/get-package-version')
 })
 
-test('fixdeps: create dependencies objects', async (t) => {
+test('fixdeps: create dependencies objects if was missing', async (t) => {
   const vol = Volume.fromJSON({
     [`${rootDir}/package.json`]: JSON.stringify({
       name: '@ns/a',
       version: '1.0.0',
     }),
-    [`${rootDir}/src/index.ts`]: `
+    [`${rootDir}/test/index.ts`]: `
       import a from 'a'
     `,
   })
@@ -250,7 +273,7 @@ test('fixdeps: create dependencies objects', async (t) => {
     {
       name: '@ns/a',
       version: '1.0.0',
-      dependencies: {
+      devDependencies: {
         a: '^1.0.0',
       },
     }
@@ -260,7 +283,7 @@ test('fixdeps: create dependencies objects', async (t) => {
   unmock('../src/get-package-version')
 })
 
-test('fixdeps: get remote version', async (t) => {
+test('fixdeps: get remote version with npm', async (t) => {
   const vol = Volume.fromJSON({
     [`${rootDir}/package.json`]: JSON.stringify({
       name: '@ns/a',

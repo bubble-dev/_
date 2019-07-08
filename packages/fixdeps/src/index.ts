@@ -2,7 +2,7 @@ import path from 'path'
 import { promisify } from 'util'
 import { readFile, writeFile } from 'graceful-fs'
 import fastGlob from 'fast-glob'
-import { TOptions, TDepsEntries } from './types'
+import { TOptions, TDepsEntries, TResult } from './types'
 import { uniqueArray } from './unique-array'
 import { globalIgnoreList } from './global-ignore-list'
 import { getDependenciesInContent } from './get-dependencies-in-content'
@@ -12,6 +12,7 @@ import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
 import { getDepsVersions } from './get-deps-versions'
 import { composeDependencies } from './compose-dependencies'
 import { getPackage } from './get-package-json'
+import { objectFromEntries } from './object-from-entries'
 
 const pReadFile = promisify(readFile)
 const pWriteFile = promisify(writeFile)
@@ -21,7 +22,7 @@ export const fixdeps = async ({
   ignoredPackages,
   dependencyFilesGlobs,
   devDependencyFilesGlobs,
-}: TOptions) => {
+}: TOptions): Promise<TResult> => {
   const fastGlobOptions = {
     ignore: ['node_modules/**'],
     deep: Infinity,
@@ -68,9 +69,10 @@ export const fixdeps = async ({
   const depsToAddWithVersions = await getDepsVersions(depsToAdd)
   const devDepsToAddWithVersions = await getDepsVersions(devDepsToAdd)
   const peerDevDepsToAddWithVersions = peerDevDepsToAdd.map((name) => [name, packageJson.peerDependencies![name]]) as TDepsEntries
+  const allDevDepsToAddWithVersions = [...devDepsToAddWithVersions, ...peerDevDepsToAddWithVersions]
 
   const composedDependencies = composeDependencies(packageJson.dependencies, depsToAddWithVersions, depsToRemove)
-  const composedDevDependencies = composeDependencies(packageJson.devDependencies, [...devDepsToAddWithVersions, ...peerDevDepsToAddWithVersions], depsToRemove)
+  const composedDevDependencies = composeDependencies(packageJson.devDependencies, allDevDepsToAddWithVersions, depsToRemove)
 
   if (Object.keys(composedDependencies).length > 0) {
     packageJson.dependencies = composedDependencies
@@ -84,9 +86,17 @@ export const fixdeps = async ({
     Reflect.deleteProperty(packageJson, 'devDependencies')
   }
 
-  if (depsToRemove.length > 0 || depsToAddWithVersions.length > 0) {
+  if (depsToRemove.length > 0 || depsToAddWithVersions.length > 0 || allDevDepsToAddWithVersions.length > 0) {
     const packageData = `${JSON.stringify(packageJson, null, 2)}\n`
 
     await pWriteFile(packageJsonPath, packageData)
+
+    return {
+      addedDeps: objectFromEntries(depsToAddWithVersions),
+      addedDevDeps: objectFromEntries(allDevDepsToAddWithVersions),
+      removedDeps: depsToRemove,
+    }
   }
+
+  return null
 }
