@@ -6,8 +6,8 @@ export * from '@bubble-dev/start-preset'
 // custom tasks:
 export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => async () => {
   const { fixdeps } = await import('fixdeps')
-  const { getWorkspacesPackageDirs } = await import('@auto/fs')
-  const packages = await getWorkspacesPackageDirs()
+  const { getPackageDirs } = await import('@auto/fs')
+  const packages = await getPackageDirs()
 
   for (const pkg of packages) {
     const result = await fixdeps({
