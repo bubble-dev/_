@@ -1,65 +1,105 @@
 /* eslint-disable import/no-cycle */
-import { TConfig, TSerializedElement } from './types'
+import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeValue } from './serialize-value'
 import { serializeIndent } from './serialize-indent'
-import { isNull, isString } from './utils'
+import { isString, sanitizeLineElements, sanitizeLines } from './utils'
+import { TYPE_QUOTE, TYPE_VALUE_STRING, TYPE_PROPS_BRACE, TYPE_PROPS_KEY, TYPE_PROPS_EQUALS } from './constants'
 
-const serializePropertyValue = (value: any, currentIndent: number, config: TConfig): TSerializedElement => {
-  const { indent, components: { Line, Quote, PropsBrace, ValueString } } = config
+type TSerializePropertyValue = {
+  value: any,
+  currentIndent: number,
+  path: TPath,
+  childIndex: number,
+  config: TConfig,
+}
+
+const serializePropertyValue = ({ value, currentIndent, config, childIndex, path }: TSerializePropertyValue): TSerializedElement => {
+  const { indent } = config
 
   if (isString(value)) {
+    if (value.length === 0) {
+      return {
+        head: [{ type: TYPE_QUOTE, value: '""' }],
+        body: [],
+        tail: [],
+      }
+    }
+
     return {
       head: [
-        Quote('"'),
-        ValueString(value),
-        Quote('"'),
+        { type: TYPE_QUOTE, value: '"' },
+        { type: TYPE_VALUE_STRING, value },
+        { type: TYPE_QUOTE, value: '"' },
       ],
-      body: null,
-      tail: null,
+      body: [],
+      tail: [],
     }
   }
 
-  const { head, body, tail } = serializeValue(value, currentIndent + indent, config)
+  const { head, body, tail } = serializeValue({
+    value,
+    currentIndent: currentIndent + indent,
+    config,
+    childIndex,
+    path,
+  })
 
   return {
-    head: [
-      PropsBrace('{'),
-      head,
-      isNull(body) && PropsBrace('}'),
-    ],
-    body: isNull(body)
-      ? null
-      : [
-        body,
-        Line([
-          serializeIndent(currentIndent, config),
-          tail,
-          PropsBrace('}'),
-        ]),
-      ],
-    tail: null,
+    head: sanitizeLineElements([
+      { type: TYPE_PROPS_BRACE, value: '{' },
+      ...head,
+      body.length === 0 && ({ type: TYPE_PROPS_BRACE, value: '}' }),
+    ]),
+    body: sanitizeLines([
+      ...body,
+      body.length > 0 && ({
+        path,
+        elements: [
+          serializeIndent(currentIndent),
+          ...tail,
+          { type: TYPE_PROPS_BRACE, value: '}' },
+        ],
+      }),
+    ]),
+    tail: [],
   }
 }
 
-export const serializeProps = (props: any, currentIndent: number, config: TConfig): TSerializedElement => {
-  const { components: { Line, PropsKey, PropsEquals } } = config
+export type TSerializeProps = {
+  props: any,
+  currentIndent: number,
+  path: TPath,
+  config: TConfig,
+}
 
+export const serializeProps = ({ props, currentIndent, config, path }: TSerializeProps): TSerializedElement => {
   return {
-    head: null,
-    body: Object.entries(props)
-      .map(([key, value]) => {
-        const { head, body } = serializePropertyValue(value, currentIndent, config)
+    head: [],
+    body: sanitizeLines(
+      Object.entries(props)
+        .map(([key, value], i) => {
+          const { head, body } = serializePropertyValue({
+            value,
+            currentIndent,
+            config,
+            childIndex: i,
+            path,
+          })
 
-        return [
-          Line([
-            serializeIndent(currentIndent, config),
-            PropsKey(key),
-            PropsEquals('='),
-            head,
-          ]),
-          body,
-        ]
-      }),
-    tail: null,
+          return [
+            {
+              path,
+              elements: [
+                serializeIndent(currentIndent),
+                { type: TYPE_PROPS_KEY, value: key },
+                { type: TYPE_PROPS_EQUALS, value: '=' },
+                ...head,
+              ],
+            },
+            ...body,
+          ]
+        })
+    ),
+    tail: [],
   }
 }

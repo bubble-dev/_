@@ -18,19 +18,20 @@ import codecov from '@start/plugin-lib-codecov'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
 import {
-  makeWorkspacesCommit,
+  makeCommit,
   buildBumpedPackages,
-  getWorkspacesPackagesBumps,
-  publishWorkspacesPrompt,
-  writeWorkspacesPackagesDependencies,
-  writeWorkspacesDependenciesCommit,
-  writeWorkspacesPackageVersions,
-  writeWorkspacesPublishCommit,
-  publishWorkspacesPackagesBumps,
+  getPackagesBumps,
+  publishPrompt,
+  writePackagesDependencies,
+  writeDependenciesCommit,
+  writePackageVersions,
+  writePublishCommit,
+  publishPackagesBumps,
   pushCommitsAndTags,
-  writeWorkspacesPublishTags,
-  makeWorkspacesGithubReleases,
-  sendWorkspacesSlackMessage,
+  writePublishTags,
+  makeGithubReleases,
+  sendSlackMessage,
+  writeChangelogFiles,
 } from '@auto/start-plugin'
 // @ts-ignore
 import tapDiff from 'tap-diff'
@@ -49,7 +50,7 @@ export const preparePackage = (packageDir: string) => {
   const dir = path.join('packages', packageDir)
 
   return sequence(
-    find(`${dir}/*.md`),
+    find(`${dir}/{readme,license}.md`),
     copy(`${dir}/build/`),
     buildPackageJson(dir)
   )
@@ -167,7 +168,7 @@ export const buildWebNode = async (dir: string) => {
   )
 }
 
-export const build = async (packageDir: string) => {
+const buildPackage = async (packageDir: string) => {
   const dir = path.join('packages', packageDir)
   const packageJsonPath = path.resolve(dir, 'package.json')
   const { default: packageJson } = await import(packageJsonPath)
@@ -200,6 +201,72 @@ export const build = async (packageDir: string) => {
     remove,
     parallel(tasks)(dir),
     Reflect.has(packageJson, 'buildAssets') && buildAssets(dir, packageJson.buildAssets)
+  )
+}
+
+export const build = async (...packageDirs: string[]) => {
+  if (packageDirs.length > 0) {
+    return sequence(
+      // @ts-ignore
+      ...packageDirs.map(buildPackage)
+    )
+  }
+
+  const { default: prompts } = await import('prompts')
+  const { getPackages } = await import('@auto/fs')
+  const { suggestFilter, makeRegExp } = await import('./utils')
+
+  const baseDir = path.resolve('packages')
+  const packages = await getPackages()
+  const choices = Object.keys(packages)
+    .map((name) => ({
+      title: name.replace(/^@/, ''),
+      value: path.relative(baseDir, packages[name].dir),
+    }))
+  const packageNames: string[] = []
+
+  while (true) {
+    const { packageName } = await prompts({
+      type: 'autocomplete',
+      name: 'packageName',
+      message: 'Type package name',
+      limit: 20,
+      choices: choices.filter((choice) => !packageNames.includes(choice.value)),
+      suggest: suggestFilter(packageNames.length > 0 ? '(done)' : null),
+    }) as { packageName?: string }
+
+    if (typeof packageName === 'undefined') {
+      throw new Error('Package name is required')
+    }
+
+    if (packageName === '-') {
+      break
+    }
+
+    if (packageName === '*') {
+      return sequence(
+        // @ts-ignore
+        ...choices.map(({ value }) => buildPackage(value))
+      )
+    }
+
+    if (packageName.includes('*')) {
+      const regExp = makeRegExp(packageName)
+      const filteredpackages = choices
+        .map(({ value }) => value)
+        .filter((value) => regExp.test(value))
+
+      packageNames.push(...filteredpackages)
+
+      continue
+    }
+
+    packageNames.push(packageName)
+  }
+
+  return sequence(
+    // @ts-ignore
+    ...packageNames.map(buildPackage)
   )
 }
 
@@ -264,7 +331,7 @@ export const commit = async () => {
     autoNamePrefix,
   }
 
-  return makeWorkspacesCommit(prefixes, workspacesOptions)
+  return makeCommit(prefixes, workspacesOptions)
 }
 
 export const publish = async () => {
@@ -273,19 +340,17 @@ export const publish = async () => {
       initialType,
       autoNamePrefix,
       zeroBreakingChangeType,
-      github,
-      slack,
+      npm,
       shouldAlwaysBumpDependents,
       shouldMakeGitTags,
       shouldMakeGitHubReleases,
       shouldSendSlackMessage,
+      shouldWriteChangelogFiles,
     },
   } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
 
-  const npmOptions: TNpmOptions = {
-    publishSubDirectory: 'build/',
-  }
+  const npmOptions: TNpmOptions = npm || {}
   const workspacesOptions: TWorkspacesOptions = {
     autoNamePrefix,
   }
@@ -297,28 +362,36 @@ export const publish = async () => {
     initialType,
   }
   const githubOptions: TGithubOptions = {
-    ...github,
     token: process.env.AUTO_GITHUB_TOKEN as string,
+    username: process.env.AUTO_GITHUB_USERNAME as string,
+    repo: process.env.AUTO_GITHUB_REPO as string,
   }
   const slackOptions: TSlackOptions = {
-    ...slack,
     token: process.env.AUTO_SLACK_TOKEN as string,
+    channel: process.env.AUTO_SLACK_CHANNEL as string,
+    username: process.env.AUTO_SLACK_USERNAME as string,
+    iconEmoji: process.env.AUTO_SLACK_ICON_EMOJI as string,
+    colors: {
+      major: process.env.AUTO_SLACK_COLOR_MAJOR as string,
+      minor: process.env.AUTO_SLACK_COLOR_MINOR as string,
+      patch: process.env.AUTO_SLACK_COLOR_PATCH as string,
+    },
   }
 
-  // TODO: refactor Auto options into one config
   return sequence(
-    getWorkspacesPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
-    publishWorkspacesPrompt(prefixes),
-    buildBumpedPackages(build),
-    writeWorkspacesPackagesDependencies,
-    writeWorkspacesDependenciesCommit(prefixes),
-    writeWorkspacesPackageVersions,
-    writeWorkspacesPublishCommit(prefixes, workspacesOptions),
-    shouldMakeGitTags && writeWorkspacesPublishTags(workspacesOptions),
+    getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
+    publishPrompt(prefixes),
+    buildBumpedPackages(buildPackage),
+    writePackagesDependencies,
+    writeDependenciesCommit(prefixes),
+    writePackageVersions,
+    shouldWriteChangelogFiles && writeChangelogFiles(prefixes),
+    writePublishCommit(prefixes, workspacesOptions),
+    shouldMakeGitTags && writePublishTags(workspacesOptions),
     buildBumpedPackages(preparePackage),
-    publishWorkspacesPackagesBumps(npmOptions),
+    publishPackagesBumps(npmOptions),
     pushCommitsAndTags,
-    shouldMakeGitHubReleases && makeWorkspacesGithubReleases(prefixes, workspacesOptions, githubOptions),
-    shouldSendSlackMessage && sendWorkspacesSlackMessage(prefixes, workspacesOptions, slackOptions)
+    shouldMakeGitHubReleases && makeGithubReleases(prefixes, workspacesOptions, githubOptions),
+    shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions)
   )
 }

@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "install",
+      "label": "⏬ install",
       "type": "shell",
       "command": "yarn install",
       "presentation": {
@@ -11,36 +11,36 @@
       "problemMatcher": []
     },
     {
-      "label": "lint",
+      "label": "🚷 lint",
       "type": "shell",
-      "command": "./node_modules/.bin/start lint",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js lint",
       "presentation": {
         "focus": true
       },
       "problemMatcher": []
     },
     {
-      "label": "test",
+      "label": "✅ test",
       "type": "shell",
-      "command": "./node_modules/.bin/start test",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js test",
       "presentation": {
         "focus": true
       },
       "problemMatcher": []
     },
     {
-      "label": "commit",
+      "label": "➕ commit",
       "type": "shell",
-      "command": "./node_modules/.bin/start commit",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js commit",
       "presentation": {
         "focus": true
       },
       "problemMatcher": []
     },
     {
-      "label": "publish",
+      "label": "📦 publish",
       "type": "shell",
-      "command": "./node_modules/.bin/start publish",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js publish",
       "presentation": {
         "focus": true
       },

@@ -1,9 +1,14 @@
-import { TConfig } from './types'
+import { TYPE_WHITESPACE } from './constants'
 
-export const serializeIndent = (indent: number, { whitespaceChar, components: { Whitespace } }: TConfig) => (
-  Whitespace(
-    new Array(indent)
-      .fill(whitespaceChar)
-      .join('')
-  )
-)
+export const serializeIndent = (currentIndent: number) => {
+  if (currentIndent === 0) {
+    return null
+  }
+
+  return {
+    type: TYPE_WHITESPACE,
+    value: new Array(currentIndent)
+      .fill(' ')
+      .join(''),
+  }
+}

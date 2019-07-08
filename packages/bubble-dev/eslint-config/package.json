@@ -1,6 +1,6 @@
 {
   "name": "@bubble-dev/eslint-config",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
@@ -8,9 +8,6 @@
   "license": "MIT",
   "engines": {
     "node": ">=8.6.0"
-  },
-  "publishConfig": {
-    "access": "public"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^1.9.0",
@@ -20,6 +17,6 @@
   },
   "peerDependencies": {
     "eslint": "^5.16.0",
-    "typescript": "^3.4.1"
+    "typescript": "^3.5.2"
   }
 }

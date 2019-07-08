@@ -1,6 +1,6 @@
 {
   "name": "@primitives/text",
-  "version": "0.6.1",
+  "version": "0.7.1",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -11,13 +11,9 @@
   "engines": {
     "node": ">=8.6.0"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "sideEffects": false,
   "dependencies": {
     "stili": "^0.1.0",
-    "elegir": "^0.3.1",
     "refun": "^0.3.0",
     "tsfn": "^0.1.0"
   },

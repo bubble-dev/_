@@ -1,94 +1,18 @@
-import { ComponentClass, FC } from 'react'
-import {
-  filterProps,
-  hasKeys,
-  INITIAL_CHILD_DEPTH,
-  getDisplayName,
-  isValidChildren,
-} from './utils'
-import { TConfig, TSerializedElement } from './types'
-import { serializeProps } from './serialize-props'
-import { serializeChildren } from './serialize-children'
+import { FC } from 'react'
+import { TConfig, TLine } from './types'
+import { serializeElement } from './serialize-element'
+import { getDisplayName } from './utils'
 
-export const serializeComponent = (Component: ComponentClass<any> | FC<any>, { children, ...props }: any, config: TConfig): TSerializedElement => {
-  const { indent, components: { ComponentBracket, ComponentName, Line } } = config
+export const serializeComponent = (Component: FC<any>, props: any, config: TConfig): TLine[] => {
   const name = getDisplayName(Component)
-  const hasChildren = isValidChildren(children)
-  const filteredProps = filterProps(props)
-  const hasProps = hasKeys(filteredProps)
+  const { body } = serializeElement({
+    name,
+    currentIndent: 0,
+    childIndex: 0,
+    props,
+    config,
+    path: [],
+  })
 
-  if (!hasProps && !hasChildren) {
-    return {
-      head: null,
-      body: Line([
-        ComponentBracket('<'),
-        ComponentName(name),
-        ComponentBracket('/>'),
-      ]),
-      tail: null,
-    }
-  }
-
-  if (hasProps && !hasChildren) {
-    const { body } = serializeProps(filteredProps, indent, config)
-
-    return {
-      head: null,
-      body: [
-        Line([
-          ComponentBracket('<'),
-          ComponentName(name),
-        ]),
-        body,
-        Line(ComponentBracket('/>')),
-      ],
-      tail: null,
-    }
-  }
-
-  if (!hasProps && hasChildren) {
-    const { body } = serializeChildren(children, indent, INITIAL_CHILD_DEPTH, config)
-
-    return {
-      head: null,
-      body: [
-        Line([
-          ComponentBracket('<'),
-          ComponentName(name),
-          ComponentBracket('>'),
-        ]),
-        body,
-        Line([
-          ComponentBracket('</'),
-          ComponentName(name),
-          ComponentBracket('>'),
-        ]),
-      ],
-      tail: null,
-    }
-  }
-
-  const { body: propsBody } = serializeProps(filteredProps, indent, config)
-  const { body: childrenBody } = serializeChildren(children, indent, INITIAL_CHILD_DEPTH, config)
-
-  return {
-    head: null,
-    body: [
-      Line([
-        ComponentBracket('<'),
-        ComponentName(name),
-      ]),
-      propsBody,
-      Line(
-        ComponentBracket('>')
-      ),
-      childrenBody,
-      Line([
-        ComponentBracket('</'),
-        ComponentName(name),
-        ComponentBracket('>'),
-      ]),
-    ],
-    tail: null,
-  }
+  return body
 }

@@ -1,108 +1,135 @@
 /* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
-import { TConfig, TSerializedElement } from './types'
+import { TConfig, TSerializedElement, TPath, TLineElement } from './types'
 import { serializeIndent } from './serialize-indent'
-import { getElementName, isNull, isNumber, isString } from './utils'
+import { isNumber, isString, getElementName, sanitizeLines } from './utils'
 import { serializeElement } from './serialize-element'
+import { TYPE_VALUE_NUMBER, TYPE_VALUE_STRING } from './constants'
 
-const serializeChildrenValue = (value: any, currentIndent: number, childDepth: number, config: TConfig): TSerializedElement => {
-  const {
-    maxChildrenDepth,
-    components: { Line, CommentBrace, Comment, ValueString },
-  } = config
+type TSerializeChildrenValue = {
+  value: any,
+  currentIndent: number,
+  childIndex: number,
+  config: TConfig,
+  path: TPath,
+}
 
+const serializeChildrenValue = ({ value, currentIndent, childIndex, config, path }: TSerializeChildrenValue): TSerializedElement => {
   if (isValidElement(value)) {
-    if (childDepth >= maxChildrenDepth) {
-      return {
-        head: null,
-        body: (
-          Line([
-            serializeIndent(currentIndent, config),
-            CommentBrace('{'),
-            Comment(`/* ${getElementName(value)} */`),
-            CommentBrace('}'),
-          ])
-        ),
-        tail: null,
-      }
-    }
-
-    return serializeElement(value, currentIndent, childDepth, config)
+    return serializeElement({
+      name: getElementName(value),
+      props: value.props,
+      currentIndent,
+      childIndex,
+      config,
+      path,
+    })
   }
 
-  if (isString(value) || isNumber(value)) {
+  if (isNumber(value)) {
     return {
-      head: ValueString(value),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_NUMBER, value }],
+      body: [],
+      tail: [],
+    }
+  }
+
+  if (isString(value)) {
+    return {
+      head: [{ type: TYPE_VALUE_STRING, value }],
+      body: [],
+      tail: [],
     }
   }
 
   return {
-    head: null,
-    body: null,
-    tail: null,
+    head: [],
+    body: [],
+    tail: [],
   }
 }
 
-export const serializeChildren = (children: any, currentIndent: number, childDepth: number, config: TConfig): TSerializedElement => {
-  const { components: { Line } } = config
+export type TSerializeChildren = {
+  children: any,
+  currentIndent: number,
+  config: TConfig,
+  path: TPath,
+}
 
+export const serializeChildren = ({ children, currentIndent, config, path }: TSerializeChildren): TSerializedElement => {
   if (Array.isArray(children)) {
     const lines = []
-    let line = []
+    let lineElements: TLineElement[] = []
+    let childIndex = 0
 
     for (const child of children) {
-      const { head, body } = serializeChildrenValue(child, currentIndent, childDepth, config)
+      const { head, body } = serializeChildrenValue({
+        value: child,
+        currentIndent,
+        childIndex,
+        config,
+        path,
+      })
 
-      if (!isNull(head)) {
-        line.push(head)
+      if (head.length > 0) {
+        lineElements.push(...head)
       }
 
-      if (!isNull(body)) {
-        if (line.length > 0) {
-          lines.push(
-            Line([
-              serializeIndent(currentIndent, config),
-              line,
-            ])
-          )
+      if (body.length > 0) {
+        if (lineElements.length > 0) {
+          lines.push({
+            path,
+            elements: [
+              serializeIndent(currentIndent),
+              ...lineElements,
+            ],
+          })
         }
 
-        lines.push(body)
-        line = []
+        lines.push(...body)
+        lineElements = []
       }
+
+      childIndex += 1
     }
 
-    if (line.length > 0) {
-      lines.push((
-        Line([
-          serializeIndent(currentIndent, config),
-          line,
-        ])
-      ))
+    if (lineElements.length > 0) {
+      lines.push({
+        path,
+        elements: [
+          serializeIndent(currentIndent),
+          ...lineElements,
+        ],
+      })
     }
 
     return {
-      head: null,
-      body: lines.length > 0 ? lines : null,
-      tail: null,
+      head: [],
+      body: sanitizeLines(lines),
+      tail: [],
     }
   }
 
-  const { head, body } = serializeChildrenValue(children, currentIndent, childDepth, config)
+  const { head, body } = serializeChildrenValue({
+    value: children,
+    currentIndent,
+    childIndex: 0,
+    config,
+    path,
+  })
 
   return {
-    head: null,
-    body: [
-      !isNull(head) && (
-        Line([
-          serializeIndent(currentIndent, config),
-          head,
-        ])
-      ),
-      body,
-    ],
-    tail: null,
+    head: [],
+    body: sanitizeLines([
+      head.length > 0 && ({
+        path,
+        elements: [
+          serializeIndent(currentIndent),
+          ...head,
+        ],
+      }),
+      ...body,
+    ]),
+    tail: [],
   }
 }

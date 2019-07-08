@@ -3,23 +3,33 @@
   "description": "_",
   "workspaces": [
     "packages/auto/*",
-    "packages/bubble-dev/*",
-    "packages/fixdeps",
     "packages/autoprops",
+    "packages/bubble-dev/*",
+    "packages/codecov-lite",
     "packages/colorido",
+    "packages/copie",
+    "packages/dleet",
+    "packages/ekst",
     "packages/elegir",
     "packages/fantasy-color/*",
+    "packages/fixdeps",
     "packages/lada/*",
+    "packages/math-playground",
+    "packages/mocku",
+    "packages/move-path",
+    "packages/pifs",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",
     "packages/refun",
     "packages/rn-fonts",
-    "packages/math-playground",
+    "packages/spyfn",
     "packages/spyt",
+    "packages/start/*",
     "packages/stili",
     "packages/syntx",
     "packages/tsfn",
+    "packages/typeon",
     "packages/x-ray/*"
   ],
   "resolutions": {
@@ -37,7 +47,10 @@
     "eslint": "^5.16.0",
     "mocku": "^0.5.0",
     "spyfn": "^0.2.0",
-    "typescript": "bubble-dev/TypeScript#ext-3.4.1"
+    "typescript": "bubble-dev/TypeScript#ext-3.5.2"
+  },
+  "scripts": {
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",
@@ -45,14 +58,15 @@
       "initialType": "minor",
       "autoNamePrefix": "@",
       "zeroBreakingChangeType": "minor",
-      "github": {
-        "username": "bubble-dev",
-        "repo": "_"
+      "npm": {
+        "publishSubDirectory": "build",
+        "access": "public"
       },
       "shouldAlwaysBumpDependents": false,
       "shouldMakeGitTags": true,
-      "shouldMakeGitHubReleases": true,
-      "shouldSendSlackMessage": false
+      "shouldMakeGitHubReleases": false,
+      "shouldSendSlackMessage": false,
+      "shouldWriteChangelogFiles": true
     }
   },
   "eslintConfig": {

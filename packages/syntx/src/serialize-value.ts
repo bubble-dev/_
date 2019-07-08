@@ -1,92 +1,97 @@
 /* eslint-disable import/no-cycle */
 import { isValidElement } from 'react'
-import { TConfig, TSerializedElement } from './types'
+import { TConfig, TSerializedElement, TPath } from './types'
 import { serializeObject } from './serialize-object'
 import { serializeArray } from './serialize-array'
 import { serializeElement } from './serialize-element'
-import {
-  INITIAL_CHILD_DEPTH,
-  isArray,
-  isBoolean,
-  isFunction,
-  isNull,
-  isNumber,
-  isObject,
-  isSymbol,
-} from './utils'
+import { isArray, isBoolean, isFunction, isNull, isNumber, isObject, isSymbol, getElementName } from './utils'
+import { TYPE_VALUE_FUNCTION, TYPE_VALUE_NULL, TYPE_VALUE_NUMBER, TYPE_VALUE_BOOLEAN, TYPE_VALUE_SYMBOL, TYPE_VALUE_STRING, TYPE_QUOTE } from './constants'
 
-export const serializeValue = (value: any, indent: number, config: TConfig): TSerializedElement => {
-  const {
-    components: {
-      Quote,
-      ValueBoolean,
-      ValueFunction,
-      ValueNull,
-      ValueNumber,
-      ValueString,
-      ValueSymbol,
-    },
-  } = config
+export type TSerializeValue = {
+  value: any,
+  currentIndent: number,
+  childIndex: number,
+  config: TConfig,
+  path: TPath,
+}
 
+export const serializeValue = ({ value, currentIndent, config, childIndex, path }: TSerializeValue): TSerializedElement => {
   if (isValidElement(value)) {
-    return serializeElement(value, indent, INITIAL_CHILD_DEPTH, config)
+    return serializeElement({
+      name: getElementName(value),
+      props: value.props,
+      currentIndent,
+      childIndex,
+      config,
+      path,
+    })
   }
 
   if (isObject(value)) {
-    return serializeObject(value, indent, config)
+    return serializeObject({
+      obj: value,
+      currentIndent,
+      config,
+      path,
+    })
   }
 
   if (isArray(value)) {
-    return serializeArray(value, indent, config)
+    return serializeArray({
+      arr: value,
+      currentIndent,
+      config,
+      path,
+    })
   }
 
   if (isFunction(value)) {
     return {
-      head: ValueFunction(`() => {}`),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_FUNCTION, value }],
+      body: [],
+      tail: [],
     }
   }
 
   if (isNull(value)) {
     return {
-      head: ValueNull('null'),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_NULL, value }],
+      body: [],
+      tail: [],
     }
   }
 
   if (isNumber(value)) {
     return {
-      head: ValueNumber(value),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_NUMBER, value }],
+      body: [],
+      tail: [],
     }
   }
 
   if (isBoolean(value)) {
     return {
-      head: ValueBoolean(String(value)),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_BOOLEAN, value }],
+      body: [],
+      tail: [],
     }
   }
 
   if (isSymbol(value)) {
     return {
-      head: ValueSymbol(value.description),
-      body: null,
-      tail: null,
+      head: [{ type: TYPE_VALUE_SYMBOL, value }],
+      body: [],
+      tail: [],
     }
   }
 
   return {
     head: [
-      Quote('\''),
-      ValueString(`${String(value).replace(/'/g, '"')}`),
-      Quote('\''),
+      { type: TYPE_QUOTE, value: '\'' },
+      { type: TYPE_VALUE_STRING, value: String(value).replace(/'/g, '"') },
+      { type: TYPE_QUOTE, value: '\'' },
     ],
-    body: null,
-    tail: null,
+    body: [],
+    tail: [],
   }
 }

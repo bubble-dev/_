@@ -76,7 +76,6 @@ module.exports = {
     'no-self-assign': 2,
     'no-self-compare': 2,
     'no-sequences': 2,
-    'no-throw-literal': 2,
     'no-unmodified-loop-condition': 2,
     'no-useless-call': 2,
     'no-useless-catch': 2,
@@ -84,7 +83,6 @@ module.exports = {
     'no-useless-escape': 2,
     'no-useless-return': 2,
     'no-with': 2,
-    'prefer-promise-reject-errors': 2,
     'require-await': 2,
     'wrap-iife': [2, 'inside'],
     yoda: 2,
@@ -133,7 +131,7 @@ module.exports = {
     'no-lonely-if': 2,
     'no-mixed-spaces-and-tabs': 2,
     'no-multi-assign': 2,
-    'no-multiple-empty-lines': 2,
+    'no-multiple-empty-lines': [2, { max: 1 }],
     'no-nested-ternary': 1,
     'no-new-object': 2,
     'no-trailing-spaces': 2,
@@ -189,6 +187,41 @@ module.exports = {
         ],
         next: [
           'block',
+          'block-like',
+        ],
+      },
+      {
+        blankLine: 'always',
+        prev: [
+          'block',
+          'block-like',
+        ],
+        next: [
+          'const',
+          'let',
+          'var',
+        ],
+      },
+      {
+        blankLine: 'always',
+        prev: [
+          '*',
+        ],
+        next: [
+          'break',
+        ],
+      },
+      {
+        blankLine: 'any',
+        prev: [
+          'const',
+          'let',
+          'var',
+        ],
+        next: [
+          'const',
+          'let',
+          'var',
         ],
       },
       {

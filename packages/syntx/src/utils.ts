@@ -1,12 +1,11 @@
 import { ReactElement, ComponentClass, FC, isValidElement } from 'react'
+import { TLine, TLineElement } from './types'
 
 export const hasKeys = (obj: any) => Object.keys(obj).length > 0
 
 export const getDisplayName = (component: ComponentClass<any> | FC<any>) => {
   return component.displayName || component.name
 }
-
-export const INITIAL_CHILD_DEPTH = 0
 
 export const isUndefined = (value: any): value is undefined => typeof value === 'undefined'
 
@@ -63,4 +62,48 @@ export const getElementName = (element: ReactElement<any>) => {
   }
 
   return getDisplayName(element.type)
+}
+
+export const flatten = (array: any[]) => {
+  const flattened: any[] = []
+
+  const flat = (array: any[]) => {
+    array.forEach((el) => {
+      if (Array.isArray(el)) {
+        flat(el)
+      } else {
+        flattened.push(el)
+      }
+    })
+  }
+
+  flat(array)
+
+  return flattened
+}
+
+export const isLine = (obj: any): obj is TLine => {
+  return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
+}
+
+export const isLineElement = (obj: any): obj is TLineElement => {
+  return !isNull(obj) && !isBoolean(obj) && !isUndefined(obj)
+}
+
+export const sanitizeLineElements = (lineElements: any[]): TLineElement[] => {
+  return lineElements.filter(isLineElement)
+}
+
+export const sanitizeLines = (lines: any[]): TLine[] => {
+  return flatten(lines)
+    .reduce((result, line) => {
+      if (isLine(line)) {
+        result.push({
+          ...line,
+          elements: sanitizeLineElements(line.elements),
+        })
+      }
+
+      return result
+    }, [] as TLine[])
 }
