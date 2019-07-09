@@ -14,9 +14,8 @@ export type TOptions = {
 
 export const run = async (options: TOptions) => {
   await runEmulator({
-    projectPath: options.projectPath,
     isHeadless: false,
-    portsToForward: [8081, ...options.portsToForward],
+    portsToForward: [Number(PORT), ...options.portsToForward],
   })
 
   return Promise.all([

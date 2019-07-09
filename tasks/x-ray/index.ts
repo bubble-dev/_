@@ -109,36 +109,29 @@ export const checkAndroidScreenshots = (component = '**') =>
     xRayAndroidScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
   )
 
-export const buildXRayIos = (packageDir: string) => {
-  const projectPath = 'node_modules/.rebox/X-Ray/ios/'
+export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
+  plugin('build', () => async () => {
+    const { copyTemplate, buildDebug } = await import('@rebox/ios')
+    const { linkDependencyIos } = await import('rn-link')
 
-  return sequence(
-    find(projectPath),
-    remove,
-    plugin('build', () => async () => {
-      const { copyTemplate, buildDebug } = await import('@rebox/ios')
-      const { linkDependencyIos } = await import('rn-link')
+    const projectPath = await copyTemplate('X-Ray')
 
-      await copyTemplate(projectPath)
-
-      linkDependencyIos({
-        projectPath,
-        dependencyPath: 'node_modules/react-native-view-shot/ios',
-      })
-
-      await buildDebug({
-        projectPath,
-        outputPath: path.join(packageDir, 'build'),
-        osVersion: 'latest',
-        platformName: 'iOS Simulator',
-        appName: 'X-Ray',
-        appId: 'org.bubble-dev.xray',
-      })
+    linkDependencyIos({
+      projectPath,
+      dependencyPath: 'node_modules/react-native-view-shot/ios',
     })
-  )
-}
 
-export const buildXRayAndroid = (packageDir: string) => {
+    await buildDebug({
+      projectPath,
+      outputPath: path.join(packageDir, 'build'),
+      osVersion: 'latest',
+      platformName: 'iOS Simulator',
+      appName: 'X-Ray',
+      appId: 'org.bubble-dev.xray',
+    })
+  })
+
+export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots-app/') => {
   const projectPath = 'node_modules/.rebox/X-Ray/android/'
 
   return sequence(

@@ -54,8 +54,6 @@ export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-android
 
   try {
     killEmulator = await runEmulator({
-      // TODO: get rid of this path
-      projectPath: 'node_modules/.rebox/X-Ray/android/',
       isHeadless: false,
       portsToForward: [3002, 8081],
     })
