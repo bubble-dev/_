@@ -7,6 +7,7 @@ const { green, yellow } = require('chalk')
 const lighthouseLogger = require('lighthouse-logger')
 const y = require('yargs')
 const { log, error, executeWithMessage } = require('./utils')
+const fs = require('fs')
 const {
   getReportFolder,
   getReportPath,
@@ -14,6 +15,7 @@ const {
   generateDigests,
   getMetricStats,
 } = require('./lighthouse-utils')
+const makeDir = require('make-dir')
 
 // TODO: Make it possible to read from a lighthouse.config.js file to get some configs
 // such as baseURL
@@ -174,8 +176,17 @@ function launchChromeAndRunLighthouse(url, opts, config = perfRun) {
                 }
 
                 const reportFolder = getReportFolder(hash)
+                let reportPromise
 
-                return executeWithMessage(undefined, `yarn rimraf ${reportFolder} && mkdir ${reportFolder}`)()
+                // eslint-disable-next-line no-sync
+                if (fs.existsSync(reportFolder)) {
+                  reportPromise = executeWithMessage(undefined, `yarn rimraf ${reportFolder}`)()
+                    .then(() => makeDir(reportFolder))
+                } else {
+                  reportPromise = makeDir(reportFolder)
+                }
+
+                return reportPromise
                   .then(
                     () => generateDigests(digests, hash)
                       .then(() => (

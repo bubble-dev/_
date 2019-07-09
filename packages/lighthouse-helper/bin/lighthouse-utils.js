@@ -196,9 +196,9 @@ const generateReportForHash = (chrome, results, reportFormat, reportFolder) => (
  * @typedef improvements { [metricName: string]: { improvement: number | string, message: string | undefined }
  * @typedef regressions { [metricName: string]: { regression: number | string, message: string | undefined, infoMessage: string | undefined }
  * @param { regressions: regressions, improvements: improvements }} digest
- * @param string workingBranch
+ * @param string hash
  */
-function generateDigests(digest, workingBranch) {
+function generateDigests(digest, hash) {
   const digests = Object.keys(digest)
 
   return Promise.all(digests.map((digestName) => {
@@ -207,7 +207,7 @@ function generateDigests(digest, workingBranch) {
       return Promise.resolve(true)
     }
 
-    return generateReportForHash(undefined, { report: JSON.stringify(digest[digestName], null, 2) }, 'json')({ stdout: workingBranch, fileName: `${digestName}-digest` })
+    return generateReportForHash(undefined, { report: JSON.stringify(digest[digestName], null, 2) }, 'json')({ hash, fileName: `${digestName}-digest` })
   }))
 }
 
