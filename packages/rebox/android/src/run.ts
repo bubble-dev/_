@@ -1,20 +1,22 @@
+import path from 'path'
 import execa from 'execa'
+import { runEmulator } from './run-emulator'
 
 // https://github.com/facebook/react-native/issues/9145
 // https://github.com/facebook/react-native/pull/23616
 const PORT = '8081'
 
 export type TOptions = {
+  projectPath: string,
   entryPointPath: string,
+  portsToForward: number[],
 }
 
 export const run = async (options: TOptions) => {
-  await execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
-    stdout: process.stdout,
-    stderr: process.stderr,
-    env: {
-      FORCE_COLOR: '1',
-    },
+  await runEmulator({
+    projectPath: options.projectPath,
+    isHeadless: false,
+    portsToForward: [8081, ...options.portsToForward],
   })
 
   return Promise.all([
@@ -45,7 +47,7 @@ export const run = async (options: TOptions) => {
         PORT,
         '--no-packager',
         '--root',
-        'node_modules/@rebox/android',
+        path.join(options.projectPath, '..'),
       ],
       {
         stdout: process.stdout,

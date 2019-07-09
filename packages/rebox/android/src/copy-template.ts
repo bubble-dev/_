@@ -16,7 +16,7 @@ export const copyTemplate = async (outputPath: string) => {
   try {
     await pAccess(outputPath)
   } catch (e) {
-    const templatePath = path.join(path.dirname(require.resolve('../../package.json')), 'ios')
+    const templatePath = path.join(path.dirname(require.resolve('../package.json')), 'android')
     const files = await fastGlob(`${templatePath}/**/*`, globbyOptions)
 
     for (const file of files) {

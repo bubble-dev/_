@@ -1,3 +1,5 @@
-export * from './build'
-export * from './copy'
+export * from './build-debug'
+export * from './build-js-bundle'
+export * from './build-release'
+export * from './copy-template'
 export * from './run'

@@ -24,7 +24,7 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
       '--progress',
       'none',
       '--bundle-output',
-      bundlePath
+      bundlePath,
     ],
     {
       stderr: process.stderr,

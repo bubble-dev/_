@@ -5,10 +5,11 @@ import execa from 'execa'
 const PORT = '8082'
 
 export type TRunIosOptions = {
+  projectPath: string,
   entryPointPath: string,
 }
 
-export const runIos = (options: TRunIosOptions) => Promise.all([
+export const run = (options: TRunIosOptions) => Promise.all([
   execa(
     'haul',
     [
@@ -36,7 +37,7 @@ export const runIos = (options: TRunIosOptions) => Promise.all([
       PORT,
       '--no-packager',
       '--project-path',
-      'node_modules/@rebox/ios/ios',
+      options.projectPath,
     ],
     {
       stdout: process.stdout,
