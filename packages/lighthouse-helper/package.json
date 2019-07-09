@@ -10,7 +10,9 @@
     "chalk": "^2.4.2",
     "chrome-launcher": "^0.10.7",
     "lighthouse": "^5.1.0",
+    "make-dir": "^3.0.0",
     "puppeteer": "^1.18.1",
+    "rimraf": "^2.6.3",
     "yargs": "^13.2.4"
   }
 }
