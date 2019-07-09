@@ -1,2 +1,0 @@
-import file0 from '/Users/kir.belevich/Projects/bubble-dev/packages/primitives/button/test/screenshots.tsx'
-export default [{ path: '/Users/kir.belevich/Projects/bubble-dev/packages/primitives/button/test/screenshots.tsx', content: file0 }]
