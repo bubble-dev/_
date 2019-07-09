@@ -17,6 +17,7 @@
     "packages/refun",
     "packages/rn-fonts",
     "packages/rn-link",
+    "packages/rn-resolve",
     "packages/spyt",
     "packages/stili",
     "packages/syntx",

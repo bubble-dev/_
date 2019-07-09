@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import { createReadStream } from 'fs'
 import plugin, { StartFilesProps } from '@start/plugin'
 import execa from 'execa'
+import { rnResolve } from 'rn-resolve'
 
 const BUNDLE_PATH = '.rebox/android/index.android.bundle'
 const APP_PATH = '.rebox/build/X-Ray.apk'
@@ -11,9 +12,11 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
   const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
   const { buildJsBundle } = await import('@rebox/android')
 
-  await prepareFiles(files.map((file) => file.path))
+  const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
+
+  await prepareFiles(entryPointPath, files.map((file) => file.path))
   await buildJsBundle({
-    entryPointPath: '@x-ray/native-screenshots-app',
+    entryPointPath,
     outputPath: BUNDLE_PATH,
   })
 
@@ -52,37 +55,21 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
   let emulatorProcess = null
 
   try {
-    // https://developer.android.com/studio/run/emulator-commandline.html
-    // https://github.com/voidxv/avd_creation_script
-    emulatorProcess = execa(
-      `${process.env.ANDROID_HOME}/emulator/emulator`,
-      [
-        '-avd',
-        'xray',
-        '-gpu',
-        'host',
-        '-no-window',
-        '-no-audio',
-        '-memory',
-        '2048',
-        '-netfast',
-        '-accel',
-        'on',
-        '-no-boot-anim',
-        '-no-snapshot',
-      ],
-      {
-        stderr: process.stderr,
-      }
-    )
+    emulatorProcess = execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
+      stderr: process.stderr,
+      env: {
+        FORCE_COLOR: '1',
+      },
+    })
 
-    // https://stackoverflow.com/questions/41151883/wait-for-android-emulator-to-be-running-before-next-shell-command
+    await emulatorProcess
+
     await execa(
       `${process.env.ANDROID_HOME}/platform-tools/adb`,
       [
-        'wait-for-device',
-        'shell',
-        'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;',
+        'reverse',
+        'tcp:3001',
+        'tcp:3001',
       ]
     )
 
@@ -92,15 +79,6 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
         'reverse',
         'tcp:3002',
         'tcp:3002',
-      ]
-    )
-
-    await execa(
-      `${process.env.ANDROID_HOME}/platform-tools/adb`,
-      [
-        'reverse',
-        'tcp:8081',
-        'tcp:8081',
       ]
     )
 

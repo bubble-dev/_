@@ -8,7 +8,7 @@ export type TOptions = {
   entryPointPath: string,
 }
 
-export const runAndroid = async (options: TOptions) => {
+export const run = async (options: TOptions) => {
   await execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
     stdout: process.stdout,
     stderr: process.stderr,
