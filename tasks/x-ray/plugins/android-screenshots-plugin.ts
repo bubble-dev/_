@@ -1,23 +1,21 @@
-/* eslint-disable import/named */
-import { createServer } from 'http'
-import { createReadStream } from 'fs'
 import plugin, { StartFilesProps } from '@start/plugin'
-import execa from 'execa'
-import { rnResolve } from 'rn-resolve'
 
-const BUNDLE_PATH = '.rebox/android/index.android.bundle'
-const APP_PATH = '.rebox/build/X-Ray.apk'
-
-export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ logMessage }) => async ({ files }) => {
+export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ logMessage }) => async ({ files }) => {
+  const path = await import('path')
+  const { createServer } = await import('http')
+  const { createReadStream } = await import('fs')
+  const { default: execa } = await import('execa')
+  const { rnResolve } = await import('rn-resolve')
+  const { buildJsBundle, runEmulator } = await import('@rebox/android')
   const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
-  const { buildJsBundle } = await import('@rebox/android')
 
   const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
 
   await prepareFiles(entryPointPath, files.map((file) => file.path))
-  await buildJsBundle({
+
+  const bundlePath = await buildJsBundle({
     entryPointPath,
-    outputPath: BUNDLE_PATH,
+    outputPath: path.dirname(appPath),
   })
 
   logMessage('bundle is ready')
@@ -38,7 +36,7 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
 
       res.writeHead(200, { 'Content-Type': 'application/javascript' })
 
-      const fileStream = createReadStream(BUNDLE_PATH)
+      const fileStream = createReadStream(bundlePath)
 
       fileStream
         .on('error', (e) => {
@@ -52,41 +50,21 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
     })
     .listen(8081, '127.0.0.1')
 
-  let emulatorProcess = null
+  let killEmulator = null
 
   try {
-    emulatorProcess = execa('bash', [require.resolve('@rebox/android/android/run-android-emulator.sh')], {
-      stderr: process.stderr,
-      env: {
-        FORCE_COLOR: '1',
-      },
+    killEmulator = await runEmulator({
+      // TODO: get rid of this path
+      projectPath: 'node_modules/.rebox/X-Ray/android/',
+      isHeadless: false,
+      portsToForward: [3002, 8081],
     })
-
-    await emulatorProcess
-
-    await execa(
-      `${process.env.ANDROID_HOME}/platform-tools/adb`,
-      [
-        'reverse',
-        'tcp:3001',
-        'tcp:3001',
-      ]
-    )
-
-    await execa(
-      `${process.env.ANDROID_HOME}/platform-tools/adb`,
-      [
-        'reverse',
-        'tcp:3002',
-        'tcp:3002',
-      ]
-    )
 
     logMessage('device is ready')
 
     const runScreenshots = await runServer({ platform: 'android' })
 
-    await execa('adb', ['install', '-r', APP_PATH], {
+    await execa('adb', ['install', '-r', appPath], {
       stderr: process.stderr,
     })
 
@@ -100,8 +78,8 @@ export default plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ log
 
     await runScreenshots()
   } finally {
-    if (emulatorProcess !== null) {
-      emulatorProcess.kill()
+    if (killEmulator !== null) {
+      killEmulator()
     }
 
     httpServer.close()

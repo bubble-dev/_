@@ -7,6 +7,8 @@ export type TBuildJsBundleOptions = {
 }
 
 export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBundleOptions) => {
+  const bundlePath = path.join(outputPath, 'main.jsbundle')
+
   await execa(
     'haul',
     [
@@ -22,7 +24,7 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
       '--progress',
       'none',
       '--bundle-output',
-      path.join(outputPath, 'main.jsbundle'),
+      bundlePath
     ],
     {
       stderr: process.stderr,
@@ -32,4 +34,6 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
       },
     }
   )
+
+  return bundlePath
 }

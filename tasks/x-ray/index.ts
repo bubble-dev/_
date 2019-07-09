@@ -106,7 +106,7 @@ export const checkAndroidScreenshots = (component = '**') =>
   sequence(
     find(`packages/${component}/test/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
-    xRayAndroidScreenshots
+    xRayAndroidScreenshots('packages/x-ray/native-screenshots-app/build/X-Ray.apk')
   )
 
 export const buildXRayIos = (packageDir: string) => {

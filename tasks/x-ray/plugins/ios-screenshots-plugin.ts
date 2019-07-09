@@ -1,7 +1,4 @@
 /* eslint-disable import/named */
-import { createServer } from 'http'
-import { createReadStream } from 'fs'
-import path from 'path'
 import plugin, { StartFilesProps } from '@start/plugin'
 
 type TDeviceList = {
@@ -43,9 +40,13 @@ export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-ios-scr
     return logMessage('no files, skipping')
   }
 
+  const { createServer } = await import('http')
+  const { createReadStream } = await import('fs')
   const { default: execa } = await import('execa')
+  const { rnResolve } = await import('rn-resolve')
   const { buildJsBundle } = await import('@rebox/ios')
   const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
+
   const deviceInfo = await getDeviceInfo()
 
   if (deviceInfo === null) {
@@ -54,9 +55,12 @@ export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-ios-scr
 
   logMessage(`device id ${deviceInfo.udid}`)
 
-  await prepareFiles(files.map((file) => file.path))
-  await buildJsBundle({
-    entryPointPath: '@x-ray/native-screenshots-app',
+  const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
+
+  await prepareFiles(entryPointPath, files.map((file) => file.path))
+
+  const bundlePath = await buildJsBundle({
+    entryPointPath,
     outputPath: appPath,
   })
 
@@ -66,7 +70,7 @@ export default (appPath: string) => plugin<StartFilesProps, void>('x-ray-ios-scr
     if (req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/javascript' })
 
-      const fileStream = createReadStream(path.join(appPath, 'main.jsbundle'))
+      const fileStream = createReadStream(bundlePath)
 
       fileStream
         .on('error', (e) => {

@@ -1,3 +1,4 @@
+import path from 'path'
 import execa from 'execa'
 
 export type TBuildJsBundleOptions = {
@@ -6,6 +7,8 @@ export type TBuildJsBundleOptions = {
 }
 
 export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBundleOptions) => {
+  const bundlePath = path.join(outputPath, 'index.android.bundle')
+
   await execa(
     'haul',
     [
@@ -21,7 +24,7 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
       '--progress',
       'none',
       '--bundle-output',
-     outputPath
+      bundlePath
     ],
     {
       stderr: process.stderr,
@@ -31,4 +34,6 @@ export const buildJsBundle = async ({ entryPointPath, outputPath }: TBuildJsBund
       },
     }
   )
+
+  return bundlePath
 }
