@@ -8,12 +8,15 @@ export type TInstallAppOptions = {
 
 export const installApp = async (options: TInstallAppOptions): Promise<void> => {
   await execa(
-    'xcrun',
+    'adb',
     [
-      'simctl',
+      ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
       'install',
-      isUndefined(options.deviceId) ? 'booted' : options.deviceId,
+      '-r',
       options.appPath,
-    ]
+    ],
+    {
+      stderr: process.stderr,
+    }
   )
 }

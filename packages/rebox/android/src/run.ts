@@ -1,10 +1,11 @@
 import path from 'path'
 import execa from 'execa'
 import { runEmulator } from './run-emulator'
+import { serveJsBundle } from './serve-js-bundle'
 
 // https://github.com/facebook/react-native/issues/9145
 // https://github.com/facebook/react-native/pull/23616
-const PORT = '8081'
+const PORT = 8081
 
 export type TOptions = {
   projectPath: string,
@@ -13,49 +14,33 @@ export type TOptions = {
 }
 
 export const run = async (options: TOptions) => {
-  await runEmulator({
-    isHeadless: false,
-    portsToForward: [Number(PORT), ...options.portsToForward],
-  })
-
-  return Promise.all([
-    execa(
-      'haul',
-      [
-        'start',
-        '--port',
-        PORT,
-        '--config',
-        require.resolve('./haul.config.js'),
-      ],
-      {
-        stdin: process.stdin,
-        stdout: process.stdout,
-        stderr: process.stderr,
-        env: {
-          FORCE_COLOR: '1',
-          REBOX_ENTRY_POINT: options.entryPointPath,
-        },
-      }
-    ),
-    execa(
-      'react-native',
-      [
-        'run-android',
-        '--port',
-        PORT,
-        '--no-packager',
-        '--root',
-        path.join(options.projectPath, '..'),
-      ],
-      {
-        stdout: process.stdout,
-        stderr: process.stderr,
-        env: {
-          FORCE_COLOR: '1',
-          RCT_METRO_PORT: PORT,
-        },
-      }
-    ),
+  await Promise.all([
+    serveJsBundle({
+      entryPointPath: options.entryPointPath,
+      port: PORT,
+    }),
+    runEmulator({
+      isHeadless: false,
+      portsToForward: [PORT, ...options.portsToForward],
+    }),
   ])
+
+  await execa(
+    'react-native',
+    [
+      'run-android',
+      '--port',
+      String(PORT),
+      '--no-packager',
+      '--root',
+      path.join(options.projectPath, '..'),
+    ],
+    {
+      stderr: process.stderr,
+      env: {
+        FORCE_COLOR: '1',
+        RCT_METRO_PORT: String(PORT),
+      },
+    }
+  )
 }

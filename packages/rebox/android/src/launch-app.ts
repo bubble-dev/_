@@ -8,12 +8,17 @@ export type TLaunchAppOptions = {
 
 export const launchApp = async (options: TLaunchAppOptions): Promise<void> => {
   await execa(
-    'xcrun',
+    'adb',
     [
-      'simctl',
-      'launch',
-      isUndefined(options.deviceId) ? 'booted' : options.deviceId,
-      'org.bubble-dev.xray',
-    ]
+      ...(isUndefined(options.deviceId) ? [] : ['-s', options.deviceId]),
+      'shell',
+      'am',
+      'start',
+      '-n',
+      `${options.appId}/com.rebox.MainActivity`,
+    ],
+    {
+      stderr: process.stderr,
+    }
   )
 }
