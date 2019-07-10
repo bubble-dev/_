@@ -110,16 +110,21 @@ export const checkAndroidScreenshots = (component = '**') =>
   )
 
 export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
-  plugin('build', () => async () => {
+  plugin('build', ({ logMessage }) => async () => {
     const { copyTemplate, buildDebug } = await import('@rebox/ios')
     const { linkDependencyIos } = await import('rn-link')
 
     const projectPath = await copyTemplate('X-Ray')
 
+    logMessage(`rebox copy: ${projectPath}`)
+
     linkDependencyIos({
       projectPath,
       dependencyPath: 'node_modules/react-native-view-shot/ios',
     })
+
+    logMessage('dependencies have been linked')
+    logMessage('building...')
 
     await buildDebug({
       projectPath,
@@ -131,30 +136,28 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
     })
   })
 
-export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots-app/') => {
-  const projectPath = 'node_modules/.rebox/X-Ray/android/'
+export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots-app/') =>
+  plugin('build', ({ logMessage }) => async () => {
+    const { buildDebug, copyTemplate } = await import('@rebox/android')
+    const { linkDependencyAndroid } = await import('rn-link')
 
-  return sequence(
-    find(projectPath),
-    remove,
-    plugin('build', () => async () => {
-      const { buildDebug, copyTemplate } = await import('@rebox/android')
-      const { linkDependencyAndroid } = await import('rn-link')
+    const projectPath = await copyTemplate('X-Ray')
 
-      await copyTemplate(projectPath)
+    logMessage(`rebox copy: ${projectPath}`)
 
-      linkDependencyAndroid({
-        projectPath,
-        dependencyName: 'react-native-view-shot',
-        dependencyPath: 'node_modules/react-native-view-shot',
-      })
-
-      await buildDebug({
-        projectPath,
-        outputPath: path.join(packageDir, 'build'),
-        appName: 'X-Ray',
-        appId: 'org.bubble_dev.xray',
-      })
+    linkDependencyAndroid({
+      projectPath,
+      dependencyName: 'react-native-view-shot',
+      dependencyPath: 'node_modules/react-native-view-shot',
     })
-  )
-}
+
+    logMessage('dependencies have been linked')
+    logMessage('building...')
+
+    await buildDebug({
+      projectPath,
+      outputPath: path.join(packageDir, 'build'),
+      appName: 'X-Ray',
+      appId: 'org.bubble_dev.xray',
+    })
+  })
