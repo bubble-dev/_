@@ -164,6 +164,7 @@ const getReportPath = (dirName, format, fileName = 'report') => `${dirName}/${fi
  * @param LaunchedChrome chrome The Chrome instance
  * @param { report: object | string | array, lhr: object } results For multi format run on lighthnouse it will be an array with both formats
  * @param string reportFormat the format informed by the CLI command
+ * @param string reportFolder the desired folder destination to save the generated reports
  */
 const generateReportForHash = (chrome, results, reportFormat, reportFolder) => ({ hash, fileName }) => {
   const dirName = reportFolder || getReportFolder(hash.replace('\n', ''))
