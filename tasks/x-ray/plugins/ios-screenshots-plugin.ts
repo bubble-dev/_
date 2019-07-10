@@ -1,41 +1,7 @@
 import plugin, { StartFilesProps } from '@start/plugin'
 
-type TDeviceList = {
-  devices: {
-    [k: string]: {
-      name: string,
-      udid: string,
-      state: string,
-    }[],
-  },
-}
-
-const getDeviceInfo = async () => {
-  const { default: execa } = await import('execa')
-  const { stdout: xcrunList } = await execa('xcrun', ['simctl', 'list', '--json'])
-
-  try {
-    const devicesList = JSON.parse(xcrunList) as TDeviceList
-    const devices = devicesList.devices['iOS 11.3'] || devicesList.devices['com.apple.CoreSimulator.SimRuntime.iOS-11-3']
-
-    for (const device of devices) {
-      if (device.name === 'iPhone 7') {
-        return device
-      }
-    }
-
-    return null
-  } catch {
-    return null
-  }
-}
-
 export default (appPath: string) =>
   plugin<StartFilesProps, void>('x-ray-ios-screenshots', ({ logMessage }) => async ({ files }) => {
-    if (process.platform !== 'darwin') {
-      return logMessage('BUY A MAC')
-    }
-
     if (files.length === 0) {
       return logMessage('no files, skipping')
     }
@@ -44,16 +10,8 @@ export default (appPath: string) =>
     const { createReadStream } = await import('fs')
     const { default: execa } = await import('execa')
     const { rnResolve } = await import('rn-resolve')
-    const { buildJsBundle } = await import('@rebox/ios')
+    const { buildJsBundle, runSimulator } = await import('@rebox/ios')
     const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
-
-    const deviceInfo = await getDeviceInfo()
-
-    if (deviceInfo === null) {
-      throw new Error('Unable to find iOS 11.3 + iPhone 7 Simulator')
-    }
-
-    logMessage(`device id ${deviceInfo.udid}`)
 
     const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
 
@@ -84,10 +42,14 @@ export default (appPath: string) =>
       })
       .listen(8081, '127.0.0.1')
 
+    let killSimulator = null
+
     try {
-    // if (deviceInfo.state !== 'Booted') {
-    //   await execa('xcrun', ['simctl', 'boot', deviceInfo.udid])
-    // }
+      killSimulator = await runSimulator({
+        iOSVersion: '12.2',
+        iPhoneVersion: 7,
+        isHeadless: false,
+      })
 
       logMessage('device is ready')
 
@@ -103,7 +65,10 @@ export default (appPath: string) =>
 
       await runScreenshots()
     } finally {
-    // await execa('xcrun', ['simctl', 'shutdown', deviceInfo.udid])
+      if (killSimulator !== null) {
+        killSimulator()
+      }
+
       httpServer.close()
     }
   })
