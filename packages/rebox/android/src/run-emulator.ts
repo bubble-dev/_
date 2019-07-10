@@ -35,7 +35,7 @@ export const runEmulator = async (options: TRunEmulator): Promise<() => void> =>
       `path=${reboxAvdPath}`,
       'path.rel=avd/rebox.avd',
       'target=android-28',
-    ]
+    ].join('\n')
 
     await writeFile(reboxIniPath, reboxIniData)
 
