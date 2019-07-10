@@ -1,6 +1,6 @@
 {
   "name": "@fantasy-color/rgb-to-lab",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform RGB objects to LAB objects",
   "homepage": "https://github.com/bubble-dev/_/tree/master/packages/fantasy-color/rgb-to-lab",
   "author": "Fernando Via Canel <fernando.via@gmail.com> (https://twitter.com/xaviervia)",
@@ -14,8 +14,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@fantasy-color/types": "^0.1.0",
-    "@fantasy-color/normalize-rgb": "^0.1.0"
+    "@fantasy-color/types": "^0.1.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

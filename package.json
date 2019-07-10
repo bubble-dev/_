@@ -17,6 +17,7 @@
     "packages/math-playground",
     "packages/mocku",
     "packages/move-path",
+    "packages/pifs",
     "packages/primitives/*",
     "packages/react-autoprops",
     "packages/rebox/*",
@@ -32,6 +33,10 @@
     "packages/x-ray/*",
     "packages/lighthouse-helper"
   ],
+  "resolutions": {
+    "react": "^16.8.6",
+    "typeon": "^0.3.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@bubble-dev/eslint-config": "*",
