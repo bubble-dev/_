@@ -8,9 +8,8 @@ export default (appPath: string) =>
 
     const { createServer } = await import('http')
     const { createReadStream } = await import('fs')
-    const { default: execa } = await import('execa')
     const { rnResolve } = await import('rn-resolve')
-    const { buildJsBundle, runSimulator } = await import('@rebox/ios')
+    const { buildJsBundle, runSimulator, installApp, launchApp } = await import('@rebox/ios')
     const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
 
     const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
@@ -53,15 +52,15 @@ export default (appPath: string) =>
 
       logMessage('device is ready')
 
-      await execa('xcrun', ['simctl', 'install', 'booted', appPath])
+      await installApp({ appPath })
 
-      logMessage('x-ray app is installed')
+      logMessage('app is installed')
 
       const runScreenshots = await runServer({ platform: 'ios' })
 
-      await execa('xcrun', ['simctl', 'launch', 'booted', 'org.bubble-dev.xray'])
+      await launchApp({ appId: 'org.bubble-dev.xray' })
 
-      logMessage('x-ray app is launching')
+      logMessage('app is launched')
 
       await runScreenshots()
     } finally {
