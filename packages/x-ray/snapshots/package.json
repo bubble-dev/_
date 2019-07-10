@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@x-ray/common-utils": "^0.1.0",
-    "@x-ray/next": "^0.0.0",
+    "@x-ray/tar-fs": "^0.0.0",
     "@x-ray/serialize-react-tree": "^0.2.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",

@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.1.2",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^0.1.0",
-    "@x-ray/next": "^0.0.0",
+    "@x-ray/tar-fs": "^0.0.0",
     "imagemin-pngout": "^4.0.0",
     "pixelmatch": "^5.0.0",
     "upng-js": "^2.1.0"

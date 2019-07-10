@@ -1,5 +1,5 @@
 import { TCheckResult } from '@x-ray/common-utils'
-import { TTarFs } from '@x-ray/next'
+import { TTarFs } from '@x-ray/tar-fs'
 
 const check = (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): TCheckResult => {
   if (tar.has(snapshotName)) {

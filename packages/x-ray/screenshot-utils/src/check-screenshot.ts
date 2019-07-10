@@ -1,7 +1,7 @@
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
 import { TCheckResult } from '@x-ray/common-utils'
-import { TTarFs } from '@x-ray/next'
+import { TTarFs } from '@x-ray/tar-fs'
 import hasPngDiff from './has-png-diff'
 
 const optimizePng = imageminPngout({ strategy: 2 })

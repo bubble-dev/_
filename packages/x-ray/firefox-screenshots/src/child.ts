@@ -6,7 +6,7 @@ import fs from 'graceful-fs'
 import makeDir from 'make-dir'
 import { TMessage } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
-import { TarFs } from '@x-ray/next'
+import { TarFs } from '@x-ray/tar-fs'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
