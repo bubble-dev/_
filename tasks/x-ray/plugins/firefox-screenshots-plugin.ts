@@ -1,4 +1,3 @@
-/* eslint-disable import/named */
 import plugin, { StartFilesProps } from '@start/plugin'
 import { TOptions } from '@x-ray/firefox-screenshots'
 
