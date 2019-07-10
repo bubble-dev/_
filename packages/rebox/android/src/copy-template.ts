@@ -12,19 +12,23 @@ const globbyOptions = {
   absolute: true,
 }
 
-export const copyTemplate = async (outputPath: string) => {
+export const copyTemplate = async (appName: string) => {
+  const appPath = path.join('node_modules', '.rebox', appName, 'android')
+
   try {
-    await pAccess(outputPath)
+    await pAccess(appPath)
   } catch (e) {
     const templatePath = path.join(path.dirname(require.resolve('../package.json')), 'android')
     const files = await fastGlob(`${templatePath}/**/*`, globbyOptions)
 
     for (const file of files) {
-      const outFile = file.replace(templatePath, outputPath)
+      const outFile = file.replace(templatePath, appPath)
       const outDir = path.dirname(outFile)
 
       await makeDir(outDir)
       await copie(file, outFile)
     }
   }
+
+  return appPath
 }
