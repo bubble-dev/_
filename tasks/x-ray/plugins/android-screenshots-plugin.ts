@@ -2,6 +2,10 @@ import plugin, { StartFilesProps } from '@start/plugin'
 
 export default (appPath: string) =>
   plugin<StartFilesProps, void>('x-ray-android-screenshots', ({ logMessage }) => async ({ files }) => {
+    if (files.length === 0) {
+      return logMessage('no files, skipping')
+    }
+
     const { rnResolve } = await import('rn-resolve')
     const { runEmulator, serveJsBundle, installApp, launchApp } = await import('@rebox/android')
     const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
@@ -18,6 +22,8 @@ export default (appPath: string) =>
         entryPointPath,
         isDev: false,
       })
+
+      logMessage('server is ready')
 
       killEmulator = await runEmulator({
         isHeadless: false,

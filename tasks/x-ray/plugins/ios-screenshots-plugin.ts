@@ -23,6 +23,8 @@ export default (appPath: string) =>
         isDev: false,
       })
 
+      logMessage('server is ready')
+
       killSimulator = await runSimulator({
         iOSVersion: '12.2',
         iPhoneVersion: 7,

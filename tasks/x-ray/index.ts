@@ -122,8 +122,7 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
       dependencyPath: 'node_modules/react-native-view-shot/ios',
     })
 
-    logMessage('dependencies have been linked')
-    logMessage('building...')
+    logMessage('dependencies are linked')
 
     await buildDebug({
       projectPath,
@@ -150,8 +149,7 @@ export const buildXRayAndroid = (packageDir = 'packages/x-ray/native-screenshots
       dependencyPath: 'node_modules/react-native-view-shot',
     })
 
-    logMessage('dependencies have been linked')
-    logMessage('building...')
+    logMessage('dependencies are linked')
 
     await buildDebug({
       projectPath,
