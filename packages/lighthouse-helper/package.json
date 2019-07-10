@@ -5,6 +5,9 @@
   "description": "A Lighthouse helper to integrate against CI and run performance tests with",
   "main": "src/index.js",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.13"
+  },
   "dependencies": {
     "axios": "^0.19.0",
     "chalk": "^2.4.2",
