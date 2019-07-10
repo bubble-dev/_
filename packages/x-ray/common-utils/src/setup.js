@@ -17,7 +17,7 @@ const babelConfig = {
   comments: false,
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         targets: {
           node: 'current',
@@ -26,14 +26,14 @@ const babelConfig = {
         loose: true,
       },
     ],
-    '@babel/preset-react',
+    require.resolve('@babel/preset-react'),
     '@babel/preset-typescript',
   ],
   plugins: [
-    '@babel/plugin-syntax-dynamic-import',
-    'babel-plugin-dynamic-import-node',
+    require.resolve('@babel/plugin-syntax-dynamic-import'),
+    require.resolve('babel-plugin-dynamic-import-node'),
     [
-      'babel-plugin-module-resolver',
+      require.resolve('babel-plugin-module-resolver'),
       {
         alias: options.mocks,
         extensions: options.extensions,
