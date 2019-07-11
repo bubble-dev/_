@@ -15,6 +15,7 @@ export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => asyn
       ignoredPackages: [
         '@babel/core',
         '@babel/runtime',
+        '@babel/runtime-corejs3',
         '__REBOX_ENTRY_POINT__',
         '@typescript-eslint/eslint-plugin',
         '@typescript-eslint/parser',
@@ -25,6 +26,7 @@ export const fixDeps = () => plugin('fixDeps', ({ logPath, logMessage }) => asyn
         'react-dom',
         'react-hot-loader',
         'request',
+        'core-js',
       ],
       packagePath: pkg,
       dependencyFilesGlobs: ['src/**/*.{ts,tsx,js}'],
