@@ -1,5 +1,5 @@
 import test from 'blue-tape'
-import { getPositionInMasked, getPositionInValue } from '..'
+import { applyMask, getPositionInMasked, getPositionInValue, isLongerThanMask } from '..'
 
 test('getPositionInMasked', (t) => {
   t.equals(
@@ -169,6 +169,131 @@ test('getPositionInValue', (t) => {
     ),
     5,
     'should be 5'
+  )
+
+  t.end()
+})
+
+test('applyMask', (t) => {
+  t.equals(
+    applyMask(
+      '20192',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    '2019-2',
+    'should be 2019-2'
+  )
+
+  t.equals(
+    applyMask(
+      '2019-2',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    '2019-2',
+    'should be 2019-2'
+  )
+
+  t.equals(
+    applyMask(
+      '2019-2123',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    '2019-21-23',
+    'should be 2019-21-23'
+  )
+
+  t.equals(
+    applyMask(
+      '',
+      ['-']
+    ),
+    '',
+    'should be empty'
+  )
+
+  t.equals(
+    applyMask(
+      '-',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    '-',
+    'should be -'
+  )
+
+  t.equals(
+    applyMask(
+      '12341324124312432143124',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    '1234-13-24',
+    'should be 1234-13-24'
+  )
+
+  t.end()
+})
+
+test('isLongerThanMask', (t) => {
+  t.equals(
+    isLongerThanMask(
+      '2019-2123',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    false,
+    'should be false'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '',
+      ['-']
+    ),
+    false,
+    'should be false'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '-',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    false,
+    'should be false'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '12341324124312432143124',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    true,
+    'should be true'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '20192123',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    false,
+    'should be false'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '2019-21-23',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    false,
+    'should be false'
+  )
+
+  t.equals(
+    isLongerThanMask(
+      '20192123--',
+      [null, null, null, null, '-', null, null, '-', null, null]
+    ),
+    true,
+    'should be true'
   )
 
   t.end()

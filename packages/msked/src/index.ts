@@ -62,3 +62,53 @@ export const getPositionInValue = (value: string, mask: TMask, position: number,
     result - 1
   )
 }
+
+export const applyMask = (value: string, mask: TMask, result:string = ''): string => {
+  if (value.length === 0 || mask.length === 0) {
+    return result
+  }
+
+  const [maskHead, ...maskTail] = mask
+
+  if (maskHead === null || maskHead === value[0]) {
+    return applyMask(
+      value.slice(1),
+      maskTail,
+      result + value[0]
+    )
+  }
+
+  return applyMask(
+    value,
+    maskTail,
+    result + maskHead
+  )
+}
+
+export const isLongerThanMask = (value: string, mask: TMask): boolean => {
+  if (mask.length === 0) {
+    if (value.length > 0) {
+      return true
+    }
+
+    return false
+  }
+
+  if (value.length === 0) {
+    return false
+  }
+
+  const [maskHead, ...maskTail] = mask
+
+  if (maskHead === null || maskHead === value[0]) {
+    return isLongerThanMask(
+      value.slice(1),
+      maskTail
+    )
+  }
+
+  return isLongerThanMask(
+    value,
+    maskTail
+  )
+}
