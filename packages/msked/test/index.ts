@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import { applyMask, getPositionInMasked, getPositionInValue, isLongerThanMask } from '..'
 
-test('getPositionInMasked', (t) => {
+test('msked: getPositionInMasked', (t) => {
   t.equals(
     getPositionInMasked(
       '20192',
@@ -79,7 +79,7 @@ test('getPositionInMasked', (t) => {
   t.end()
 })
 
-test('getPositionInValue', (t) => {
+test('msked: getPositionInValue', (t) => {
   t.equals(
     getPositionInValue(
       '20192',
@@ -174,7 +174,7 @@ test('getPositionInValue', (t) => {
   t.end()
 })
 
-test('applyMask', (t) => {
+test('msked: applyMask', (t) => {
   t.equals(
     applyMask(
       '20192',
@@ -232,7 +232,7 @@ test('applyMask', (t) => {
   t.end()
 })
 
-test('isLongerThanMask', (t) => {
+test('msked: isLongerThanMask', (t) => {
   t.equals(
     isLongerThanMask(
       '2019-2123',
