@@ -35,80 +35,90 @@ export default async (options: TOptions) => {
 
     const pages: Page[] = await Promise.all(pagesPromises)
 
-    port.on('message', async (action: TCheckRequest) => {
-      try {
-        switch (action.type) {
-          case 'FILE': {
-            const { default: items } = await import(action.path) as { default: TMeta[] }
-            const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
+    await new Promise((resolve, reject) => {
+      port.on('message', async (action: TCheckRequest) => {
+        try {
+          switch (action.type) {
+            case 'FILE': {
+              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
 
-            await makeDir(screenshotsDir)
+              await makeDir(screenshotsDir)
 
-            const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
+              const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
 
-            await pAll(
-              items.map((item) => async () => {
-                const page = pages.shift() as Page
-                const screenshot = await getScreenshot(page, item)
-                const screenshotName = `${item.options.name}.png`
+              await pAll(
+                items.map((item) => async () => {
+                  const page = pages.shift() as Page
+                  const screenshot = await getScreenshot(page, item)
+                  const screenshotName = `${item.options.name}.png`
 
-                pages.push(page)
+                  pages.push(page)
 
-                const message = await checkScreenshot(screenshot, tar, screenshotName)
+                  const message = await checkScreenshot(screenshot, tar, screenshotName)
 
-                switch (message.type) {
-                  case 'OK': {
-                    return port.postMessage(message)
-                  }
-                  case 'DIFF':
-                  case 'NEW': {
-                    if (shouldBailout) {
-                      await browser.disconnect()
+                  switch (message.type) {
+                    case 'OK': {
+                      port.postMessage(message)
 
-                      port.postMessage({
-                        type: 'BAILOUT',
-                        path: message.path,
-                      })
+                      break
+                    }
+                    case 'DIFF':
+                    case 'NEW': {
+                      if (shouldBailout) {
+                        await browser.disconnect()
 
-                      throw null
+                        port.postMessage({
+                          type: 'BAILOUT',
+                          path: message.path,
+                        })
+
+                        port.close()
+
+                        throw null
+                      }
+                    }
+                    case 'DIFF': {
+                      // return port.postMessage(message, [message.data!.buffer])
+                      port.postMessage(message)
+
+                      break
+                    }
+                    case 'NEW': {
+                      // return port.postMessage(message, [message.data!.buffer])
+                      port.postMessage(message)
+
+                      break
                     }
                   }
-                  case 'DIFF': {
-                    // return port.postMessage(message, [message.data!.buffer])
-                    return port.postMessage(message)
-                  }
-                  case 'NEW': {
-                    // return port.postMessage(message, [message.data!.buffer])
-                    return port.postMessage(message)
-                  }
-                }
-              }),
-              { concurrency: pages.length }
-            )
+                }),
+                { concurrency: pages.length }
+              )
 
-            return port.postMessage({
-              type: 'DONE',
-              path: action.path,
-            })
+              port.postMessage({
+                type: 'DONE',
+                path: action.path,
+              })
+
+              break
+            }
+            case 'DONE': {
+              // await browser.disconnect()
+              port.close()
+              resolve()
+            }
           }
-          case 'DONE': {
-            // await browser.disconnect()
-            port.close()
-          }
+        } catch (err) {
+          reject(err)
         }
-      } catch (err) {
-        if (err !== null) {
-          port.postMessage({
-            type: 'ERROR',
-            data: err.message,
-          })
-        }
-      }
+      })
     })
   } catch (err) {
-    port.postMessage({
-      type: 'ERROR',
-      data: err.message,
-    })
+    if (err !== null) {
+      port.postMessage({
+        type: 'ERROR',
+        data: err.message,
+      })
+    }
   }
 }

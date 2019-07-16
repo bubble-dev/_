@@ -49,18 +49,31 @@ const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
         }
         const worker = parent(childFile, options)
 
-        worker.on('message', (action: TItemResult) => {
+        worker.on('message', async (action: TItemResult) => {
           console.log(action)
 
           switch (action.type) {
             case 'OK': {
-              return targetResult.ok.add(action.path)
+              targetResult.ok.add(action.path)
+
+              break
             }
             case 'DIFF': {
-              return targetResult.diff.set(action.path, action.data!)
+              targetResult.diff.set(action.path, action.data!)
+
+              break
             }
             case 'NEW': {
-              return targetResult.new.set(action.path, action.data!)
+              targetResult.new.set(action.path, action.data!)
+
+              break
+            }
+            case 'BAILOUT': {
+              await Promise.all(workers.map((worker) => worker.terminate()))
+
+              reject('BAILOUT')
+
+              break
             }
             case 'DONE': {
               result.set(action.path, targetResult)
@@ -72,10 +85,12 @@ const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
               }
 
               if (targetFileIndex < targetFiles.length) {
-                return worker.postMessage({
+                worker.postMessage({
                   type: 'FILE',
                   path: targetFiles[targetFileIndex++],
                 })
+
+                break
               }
 
               worker.postMessage({ type: 'DONE' })
@@ -86,7 +101,7 @@ const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
                 resolve()
               }
 
-              return
+              break
             }
             case 'ERROR': {
               reject(action.data)
