@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-require-imports, import/no-dynamic-require */
+const { workerData } = require('worker_threads')
 const babelRegister = require('@babel/register')
+
+const { options, childFile } = workerData
 
 global.navigator = {
   userAgent: 'x-ray',
 }
-
-const options = JSON.parse(process.argv[2])
-const childFile = process.argv[3]
-const targetFiles = process.argv.slice(4)
 
 const babelConfig = {
   babelrc: false,
@@ -45,4 +44,4 @@ const babelConfig = {
 
 babelRegister(babelConfig)
 
-require(childFile).default(targetFiles, options)
+require(childFile).default(options)

@@ -6,46 +6,32 @@ import hasPngDiff from './has-png-diff'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
-const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string, shouldBailout: boolean): Promise<TCheckResult> => {
+const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TCheckResult> => {
   if (tar.has(screenshotName)) {
     const existingData = tar.read(screenshotName)
 
     if (!hasPngDiff(existingData, data)) {
       return {
-        status: 'ok',
-        path: screenshotName,
-      }
-    }
-
-    if (shouldBailout) {
-      return {
-        status: 'diff',
+        type: 'OK',
         path: screenshotName,
       }
     }
 
     const optimizedScreenshot = await optimizePng(data)
-    tar.write(screenshotName, optimizedScreenshot)
 
     return {
-      status: 'diff',
+      type: 'DIFF',
       path: screenshotName,
-    }
-  }
-
-  if (shouldBailout) {
-    return {
-      status: 'unknown',
-      path: screenshotName,
+      data: optimizedScreenshot,
     }
   }
 
   const optimizedScreenshot = await optimizePng(data)
-  tar.write(screenshotName, optimizedScreenshot)
 
   return {
-    status: 'new',
+    type: 'NEW',
     path: screenshotName,
+    data: optimizedScreenshot,
   }
 }
 

@@ -4,4 +4,5 @@ export type TOptions = {
   dpr?: number,
   width?: number,
   height?: number,
+  webSocketDebuggerUrl: string,
 } & TCommonOptions

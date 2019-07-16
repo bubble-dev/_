@@ -5,10 +5,15 @@ export type TMessage = {
   path: string,
 }
 
+export type TCheckRequest = { type: 'FILE', path: string } | { type: 'DONE' }
+
 export type TCheckResult = {
-  status: TMessageStatus,
+  type: 'OK' | 'DIFF' | 'NEW' | 'BAILOUT',
   path: string,
+  data?: Buffer,
 }
+
+export type TItemResult = TCheckResult | { type: 'DONE', path: string } | { type: 'ERROR', data: string }
 
 export type TTotalResult = {
   ok: number,
