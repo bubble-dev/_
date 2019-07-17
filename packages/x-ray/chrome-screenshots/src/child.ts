@@ -51,6 +51,7 @@ export default async (options: TOptions) => {
                 items.map((item) => async () => {
                   const page = pages.shift() as Page
                   const screenshot = await getScreenshot(page, item)
+
                   const screenshotName = `${item.options.name}.png`
 
                   pages.push(page)
@@ -58,15 +59,10 @@ export default async (options: TOptions) => {
                   const message = await checkScreenshot(screenshot, tar, screenshotName)
 
                   switch (message.type) {
-                    case 'OK': {
-                      port.postMessage(message)
-
-                      break
-                    }
                     case 'DIFF':
                     case 'NEW': {
                       if (shouldBailout) {
-                        await browser.disconnect()
+                        // await browser.disconnect()
 
                         port.postMessage({
                           type: 'BAILOUT',
@@ -78,15 +74,23 @@ export default async (options: TOptions) => {
                         throw null
                       }
                     }
-                    case 'DIFF': {
-                      // return port.postMessage(message, [message.data!.buffer])
+                  }
+
+                  switch (message.type) {
+                    case 'OK': {
                       port.postMessage(message)
 
                       break
                     }
+                    case 'DIFF': {
+                      port.postMessage(message, [message.data!.buffer])
+                      // port.postMessage(message)
+
+                      break
+                    }
                     case 'NEW': {
-                      // return port.postMessage(message, [message.data!.buffer])
-                      port.postMessage(message)
+                      port.postMessage(message, [message.data!.buffer])
+                      // port.postMessage(message)
 
                       break
                     }
@@ -114,6 +118,8 @@ export default async (options: TOptions) => {
       })
     })
   } catch (err) {
+    console.error(err)
+
     if (err !== null) {
       port.postMessage({
         type: 'ERROR',
