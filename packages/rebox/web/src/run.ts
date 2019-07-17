@@ -3,11 +3,12 @@ import Webpack, { Configuration as WebpackConfig } from 'webpack'
 import WebpackDevServer, { Configuration as TWebpackDevServerConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { browsersList } from '@bubble-dev/browsers-list'
+import { isUndefined } from 'tsfn'
 
 export type TServeJsBundleOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
-  assetsPath: string,
+  assetsPath?: string,
 }
 
 export const run = (options: TServeJsBundleOptions) => {
@@ -95,7 +96,7 @@ export const run = (options: TServeJsBundleOptions) => {
   const { host, port, ...devConfig }: TWebpackDevServerConfig = {
     host: '127.0.0.1',
     port: 3000,
-    contentBase: path.resolve(options.assetsPath),
+    contentBase: isUndefined(options.assetsPath) ? false : path.resolve(options.assetsPath),
   }
   const server = new WebpackDevServer(compiler, devConfig)
 

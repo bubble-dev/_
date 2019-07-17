@@ -83,14 +83,12 @@ export default async (options: TOptions) => {
                       break
                     }
                     case 'DIFF': {
-                      port.postMessage(message, [message.data!.buffer])
-                      // port.postMessage(message)
+                      port.postMessage(message)
 
                       break
                     }
                     case 'NEW': {
-                      port.postMessage(message, [message.data!.buffer])
-                      // port.postMessage(message)
+                      port.postMessage(message)
 
                       break
                     }

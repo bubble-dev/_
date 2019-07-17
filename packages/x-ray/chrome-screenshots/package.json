@@ -12,8 +12,8 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@x-ray/common-utils": "^0.1.0",
-    "@x-ray/tar-fs": "^0.0.0",
     "@x-ray/screenshot-utils": "^0.1.0",
+    "@x-ray/tar-fs": "^0.0.0",
     "graceful-fs": "^4.1.11",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
@@ -21,13 +21,15 @@
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
     "request": "^2.87.0",
-    "request-promise-native": "^1.0.5"
+    "request-promise-native": "^1.0.5",
+    "ws": "^7.1.0"
   },
   "devDependencies": {
     "@types/graceful-fs": "^4.1.2",
     "@types/puppeteer-core": "^1.9.0",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.0.9",
-    "@types/request-promise-native": "^1.0.15"
+    "@types/request-promise-native": "^1.0.15",
+    "@types/ws": "^6.0.1"
   }
 }

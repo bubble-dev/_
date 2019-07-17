@@ -1,0 +1,24 @@
+{
+  "name": "@x-ray/ui",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.6.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@rebox/web": "^0.2.2"
+  },
+  "devDependencies": {
+    "@types/blue-tape": "^0.1.32",
+    "@types/graceful-fs": "^4.1.3",
+    "@types/tar-stream": "^1.6.1",
+    "blue-tape": "^1.0.0",
+    "memfs": "^2.15.4",
+    "mocku": "^0.5.0"
+  }
+}
