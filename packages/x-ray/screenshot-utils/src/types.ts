@@ -36,6 +36,13 @@ export type TCheckResult =
     data: Buffer,
     width: number,
     height: number,
+  } |
+  {
+    type: 'DELETED',
+    path: string,
+    data: Buffer,
+    width: number,
+    height: number,
   }
 
 export type TItemResult =

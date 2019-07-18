@@ -3,9 +3,9 @@ import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
-import makeDir from 'make-dir'
 import { TCheckRequest } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import upng from 'upng-js'
 import { TarFs } from '@x-ray/tar-fs'
 import getScreenshot from './get'
 import { TOptions } from './types'
@@ -42,9 +42,6 @@ export default async (options: TOptions) => {
             case 'FILE': {
               const { default: items } = await import(action.path) as { default: TMeta[] }
               const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
-
-              await makeDir(screenshotsDir)
-
               const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
 
               await pAll(
@@ -96,6 +93,22 @@ export default async (options: TOptions) => {
                 }),
                 { concurrency: pages.length }
               )
+
+              Array
+                .from(tar.list())
+                .filter((tarItem) => !items.find((metaItem) => `${metaItem.options.name}.png` === tarItem))
+                .forEach((item) => {
+                  const data = tar.read(item)
+                  const { width, height } = upng.decode(data)
+
+                  port.postMessage({
+                    type: 'DELETED',
+                    path: item,
+                    data,
+                    width,
+                    height,
+                  })
+                })
 
               port.postMessage({
                 type: 'DONE',
