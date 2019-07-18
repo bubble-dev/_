@@ -34,7 +34,7 @@ export const Border = component(
     overflowLeft: 0,
     overflowRight: 0,
     overflowTop: 0,
-  }),
+  })
 )(({
   topLeftRadius,
   topRightRadius,
