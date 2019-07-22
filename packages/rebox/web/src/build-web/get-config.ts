@@ -68,12 +68,12 @@ export const getConfig = (entryPointPath: string, outputPath: string, htmlTempla
       {
         test: /\.png$/,
         exclude: /node_modules/,
-        loader: 'file-loader?name=images/[name].[ext]',
+        loader: 'images/[name].[hash].[ext]',
       },
       {
         test: /\.mp4$/,
         exclude: /node_modules/,
-        loader: 'file-loader?name=videos/[name].[ext]',
+        loader: 'videos/[name].[hash].[ext]',
       },
     ],
   },
