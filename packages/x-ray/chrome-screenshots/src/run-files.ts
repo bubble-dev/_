@@ -258,6 +258,10 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
                     tar.write(item, resultData[file].new[item].data)
                   })
 
+                  result[file].deleted.forEach((item) => {
+                    tar.delete(item)
+                  })
+
                   await tar.save()
                 }),
                 { concurrency: SAVE_FILES_CONCURRENCY }

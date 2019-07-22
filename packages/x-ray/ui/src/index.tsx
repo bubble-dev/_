@@ -64,7 +64,7 @@ export const App = component(
                 (
                   <h3 key={`${file}:diff`}>diff: {data.diff.length}</h3>
                 ),
-                ...data.new.map((item) => (
+                ...data.diff.map((item) => (
                   <div key={`${file}:diff:${item}`}>
                     <h4>{item}</h4>
                     <Image
@@ -82,12 +82,12 @@ export const App = component(
               )
             }
 
-            if (data.diff.length > 0) {
+            if (data.deleted.length > 0) {
               result.push(
                 (
                   <h3 key={`${file}:deleted`}>deleted: {data.deleted.length}</h3>
                 ),
-                ...data.new.map((item) => (
+                ...data.deleted.map((item) => (
                   <div key={`${file}:deleted:${item}`}>
                     <h4>{item}</h4>
                     <Image

@@ -161,7 +161,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       filesToWrite.set(filePath, data)
     },
     save: async () => {
-      if (filesToWrite.size === 0) {
+      if (filesToWrite.size === 0 && filesToDelete.size === 0) {
         if (fd !== null) {
           await fs.close(fd)
         }
