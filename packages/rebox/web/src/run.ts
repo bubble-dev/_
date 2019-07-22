@@ -106,9 +106,11 @@ export const run = (options: TServeJsBundleOptions) => {
     ...(options.isQuiet ? { stats: 'errors-only', noInfo: true } : {}),
   })
 
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<() => Promise<void>>((resolve, reject) => {
     compiler.hooks.done.tap('done', () => {
-      resolve()
+      resolve(() => new Promise((resolve) => {
+        server.close(resolve)
+      }))
     })
 
     server

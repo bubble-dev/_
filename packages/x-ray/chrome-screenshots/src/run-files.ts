@@ -1,18 +1,12 @@
 import path from 'path'
 import { cpus } from 'os'
-import http from 'http'
-import url from 'url'
 import request from 'request-promise-native'
 import { parent } from '@x-ray/common-utils'
 import { run } from '@rebox/web'
 import { TItemResult } from '@x-ray/screenshot-utils'
-import makeDir from 'make-dir'
-import { TarFs } from '@x-ray/tar-fs'
-import { isString } from 'tsfn'
-import pAll from 'p-all'
+import { runServer } from './server'
 import { TOptions } from './types'
 
-const SAVE_FILES_CONCURRENCY = 4
 const DEBUGGER_ENDPOINT_HOST = 'localhost'
 const DEBUGGER_ENDPOINT_PORT = 9222
 const CONCURRENCY = Math.max(cpus().length - 1, 1)
@@ -28,8 +22,6 @@ type TFileResultType = 'ok' | 'diff' | 'new' | 'deleted'
 type TFileResult = {
   [key in TFileResultType]: string[]
 }
-
-type TFileResultDataType = 'old' | 'new'
 
 type TFileResultData = {
   old: {
@@ -64,6 +56,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
   }
   const result: TResult = {}
   const resultData: TResultData = {}
+  let hasBeenChanged = false
 
   await new Promise((resolve, reject) => {
     const workersCount = Math.min(targetFiles.length, CONCURRENCY)
@@ -105,6 +98,8 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
                 height: action.new.height,
               }
 
+              hasBeenChanged = true
+
               break
             }
             case 'NEW': {
@@ -115,6 +110,8 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
                 height: action.height,
               }
 
+              hasBeenChanged = true
+
               break
             }
             case 'DELETED': {
@@ -124,6 +121,8 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
                 width: action.width,
                 height: action.height,
               }
+
+              hasBeenChanged = true
 
               break
             }
@@ -184,101 +183,14 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
       })
   })
 
-  await Promise.all([
-    new Promise((resolve, reject) => {
-      http
-        .createServer(async (req, res) => {
-          res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
-
-          if (req.method === 'GET') {
-            if (req.url === '/list') {
-              res.end(JSON.stringify(result))
-
-              return
-            }
-
-            const urlData = url.parse(req.url!, true)
-
-            if (urlData.pathname === '/get') {
-              const { file, item, type } = urlData.query as {
-                file: string,
-                item: string,
-                type: TFileResultDataType,
-              }
-
-              if (!isString(file)) {
-                throw new Error(`?file param is required in ${req.url}`)
-              }
-
-              if (!isString(item)) {
-                throw new Error(`?item param is required in ${req.url}`)
-              }
-
-              if (!isString(type)) {
-                throw new Error(`?type param is required in ${req.url}`)
-              }
-
-              if (!Reflect.has(resultData, file)) {
-                throw new Error(`There is no such file "${file}"`)
-              }
-
-              const items = resultData[file]
-
-              if (!Reflect.has(items, type)) {
-                throw new Error(`Cannot find "${file}" → "${type}"`)
-              }
-
-              if (!Reflect.has(items[type], item)) {
-                throw new Error(`Cannot find "${file}" → "${type}" → "${item}"`)
-              }
-
-              res.setHeader('Access-Control-Expose-Headers', 'x-ray-width, x-ray-height')
-              res.setHeader('x-ray-width', String(items[type][item].width))
-              res.setHeader('x-ray-height', String(items[type][item].height))
-              res.end(items[type][item].data, 'binary')
-            }
-          }
-
-          if (req.method === 'POST') {
-            if (req.url === '/save') {
-              await pAll(
-                Object.keys(result).map((file) => async () => {
-                  const screenshotsDir = path.join(path.dirname(file), '__x-ray__')
-                  const tarPath = path.join(screenshotsDir, 'chrome-screenshots.tar')
-
-                  await makeDir(screenshotsDir)
-
-                  const tar = await TarFs(tarPath)
-
-                  result[file].new.forEach((item) => {
-                    tar.write(item, resultData[file].new[item].data)
-                  })
-
-                  result[file].diff.forEach((item) => {
-                    tar.write(item, resultData[file].new[item].data)
-                  })
-
-                  result[file].deleted.forEach((item) => {
-                    tar.delete(item)
-                  })
-
-                  await tar.save()
-                }),
-                { concurrency: SAVE_FILES_CONCURRENCY }
-              )
-
-              res.end()
-            }
-          }
-        })
-        .on('error', reject)
-        .listen(3001, 'localhost')
-    }),
-
-    run({
+  if (hasBeenChanged) {
+    const closeReboxServer = await run({
       htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
       entryPointPath: 'packages/x-ray/ui/src/index.tsx',
       isQuiet: true,
-    }),
-  ])
+    })
+
+    await runServer(result, resultData)
+    await closeReboxServer()
+  }
 }
