@@ -9,7 +9,11 @@ const optimizePng = imageminPngout({ strategy: 2 })
 
 const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TCheckResult> => {
   if (tar.has(screenshotName)) {
-    const existingData = tar.read(screenshotName)
+    const existingData = await tar.read(screenshotName)
+
+    if (existingData === null) {
+      throw new Error(`Unable to read file "${screenshotName}"`)
+    }
 
     const pngOld = upng.decode(existingData)
     const pngNew = upng.decode(data)

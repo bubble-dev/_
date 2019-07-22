@@ -94,11 +94,9 @@ export default async (options: TOptions) => {
                 { concurrency: pages.length }
               )
 
-              Array
-                .from(tar.list())
-                .filter((tarItem) => !items.find((metaItem) => `${metaItem.options.name}.png` === tarItem))
-                .forEach((item) => {
-                  const data = tar.read(item)
+              for (const item of tar.list()) {
+                if (!items.find((metaItem) => `${metaItem.options.name}.png` === item)) {
+                  const data = await tar.read(item) as Buffer
                   const { width, height } = upng.decode(data)
 
                   port.postMessage({
@@ -108,7 +106,8 @@ export default async (options: TOptions) => {
                     width,
                     height,
                   })
-                })
+                }
+              }
 
               port.postMessage({
                 type: 'DONE',
