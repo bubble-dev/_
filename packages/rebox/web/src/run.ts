@@ -1,6 +1,6 @@
 import path from 'path'
-import Webpack, { Configuration as WebpackConfig } from 'webpack'
-import WebpackDevServer, { Configuration as TWebpackDevServerConfig } from 'webpack-dev-server'
+import Webpack, { Configuration as TWebpackConfig } from 'webpack'
+import WebpackDevServer, { Configuration as TWebpackDevConfig } from 'webpack-dev-server'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { browsersList } from '@bubble-dev/browsers-list'
 import { isUndefined } from 'tsfn'
@@ -9,10 +9,12 @@ export type TServeJsBundleOptions = {
   entryPointPath: string,
   htmlTemplatePath: string,
   assetsPath?: string,
+  isQuiet?: boolean,
+  shouldOpenBrowser?: boolean,
 }
 
 export const run = (options: TServeJsBundleOptions) => {
-  const config: WebpackConfig = {
+  const config: TWebpackConfig = {
     mode: 'development',
     entry: path.resolve(options.entryPointPath),
     output: {
@@ -93,12 +95,16 @@ export const run = (options: TServeJsBundleOptions) => {
     ],
   }
   const compiler = Webpack(config)
-  const { host, port, ...devConfig }: TWebpackDevServerConfig = {
+  const { host, port, ...devConfig }: TWebpackDevConfig = {
     host: '127.0.0.1',
     port: 3000,
     contentBase: isUndefined(options.assetsPath) ? false : path.resolve(options.assetsPath),
   }
-  const server = new WebpackDevServer(compiler, devConfig)
+  const server = new WebpackDevServer(compiler, {
+    ...devConfig,
+    open: options.shouldOpenBrowser,
+    ...(options.isQuiet ? { stats: 'errors-only', noInfo: true } : {}),
+  })
 
   return new Promise<void>((resolve, reject) => {
     compiler.hooks.done.tap('done', () => {

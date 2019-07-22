@@ -274,6 +274,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TOptions) => 
     run({
       htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
       entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+      isQuiet: true,
     }),
   ])
 }
