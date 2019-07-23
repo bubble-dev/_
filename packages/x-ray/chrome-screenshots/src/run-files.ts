@@ -26,7 +26,9 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
     webSocketDebuggerUrl,
   }
 
+  console.time('screenshots')
   const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, CONCURRENCY, options)
+  console.timeEnd('screenshots')
 
   if (hasBeenChanged) {
     const closeReboxServer = await run({

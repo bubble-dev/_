@@ -14,7 +14,9 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
     ...userOptions,
   }
 
+  console.time('screenshots')
   const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, 1, options)
+  console.timeEnd('screenshots')
 
   if (hasBeenChanged) {
     const closeReboxServer = await run({
