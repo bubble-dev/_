@@ -1,20 +1,34 @@
-import { logTotalResults, parent } from '@x-ray/common-utils'
-import { TOptions } from './types'
+import { runScreenshots, runServer } from '@x-ray/screenshot-utils'
+import { run } from '@rebox/web'
+import { TOptions, TUserOptions } from './types'
 
-const defaultOptions: Partial<TOptions> = {
+const defaultOptions = {
   width: 1024,
   height: 1024,
 }
 const childFile = require.resolve('./child')
 
-const runFiles = async (targetFiles: string[], userOptions: TOptions) => {
-  const options = {
+export const runFiles = async (targetFiles: string[], userOptions: TUserOptions) => {
+  const options: TOptions = {
     ...defaultOptions,
     ...userOptions,
   }
-  const totalResults = await parent(childFile, targetFiles, options)
 
-  logTotalResults([totalResults])
+  const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, 1, options)
+
+  if (hasBeenChanged) {
+    const closeReboxServer = await run({
+      htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
+      entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+      isQuiet: true,
+    })
+
+    await runServer({
+      platform: options.platform,
+      dpr: 1,
+      result,
+      resultData,
+    })
+    await closeReboxServer()
+  }
 }
-
-export default runFiles

@@ -15,14 +15,12 @@
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/screenshot-utils": "^0.1.0",
     "@x-ray/tar-fs": "^0.0.0",
-    "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
     "puppeteer-core": "^1.16.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
-    "tsfn": "^0.1.2",
     "upng-js": "^2.1.0"
   },
   "devDependencies": {

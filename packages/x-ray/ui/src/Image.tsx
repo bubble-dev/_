@@ -23,13 +23,14 @@ export const Image = component(
       const response = await fetch(`${ENDPOINT}?file=${encodeURIComponent(file)}&type=${type}&item=${encodeURIComponent(item)}`)
       const width = Number(response.headers.get('x-ray-width'))
       const height = Number(response.headers.get('x-ray-height'))
+      const dpr = Number(response.headers.get('x-ray-dpr'))
       const blob = await response.blob()
       const url = URL.createObjectURL(blob)
 
       setState({
         src: url,
-        width: width / 2,
-        height: height / 2,
+        width: width / dpr,
+        height: height / dpr,
       })
     })()
   }),

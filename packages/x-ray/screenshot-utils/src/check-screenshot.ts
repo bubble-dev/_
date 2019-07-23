@@ -3,11 +3,11 @@ import imageminPngout from 'imagemin-pngout'
 import { TTarFs } from '@x-ray/tar-fs'
 import upng from 'upng-js'
 import { TCheckResult } from './types'
-import hasPngDiff from './has-png-diff'
+import { hasPngDiff } from './has-png-diff'
 
 const optimizePng = imageminPngout({ strategy: 2 })
 
-const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TCheckResult> => {
+export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TCheckResult> => {
   if (tar.has(screenshotName)) {
     const existingData = await tar.read(screenshotName)
 
@@ -54,5 +54,3 @@ const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string
     height: pngNew.height,
   }
 }
-
-export default checkScreenshot

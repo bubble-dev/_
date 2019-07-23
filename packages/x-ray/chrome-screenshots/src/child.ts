@@ -59,7 +59,7 @@ export default async (options: TOptions) => {
                     case 'DIFF':
                     case 'NEW': {
                       if (shouldBailout) {
-                        // await browser.disconnect()
+                        await browser.disconnect()
 
                         port.postMessage({
                           type: 'BAILOUT',
@@ -117,7 +117,7 @@ export default async (options: TOptions) => {
               break
             }
             case 'DONE': {
-              // await browser.disconnect()
+              await browser.disconnect()
               port.close()
               resolve()
             }

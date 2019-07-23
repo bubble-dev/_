@@ -5,13 +5,18 @@ import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
 import { isString } from 'tsfn'
 import pAll from 'p-all'
-import { TResult, TResultData } from './run-files'
+import { TResult, TResultData } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
-type TFileResultDataType = 'old' | 'new'
+export type TRunServer = {
+  platform: string,
+  dpr: number,
+  result: TResult,
+  resultData: TResultData,
+}
 
-export const runServer = (result: TResult, resultData: TResultData) => new Promise((resolve, reject) => {
+export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
   const server = http
     .createServer(async (req, res) => {
       res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -29,7 +34,7 @@ export const runServer = (result: TResult, resultData: TResultData) => new Promi
           const { file, item, type } = urlData.query as {
             file: string,
             item: string,
-            type: TFileResultDataType,
+            type: 'old' | 'new',
           }
 
           if (!isString(file)) {
@@ -58,9 +63,10 @@ export const runServer = (result: TResult, resultData: TResultData) => new Promi
             throw new Error(`Cannot find "${file}" → "${type}" → "${item}"`)
           }
 
-          res.setHeader('Access-Control-Expose-Headers', 'x-ray-width, x-ray-height')
+          res.setHeader('Access-Control-Expose-Headers', 'x-ray-width, x-ray-height, x-ray-dpr')
           res.setHeader('x-ray-width', String(items[type][item].width))
           res.setHeader('x-ray-height', String(items[type][item].height))
+          res.setHeader('x-ray-dpr', String(dpr))
           res.end(items[type][item].data, 'binary')
         }
       }
@@ -70,7 +76,7 @@ export const runServer = (result: TResult, resultData: TResultData) => new Promi
           await pAll(
             Object.keys(result).map((file) => async () => {
               const screenshotsDir = path.join(path.dirname(file), '__x-ray__')
-              const tarPath = path.join(screenshotsDir, 'chrome-screenshots.tar')
+              const tarPath = path.join(screenshotsDir, `${platform}-screenshots.tar`)
 
               await makeDir(screenshotsDir)
 

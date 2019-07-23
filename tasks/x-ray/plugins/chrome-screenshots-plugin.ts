@@ -1,7 +1,7 @@
 import plugin, { StartFilesProps } from '@start/plugin'
-import { TOptions } from '@x-ray/chrome-screenshots'
+import { TUserOptions } from '@x-ray/chrome-screenshots'
 
-export default (options: TOptions) =>
+export default (options: TUserOptions) =>
   plugin<StartFilesProps, void>('x-ray-chrome-screenshots', () => async ({ files }) => {
     const { runFiles } = await import('@x-ray/chrome-screenshots')
 

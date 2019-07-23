@@ -1,7 +1,7 @@
 import pixelmatch from 'pixelmatch'
 import { Image, toRGBA8 } from 'upng-js'
 
-const hasPngDiff = (pngA: Image, pngB: Image) => {
+export const hasPngDiff = (pngA: Image, pngB: Image) => {
   if (pngA.width !== pngB.width || pngA.height !== pngB.height) {
     return true
   }
@@ -16,5 +16,3 @@ const hasPngDiff = (pngA: Image, pngB: Image) => {
 
   return diffPixels > 0
 }
-
-export default hasPngDiff
