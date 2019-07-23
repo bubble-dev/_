@@ -12,7 +12,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "react-native-svg": "^9.3.7",
+    "stili": "^0.1.0",
     "refun": "^0.3.1"
   },
   "devDependencies": {

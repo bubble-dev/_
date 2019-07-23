@@ -1,3 +1,5 @@
+This is A WEB COMPONENT, in the next version we will add native variation.
+
 `Table`, `TableBody`, `TableBodyCell`, `TableHead`, `TableHeadCell`, `TableRow` are use in order to render web tables.
 
 These map to the same corresponding props in Web.
@@ -27,7 +29,12 @@ export type TTableBodyCell = {
   id?: string,
   children?: ReactNode,
   borderColor?: string,
+  borderTopWidth?: number,
+  borderBottomWidth?: number,
+  borderLeftWidth?: number,
+  borderRightWidth?: number,
   backgroundColor?: string,
+  borderStyle?: string,
 }
 ```
 
