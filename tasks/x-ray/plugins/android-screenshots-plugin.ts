@@ -8,7 +8,9 @@ export default (appPath: string) =>
 
     const { rnResolve } = await import('rn-resolve')
     const { runEmulator, serveJsBundle, installApp, launchApp } = await import('@rebox/android')
-    const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
+    const { run: runWeb } = await import('@rebox/web')
+    const { runScreenshotsServer, prepareFiles } = await import('@x-ray/native-screenshots')
+    const { runServer: runUiServer } = await import('@x-ray/screenshot-utils')
 
     const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
 
@@ -26,13 +28,13 @@ export default (appPath: string) =>
       logMessage('server is ready')
 
       killEmulator = await runEmulator({
-        isHeadless: false,
+        isHeadless: true,
         portsToForward: [3002, 8081],
       })
 
       logMessage('device is ready')
 
-      const runScreenshots = await runServer({ platform: 'android' })
+      const runScreenshots = await runScreenshotsServer({ platform: 'android' })
 
       await installApp({ appPath })
 
@@ -42,7 +44,25 @@ export default (appPath: string) =>
 
       logMessage('app is launched')
 
-      await runScreenshots()
+      console.time('screenshots')
+      const { result, resultData, hasBeenChanged } = await runScreenshots()
+      console.timeEnd('screenshots')
+
+      if (hasBeenChanged) {
+        const closeReboxServer = await runWeb({
+          htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
+          entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+          isQuiet: true,
+        })
+
+        await runUiServer({
+          platform: 'android',
+          dpr: 1,
+          result,
+          resultData,
+        })
+        await closeReboxServer()
+      }
     } finally {
       if (killEmulator !== null) {
         killEmulator()
