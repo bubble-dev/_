@@ -1,7 +1,15 @@
 /* eslint-disable import/no-named-as-default-member */
+import path from 'path'
+import crypto from 'crypto'
 import fs from 'pifs'
 
 const HEADER_SIZE = 512
+
+const hash = (value: string): string =>
+  crypto
+    .createHash('sha1')
+    .update(value)
+    .digest('hex')
 
 const chksum = (block: Buffer): number => {
   let sum = 8 * 32
@@ -77,12 +85,16 @@ type TFileMeta = {
   size: number,
 }
 
+type TIndexFile = {
+  [id: string]: string,
+}
+
 export type TTarFs = {
-  has: (filePath: string) => boolean,
+  has: (fileName: string) => boolean,
   list: () => string[],
-  read: (filePath: string) => Promise<Buffer | null>,
-  delete: (filePath: string) => void,
-  write: (filePath: string, data: Buffer) => void,
+  read: (fileName: string) => Promise<Buffer | null>,
+  delete: (fileName: string) => void,
+  write: (fileName: string, data: Buffer) => void,
   save: () => Promise<void>,
   close: () => Promise<void>,
 }
@@ -92,6 +104,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   const files = new Map<string, TFileMeta>()
   const filesToWrite = new Map<string, Buffer>()
   const filesToDelete = new Set<string>()
+  let indexFile: TIndexFile = {}
   let pos = 0
   const nameBuffer = Buffer.alloc(100)
   const sizeBuffer = Buffer.alloc(12)
@@ -99,12 +112,29 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   try {
     fd = await fs.open(tarFilePath, 'r')
 
+    // read index file
+    await fs.read(fd, sizeBuffer, 0, 12, 124)
+
+    const dataSize = parseInt(sizeBuffer.toString(), 8)
+    const dataBuffer = Buffer.alloc(dataSize)
+
+    await fs.read(fd, dataBuffer, 0, dataSize, 512)
+
+    indexFile = JSON.parse(dataBuffer.toString())
+    const indexFileInverted = Object.entries(indexFile).reduce((result, [key, value]) => {
+      result[value] = key
+
+      return result
+    }, {} as TIndexFile)
+
+    pos += HEADER_SIZE + dataSize + (HEADER_SIZE - dataSize % HEADER_SIZE)
+
     while (true) {
       await fs.read(fd, nameBuffer, 0, 100, pos)
 
-      const name = trimBufferString(nameBuffer.toString())
+      const hashedFileName = trimBufferString(nameBuffer.toString())
 
-      if (name.length === 0) {
+      if (hashedFileName.length === 0) {
         break
       }
 
@@ -112,7 +142,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       const dataSize = parseInt(sizeBuffer.toString(), 8)
 
-      files.set(name, {
+      files.set(indexFileInverted[hashedFileName], {
         position: pos + HEADER_SIZE,
         size: dataSize,
       })
@@ -122,7 +152,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   } catch {} //eslint-disable-line
 
   return {
-    has: (filePath): boolean => files.has(filePath),
+    has: (fileName): boolean => files.has(fileName),
     list: () => {
       const tempSet = new Set<string>([
         ...files.keys(),
@@ -135,12 +165,12 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       return Array.from(tempSet)
     },
-    read: async (filePath) => {
-      if (filesToWrite.has(filePath)) {
-        return filesToWrite.get(filePath)!
+    read: async (fileName) => {
+      if (filesToWrite.has(fileName)) {
+        return filesToWrite.get(fileName)!
       }
 
-      if (filesToDelete.has(filePath)) {
+      if (filesToDelete.has(fileName)) {
         return null
       }
 
@@ -148,18 +178,18 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         return null
       }
 
-      const { position, size } = files.get(filePath)!
+      const { position, size } = files.get(fileName)!
       const dataBuffer = Buffer.alloc(size)
 
       await fs.read(fd, dataBuffer, 0, size, position)
 
       return dataBuffer
     },
-    delete: (filePath) => {
-      filesToDelete.add(filePath)
+    delete: (fileName) => {
+      filesToDelete.add(fileName)
     },
-    write: (filePath, data) => {
-      filesToWrite.set(filePath, data)
+    write: (fileName, data) => {
+      filesToWrite.set(fileName, data)
     },
     save: async () => {
       if (filesToWrite.size === 0 && filesToDelete.size === 0) {
@@ -174,22 +204,39 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       const tempFd = await fs.open(tempTarFilePath, 'w')
       let tempPos = 0
 
+      for (const fileName of filesToDelete) {
+        Reflect.deleteProperty(indexFile, fileName)
+      }
+
+      for (const fileName of filesToWrite.keys()) {
+        indexFile[fileName] = `${hash(fileName)}${path.extname(fileName)}`
+      }
+
+      const indexFileBuffer = Buffer.from(JSON.stringify(indexFile))
+      const indexFileBufferSize = indexFileBuffer.byteLength
+      const headerBuffer = generateHeader('_.json', indexFileBufferSize)
+
+      await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, 0)
+      await fs.write(tempFd, indexFileBuffer, 0, indexFileBufferSize, HEADER_SIZE)
+
+      tempPos += HEADER_SIZE + indexFileBufferSize + (HEADER_SIZE - indexFileBufferSize % HEADER_SIZE)
+
       if (fd !== null) {
-        for (const filePath of files.keys()) {
+        for (const fileName of files.keys()) {
           // updated file
-          if (filesToWrite.has(filePath)) {
-            const dataBuffer = filesToWrite.get(filePath)!
-            const size = dataBuffer.byteLength
-            const headerBuffer = generateHeader(filePath, size)
+          if (filesToWrite.has(fileName)) {
+            const dataBuffer = filesToWrite.get(fileName)!
+            const dataBufferSize = dataBuffer.byteLength
+            const headerBuffer = generateHeader(indexFile[fileName], dataBufferSize)
 
             await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
-            await fs.write(tempFd, dataBuffer, 0, size, tempPos + HEADER_SIZE)
+            await fs.write(tempFd, dataBuffer, 0, dataBufferSize, tempPos + HEADER_SIZE)
 
-            tempPos += HEADER_SIZE + size + (HEADER_SIZE - size % HEADER_SIZE)
+            tempPos += HEADER_SIZE + dataBufferSize + (HEADER_SIZE - dataBufferSize % HEADER_SIZE)
           // deleted file
           // old file
-          } else if (!filesToDelete.has(filePath)) {
-            const { position, size } = files.get(filePath)!
+          } else if (!filesToDelete.has(fileName)) {
+            const { position, size } = files.get(fileName)!
             const headerBuffer = Buffer.alloc(HEADER_SIZE)
             const dataBuffer = Buffer.alloc(size)
 
@@ -209,7 +256,7 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         if (!files.has(filePath)) {
           const dataBuffer = filesToWrite.get(filePath)!
           const size = dataBuffer.byteLength
-          const headerBuffer = generateHeader(filePath, size)
+          const headerBuffer = generateHeader(indexFile[filePath], size)
 
           await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
           await fs.write(tempFd, dataBuffer, 0, size, tempPos + HEADER_SIZE)
