@@ -57,7 +57,7 @@ export default (appPath: string) =>
 
         await runUiServer({
           platform: 'android',
-          dpr: 1,
+          dpr: 3,
           result,
           resultData,
         })
