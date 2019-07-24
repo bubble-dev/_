@@ -30,7 +30,7 @@ export default (appPath: string) =>
       killSimulator = await runSimulator({
         iOSVersion: '12.2',
         iPhoneVersion: 7,
-        isHeadless: false,
+        isHeadless: true,
       })
 
       logMessage('device is ready')
@@ -45,7 +45,7 @@ export default (appPath: string) =>
 
       logMessage('app is launched')
 
-      console.time('screeshots')
+      console.time('screenshots')
       const { result, resultData, hasBeenChanged } = await runScreenshots()
       console.timeEnd('screenshots')
 
@@ -58,7 +58,7 @@ export default (appPath: string) =>
 
         await runUiServer({
           platform: 'ios',
-          dpr: 1,
+          dpr: 2,
           result,
           resultData,
         })

@@ -29,6 +29,46 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
       new: {},
     }
 
+    const onFileDone = async (tar: TTarFs, filePath: string) => {
+      if (!isUndefined(tar)) {
+        for (const itemName of tar.list()) {
+          if (targetResult.ok.includes(itemName) || targetResult.diff.includes(itemName)) {
+            continue
+          }
+
+          const data = await tar.read(itemName) as Buffer
+          const { width, height } = upng.decode(data)
+
+          targetResult.deleted.push(itemName)
+          targetResultData.old[itemName] = {
+            data: Buffer.from(data),
+            width,
+            height,
+          }
+
+          hasBeenChanged = true
+        }
+      }
+
+      // target file DONE
+      if (isString(filePath)) {
+        const relativePath = path.relative(process.cwd(), filePath)
+        result[relativePath] = targetResult
+        resultData[relativePath] = targetResultData
+
+        targetResult = {
+          ok: [],
+          diff: [],
+          new: [],
+          deleted: [],
+        }
+        targetResultData = {
+          old: {},
+          new: {},
+        }
+      }
+    }
+
     const server = http
       .createServer(async (req, res) => {
         if (req.method === 'POST' && req.url === '/upload') {
@@ -46,44 +86,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
               const screenshot = Buffer.from(data, 'base64')
 
               if (currentFilePath !== filePath) {
-                // handle deleted files
-                if (!isUndefined(currentTar)) {
-                  for (const itemName of currentTar.list()) {
-                    if (targetResult.ok.includes(itemName) || targetResult.diff.includes(itemName)) {
-                      continue
-                    }
-
-                    const data = await currentTar.read(itemName) as Buffer
-                    const { width, height } = upng.decode(data)
-
-                    targetResult.deleted.push(itemName)
-                    targetResultData.old[itemName] = {
-                      data: Buffer.from(data),
-                      width,
-                      height,
-                    }
-
-                    hasBeenChanged = true
-                  }
-                }
-
-                // target file DONE
-                if (isString(currentFilePath)) {
-                  const relativePath = path.relative(process.cwd(), currentFilePath)
-                  result[relativePath] = targetResult
-                  resultData[relativePath] = targetResultData
-
-                  targetResult = {
-                    ok: [],
-                    diff: [],
-                    new: [],
-                    deleted: [],
-                  }
-                  targetResultData = {
-                    old: {},
-                    new: {},
-                  }
-                }
+                await onFileDone(currentTar, currentFilePath)
 
                 currentFilePath = filePath
 
@@ -149,6 +152,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
           res.end()
 
           if (req.url === '/done') {
+            await onFileDone(currentTar, currentFilePath)
+
             if (!isUndefined(currentTar)) {
               await currentTar.close()
             }

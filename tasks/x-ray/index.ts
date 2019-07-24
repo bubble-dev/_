@@ -127,7 +127,7 @@ export const buildXRayIos = (packageDir = 'packages/x-ray/native-screenshots-app
     await buildDebug({
       projectPath,
       outputPath: path.join(packageDir, 'build'),
-      osVersion: 'latest',
+      osVersion: '12.2',
       platformName: 'iOS Simulator',
       appName: 'X-Ray',
       appId: 'org.bubble-dev.xray',
