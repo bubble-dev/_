@@ -109,6 +109,8 @@ export default async (options: TOptions) => {
                 }
               }
 
+              await tar.close()
+
               port.postMessage({
                 type: 'DONE',
                 path: action.path,

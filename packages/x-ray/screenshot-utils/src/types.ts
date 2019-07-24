@@ -86,3 +86,9 @@ export type TFileResultData = {
 export type TResult = { [key: string]: TFileResult }
 export type TResultData = { [key: string]: TFileResultData }
 
+export type TRunScreesnotsResult = {
+  result: TResult,
+  resultData: TResultData,
+  hasBeenChanged: boolean,
+}
+

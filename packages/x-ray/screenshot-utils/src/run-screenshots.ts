@@ -1,13 +1,7 @@
 import path from 'path'
 import { parent } from '@x-ray/common-utils'
 import { TAnyObject } from 'tsfn'
-import { TFileResult, TFileResultData, TItemResult, TResult, TResultData } from './types'
-
-export type TRunScreesnotsResult = {
-  result: TResult,
-  resultData: TResultData,
-  hasBeenChanged: boolean,
-}
+import { TFileResult, TFileResultData, TItemResult, TResult, TResultData, TRunScreesnotsResult } from './types'
 
 export const runScreenshots = (childFile: string, targetFiles: string[], consurrency: number, options: TAnyObject) => new Promise<TRunScreesnotsResult>((resolve, reject) => {
   const workersCount = Math.min(targetFiles.length, consurrency)
@@ -84,7 +78,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           case 'BAILOUT': {
             await Promise.all(workers.map((worker) => worker.terminate()))
 
-            reject('BAILOUT')
+            reject(null)
 
             break
           }

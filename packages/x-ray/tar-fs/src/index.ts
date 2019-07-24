@@ -84,6 +84,7 @@ export type TTarFs = {
   delete: (filePath: string) => void,
   write: (filePath: string, data: Buffer) => void,
   save: () => Promise<void>,
+  close: () => Promise<void>,
 }
 
 export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
@@ -217,15 +218,30 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         }
       }
 
+      files.clear()
+      filesToWrite.clear()
+      filesToDelete.clear()
+
       await fs.write(tempFd, Buffer.alloc(1024), 0, 1024, tempPos)
 
       if (fd !== null) {
         await fs.close(fd)
+        fd = null
         await fs.unlink(tarFilePath)
       }
 
       await fs.close(tempFd)
       await fs.rename(tempTarFilePath, tarFilePath)
+    },
+    close: async () => {
+      files.clear()
+      filesToWrite.clear()
+      filesToDelete.clear()
+
+      if (fd !== null) {
+        await fs.close(fd)
+        fd = null
+      }
     },
   }
 }

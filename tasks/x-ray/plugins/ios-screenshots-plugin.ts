@@ -8,7 +8,9 @@ export default (appPath: string) =>
 
     const { rnResolve } = await import('rn-resolve')
     const { runSimulator, installApp, launchApp, serveJsBundle } = await import('@rebox/ios')
-    const { runServer, prepareFiles } = await import('@x-ray/native-screenshots')
+    const { run: runWeb } = await import('@rebox/web')
+    const { runScreenshotsServer, prepareFiles } = await import('@x-ray/native-screenshots')
+    const { runServer: runUiServer } = await import('@x-ray/screenshot-utils')
 
     const entryPointPath = await rnResolve('@x-ray/native-screenshots-app')
 
@@ -37,13 +39,31 @@ export default (appPath: string) =>
 
       logMessage('app is installed')
 
-      const runScreenshots = await runServer({ platform: 'ios' })
+      const runScreenshots = await runScreenshotsServer({ platform: 'ios' })
 
       await launchApp({ appId: 'org.bubble-dev.xray' })
 
       logMessage('app is launched')
 
-      await runScreenshots()
+      console.time('screeshots')
+      const { result, resultData, hasBeenChanged } = await runScreenshots()
+      console.timeEnd('screenshots')
+
+      if (hasBeenChanged) {
+        const closeReboxServer = await runWeb({
+          htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
+          entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+          isQuiet: true,
+        })
+
+        await runUiServer({
+          platform: 'ios',
+          dpr: 1,
+          result,
+          resultData,
+        })
+        await closeReboxServer()
+      }
     } finally {
       if (killSimulator !== null) {
         killSimulator()
