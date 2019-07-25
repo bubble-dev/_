@@ -1,23 +1,14 @@
-import React, { ReactNode } from 'react'
-import { startWithType, component } from 'refun'
+import React, { ReactNode, FC } from 'react'
 
 export type TTableBody = {
   id?: string,
   children?: ReactNode,
 }
 
-export const TableBody = component(
-  startWithType<TTableBody>()
-)(({ id, children }) => (
-  <tbody
-    id={id}
-    style={{
-      margin: 0,
-      padding: 0,
-    }}
-  >
+export const TableBody: FC<TTableBody> = ({ id, children }) => (
+  <tbody id={id}>
     {children}
   </tbody>
-))
+)
 
 TableBody.displayName = 'TableBody'

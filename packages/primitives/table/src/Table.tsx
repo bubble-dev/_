@@ -1,27 +1,43 @@
 import React, { ReactNode } from 'react'
-import { startWithType, component } from 'refun'
+import { startWithType, component, mapWithPropsMemo, mapDefaultProps } from 'refun'
+import { normalizeStyle } from 'stili'
+import { TTableBorderStyle } from './types'
 
 export type TTable = {
   id?: string,
   children?: ReactNode,
-  borderColor?: string,
-}
+  backgroundColor?: string,
+} & TTableBorderStyle
 
 export const Table = component(
-  startWithType<TTable>()
-)(({ id, children, borderColor }) => (
-  <table
-    id={id}
-    style={{
+  startWithType<TTable>(),
+  mapDefaultProps({
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderStyle: 'solid',
+  }),
+  mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor }) => ({
+    style: normalizeStyle({
       borderCollapse: 'collapse',
-      width: '100%',
-      margin: 0,
+      flexGrow: 1,
+      flexShrink: 1,
+      alignSelf: 'stretch',
+      maxWidth: '100%',
+      minWidth: 0,
       padding: 0,
       borderColor,
-      borderStyle: 'solid',
-      borderWidth: '1px',
-    }}
-  >
+      backgroundColor,
+      borderTopWidth: `${borderTopWidth}px`,
+      borderBottomWidth: `${borderBottomWidth}px`,
+      borderLeftWidth: `${borderLeftWidth}px`,
+      borderRightWidth: `${borderRightWidth}px`,
+      borderStyle,
+    }),
+  }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
+)(({ id, children, style }) => (
+  <table id={id} style={style}>
     {children}
   </table>
 ))

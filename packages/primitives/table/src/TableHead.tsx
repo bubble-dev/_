@@ -1,18 +1,12 @@
-import React, { ReactNode } from 'react'
-import { startWithType, component } from 'refun'
+import React, { ReactNode, FC } from 'react'
 
 export type TTableHead = {
   id?: string,
   children?: ReactNode,
 }
 
-export const TableHead = component(
-  startWithType<TTableHead>()
-)(({ id, children }) => (
-  <thead
-    id={id}
-    style={{ margin: 0, padding: 0 }}
-  >
+export const TableHead: FC<TTableHead> = (({ id, children }) => (
+  <thead id={id}>
     {children}
   </thead>
 ))

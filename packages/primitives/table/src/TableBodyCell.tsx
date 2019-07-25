@@ -1,18 +1,13 @@
 import React, { ReactNode } from 'react'
 import { normalizeStyle } from 'stili'
-import { startWithType, component, mapDefaultProps, mapWithProps } from 'refun'
+import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
+import { TTableBorderStyle } from './types'
 
 export type TTableBodyCell = {
   id?: string,
   children?: ReactNode,
-  borderColor?: string,
-  borderTopWidth?: number,
-  borderBottomWidth?: number,
-  borderLeftWidth?: number,
-  borderRightWidth?: number,
   backgroundColor?: string,
-  borderStyle?: string,
-}
+} & TTableBorderStyle
 
 export const TableBodyCell = component(
   startWithType<TTableBodyCell>(),
@@ -23,41 +18,20 @@ export const TableBodyCell = component(
     borderRightWidth: 0,
     borderStyle: 'solid',
   }),
-  mapWithProps(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth }) => ({
+  mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor }) => ({
     style: normalizeStyle({
+      padding: 0,
+      borderColor,
+      backgroundColor,
       borderTopWidth: `${borderTopWidth}px`,
       borderBottomWidth: `${borderBottomWidth}px`,
       borderLeftWidth: `${borderLeftWidth}px`,
       borderRightWidth: `${borderRightWidth}px`,
+      borderStyle,
     }),
-  }))
-)(({
-  id,
-  borderColor,
-  backgroundColor,
-  borderStyle,
-  borderTopWidth,
-  borderBottomWidth,
-  borderLeftWidth,
-  borderRightWidth,
-  children,
-}) => (
-  <td
-    id={id}
-    style={{
-      margin: 0,
-      padding: 0,
-      backgroundColor,
-      ...(borderColor && {
-        borderColor,
-        borderStyle,
-        borderTopWidth,
-        borderBottomWidth,
-        borderLeftWidth,
-        borderRightWidth,
-      }),
-    }}
-  >
+  }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
+)(({ id, style, children }) => (
+  <td id={id} style={style}>
     {children}
   </td>
 ))

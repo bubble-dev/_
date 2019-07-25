@@ -11,7 +11,13 @@ Table:
 export type TTable = {
   id?: string,
   children?: ReactNode,
+  backgroundColor?: string,
   borderColor?: string,
+  borderTopWidth?: number,
+  borderBottomWidth?: number,
+  borderLeftWidth?: number,
+  borderRightWidth?: number,
+  borderStyle?: string,
 }
 ```
 
@@ -28,12 +34,12 @@ TableBodyCell:
 export type TTableBodyCell = {
   id?: string,
   children?: ReactNode,
+  backgroundColor?: string,
   borderColor?: string,
   borderTopWidth?: number,
   borderBottomWidth?: number,
   borderLeftWidth?: number,
   borderRightWidth?: number,
-  backgroundColor?: string,
   borderStyle?: string,
 }
 ```
@@ -52,6 +58,12 @@ export type TTableHeadCell = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
+  borderColor?: string,
+  borderTopWidth?: number,
+  borderBottomWidth?: number,
+  borderLeftWidth?: number,
+  borderRightWidth?: number,
+  borderStyle?: string,
 }
 ```
 
