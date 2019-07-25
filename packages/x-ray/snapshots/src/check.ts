@@ -1,9 +1,13 @@
 import { TCheckResult } from '@x-ray/common-utils'
 import { TTarFs } from '@x-ray/tar-fs'
 
-const check = (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): TCheckResult => {
+const check = async (data: string, tar: TTarFs, snapshotName: string, shouldBailout: boolean): TCheckResult => {
   if (tar.has(snapshotName)) {
-    const existingData = tar.read(snapshotName)
+    const existingData = await tar.read(snapshotName)
+
+    if (existingData === null) {
+      throw new Error(`Unable to read file "${snapshotName}"`)
+    }
 
     const dataBuffer = Buffer.from(data)
 
