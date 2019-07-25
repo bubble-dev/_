@@ -22,38 +22,75 @@ export const getPermutations = <Props extends TProps> (
   const bump = bumpPermutation(lengthPerm)
 
   /* initial permutation */
-  let currentPerm = getInitialPermutation(lengthPerm)
+  const currentPerm = getInitialPermutation(lengthPerm)
 
   /* iterate over all possible permutations */
   const perms = [] as Permutation<Props>[]
 
+  const keysWithState = []
+
   for (let pi = 0; pi < totalPerms; ++pi) {
     /* get next permutation, skip first */
     if (pi > 0) {
-      currentPerm = bump(currentPerm)
+      bump(currentPerm)
     }
 
     /* check mutex groups */
     let validPerm = true
 
     if (mutexGroups.length > 0 || mutinGroups.length > 0) {
-      const keysWithState = keys.filter((k, i) => currentPerm[i] > 0 && props[k][currentPerm[i]] !== undefined)
+      let keysWithStateLength = 0
 
-      if (mutexGroups.length > 0) {
-        for (const mutexGroup of mutexGroups) {
-          if (arrayIntersect(keysWithState, mutexGroup).length > 1) {
-            validPerm = false
-
-            break
-          }
+      for (let i = 0; i < keys.length; ++i) {
+        if (currentPerm[i] > 0) {
+          keysWithState[keysWithStateLength++] = keys[i]
         }
       }
 
-      if (mutinGroups.length > 0) {
-        for (const mutinGroup of mutinGroups) {
-          const intersect = arrayIntersect(keysWithState, mutinGroup)
+      for (let i = 0; i < mutexGroups.length; ++i) {
+        const mutexGroup = mutexGroups[i]
 
-          if (intersect.length !== 0 && intersect.length !== mutinGroup.length) {
+        if (arrayIntersect(keysWithState, keysWithStateLength, mutexGroup, mutexGroup.length) > 1) {
+          validPerm = false
+
+          let rightSecondIndex = -1
+
+          for (let key = false, rmi = currentPerm.length - 1; rmi >= 0; --rmi) {
+            if (currentPerm[rmi] === 1) {
+              if (key) {
+                rightSecondIndex = rmi
+
+                break
+              }
+
+              key = true
+            }
+          }
+
+          let skipLength = 1
+
+          for (let p = 0; p < rightSecondIndex; ++p) {
+            skipLength *= (lengthPerm[p] - currentPerm[p])
+          }
+
+          // console.log('PERM', currentPerm)
+          // console.log('LENGTH', lengthPerm)
+          // console.log('SKIP', skipLength)
+
+          if (skipLength > 1) {
+            pi += skipLength - 2
+          }
+
+          break
+        }
+      }
+
+      if (validPerm) {
+        for (let i = 0; i < mutinGroups.length; ++i) {
+          const mutinGroup = mutinGroups[i]
+          const intersect = arrayIntersect(keysWithState, keysWithStateLength, mutinGroup, mutinGroup.length)
+
+          if (intersect !== 0 && intersect !== mutinGroup.length) {
             validPerm = false
 
             break
@@ -64,7 +101,7 @@ export const getPermutations = <Props extends TProps> (
 
     /* push valid permutation */
     if (validPerm) {
-      perms.push(currentPerm)
+      perms.push(currentPerm.slice() as Permutation<Props>)
     }
   }
 
