@@ -36,11 +36,16 @@ type TAutopropsConfigCache<T> = {
   perms: Permutation<T>[],
 }
 
+const autopropsConfigCache = new Map<string, TAutopropsConfigCache<any>>()
 const autopropsCache = new Map<string, any[]>()
 const filenamesCache = new Map<string, string[]>()
 
 export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMetaFile): TAutopropsConfigCache<any> => {
   const displayName = getComponentName(Component)
+
+  if (autopropsConfigCache.has(displayName)) {
+    return autopropsConfigCache.get(displayName)!
+  }
 
   if (!isUndefined(childrenConfig)) {
     const childrenMutex = Array.isArray(childrenConfig.mutex) ? [...childrenConfig.mutex] : []
@@ -120,6 +125,8 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
       perms: autopropsPerms,
     }
 
+    autopropsConfigCache.set(displayName, result)
+
     return result
   }
 
@@ -131,6 +138,8 @@ export const createAutopropsConfig = ({ Component, config, childrenConfig }: TMe
     keys: autopropsKeys,
     perms: autopropsPerms,
   }
+
+  autopropsConfigCache.set(displayName, result)
 
   return result
 }
