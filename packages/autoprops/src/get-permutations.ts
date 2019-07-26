@@ -7,6 +7,7 @@ import {
   getLengthPermutation,
   getTotalPermutations,
 } from './permutation-utils'
+import { getNumMutexesToSkip } from './get-num-mutexes-to-skip'
 
 export const getPermutations = <Props extends TProps> (
   props: PropsWithValues<Props>,
@@ -53,32 +54,15 @@ export const getPermutations = <Props extends TProps> (
         if (arrayIntersect(keysWithState, keysWithStateLength, mutexGroup, mutexGroup.length) > 1) {
           validPerm = false
 
-          let rightSecondIndex = -1
-
-          for (let key = false, rmi = currentPerm.length - 1; rmi >= 0; --rmi) {
-            if (currentPerm[rmi] === 1) {
-              if (key) {
-                rightSecondIndex = rmi
-
-                break
-              }
-
-              key = true
-            }
-          }
-
-          let skipLength = 1
-
-          for (let p = 0; p < rightSecondIndex; ++p) {
-            skipLength *= (lengthPerm[p] - currentPerm[p])
-          }
+          const skipMutexes = getNumMutexesToSkip(currentPerm, lengthPerm)
 
           // console.log('PERM', currentPerm)
           // console.log('LENGTH', lengthPerm)
           // console.log('SKIP', skipLength)
 
-          if (skipLength > 1) {
-            pi += skipLength - 2
+          if (skipMutexes > 0) {
+            /* skip 1 because we are currently at it, and another 1 because for-loop will increment pi */
+            pi += skipMutexes - 2
           }
 
           break
