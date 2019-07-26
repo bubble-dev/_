@@ -56,10 +56,6 @@ export const getPermutations = <Props extends TProps> (
 
           const skipMutexes = getNumMutexesToSkip(currentPerm, lengthPerm)
 
-          // console.log('PERM', currentPerm)
-          // console.log('LENGTH', lengthPerm)
-          // console.log('SKIP', skipLength)
-
           if (skipMutexes > 0) {
             /* skip 1 because we are currently at it, and another 1 because for-loop will increment pi */
             pi += skipMutexes - 2
