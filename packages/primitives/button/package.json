@@ -20,6 +20,7 @@
   "devDependencies": {
     "@primitives/text": "^0.7.1",
     "@types/react": "^16.8.6",
+    "@x-ray/common-utils": "^0.1.1",
     "react": "^16.8.6",
     "react-autoprops": "^0.4.0",
     "react-native": "^0.59.0"

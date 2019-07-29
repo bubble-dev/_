@@ -1,17 +1,17 @@
 import React from 'react'
-import { createAutoprops, createAutopropsFilenames } from 'react-autoprops'
+import { createAutoprops } from 'react-autoprops'
+import { serializeObjectToJson } from '@x-ray/common-utils'
 import { Button } from '../src'
 import * as metaFile from '../meta'
 
 // createChildren(metaFile.childrenConfig, children)
 
 const autoprops = createAutoprops(metaFile)
-const filenames = createAutopropsFilenames(metaFile)
 
-export default autoprops.map((props, propsIndex) => {
+export default autoprops.map((props, index) => {
   return {
     options: {
-      name: filenames[propsIndex],
+      name: `${index}:${serializeObjectToJson(props)}`,
     },
     element: <Button {...props}>Button</Button>,
   }

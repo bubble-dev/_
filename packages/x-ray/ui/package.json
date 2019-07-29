@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@x-ray/chrome-screenshots": "^0.2.0",
+    "@x-ray/common-utils": "^0.1.1",
     "react": "^16.8.6",
     "refun": "^0.3.3"
   }

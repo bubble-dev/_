@@ -20,6 +20,7 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.57.51",
+    "@x-ray/common-utils": "^0.1.1",
     "react": "^16.8.6",
     "react-autoprops": "^0.4.0",
     "react-native": "^0.59.0"
