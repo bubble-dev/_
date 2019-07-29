@@ -1,23 +1,18 @@
 import React from 'react'
 import { startWithType, component, mapState, onMount, mapHandlers } from 'refun'
+import { TFile } from './types'
 
 const ENDPOINT = 'http://localhost:3001/get'
 
-export type TImage = {
-  file: string,
-  type: string,
-  item: string,
-}
-
-type TImageState = {
+type TScreenshotState = {
   src: string,
   width: number,
   height: number,
 } | null
 
-export const Image = component(
-  startWithType<TImage>(),
-  mapState('state', 'setState', () => null as TImageState, []),
+export const Screenshot = component(
+  startWithType<TFile>(),
+  mapState('state', 'setState', () => null as TScreenshotState, []),
   onMount(({ setState, file, item, type }) => {
     (async () => {
       const response = await fetch(`${ENDPOINT}?file=${encodeURIComponent(file)}&type=${type}&item=${encodeURIComponent(item)}`)

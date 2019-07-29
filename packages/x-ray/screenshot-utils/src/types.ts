@@ -1,4 +1,5 @@
 import { ReactElement } from 'react' // eslint-disable-line
+import { TResult } from '@x-ray/common-utils'
 
 export type TMeta = {
   options: {
@@ -60,12 +61,6 @@ export type TItemResult =
     path: string,
   }
 
-export type TFileResultType = 'ok' | 'diff' | 'new' | 'deleted'
-
-export type TFileResult = {
-  [key in TFileResultType]: string[]
-}
-
 export type TFileResultData = {
   old: {
     [key: string]: {
@@ -83,7 +78,6 @@ export type TFileResultData = {
   },
 }
 
-export type TResult = { [key: string]: TFileResult }
 export type TResultData = { [key: string]: TFileResultData }
 
 export type TRunScreesnotsResult = {
@@ -91,4 +85,3 @@ export type TRunScreesnotsResult = {
   resultData: TResultData,
   hasBeenChanged: boolean,
 }
-

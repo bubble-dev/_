@@ -1,9 +1,8 @@
 import path from 'path'
-import { parent, TResult, TFileResult } from '@x-ray/common-utils'
-import { TAnyObject } from 'tsfn'
-import { TFileResultData, TItemResult, TResultData, TRunScreesnotsResult } from './types'
+import { parent, TOptions, TResult, TFileResult } from '@x-ray/common-utils'
+import { TRunSnapshotsResult, TResultData, TFileResultData, TItemResult } from './types'
 
-export const runScreenshots = (childFile: string, targetFiles: string[], consurrency: number, options: TAnyObject) => new Promise<TRunScreesnotsResult>((resolve, reject) => {
+export const runSnapshots = (childFile: string, targetFiles: string[], consurrency: number, options: TOptions) => new Promise<TRunSnapshotsResult>((resolve, reject) => {
   const workersCount = Math.min(targetFiles.length, consurrency)
   let targetFileIndex = 0
   let doneWorkersCount = 0
@@ -36,16 +35,8 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'DIFF': {
             targetResult.diff.push(action.path)
-            targetResultData.old[action.path] = {
-              data: Buffer.from(action.old.data),
-              width: action.old.width,
-              height: action.old.height,
-            }
-            targetResultData.new[action.path] = {
-              data: Buffer.from(action.new.data),
-              width: action.new.width,
-              height: action.new.height,
-            }
+            targetResultData.old[action.path] = Buffer.from(action.oldData)
+            targetResultData.new[action.path] = Buffer.from(action.newData)
 
             hasBeenChanged = true
 
@@ -53,11 +44,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'NEW': {
             targetResult.new.push(action.path)
-            targetResultData.new[action.path] = {
-              data: Buffer.from(action.data),
-              width: action.width,
-              height: action.height,
-            }
+            targetResultData.new[action.path] = Buffer.from(action.data)
 
             hasBeenChanged = true
 
@@ -65,11 +52,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
           }
           case 'DELETED': {
             targetResult.deleted.push(action.path)
-            targetResultData.old[action.path] = {
-              data: Buffer.from(action.data),
-              width: action.width,
-              height: action.height,
-            }
+            targetResultData.old[action.path] = Buffer.from(action.data)
 
             hasBeenChanged = true
 

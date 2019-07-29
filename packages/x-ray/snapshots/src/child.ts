@@ -1,68 +1,102 @@
-/* eslint-disable no-throw-literal */
-import { promisify } from 'util'
+/* eslint-disable no-throw-literal, import/no-unresolved */
 import path from 'path'
+import { parentPort, MessagePort } from 'worker_threads'
 import pAll from 'p-all'
-import fs from 'graceful-fs'
-import makeDir from 'make-dir'
-import { TMessage } from '@x-ray/common-utils'
 import { TarFs } from '@x-ray/tar-fs'
 import serialize from '@x-ray/serialize-react-tree'
-import checkSnapshot from './check'
+import { TCheckRequest, TOptions } from '@x-ray/common-utils'
+import { checkSnapshot } from './check-snapshot'
 import { TMeta } from './types'
 
-const pathExists = promisify(fs.access)
-
-// @ts-ignore
-const processSend: (message: TMessage) => Promise<void> = promisify(process.send.bind(process))
 const shouldBailout = Boolean(process.env.XRAY_CI)
+const port = parentPort as any as MessagePort
 const CONCURRENCY = 4
 
-export default async (targetFiles: string[], options: {[k: string]: any}) => {
-  const { platform } = options
-
+export default async (options: TOptions) => {
   try {
-    for (const targetPath of targetFiles) {
-      const { default: items } = await import(targetPath) as { default: TMeta[] }
-      const snapshotsDir = path.join(path.dirname(targetPath), '__x-ray__')
+    const { platform } = options
 
-      if (!shouldBailout) {
+    await new Promise((resolve, reject) => {
+      port.on('message', async (action: TCheckRequest) => {
         try {
-          await pathExists(snapshotsDir)
-        } catch (e) {
-          await makeDir(snapshotsDir)
-        }
-      }
+          switch (action.type) {
+            case 'FILE': {
+              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const snapshotsDir = path.join(path.dirname(action.path), '__x-ray__')
+              const tar = await TarFs(path.join(snapshotsDir, `${platform}-snapshots.tar`))
 
-      const tar = await TarFs(path.join(snapshotsDir, `${platform}-snapshots.tar`))
+              await pAll(
+                items.map((item) => async () => {
+                  const snapshot = await serialize(item.element)
+                  const snapshotName = `${item.options.name}.txt`
+                  const message = await checkSnapshot(Buffer.from(snapshot), tar, snapshotName)
 
-      await pAll(
-        items.map((item) => async () => {
-          const snapshot = await serialize(item.element)
-          const snapshotName = `${item.options.name}.txt`
-          const message = checkSnapshot(snapshot, tar, snapshotName, shouldBailout)
+                  if (shouldBailout) {
+                    switch (message.type) {
+                      case 'DIFF':
+                      case 'NEW': {
+                        port.postMessage({
+                          type: 'BAILOUT',
+                          path: message.path,
+                        })
 
-          await processSend(message)
+                        port.close()
 
-          if (shouldBailout) {
-            if (message.status === 'diff' || message.status === 'unknown') {
-              throw null
+                        throw null
+                      }
+                    }
+                  }
+
+                  switch (message.type) {
+                    case 'OK':
+                    case 'DIFF':
+                    case 'NEW': {
+                      port.postMessage(message)
+
+                      break
+                    }
+                  }
+                }),
+                { concurrency: CONCURRENCY }
+              )
+
+              for (const item of tar.list()) {
+                if (!items.find((metaItem) => `${metaItem.options.name}.png` === item)) {
+                  const data = await tar.read(item) as Buffer
+
+                  port.postMessage({
+                    type: 'DELETED',
+                    path: item,
+                    data,
+                  })
+                }
+              }
+
+              port.postMessage({
+                type: 'DONE',
+                path: action.path,
+              })
+
+              break
+            }
+            case 'DONE': {
+              port.close()
+              resolve()
             }
           }
-        }),
-        { concurrency: CONCURRENCY }
-      )
-
-      await tar.save()
-    }
-
-    process.disconnect()
-    process.exit(0) // eslint-disable-line
+        } catch (err) {
+          reject(err)
+        }
+      })
+    })
   } catch (err) {
-    if (err !== null) {
-      console.error(err)
-    }
+    console.error(err)
 
-    process.disconnect()
-    process.exit(1) // eslint-disable-line
+    if (err !== null) {
+      port.postMessage({
+        type: 'ERROR',
+        data: err.message,
+      })
+    }
   }
 }

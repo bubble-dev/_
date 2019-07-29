@@ -1,5 +1,5 @@
 import React from 'react'
-import { createAutoprops, createAutopropsFilenames, createChildren } from 'react-autoprops'
+import { createAutoprops, createAutopropsFilenames } from 'react-autoprops'
 import { Button } from '../src'
 import * as metaFile from '../meta'
 

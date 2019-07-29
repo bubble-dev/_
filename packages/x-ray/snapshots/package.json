@@ -10,15 +10,15 @@
     "node": ">=8.6.0"
   },
   "dependencies": {
+    "@rebox/web": "^0.2.2",
     "@x-ray/common-utils": "^0.1.0",
-    "@x-ray/tar-fs": "^0.0.0",
     "@x-ray/serialize-react-tree": "^0.2.0",
-    "graceful-fs": "^4.1.11",
+    "@x-ray/tar-fs": "^0.0.0",
     "make-dir": "^3.0.0",
-    "p-all": "^2.0.0"
+    "p-all": "^2.0.0",
+    "tsfn": "^0.1.2"
   },
   "devDependencies": {
-    "@types/graceful-fs": "^4.1.2",
     "@types/react": "^16.8.6",
     "react": "^16.8.6"
   }

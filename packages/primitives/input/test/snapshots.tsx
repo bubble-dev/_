@@ -1,6 +1,6 @@
 import React from 'react'
-import { createAutoprops, createAutopropsFilenames, createChildren } from 'react-autoprops'
-import { Button } from '../src'
+import { createAutoprops, createAutopropsFilenames } from 'react-autoprops'
+import { Input } from '../src'
 import * as metaFile from '../meta'
 
 // createChildren(metaFile.childrenConfig, children)
@@ -13,6 +13,6 @@ export default autoprops.map((props, propsIndex) => {
     options: {
       name: filenames[propsIndex],
     },
-    element: <Button {...props}>Button</Button>,
+    element: <Input {...props}/>,
   }
 })

@@ -39,10 +39,10 @@ export default async (options: TOptions) => {
                 const screenshotName = `${item.options.name}.png`
                 const message = await checkScreenshot(screenshot, tar, screenshotName)
 
-                switch (message.type) {
-                  case 'DIFF':
-                  case 'NEW': {
-                    if (shouldBailout) {
+                if (shouldBailout) {
+                  switch (message.type) {
+                    case 'DIFF':
+                    case 'NEW': {
                       await browser.disconnect()
 
                       port.postMessage({
@@ -58,16 +58,8 @@ export default async (options: TOptions) => {
                 }
 
                 switch (message.type) {
-                  case 'OK': {
-                    port.postMessage(message)
-
-                    break
-                  }
-                  case 'DIFF': {
-                    port.postMessage(message)
-
-                    break
-                  }
+                  case 'OK':
+                  case 'DIFF':
                   case 'NEW': {
                     port.postMessage(message)
 

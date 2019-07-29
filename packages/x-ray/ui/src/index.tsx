@@ -1,22 +1,22 @@
 import React from 'react'
 import { component, onMount, startWithType, mapState, mapHandlers } from 'refun'
-import { TResult } from '@x-ray/chrome-screenshots'
-import { Image } from './Image'
+import { TServerResult } from '@x-ray/common-utils'
+import { File } from './File'
 
 const HOST = 'localhost'
 const PORT = 3001
 
 export const App = component(
   startWithType<{}>(),
-  mapState('files', 'setFiles', () => ({}) as TResult, []),
-  onMount(({ setFiles }) => {
+  mapState('state', 'setState', () => null as TServerResult | null, []),
+  onMount(({ setState }) => {
     (async () => {
       const filesResponse = await fetch(`http://${HOST}:${PORT}/list`)
-      const files = await filesResponse.json() as TResult
+      const result = await filesResponse.json() as TServerResult
 
-      console.log('files', files)
+      console.log('files', result.files)
 
-      setFiles(files)
+      setState(result)
     })()
   }),
   mapHandlers({
@@ -24,12 +24,12 @@ export const App = component(
       await fetch(`http://${HOST}:${PORT}/save`, { method: 'POST' })
     },
   })
-)(({ files, onSave }) => (
+)(({ state, onSave }) => (
   <div>
     <div>
-      {
+      {state &&
         Object
-          .entries(files)
+          .entries(state.files)
           .reduce((result, [file, data]) => {
             result.push(
               <h2 key={file}>{file}</h2>
@@ -49,7 +49,8 @@ export const App = component(
                 ...data.new.map((item) => (
                   <div key={`${file}:new:${item}`}>
                     <h4>{item}</h4>
-                    <Image
+                    <File
+                      kind={state.kind}
                       type="new"
                       file={file}
                       item={item}
@@ -67,12 +68,14 @@ export const App = component(
                 ...data.diff.map((item) => (
                   <div key={`${file}:diff:${item}`}>
                     <h4>{item}</h4>
-                    <Image
+                    <File
+                      kind={state.kind}
                       type="old"
                       file={file}
                       item={item}
                     />
-                    <Image
+                    <File
+                      kind={state.kind}
                       type="new"
                       file={file}
                       item={item}
@@ -90,7 +93,8 @@ export const App = component(
                 ...data.deleted.map((item) => (
                   <div key={`${file}:deleted:${item}`}>
                     <h4>{item}</h4>
-                    <Image
+                    <File
+                      kind={state.kind}
                       type="old"
                       file={file}
                       item={item}

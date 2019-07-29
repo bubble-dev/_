@@ -1,17 +1,4 @@
-export type TMessageStatus = 'ok' | 'diff' | 'new' | 'unknown'
-
-export type TMessage = {
-  status: TMessageStatus,
-  path: string,
-}
-
 export type TCheckRequest = { type: 'FILE', path: string } | { type: 'DONE' }
-
-export type TTotalResult = {
-  ok: number,
-  diff: number,
-  new: number,
-}
 
 export type TOptions = {
   mocks?: {
@@ -19,4 +6,17 @@ export type TOptions = {
   },
   extensions: string[],
   platform: string,
+}
+
+export type TFileResultType = 'ok' | 'diff' | 'new' | 'deleted'
+
+export type TFileResult = {
+  [key in TFileResultType]: string[]
+}
+
+export type TResult = { [key: string]: TFileResult }
+
+export type TServerResult = {
+  kind: 'image' | 'text',
+  files: TResult,
 }

@@ -1,15 +1,29 @@
 import { cpus } from 'os'
-import { divideFiles, logTotalResults, TOptions, parent } from '@x-ray/common-utils'
+import { TOptions } from '@x-ray/common-utils'
+import { run } from '@rebox/web'
+import { runSnapshots } from './run-snapshots'
+import { runServer } from './run-server'
 
 const CONCURRENCY = Math.max(cpus().length - 1, 1)
-const childFilePath = require.resolve('./child')
+const childFile = require.resolve('./child')
 
-const runFiles = async (targetFiles: string[], options: TOptions) => {
-  const totalResults = await Promise.all(
-    divideFiles(targetFiles, CONCURRENCY).map((files) => parent(childFilePath, files, options))
-  )
+export const runFiles = async (targetFiles: string[], options: TOptions) => {
+  console.time('snapshots')
+  const { result, resultData, hasBeenChanged } = await runSnapshots(childFile, targetFiles, CONCURRENCY, options)
+  console.timeEnd('snapshots')
 
-  logTotalResults(totalResults)
+  if (hasBeenChanged) {
+    const closeReboxServer = await run({
+      htmlTemplatePath: 'packages/x-ray/ui/src/index.html',
+      entryPointPath: 'packages/x-ray/ui/src/index.tsx',
+      isQuiet: true,
+    })
+
+    await runServer({
+      platform: options.platform,
+      result,
+      resultData,
+    })
+    await closeReboxServer()
+  }
 }
-
-export default runFiles
