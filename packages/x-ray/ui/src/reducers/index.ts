@@ -1,7 +1,7 @@
 import { Reducer } from 'redux'
 import { DeepReadonly } from 'utility-types'
 import { isUndefined } from 'tsfn'
-import { isSaveAction, isLoadListStartAction, isLoadListErrorAction, isLoadListDoneAction } from '../actions'
+import { isLoadingStartAction, isLoadingEndAction, isErrorAction, isLoadListAction, isSaveAction } from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
 
@@ -12,34 +12,39 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
     return initialState
   }
 
-  if (isSaveAction(action)) {
-    return {
-      ...state,
-      isSaved: true,
-    }
-  }
-
-  if (isLoadListStartAction(action)) {
+  if (isLoadingStartAction(action)) {
     return {
       ...state,
       isLoading: true,
     }
   }
 
-  if (isLoadListErrorAction(action)) {
+  if (isLoadingEndAction(action)) {
     return {
       ...state,
-      error: action.error,
       isLoading: false,
     }
   }
 
-  if (isLoadListDoneAction(action)) {
+  if (isErrorAction(action)) {
     return {
       ...state,
-      isLoading: false,
+      error: action.error,
+    }
+  }
+
+  if (isLoadListAction(action)) {
+    return {
+      ...state,
       kind: action.payload.kind,
       files: action.payload.files,
+    }
+  }
+
+  if (isSaveAction(action)) {
+    return {
+      ...state,
+      isSaved: true,
     }
   }
 

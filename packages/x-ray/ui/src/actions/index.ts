@@ -1,35 +1,51 @@
 import { TServerResult } from '@x-ray/common-utils'
-import { TAction, TActionCreator, TAnyAction, TActionCreatorAsync, TActionWithPayload } from '../types'
-import { loadListApi } from '../api'
+import { TAction, TAnyAction, TActionCreatorAsync, TActionWithPayload } from '../types'
+import { loadListApi, saveApi } from '../api'
 
+const ERROR = 'ERROR'
+const LOADING_START = 'LOADING_START'
+const LOADING_END = 'LOADING_END'
+const LOAD_LIST = 'LOAD_LIST'
 const SAVE = 'SAVE'
-const LOAD_LIST_START = 'LOAD_LIST_START'
-const LOAD_LIST_ERROR = 'LOAD_LIST_ERROR'
-const LOAD_LIST_DONE = 'LOAD_LIST_DONE'
 
+export type TErrorAction = TAction<typeof ERROR>
+export type TLoadingStartAction = TAction<typeof LOADING_START>
+export type TLoadingEndAction = TAction<typeof LOADING_END>
+
+export type TLoadListAction = TActionWithPayload<typeof LOAD_LIST, TServerResult>
 export type TSaveAction = TAction<typeof SAVE>
-export type TLoadListStartAction = TAction<typeof LOAD_LIST_START>
-export type TLoadListErrorAction = TAction<typeof LOAD_LIST_ERROR>
-export type TLoadListDoneAction = TActionWithPayload<typeof LOAD_LIST_DONE, TServerResult>
-export type TLoadListAction = TLoadListStartAction | TLoadListErrorAction | TLoadListDoneAction
 
-export const saveAction: TActionCreator<TSaveAction> = () => ({
-  type: SAVE,
-})
-
-export const loadListAction: TActionCreatorAsync<TLoadListAction> = () => async (dispatch) => {
+export const saveAction: TActionCreatorAsync<TSaveAction | TErrorAction | TLoadingStartAction | TLoadingEndAction> = () => async (dispatch) => {
   try {
-    dispatch({ type: LOAD_LIST_START })
+    dispatch({ type: LOADING_START })
 
-    const result = await loadListApi()
+    await saveApi()
 
-    dispatch({ type: LOAD_LIST_DONE, payload: result })
+    dispatch({ type: SAVE })
   } catch (err) {
-    dispatch({ type: LOAD_LIST_ERROR, error: err.message })
+    dispatch({ type: ERROR, error: err.message })
+  } finally {
+    dispatch({ type: LOADING_END })
   }
 }
 
+export const loadListAction: TActionCreatorAsync<TLoadListAction | TErrorAction | TLoadingStartAction | TLoadingEndAction> = () => async (dispatch) => {
+  try {
+    dispatch({ type: LOADING_START })
+
+    const result = await loadListApi()
+
+    dispatch({ type: LOAD_LIST, payload: result })
+  } catch (err) {
+    dispatch({ type: ERROR, error: err.message })
+  } finally {
+    dispatch({ type: LOADING_END })
+  }
+}
+
+export const isErrorAction = (obj: TAnyAction): obj is TErrorAction => obj.type === ERROR
+export const isLoadingStartAction = (obj: TAnyAction): obj is TLoadingStartAction => obj.type === LOADING_START
+export const isLoadingEndAction = (obj: TAnyAction): obj is TLoadingEndAction => obj.type === LOADING_END
+
+export const isLoadListAction = (obj: TAnyAction): obj is TLoadListAction => obj.type === LOAD_LIST
 export const isSaveAction = (obj: TAnyAction): obj is TSaveAction => obj.type === SAVE
-export const isLoadListStartAction = (obj: TAnyAction): obj is TLoadListStartAction => obj.type === LOAD_LIST_START
-export const isLoadListErrorAction = (obj: TAnyAction): obj is TLoadListErrorAction => obj.type === LOAD_LIST_ERROR
-export const isLoadListDoneAction = (obj: TAnyAction): obj is TLoadListDoneAction => obj.type === LOAD_LIST_DONE

@@ -4,11 +4,8 @@ import { Root } from '@primitives/root'
 import { Layout, LayoutInFlow } from '@primitives/layout'
 import { isUndefined } from 'tsfn'
 import { mapStoreState, mapStoreDispatch } from '../store'
-import { loadListAction } from '../actions'
+import { loadListAction, saveAction } from '../actions'
 import { File } from './File'
-
-const HOST = 'localhost'
-const PORT = 3001
 
 export const Index = component(
   startWithType<{}>(),
@@ -21,8 +18,8 @@ export const Index = component(
     dispatch(loadListAction())
   }),
   mapHandlers({
-    onSave: () => async () => {
-      await fetch(`http://${HOST}:${PORT}/save`, { method: 'POST' })
+    onSave: ({ dispatch }) => () => {
+      dispatch(saveAction())
     },
   })
 )(({ kind, files, onSave }) => (
