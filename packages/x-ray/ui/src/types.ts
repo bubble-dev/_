@@ -1,6 +1,27 @@
-export type TFile = {
-  kind: 'image' | 'text',
-  file: string,
+import { TJsonValue } from 'typeon'
+import { TExtend } from 'tsfn'
+import { ThunkAction } from 'redux-thunk'
+import { TResult } from '@x-ray/common-utils'
+
+export type TAnyAction = {
   type: string,
-  item: string,
+  payload?: TJsonValue,
+  error?: string,
+  meta?: TJsonValue,
+}
+
+export type TAction<T extends string> = TExtend<TAnyAction, { type: T }>
+
+export type TActionWithPayload<T extends string, P extends TJsonValue> = TExtend<TAnyAction, { type: T, payload: P }>
+
+export type TActionCreator <A extends TAnyAction> = () => A
+export type TActionCreatorAsync <A extends TAnyAction> = (payload?: TJsonValue) => ThunkAction<Promise<void>, TState, any, A>
+export type TActionWithPayloadCreator<A extends TAnyAction> = (payload: A['payload']) => A
+
+export type TState = {
+  kind?: 'image' | 'text',
+  files?: TResult,
+  isSaved: boolean,
+  isLoading: boolean,
+  error?: string,
 }

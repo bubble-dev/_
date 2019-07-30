@@ -11,8 +11,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
+    "@primitives/layout": "^0.9.1",
+    "@primitives/root": "^0.3.1",
     "@x-ray/common-utils": "^0.1.1",
     "react": "^16.8.6",
-    "refun": "^0.3.3"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "refun": "^0.3.3",
+    "tsfn": "^0.1.2",
+    "typeon": "^0.3.0",
+    "utility-types": "^3.7.0"
   }
 }

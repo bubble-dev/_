@@ -2,9 +2,10 @@
 import path from 'path'
 import http from 'http'
 import upng from 'upng-js'
-import { checkScreenshot, TResult, TResultData, TFileResult, TFileResultData, TRunScreesnotsResult } from '@x-ray/screenshot-utils'
+import { checkScreenshot, TResultData, TFileResultData, TRunScreesnotsResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs } from '@x-ray/tar-fs'
 import { isUndefined, isString } from 'tsfn'
+import { TResult, TFileResult } from '@x-ray/common-utils'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)

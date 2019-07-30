@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
-import { TFile } from './types'
 import { Screenshot } from './Screenshot'
 import { Snapshot } from './Snapshot'
+import { TFile } from './types'
 
 export const File: FC<TFile> = (props) => (
   props.kind === 'image'
