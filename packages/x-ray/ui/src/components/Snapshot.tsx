@@ -1,20 +1,24 @@
 import React from 'react'
 import { startWithType, component, mapState, onMount } from 'refun'
-import { TFile } from './types'
-
-const ENDPOINT = 'http://localhost:3001/get'
+import { loadSnapshotApi, TLoadSnapshotApiOpts } from '../api'
+import { mapStoreDispatch } from '../store'
+import { errorAction } from '../actions'
 
 type TSnapshotData = string | null
 
 export const Snapshot = component(
-  startWithType<TFile>(),
+  startWithType<TLoadSnapshotApiOpts>(),
+  mapStoreDispatch,
   mapState('state', 'setState', () => null as TSnapshotData, []),
-  onMount(({ setState, file, item, type }) => {
+  onMount(({ setState, file, item, type, dispatch }) => {
     (async () => {
-      const response = await fetch(`${ENDPOINT}?file=${encodeURIComponent(file)}&type=${type}&item=${encodeURIComponent(item)}`)
-      const data = await response.text()
+      try {
+        const data = await loadSnapshotApi({ file, item, type })
 
-      setState(data)
+        setState(data)
+      } catch (err) {
+        dispatch(errorAction(err.message))
+      }
     })()
   })
 )(({ state }) => (

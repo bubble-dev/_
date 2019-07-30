@@ -1,8 +1,8 @@
 import React from 'react'
 import { startWithType, component, mapState, onMount, mapHandlers } from 'refun'
-import { TFile } from './types'
-
-const ENDPOINT = 'http://localhost:3001/get'
+import { loadScreenshotApi, TLoadScreenshotApiOpts } from '../api'
+import { mapStoreDispatch } from '../store'
+import { errorAction } from '../actions'
 
 type TScreenshotState = {
   src: string,
@@ -11,22 +11,22 @@ type TScreenshotState = {
 } | null
 
 export const Screenshot = component(
-  startWithType<TFile>(),
+  startWithType<TLoadScreenshotApiOpts>(),
+  mapStoreDispatch,
   mapState('state', 'setState', () => null as TScreenshotState, []),
-  onMount(({ setState, file, item, type }) => {
+  onMount(({ setState, file, item, type, dispatch }) => {
     (async () => {
-      const response = await fetch(`${ENDPOINT}?file=${encodeURIComponent(file)}&type=${type}&item=${encodeURIComponent(item)}`)
-      const width = Number(response.headers.get('x-ray-width'))
-      const height = Number(response.headers.get('x-ray-height'))
-      const dpr = Number(response.headers.get('x-ray-dpr'))
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
+      try {
+        const { url, width, height, dpr } = await loadScreenshotApi({ file, item, type })
 
-      setState({
-        src: url,
-        width: width / dpr,
-        height: height / dpr,
-      })
+        setState({
+          src: url,
+          width: width / dpr,
+          height: height / dpr,
+        })
+      } catch (err) {
+        dispatch(errorAction(err.message))
+      }
     })()
   }),
   mapHandlers({

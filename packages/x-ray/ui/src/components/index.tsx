@@ -26,88 +26,89 @@ export const Index = component(
   <Root>
     {(/*{ width, height }*/) => (
       <Layout direction="vertical">
-        <LayoutInFlow>
-          {!isUndefined(files) && !isUndefined(kind) &&
-            Object
-              .entries(files)
-              .reduce((result, [file, data]) => {
+        {!isUndefined(files) && !isUndefined(kind) &&
+          Object
+            .entries(files)
+            .reduce((result, [file, data]) => {
+              result.push(
+                <h2 key={file}>{file}</h2>
+              )
+
+              if (data.ok.length > 0) {
                 result.push(
-                  <h2 key={file}>{file}</h2>
+                  <h3 key={`${file}:ok`}>ok: {data.ok.length}</h3>
                 )
+              }
 
-                if (data.ok.length > 0) {
-                  result.push(
-                    <h3 key={`${file}:ok`}>ok: {data.ok.length}</h3>
-                  )
-                }
+              if (data.new.length > 0) {
+                result.push(
+                  (
+                    <h3 key={`${file}:new`}>new: {data.new.length}</h3>
+                  ),
+                  ...data.new.map((item) => (
+                    <div key={`${file}:new:${item}`}>
+                      <h4>{item}</h4>
+                      <File
+                        kind={kind}
+                        type="new"
+                        file={file}
+                        item={item}
+                      />
+                    </div>
+                  ))
+                )
+              }
 
-                if (data.new.length > 0) {
-                  result.push(
-                    (
-                      <h3 key={`${file}:new`}>new: {data.new.length}</h3>
-                    ),
-                    ...data.new.map((item) => (
-                      <div key={`${file}:new:${item}`}>
-                        <h4>{item}</h4>
-                        <File
-                          kind={kind}
-                          type="new"
-                          file={file}
-                          item={item}
-                        />
-                      </div>
-                    ))
-                  )
-                }
+              if (data.diff.length > 0) {
+                result.push(
+                  (
+                    <h3 key={`${file}:diff`}>diff: {data.diff.length}</h3>
+                  ),
+                  ...data.diff.map((item) => (
+                    <div key={`${file}:diff:${item}`}>
+                      <h4>{item}</h4>
+                      <File
+                        kind={kind}
+                        type="old"
+                        file={file}
+                        item={item}
+                      />
+                      <File
+                        kind={kind}
+                        type="new"
+                        file={file}
+                        item={item}
+                      />
+                    </div>
+                  ))
+                )
+              }
 
-                if (data.diff.length > 0) {
-                  result.push(
-                    (
-                      <h3 key={`${file}:diff`}>diff: {data.diff.length}</h3>
-                    ),
-                    ...data.diff.map((item) => (
-                      <div key={`${file}:diff:${item}`}>
-                        <h4>{item}</h4>
-                        <File
-                          kind={kind}
-                          type="old"
-                          file={file}
-                          item={item}
-                        />
-                        <File
-                          kind={kind}
-                          type="new"
-                          file={file}
-                          item={item}
-                        />
-                      </div>
-                    ))
-                  )
-                }
+              if (data.deleted.length > 0) {
+                result.push(
+                  (
+                    <h3 key={`${file}:deleted`}>deleted: {data.deleted.length}</h3>
+                  ),
+                  ...data.deleted.map((item) => (
+                    <div key={`${file}:deleted:${item}`}>
+                      <h4>{item}</h4>
+                      <File
+                        kind={kind}
+                        type="old"
+                        file={file}
+                        item={item}
+                      />
+                    </div>
+                  ))
+                )
+              }
 
-                if (data.deleted.length > 0) {
-                  result.push(
-                    (
-                      <h3 key={`${file}:deleted`}>deleted: {data.deleted.length}</h3>
-                    ),
-                    ...data.deleted.map((item) => (
-                      <div key={`${file}:deleted:${item}`}>
-                        <h4>{item}</h4>
-                        <File
-                          kind={kind}
-                          type="old"
-                          file={file}
-                          item={item}
-                        />
-                      </div>
-                    ))
-                  )
-                }
-
-                return result
-              }, [] as any[])
+              return result
+            }, [] as any[])
+            .map((item, key) => (
+              <LayoutInFlow key={key}>{item}</LayoutInFlow>
+            ))
           }
-        </LayoutInFlow>
         <LayoutInFlow>
           <button onClick={onSave}>save</button>
         </LayoutInFlow>

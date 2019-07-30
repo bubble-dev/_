@@ -1,10 +1,16 @@
 import React, { FC } from 'react'
 import { Screenshot } from './Screenshot'
 import { Snapshot } from './Snapshot'
-import { TFile } from './types'
 
-export const File: FC<TFile> = (props) => (
-  props.kind === 'image'
+export type TFile = {
+  kind: 'image' | 'text',
+  file: string,
+  type: string,
+  item: string,
+}
+
+export const File: FC<TFile> = ({ kind, ...props }) => (
+  kind === 'image'
     ? (
       <Screenshot {...props}/>
     )

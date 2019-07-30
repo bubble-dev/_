@@ -11,12 +11,8 @@ export type TAnyAction = {
 }
 
 export type TAction<T extends string> = TExtend<TAnyAction, { type: T }>
-
 export type TActionWithPayload<T extends string, P extends TJsonValue> = TExtend<TAnyAction, { type: T, payload: P }>
-
-export type TActionCreator <A extends TAnyAction> = () => A
-export type TActionCreatorAsync <A extends TAnyAction> = (payload?: TJsonValue) => ThunkAction<Promise<void>, TState, any, A>
-export type TActionWithPayloadCreator<A extends TAnyAction> = (payload: A['payload']) => A
+export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TState, any, A>
 
 export type TState = {
   kind?: 'image' | 'text',
