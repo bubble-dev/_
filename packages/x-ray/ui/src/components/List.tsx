@@ -1,28 +1,32 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { isUndefined } from 'tsfn'
-import { TResult } from '@x-ray/common-utils'
 import { component, startWithType } from 'refun'
 import { mapStoreState } from '../store'
-import { File } from './File'
 import { Block } from './Block'
 import { TRect } from './types'
+
+const TYPES = [
+  'new' as const,
+  'diff' as const,
+  'deleted' as const,
+]
 
 export type TList = {
   title: string,
   list: string[],
-  files: TResult,
-  kind: 'image' | 'text',
   onSelect: (file: string, item: string, type: string) => void,
   onMove: (file: string) => void,
 } & TRect
 
 export const List = component(
   startWithType<TList>(),
-  mapStoreState(({ selectedFile, selectedItem, selectedType }) => ({
+  mapStoreState(({ files, kind, selectedFile, selectedItem, selectedType }) => ({
+    files,
+    kind,
     selectedFile,
     selectedItem,
     selectedType,
-  }), ['selectedFile', 'selectedItem', 'selectedType'])
+  }), ['files', 'kind', 'selectedFile', 'selectedItem', 'selectedType'])
 )(({
   files,
   list,
@@ -46,77 +50,42 @@ export const List = component(
     shouldScroll
   >
     <h2>{title}:</h2>
-
-    {list.length > 0 && !isUndefined(kind) &&
-      list
-        .map((file) => {
+    <ul>
+      {!isUndefined(files) && !isUndefined(kind) && list.length > 0 &&
+        list.map((file) => {
           const data = files[file]
 
           return (
-            <div key={file}>
-              <div>
-                <div>
-                  <h3 key={file} onDoubleClick={() => onMove(file)}>
-                    {file}
-                  </h3>
-                </div>
-                {data.new.length > 0 && (
-                  <ul>
-                    {data.new.map((item) => {
-                      const isSelected = selectedFile === file && selectedItem === item && selectedType === 'new'
+            <li key={file}>
+              <h3 key={file} onDoubleClick={() => onMove(file)}>
+                {file}
+              </h3>
 
-                      return (
-                        <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={`${file}:new:${item}`}>
-                          <h4 onClick={() => onSelect(file, item, 'new')}>new: {item}</h4>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                )}
-              </div>
+              {
+                TYPES.map((type) => {
+                  if (data[type].length === 0) {
+                    return null
+                  }
 
-              {data.diff.length > 0 && (
-                <Fragment>
-                  <h4 key={`${file}:diff`}>diff: {data.diff.length}</h4>
-                  {data.diff.map((item) => (
-                    <div key={`${file}:diff:${item}`}>
-                      <h5>{item}</h5>
-                      <File
-                        kind={kind}
-                        type="old"
-                        file={file}
-                        item={item}
-                      />
-                      <File
-                        kind={kind}
-                        type="new"
-                        file={file}
-                        item={item}
-                      />
-                    </div>
-                  ))}
-                </Fragment>
-              )}
+                  return (
+                    <ul key={type}>
+                      {data[type].map((item) => {
+                        const isSelected = selectedFile === file && selectedItem === item && selectedType === type
 
-              {data.deleted.length > 0 && (
-                <Fragment>
-                  <h4 key={`${file}:deleted`}>deleted: {data.deleted.length}</h4>
-                  {data.deleted.map((item) => (
-                    <div key={`${file}:deleted:${item}`}>
-                      <h5>{item}</h5>
-                      <File
-                        kind={kind}
-                        type="old"
-                        file={file}
-                        item={item}
-                      />
-                    </div>
-                  ))}
-                </Fragment>
-              )}
-            </div>
+                        return (
+                          <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={item}>
+                            <h4 onClick={() => onSelect(file, item, type)}>{type}: {item}</h4>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )
+                })
+              }
+            </li>
           )
         })
       }
+    </ul>
   </Block>
 ))

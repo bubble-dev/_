@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapStoreState } from '../store'
@@ -16,21 +16,56 @@ export const Preview = component(
     selectedItem,
     selectedType,
   }), ['selectedFile', 'selectedItem', 'selectedType', 'kind'])
-)(({ top, left, width, height, kind, selectedFile, selectedItem, selectedType }) => (
-  <Block
-    top={top}
-    left={left}
-    width={width}
-    height={height}
-  >
-    {!isUndefined(kind) && !isUndefined(selectedFile) && !isUndefined(selectedItem) && !isUndefined(selectedType) && (
-      <File
-        key={`${selectedFile}:${selectedItem}:${selectedType}`}
-        kind={kind}
-        file={selectedFile}
-        item={selectedItem}
-        type={selectedType}
-      />
-    )}
-  </Block>
-))
+)(({ top, left, width, height, kind, selectedFile, selectedItem, selectedType }) => {
+  if (isUndefined(kind) || isUndefined(selectedFile) || isUndefined(selectedItem) || isUndefined(selectedType)) {
+    return null
+  }
+
+  return (
+    <Block
+      top={top}
+      left={left}
+      width={width}
+      height={height}
+    >
+      {selectedType === 'new' && (
+        <File
+          key={`${selectedFile}:${selectedItem}:new`}
+          kind={kind}
+          file={selectedFile}
+          item={selectedItem}
+          type="new"
+        />
+      )}
+
+      {selectedType === 'diff' && (
+        <Fragment>
+          <File
+            key={`${selectedFile}:${selectedItem}:old`}
+            kind={kind}
+            file={selectedFile}
+            item={selectedItem}
+            type="old"
+          />
+          <File
+            key={`${selectedFile}:${selectedItem}:new`}
+            kind={kind}
+            file={selectedFile}
+            item={selectedItem}
+            type="new"
+          />
+        </Fragment>
+      )}
+
+      {selectedType === 'deleted' && (
+        <File
+          key={`${selectedFile}:${selectedItem}:old`}
+          kind={kind}
+          file={selectedFile}
+          item={selectedItem}
+          type="old"
+        />
+      )}
+    </Block>
+  )
+})

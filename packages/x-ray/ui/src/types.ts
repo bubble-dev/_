@@ -16,6 +16,10 @@ export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TSta
 
 export type TKind = 'image' | 'text'
 
+export type TFileType = 'old' | 'new'
+
+export type TResultType = 'new' | 'diff' | 'deleted'
+
 export type TState = {
   kind?: TKind,
   files?: TResult,
@@ -25,6 +29,6 @@ export type TState = {
   unstagedList: string[],
   selectedFile?: string,
   selectedItem?: string,
-  selectedType?: string,
+  selectedType?: TResultType,
   error?: string,
 }

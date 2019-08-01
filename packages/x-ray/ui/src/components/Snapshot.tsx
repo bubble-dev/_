@@ -21,20 +21,22 @@ export const Snapshot = component(
       }
     })()
   })
-)(({ state }) => (
-  state === null
-    ? null
-    : (
-      <pre
-        style={{
-          border: '1px solid red',
-          width: 400,
-          height: 50,
-          overflow: 'scroll',
-          resize: 'both',
-        }}
-      >
-        {state}
-      </pre>
-    )
-))
+)(({ state }) => {
+  if (state === null) {
+    return null
+  }
+
+  return (
+    <pre
+      style={{
+        border: '1px solid red',
+        width: 400,
+        height: 50,
+        overflow: 'scroll',
+        resize: 'both',
+      }}
+    >
+      {state}
+    </pre>
+  )
+})

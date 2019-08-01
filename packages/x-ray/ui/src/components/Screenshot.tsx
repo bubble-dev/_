@@ -35,18 +35,20 @@ export const Screenshot = component(
       URL.revokeObjectURL(state!.src)
     },
   })
-)(({ state, onLoad }) => (
-  state === null
-    ? null
-    : (
-      <img
-        style={{
-          border: '1px solid red',
-          width: state.width,
-          height: state.height,
-        }}
-        src={state.src}
-        onLoad={onLoad}
-      />
-    )
-))
+)(({ state, onLoad }) => {
+  if (state === null) {
+    return null
+  }
+
+  return (
+    <img
+      style={{
+        border: '1px solid red',
+        width: state.width,
+        height: state.height,
+      }}
+      src={state.src}
+      onLoad={onLoad}
+    />
+  )
+})

@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { component, onMount, startWithType, mapHandlers, mapWithProps } from 'refun'
-import { isUndefined } from 'tsfn'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
@@ -14,12 +13,10 @@ export type TMain = {
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ kind, files, unstagedList, stagedList }) => ({
-    kind,
-    files,
+  mapStoreState(({ unstagedList, stagedList }) => ({
     unstagedList,
     stagedList,
-  }), ['kind', 'files', 'unstagedList', 'stagedList']),
+  }), ['files', 'unstagedList', 'stagedList']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
@@ -52,9 +49,7 @@ export const Main = component(
     previewHeight: height - TOOLBAR_HEIGHT,
   }))
 )(({
-  kind,
   width,
-  files,
   stagedList,
   unstagedList,
   stagedTop,
@@ -70,48 +65,38 @@ export const Main = component(
   onSelect,
   onMoveToStaged,
   onMoveToUnstaged,
-}) => {
-  if (isUndefined(files) || isUndefined(kind)) {
-    return null
-  }
-
-  return (
-    <Fragment>
-      <Toolbar
-        top={0}
-        left={0}
-        width={width}
-      />
-      <List
-        title="staged"
-        files={files}
-        list={stagedList}
-        kind={kind}
-        top={stagedTop}
-        left={0}
-        width={stagedWidth}
-        height={stagedHeight}
-        onSelect={onSelect}
-        onMove={onMoveToUnstaged}
-      />
-      <List
-        title="unstaged"
-        files={files}
-        list={unstagedList}
-        kind={kind}
-        left={0}
-        top={unstagedTop}
-        width={unstagedWidth}
-        height={unstagedHeight}
-        onSelect={onSelect}
-        onMove={onMoveToStaged}
-      />
-      <Preview
-        top={previewTop}
-        left={previewLeft}
-        width={previewWidth}
-        height={previewHeight}
-      />
-    </Fragment>
-  )
-})
+}) => (
+  <Fragment>
+    <Toolbar
+      top={0}
+      left={0}
+      width={width}
+    />
+    <List
+      title="staged"
+      list={stagedList}
+      top={stagedTop}
+      left={0}
+      width={stagedWidth}
+      height={stagedHeight}
+      onSelect={onSelect}
+      onMove={onMoveToUnstaged}
+    />
+    <List
+      title="unstaged"
+      list={unstagedList}
+      left={0}
+      top={unstagedTop}
+      width={unstagedWidth}
+      height={unstagedHeight}
+      onSelect={onSelect}
+      onMove={onMoveToStaged}
+    />
+    <Preview
+      top={previewTop}
+      left={previewLeft}
+      width={previewWidth}
+      height={previewHeight}
+    />
+  </Fragment>
+))

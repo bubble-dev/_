@@ -1,11 +1,11 @@
-import { TActionWithPayload, TAnyAction } from '../types'
+import { TActionWithPayload, TAnyAction, TResultType } from '../types'
 
 const TYPE_SELECT = 'SELECT'
 
 export type TActionSelectPayload = {
   file: string,
   item: string,
-  type: string,
+  type: TResultType,
 }
 
 export type TActionSelect = TActionWithPayload<typeof TYPE_SELECT, TActionSelectPayload>
