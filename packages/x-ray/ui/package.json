@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/layout": "^0.9.1",
     "@primitives/root": "^0.3.1",
     "@x-ray/common-utils": "^0.1.1",
     "react": "^16.8.6",

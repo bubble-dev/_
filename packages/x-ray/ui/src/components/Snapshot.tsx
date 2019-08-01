@@ -1,23 +1,23 @@
 import React from 'react'
 import { startWithType, component, mapState, onMount } from 'refun'
-import { loadSnapshotApi, TLoadSnapshotApiOpts } from '../api'
+import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
-import { errorAction } from '../actions'
+import { actionError } from '../actions'
 
 type TSnapshotData = string | null
 
 export const Snapshot = component(
-  startWithType<TLoadSnapshotApiOpts>(),
+  startWithType<TApiLoadSnapshotOpts>(),
   mapStoreDispatch,
   mapState('state', 'setState', () => null as TSnapshotData, []),
   onMount(({ setState, file, item, type, dispatch }) => {
     (async () => {
       try {
-        const data = await loadSnapshotApi({ file, item, type })
+        const data = await apiLoadSnapshot({ file, item, type })
 
         setState(data)
       } catch (err) {
-        dispatch(errorAction(err.message))
+        dispatch(actionError(err.message))
       }
     })()
   })

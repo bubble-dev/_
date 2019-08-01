@@ -1,8 +1,8 @@
 import React from 'react'
 import { startWithType, component, mapState, onMount, mapHandlers } from 'refun'
-import { loadScreenshotApi, TLoadScreenshotApiOpts } from '../api'
+import { apiLoadScreenshot, TApiLoadScreenshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
-import { errorAction } from '../actions'
+import { actionError } from '../actions'
 
 type TScreenshotState = {
   src: string,
@@ -11,13 +11,14 @@ type TScreenshotState = {
 } | null
 
 export const Screenshot = component(
-  startWithType<TLoadScreenshotApiOpts>(),
+  startWithType<TApiLoadScreenshotOpts>(),
   mapStoreDispatch,
   mapState('state', 'setState', () => null as TScreenshotState, []),
   onMount(({ setState, file, item, type, dispatch }) => {
     (async () => {
       try {
-        const { url, width, height, dpr } = await loadScreenshotApi({ file, item, type })
+        const { blob, width, height, dpr } = await apiLoadScreenshot({ file, item, type })
+        const url = URL.createObjectURL(blob)
 
         setState({
           src: url,
@@ -25,12 +26,14 @@ export const Screenshot = component(
           height: height / dpr,
         })
       } catch (err) {
-        dispatch(errorAction(err.message))
+        dispatch(actionError(err.message))
       }
     })()
   }),
   mapHandlers({
-    onLoad: ({ state }) => () => URL.revokeObjectURL(state!.src),
+    onLoad: ({ state }) => () => {
+      URL.revokeObjectURL(state!.src)
+    },
   })
 )(({ state, onLoad }) => (
   state === null

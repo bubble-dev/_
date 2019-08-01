@@ -19,5 +19,7 @@ export type TState = {
   files?: TResult,
   isSaved: boolean,
   isLoading: boolean,
+  stagedList: string[],
+  unstagedList: string[],
   error?: string,
 }

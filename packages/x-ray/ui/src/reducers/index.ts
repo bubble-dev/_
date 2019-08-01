@@ -1,7 +1,15 @@
 import { Reducer } from 'redux'
 import { DeepReadonly } from 'utility-types'
 import { isUndefined } from 'tsfn'
-import { isLoadingStartAction, isLoadingEndAction, isErrorAction, isLoadListAction, isSaveAction } from '../actions'
+import {
+  isActionLoadingStart,
+  isActionLoadingEnd,
+  isActionError,
+  isActionLoadList,
+  isActionSave,
+  isActionMoveToStaged,
+  isActionMoveToUnstaged,
+} from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
 
@@ -12,36 +20,59 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
     return initialState
   }
 
-  if (isLoadingStartAction(action)) {
+  if (isActionLoadingStart(action)) {
     return {
       ...state,
       isLoading: true,
     }
   }
 
-  if (isLoadingEndAction(action)) {
+  if (isActionLoadingEnd(action)) {
     return {
       ...state,
       isLoading: false,
     }
   }
 
-  if (isErrorAction(action)) {
+  if (isActionError(action)) {
     return {
       ...state,
       error: action.error,
     }
   }
 
-  if (isLoadListAction(action)) {
+  if (isActionLoadList(action)) {
     return {
       ...state,
       kind: action.payload.kind,
       files: action.payload.files,
+      unstagedList: Object.keys(action.payload.files),
     }
   }
 
-  if (isSaveAction(action)) {
+  if (isActionMoveToStaged(action)) {
+    return {
+      ...state,
+      unstagedList: state.unstagedList.filter((item) => item !== action.payload),
+      stagedList: [
+        ...state.stagedList,
+        action.payload,
+      ],
+    }
+  }
+
+  if (isActionMoveToUnstaged(action)) {
+    return {
+      ...state,
+      stagedList: state.stagedList.filter((item) => item !== action.payload),
+      unstagedList: [
+        ...state.unstagedList,
+        action.payload,
+      ],
+    }
+  }
+
+  if (isActionSave(action)) {
     return {
       ...state,
       isSaved: true,
