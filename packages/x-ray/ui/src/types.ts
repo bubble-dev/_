@@ -23,5 +23,8 @@ export type TState = {
   isLoading: boolean,
   stagedList: string[],
   unstagedList: string[],
+  selectedFile?: string,
+  selectedItem?: string,
+  selectedType?: string,
   error?: string,
 }

@@ -1,6 +1,6 @@
 import { TActionWithPayload, TAnyAction } from '../types'
 
-const TYPE_MOVE_TO_STAGED = 'TYPE_MOVE_TO_STAGED'
+const TYPE_MOVE_TO_STAGED = 'MOVE_TO_STAGED'
 
 export type TActionMoveToStaged = TActionWithPayload<typeof TYPE_MOVE_TO_STAGED, string>
 

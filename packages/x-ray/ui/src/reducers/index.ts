@@ -9,6 +9,7 @@ import {
   isActionSave,
   isActionMoveToStaged,
   isActionMoveToUnstaged,
+  isActionSelect,
 } from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
@@ -69,6 +70,15 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
         ...state.unstagedList,
         action.payload,
       ],
+    }
+  }
+
+  if (isActionSelect(action)) {
+    return {
+      ...state,
+      selectedFile: action.payload.file,
+      selectedItem: action.payload.item,
+      selectedType: action.payload.type,
     }
   }
 

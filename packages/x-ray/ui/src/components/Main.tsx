@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, onMount, startWithType, mapHandlers, mapWithProps } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapStoreState, mapStoreDispatch } from '../store'
-import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged } from '../actions'
+import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
-import { Block } from './Block'
 import { List } from './List'
+import { Preview } from './Preview'
 
 export type TMain = {
   width: number,
@@ -25,22 +25,31 @@ export const Main = component(
     dispatch(actionLoadList())
   }),
   mapHandlers({
-    onStagedClick: ({ dispatch }) => (file) => {
+    onSelect: ({ dispatch }) => (file: string, item: string, type: string) => {
+      dispatch(actionSelect({ file, item, type }))
+    },
+    onMoveToUnstaged: ({ dispatch }) => (file) => {
       dispatch(actionMoveToUnstaged(file))
     },
-    onUnstagedClick: ({ dispatch }) => (file) => {
+    onMoveToStaged: ({ dispatch }) => (file) => {
       dispatch(actionMoveToStaged(file))
     },
   }),
   mapWithProps(({ width, height }) => ({
     stagedTop: TOOLBAR_HEIGHT,
     stagedHeight: (height - TOOLBAR_HEIGHT) / 2,
-    stagedWidth: width,
+    stagedWidth: width / 2,
   })),
   mapWithProps(({ stagedTop, stagedWidth, stagedHeight }) => ({
     unstagedTop: stagedTop + stagedHeight,
     unstagedHeight: stagedHeight,
     unstagedWidth: stagedWidth,
+  })),
+  mapWithProps(({ width, height }) => ({
+    previewTop: TOOLBAR_HEIGHT,
+    previewLeft: width / 2,
+    previewWidth: width / 2,
+    previewHeight: height - TOOLBAR_HEIGHT,
   }))
 )(({
   kind,
@@ -54,15 +63,20 @@ export const Main = component(
   unstagedTop,
   unstagedWidth,
   unstagedHeight,
-  onStagedClick,
-  onUnstagedClick,
+  previewTop,
+  previewLeft,
+  previewWidth,
+  previewHeight,
+  onSelect,
+  onMoveToStaged,
+  onMoveToUnstaged,
 }) => {
   if (isUndefined(files) || isUndefined(kind)) {
     return null
   }
 
   return (
-    <Block>
+    <Fragment>
       <Toolbar
         top={0}
         left={0}
@@ -77,7 +91,8 @@ export const Main = component(
         left={0}
         width={stagedWidth}
         height={stagedHeight}
-        onClick={onStagedClick}
+        onSelect={onSelect}
+        onMove={onMoveToUnstaged}
       />
       <List
         title="unstaged"
@@ -88,8 +103,15 @@ export const Main = component(
         top={unstagedTop}
         width={unstagedWidth}
         height={unstagedHeight}
-        onClick={onUnstagedClick}
+        onSelect={onSelect}
+        onMove={onMoveToStaged}
       />
-    </Block>
+      <Preview
+        top={previewTop}
+        left={previewLeft}
+        width={previewWidth}
+        height={previewHeight}
+      />
+    </Fragment>
   )
 })
