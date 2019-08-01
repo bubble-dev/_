@@ -7,7 +7,7 @@ const TYPE_SAVE = 'SAVE'
 
 export type TActionSave = TAction<typeof TYPE_SAVE>
 
-export const saveAction = (): TActionAsync<TActionSave | TActionError | TActionLoadingStart | TActionLoadingEnd> =>
+export const actionSave = (): TActionAsync<TActionSave | TActionError | TActionLoadingStart | TActionLoadingEnd> =>
   async (dispatch) => {
     try {
       dispatch(actionLoadingStart())

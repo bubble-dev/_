@@ -1,8 +1,9 @@
 import React, { FC, Fragment } from 'react'
 import { isUndefined } from 'tsfn'
 import { TResult } from '@x-ray/common-utils'
-// import { div } from './div'
 import { File } from './File'
+import { Block } from './Block'
+import { TRect } from './types'
 
 export type TList = {
   title: string,
@@ -10,10 +11,20 @@ export type TList = {
   files: TResult,
   kind: 'image' | 'text',
   onClick: (file: string) => void,
-}
+} & TRect
 
-export const List: FC<TList> = ({ title, files, list, kind, onClick }) => (
-  <div>
+export const List: FC<TList> = ({
+  title,
+  files,
+  list,
+  kind,
+  top,
+  left,
+  width,
+  height,
+  onClick,
+}) => (
+  <Block top={top} left={left} width={width} height={height}>
     <h2>{title}:</h2>
 
     {list.length > 0 && !isUndefined(kind) &&
@@ -88,5 +99,5 @@ export const List: FC<TList> = ({ title, files, list, kind, onClick }) => (
           )
         })
       }
-  </div>
+  </Block>
 )

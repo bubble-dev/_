@@ -17,6 +17,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "refun": "^0.3.3",
+    "stili": "^0.1.3",
     "tsfn": "^0.1.2",
     "typeon": "^0.3.0",
     "utility-types": "^3.7.0"
