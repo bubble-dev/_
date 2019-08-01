@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
+import { TKind } from '../types'
 import { Screenshot } from './Screenshot'
 import { Snapshot } from './Snapshot'
 
 export type TFile = {
-  kind: 'image' | 'text',
+  kind: TKind,
   file: string,
   type: string,
   item: string,
@@ -11,10 +12,6 @@ export type TFile = {
 
 export const File: FC<TFile> = ({ kind, ...props }) => (
   kind === 'image'
-    ? (
-      <Screenshot {...props}/>
-    )
-    : (
-      <Snapshot {...props}/>
-    )
+    ? <Screenshot {...props}/>
+    : <Snapshot {...props}/>
 )
