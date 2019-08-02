@@ -1,8 +1,8 @@
 import { TState } from '../types'
 
 export const initialState: TState = {
-  stagedList: [],
-  unstagedList: [],
+  stagedList: {},
+  unstagedList: {},
   isSaved: false,
   isLoading: false,
 }

@@ -1,12 +1,18 @@
-import { TActionWithPayload, TAnyAction } from '../types'
+import { TActionWithPayload, TAnyAction, TResultType } from '../types'
 
 const TYPE_MOVE_TO_UNSTAGED = 'MOVE_TO_UNSTAGED'
 
-export type TActionMoveToUnstaged = TActionWithPayload<typeof TYPE_MOVE_TO_UNSTAGED, string>
+export type TActionMoveToUnstagedPayload = {
+  file: string,
+  item: string,
+  type: TResultType,
+}
 
-export const actionMoveToUnstaged = (file: string): TActionMoveToUnstaged => ({
+export type TActionMoveToUnstaged = TActionWithPayload<typeof TYPE_MOVE_TO_UNSTAGED, TActionMoveToUnstagedPayload>
+
+export const actionMoveToUnstaged = (payload: TActionMoveToUnstagedPayload): TActionMoveToUnstaged => ({
   type: TYPE_MOVE_TO_UNSTAGED,
-  payload: file,
+  payload,
 })
 
 export const isActionMoveToUnstaged = (obj: TAnyAction): obj is TActionMoveToUnstaged => obj.type === TYPE_MOVE_TO_UNSTAGED

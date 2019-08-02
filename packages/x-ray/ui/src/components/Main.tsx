@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { component, onMount, startWithType, mapHandlers, mapWithProps } from 'refun'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
+import { TResultType } from '../types'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
 import { List } from './List'
 import { Preview } from './Preview'
@@ -22,14 +23,14 @@ export const Main = component(
     dispatch(actionLoadList())
   }),
   mapHandlers({
-    onSelect: ({ dispatch }) => (file: string, item: string, type: string) => {
+    onSelect: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
       dispatch(actionSelect({ file, item, type }))
     },
-    onMoveToUnstaged: ({ dispatch }) => (file) => {
-      dispatch(actionMoveToUnstaged(file))
+    onMoveToUnstaged: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
+      dispatch(actionMoveToUnstaged({ file, item, type }))
     },
-    onMoveToStaged: ({ dispatch }) => (file) => {
-      dispatch(actionMoveToStaged(file))
+    onMoveToStaged: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
+      dispatch(actionMoveToStaged({ file, item, type }))
     },
   }),
   mapWithProps(({ width, height }) => ({

@@ -1,7 +1,9 @@
 import React from 'react'
 import { isUndefined } from 'tsfn'
 import { component, startWithType } from 'refun'
+import { TResult } from '@x-ray/common-utils'
 import { mapStoreState } from '../store'
+import { TResultType } from '../types'
 import { Block } from './Block'
 import { TRect } from './types'
 
@@ -13,9 +15,9 @@ const TYPES = [
 
 export type TList = {
   title: string,
-  list: string[],
-  onSelect: (file: string, item: string, type: string) => void,
-  onMove: (file: string) => void,
+  list: TResult,
+  onSelect: (file: string, item: string, type: TResultType) => void,
+  onMove: (file: string, item: string, type: TResultType) => void,
 } & TRect
 
 export const List = component(
@@ -51,19 +53,17 @@ export const List = component(
   >
     <h2>{title}:</h2>
     <ul>
-      {!isUndefined(files) && !isUndefined(kind) && list.length > 0 &&
-        list.map((file) => {
-          const data = files[file]
+      {!isUndefined(files) && !isUndefined(kind) && Object.keys(list).length > 0 &&
+        Object.keys(list).map((file) => {
+          const data = list[file]
 
           return (
             <li key={file}>
-              <h3 key={file} onDoubleClick={() => onMove(file)}>
-                {file}
-              </h3>
+              <h3 key={file}>{file} </h3>
 
               {
                 TYPES.map((type) => {
-                  if (data[type].length === 0) {
+                  if (!data[type] || data[type].length === 0) {
                     return null
                   }
 
@@ -74,7 +74,12 @@ export const List = component(
 
                         return (
                           <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={item}>
-                            <h4 onClick={() => onSelect(file, item, type)}>{type}: {item}</h4>
+                            <h4
+                              onClick={() => onSelect(file, item, type)}
+                              onDoubleClick={() => onMove(file, item, type)}
+                            >
+                              {type}: {item}
+                            </h4>
                           </li>
                         )
                       })}
