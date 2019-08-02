@@ -39,20 +39,20 @@ export const Main = component(
     },
   }),
   mapWithProps(({ width, height }) => ({
-    stagedTop: TOOLBAR_HEIGHT,
-    stagedHeight: (height - TOOLBAR_HEIGHT) / 2,
-    stagedWidth: width / 2,
+    stagedTop: TOOLBAR_HEIGHT + BORDER_SIZE,
+    stagedHeight: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2,
+    stagedWidth: (width - BORDER_SIZE) / 2,
   })),
   mapWithProps(({ stagedTop, stagedWidth, stagedHeight }) => ({
-    unstagedTop: stagedTop + stagedHeight,
+    unstagedTop: stagedTop + stagedHeight + BORDER_SIZE,
     unstagedHeight: stagedHeight,
     unstagedWidth: stagedWidth,
   })),
   mapWithProps(({ width, height }) => ({
-    previewTop: TOOLBAR_HEIGHT,
-    previewLeft: width / 2,
-    previewWidth: width / 2,
-    previewHeight: height - TOOLBAR_HEIGHT,
+    previewTop: TOOLBAR_HEIGHT + BORDER_SIZE,
+    previewLeft: (width - BORDER_SIZE) / 2 + BORDER_SIZE,
+    previewWidth: (width - BORDER_SIZE) / 2,
+    previewHeight: height - TOOLBAR_HEIGHT - BORDER_SIZE,
   }))
 )(({
   width,
@@ -79,7 +79,7 @@ export const Main = component(
       width={width}
     />
     <Border
-      top={stagedTop}
+      top={TOOLBAR_HEIGHT}
       left={0}
       width={width}
       height={BORDER_SIZE}
@@ -96,7 +96,7 @@ export const Main = component(
       onMove={onMoveToUnstaged}
     />
     <Border
-      top={unstagedTop}
+      top={unstagedTop - BORDER_SIZE}
       left={0}
       width={unstagedWidth}
       height={BORDER_SIZE}
@@ -114,7 +114,7 @@ export const Main = component(
     />
     <Border
       top={previewTop}
-      left={previewLeft}
+      left={previewLeft - BORDER_SIZE}
       width={BORDER_SIZE}
       height={previewHeight}
       color={BORDER_COLOR}
