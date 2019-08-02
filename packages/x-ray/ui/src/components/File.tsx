@@ -8,6 +8,8 @@ export type TFile = {
   file: string,
   type: TFileType,
   item: string,
+  top: number,
+  left: number,
 }
 
 export const File: FC<TFile> = ({ kind, ...props }) => (

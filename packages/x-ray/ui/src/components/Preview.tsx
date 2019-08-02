@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType } from 'refun'
+import { component, startWithType, mapWithProps } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapStoreState } from '../store'
 import { Block } from './Block'
@@ -15,8 +15,12 @@ export const Preview = component(
     selectedFile,
     selectedItem,
     selectedType,
-  }), ['selectedFile', 'selectedItem', 'selectedType', 'kind'])
-)(({ top, left, width, height, kind, selectedFile, selectedItem, selectedType }) => {
+  }), ['selectedFile', 'selectedItem', 'selectedType', 'kind']),
+  mapWithProps(({ width, height }) => ({
+    fileTop: height / 2,
+    fileLeft: width / 2,
+  }))
+)(({ top, left, width, height, fileLeft, fileTop, kind, selectedFile, selectedItem, selectedType }) => {
   if (isUndefined(kind) || isUndefined(selectedFile) || isUndefined(selectedItem) || isUndefined(selectedType)) {
     return null
   }
@@ -28,46 +32,52 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      <Block top={height / 2} left={width / 2}>
-        {selectedType === 'new' && (
-          <File
-            key={`${selectedFile}:${selectedItem}:new`}
-            kind={kind}
-            file={selectedFile}
-            item={selectedItem}
-            type="new"
-          />
-        )}
+      {selectedType === 'new' && (
+        <File
+          key={`${selectedFile}:${selectedItem}:new`}
+          kind={kind}
+          file={selectedFile}
+          item={selectedItem}
+          type="new"
+          top={fileTop}
+          left={fileLeft}
+        />
+      )}
 
-        {selectedType === 'diff' && (
-          <Fragment>
-            <File
-              key={`${selectedFile}:${selectedItem}:old`}
-              kind={kind}
-              file={selectedFile}
-              item={selectedItem}
-              type="old"
-            />
-            <File
-              key={`${selectedFile}:${selectedItem}:new`}
-              kind={kind}
-              file={selectedFile}
-              item={selectedItem}
-              type="new"
-            />
-          </Fragment>
-        )}
-
-        {selectedType === 'deleted' && (
+      {selectedType === 'diff' && (
+        <Fragment>
           <File
             key={`${selectedFile}:${selectedItem}:old`}
             kind={kind}
             file={selectedFile}
             item={selectedItem}
             type="old"
+            top={fileTop}
+            left={fileLeft}
           />
-        )}
-      </Block>
+          <File
+            key={`${selectedFile}:${selectedItem}:new`}
+            kind={kind}
+            file={selectedFile}
+            item={selectedItem}
+            type="new"
+            top={fileTop}
+            left={fileLeft}
+          />
+        </Fragment>
+      )}
+
+      {selectedType === 'deleted' && (
+        <File
+          key={`${selectedFile}:${selectedItem}:old`}
+          kind={kind}
+          file={selectedFile}
+          item={selectedItem}
+          type="old"
+          top={fileTop}
+          left={fileLeft}
+        />
+      )}
     </Block>
   )
 })
