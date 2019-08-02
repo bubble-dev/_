@@ -3,12 +3,16 @@ import { startWithType, component, mapState, onMount, mapHandlers } from 'refun'
 import { apiLoadScreenshot, TApiLoadScreenshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
+import { Block } from './Block'
+import { TRect } from './types'
 
 type TScreenshotState = {
   src: string,
   width: number,
   height: number,
 } | null
+
+export type TScreenshot = TApiLoadScreenshotOpts & TRect
 
 export const Screenshot = component(
   startWithType<TApiLoadScreenshotOpts>(),
@@ -41,14 +45,16 @@ export const Screenshot = component(
   }
 
   return (
-    <img
-      style={{
-        border: '1px solid red',
-        width: state.width,
-        height: state.height,
-      }}
-      src={state.src}
-      onLoad={onLoad}
-    />
+    <Block top={-state.height / 2} left={-state.width / 2}>
+      <img
+        style={{
+          border: '1px solid red',
+          width: state.width,
+          height: state.height,
+        }}
+        src={state.src}
+        onLoad={onLoad}
+      />
+    </Block>
   )
 })

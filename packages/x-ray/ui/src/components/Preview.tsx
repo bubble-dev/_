@@ -28,25 +28,8 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      {selectedType === 'new' && (
-        <File
-          key={`${selectedFile}:${selectedItem}:new`}
-          kind={kind}
-          file={selectedFile}
-          item={selectedItem}
-          type="new"
-        />
-      )}
-
-      {selectedType === 'diff' && (
-        <Fragment>
-          <File
-            key={`${selectedFile}:${selectedItem}:old`}
-            kind={kind}
-            file={selectedFile}
-            item={selectedItem}
-            type="old"
-          />
+      <Block top={height / 2} left={width / 2}>
+        {selectedType === 'new' && (
           <File
             key={`${selectedFile}:${selectedItem}:new`}
             kind={kind}
@@ -54,18 +37,37 @@ export const Preview = component(
             item={selectedItem}
             type="new"
           />
-        </Fragment>
-      )}
+        )}
 
-      {selectedType === 'deleted' && (
-        <File
-          key={`${selectedFile}:${selectedItem}:old`}
-          kind={kind}
-          file={selectedFile}
-          item={selectedItem}
-          type="old"
-        />
-      )}
+        {selectedType === 'diff' && (
+          <Fragment>
+            <File
+              key={`${selectedFile}:${selectedItem}:old`}
+              kind={kind}
+              file={selectedFile}
+              item={selectedItem}
+              type="old"
+            />
+            <File
+              key={`${selectedFile}:${selectedItem}:new`}
+              kind={kind}
+              file={selectedFile}
+              item={selectedItem}
+              type="new"
+            />
+          </Fragment>
+        )}
+
+        {selectedType === 'deleted' && (
+          <File
+            key={`${selectedFile}:${selectedItem}:old`}
+            kind={kind}
+            file={selectedFile}
+            item={selectedItem}
+            type="old"
+          />
+        )}
+      </Block>
     </Block>
   )
 })

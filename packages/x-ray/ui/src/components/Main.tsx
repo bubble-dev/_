@@ -1,11 +1,16 @@
 import React, { Fragment } from 'react'
 import { component, onMount, startWithType, mapHandlers, mapWithProps } from 'refun'
+import { TColor } from 'colorido'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
 import { TResultType } from '../types'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
 import { List } from './List'
 import { Preview } from './Preview'
+import { Border } from './Border'
+
+const BORDER_SIZE = 1
+const BORDER_COLOR = [0, 0, 0, 1] as TColor
 
 export type TMain = {
   width: number,
@@ -73,6 +78,13 @@ export const Main = component(
       left={0}
       width={width}
     />
+    <Border
+      top={stagedTop}
+      left={0}
+      width={width}
+      height={BORDER_SIZE}
+      color={BORDER_COLOR}
+    />
     <List
       title="staged"
       list={stagedList}
@@ -83,6 +95,13 @@ export const Main = component(
       onSelect={onSelect}
       onMove={onMoveToUnstaged}
     />
+    <Border
+      top={unstagedTop}
+      left={0}
+      width={unstagedWidth}
+      height={BORDER_SIZE}
+      color={BORDER_COLOR}
+    />
     <List
       title="unstaged"
       list={unstagedList}
@@ -92,6 +111,13 @@ export const Main = component(
       height={unstagedHeight}
       onSelect={onSelect}
       onMove={onMoveToStaged}
+    />
+    <Border
+      top={previewTop}
+      left={previewLeft}
+      width={BORDER_SIZE}
+      height={previewHeight}
+      color={BORDER_COLOR}
     />
     <Preview
       top={previewTop}
