@@ -2,15 +2,17 @@ import React from 'react'
 import { component, startWithType } from 'refun'
 import { mapStoreState } from '../store'
 import { TItem } from '../types'
-import { isEqualItems } from '../utils'
+import { isEqualItems, hasItem } from '../utils'
 import { Block } from './Block'
 import { TRect } from './types'
 
 export type TList = {
   title: string,
   items: TItem[],
+  itemsToMove: TItem[],
+  onMove: () => void,
   onSelect: (item: TItem) => void,
-  onMove: (item: TItem) => void,
+  onToggle: (item: TItem) => void,
 } & TRect
 
 export const List = component(
@@ -20,14 +22,16 @@ export const List = component(
   }), ['selectedItem'])
 )(({
   items,
+  itemsToMove,
   title,
   selectedItem,
   top,
   left,
   width,
   height,
-  onSelect,
   onMove,
+  onSelect,
+  onToggle,
 }) => (
   <Block
     top={top}
@@ -37,20 +41,24 @@ export const List = component(
     shouldScroll
   >
     <h2>{title}:</h2>
+    <button onClick={onMove}>move</button>
     <ul>
       {
         items.map((item) => {
           const { file, type, name } = item
           const isSelected = selectedItem && isEqualItems(selectedItem, item)
+          const isChecked = hasItem(itemsToMove, item)
 
           return (
             <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={`${file}:${type}:${name}`}>
-              <h4
-                onClick={() => onSelect(item)}
-                onDoubleClick={() => onMove(item)}
-              >
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => onToggle(item)}
+              />
+              <span onClick={() => onSelect(item)}>
                 {file}: {type}: {name}
-              </h4>
+              </span>
             </li>
           )
         })

@@ -2,14 +2,21 @@ import React, { Fragment } from 'react'
 import { component, onMount, startWithType, mapHandlers, mapWithProps } from 'refun'
 import { TColor } from 'colorido'
 import { mapStoreState, mapStoreDispatch } from '../store'
-import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
+import {
+  actionLoadList,
+  actionSelect,
+  actionToggleAsStaged,
+  actionToggleAsUnstaged,
+  actionMoveToUnstaged,
+  actionMoveToStaged,
+} from '../actions'
 import { TItem } from '../types'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
 import { List } from './List'
 import { Preview } from './Preview'
 import { Border } from './Border'
 
-const BORDER_SIZE = 1
+const BORDER_SIZE = 2
 const BORDER_COLOR = [0, 0, 0, 1] as TColor
 
 export type TMain = {
@@ -19,10 +26,12 @@ export type TMain = {
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ unstagedItems, stagedItems }) => ({
+  mapStoreState(({ itemsToStage, itemsToUnstage, stagedItems, unstagedItems }) => ({
+    itemsToStage,
+    itemsToUnstage,
     unstagedItems,
     stagedItems,
-  }), ['unstagedItems', 'stagedItems']),
+  }), ['itemsToStage', 'itemsToUnstage', 'stagedItems', 'unstagedItems']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
@@ -31,11 +40,17 @@ export const Main = component(
     onSelect: ({ dispatch }) => (item: TItem) => {
       dispatch(actionSelect(item))
     },
-    onMoveToUnstaged: ({ dispatch }) => (item: TItem) => {
-      dispatch(actionMoveToUnstaged(item))
+    onToggleAsStaged: ({ dispatch }) => (item: TItem) => {
+      dispatch(actionToggleAsStaged(item))
     },
-    onMoveToStaged: ({ dispatch }) => (item: TItem) => {
-      dispatch(actionMoveToStaged(item))
+    onToggleAsUnstaged: ({ dispatch }) => (item: TItem) => {
+      dispatch(actionToggleAsUnstaged(item))
+    },
+    onMoveToUnstaged: ({ dispatch }) => () => {
+      dispatch(actionMoveToUnstaged())
+    },
+    onMoveToStaged: ({ dispatch }) => () => {
+      dispatch(actionMoveToStaged())
     },
   }),
   mapWithProps(({ width, height }) => ({
@@ -56,6 +71,8 @@ export const Main = component(
   }))
 )(({
   width,
+  itemsToStage,
+  itemsToUnstage,
   stagedItems,
   unstagedItems,
   stagedTop,
@@ -68,9 +85,11 @@ export const Main = component(
   previewLeft,
   previewWidth,
   previewHeight,
-  onSelect,
   onMoveToStaged,
   onMoveToUnstaged,
+  onSelect,
+  onToggleAsStaged,
+  onToggleAsUnstaged,
 }) => (
   <Fragment>
     <Toolbar
@@ -88,11 +107,13 @@ export const Main = component(
     <List
       title="staged"
       items={stagedItems}
+      itemsToMove={itemsToUnstage}
       top={stagedTop}
       left={0}
       width={stagedWidth}
       height={stagedHeight}
       onSelect={onSelect}
+      onToggle={onToggleAsUnstaged}
       onMove={onMoveToUnstaged}
     />
     <Border
@@ -105,11 +126,13 @@ export const Main = component(
     <List
       title="unstaged"
       items={unstagedItems}
+      itemsToMove={itemsToStage}
       left={0}
       top={unstagedTop}
       width={unstagedWidth}
       height={unstagedHeight}
       onSelect={onSelect}
+      onToggle={onToggleAsStaged}
       onMove={onMoveToStaged}
     />
     <Border

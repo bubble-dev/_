@@ -29,6 +29,8 @@ export type TState = {
   kind?: TKind,
   isSaved: boolean,
   isLoading: boolean,
+  itemsToStage: TItem[],
+  itemsToUnstage: TItem[],
   stagedItems: TItem[],
   unstagedItems: TItem[],
   selectedItem?: TItem,
