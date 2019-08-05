@@ -41,7 +41,7 @@ export const List = component(
     shouldScroll
   >
     <h2>{title}:</h2>
-    <button onClick={onMove}>move</button>
+    <button disabled={itemsToMove.length === 0} onClick={onMove}>move</button>
     <ul>
       {
         items.map((item) => {

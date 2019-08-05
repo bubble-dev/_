@@ -38,6 +38,9 @@ export const reducer: Reducer<TState> = (state, action) => {
   }
 
   if (isActionError(action)) {
+    // TODO: remove me
+    console.error(action.error)
+
     return {
       ...state,
       error: action.error,

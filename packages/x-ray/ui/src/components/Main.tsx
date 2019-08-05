@@ -96,6 +96,7 @@ export const Main = component(
       top={0}
       left={0}
       width={width}
+      itemsToSave={stagedItems}
     />
     <Border
       top={TOOLBAR_HEIGHT}

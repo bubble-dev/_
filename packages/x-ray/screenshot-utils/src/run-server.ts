@@ -78,8 +78,23 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
+            const data = await new Promise<TResult>((resolve, reject) => {
+              let body = ''
+
+              req
+                .on('data', (chunk) => {
+                  body += chunk.toString()
+                })
+                .on('error', reject)
+                .on('end', () => {
+                  resolve(JSON.parse(body))
+                })
+            })
+
+            console.log('SAVE', data)
+
             await pAll(
-              Object.keys(result).map((file) => async () => {
+              Object.keys(data).map((file) => async () => {
                 const screenshotsDir = path.join(path.dirname(file), '__x-ray__')
                 const tarPath = path.join(screenshotsDir, `${platform}-screenshots.tar`)
 
