@@ -3,7 +3,7 @@ import { component, onMount, startWithType, mapHandlers, mapWithProps } from 're
 import { TColor } from 'colorido'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import { actionLoadList, actionMoveToUnstaged, actionMoveToStaged, actionSelect } from '../actions'
-import { TResultType } from '../types'
+import { TItem } from '../types'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
 import { List } from './List'
 import { Preview } from './Preview'
@@ -19,23 +19,23 @@ export type TMain = {
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ unstagedList, stagedList }) => ({
-    unstagedList,
-    stagedList,
-  }), ['files', 'unstagedList', 'stagedList']),
+  mapStoreState(({ unstagedItems, stagedItems }) => ({
+    unstagedItems,
+    stagedItems,
+  }), ['unstagedItems', 'stagedItems']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
   }),
   mapHandlers({
-    onSelect: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
-      dispatch(actionSelect({ file, item, type }))
+    onSelect: ({ dispatch }) => (item: TItem) => {
+      dispatch(actionSelect(item))
     },
-    onMoveToUnstaged: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
-      dispatch(actionMoveToUnstaged({ file, item, type }))
+    onMoveToUnstaged: ({ dispatch }) => (item: TItem) => {
+      dispatch(actionMoveToUnstaged(item))
     },
-    onMoveToStaged: ({ dispatch }) => (file: string, item: string, type: TResultType) => {
-      dispatch(actionMoveToStaged({ file, item, type }))
+    onMoveToStaged: ({ dispatch }) => (item: TItem) => {
+      dispatch(actionMoveToStaged(item))
     },
   }),
   mapWithProps(({ width, height }) => ({
@@ -56,8 +56,8 @@ export const Main = component(
   }))
 )(({
   width,
-  stagedList,
-  unstagedList,
+  stagedItems,
+  unstagedItems,
   stagedTop,
   stagedWidth,
   stagedHeight,
@@ -87,7 +87,7 @@ export const Main = component(
     />
     <List
       title="staged"
-      list={stagedList}
+      items={stagedItems}
       top={stagedTop}
       left={0}
       width={stagedWidth}
@@ -104,7 +104,7 @@ export const Main = component(
     />
     <List
       title="unstaged"
-      list={unstagedList}
+      items={unstagedItems}
       left={0}
       top={unstagedTop}
       width={unstagedWidth}

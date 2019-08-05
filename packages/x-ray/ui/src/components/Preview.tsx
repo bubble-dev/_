@@ -10,18 +10,16 @@ export type TPreview = TRect
 
 export const Preview = component(
   startWithType<TPreview>(),
-  mapStoreState(({ kind, selectedFile, selectedItem, selectedType }) => ({
+  mapStoreState(({ kind, selectedItem }) => ({
     kind,
-    selectedFile,
     selectedItem,
-    selectedType,
-  }), ['selectedFile', 'selectedItem', 'selectedType', 'kind']),
+  }), ['selectedItem', 'kind']),
   mapWithProps(({ width, height }) => ({
     fileTop: height / 2,
     fileLeft: width / 2,
   }))
-)(({ top, left, width, height, fileLeft, fileTop, kind, selectedFile, selectedItem, selectedType }) => {
-  if (isUndefined(kind) || isUndefined(selectedFile) || isUndefined(selectedItem) || isUndefined(selectedType)) {
+)(({ top, left, width, height, fileLeft, fileTop, kind, selectedItem }) => {
+  if (isUndefined(kind) || isUndefined(selectedItem)) {
     return null
   }
 
@@ -32,34 +30,34 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      {selectedType === 'new' && (
+      {selectedItem.type === 'new' && (
         <File
-          key={`${selectedFile}:${selectedItem}:new`}
+          key={`${selectedItem.file}:new:${selectedItem.name}`}
           kind={kind}
-          file={selectedFile}
-          item={selectedItem}
+          file={selectedItem.file}
+          item={selectedItem.name}
           type="new"
           top={fileTop}
           left={fileLeft}
         />
       )}
 
-      {selectedType === 'diff' && (
+      {selectedItem.type === 'diff' && (
         <Fragment>
           <File
-            key={`${selectedFile}:${selectedItem}:old`}
+            key={`${selectedItem.file}:old:${selectedItem.name}`}
             kind={kind}
-            file={selectedFile}
-            item={selectedItem}
+            file={selectedItem.file}
+            item={selectedItem.name}
             type="old"
             top={fileTop}
             left={fileLeft}
           />
           <File
-            key={`${selectedFile}:${selectedItem}:new`}
+            key={`${selectedItem.file}:new:${selectedItem.name}`}
             kind={kind}
-            file={selectedFile}
-            item={selectedItem}
+            file={selectedItem.file}
+            item={selectedItem.name}
             type="new"
             top={fileTop}
             left={fileLeft}
@@ -67,12 +65,12 @@ export const Preview = component(
         </Fragment>
       )}
 
-      {selectedType === 'deleted' && (
+      {selectedItem.type === 'deleted' && (
         <File
-          key={`${selectedFile}:${selectedItem}:old`}
+          key={`${selectedItem.file}:old:${selectedItem.name}`}
           kind={kind}
-          file={selectedFile}
-          item={selectedItem}
+          file={selectedItem.file}
+          item={selectedItem.name}
           type="old"
           top={fileTop}
           left={fileLeft}

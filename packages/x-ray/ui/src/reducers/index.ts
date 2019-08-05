@@ -1,7 +1,6 @@
 import { Reducer } from 'redux'
 import { DeepReadonly } from 'utility-types'
 import { isUndefined } from 'tsfn'
-import { TResult, TFileResult } from '@x-ray/common-utils'
 import {
   isActionLoadingStart,
   isActionLoadingEnd,
@@ -12,8 +11,9 @@ import {
   isActionMoveToUnstaged,
   isActionSelect,
 } from '../actions'
-import { TAction, TState } from '../types'
+import { TAction, TState, TItem } from '../types'
 import { initialState } from '../store/initial-state'
+import { isEqualItems } from '../utils'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 
@@ -47,85 +47,62 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
     return {
       ...state,
       kind: action.payload.kind,
-      files: action.payload.files,
-      unstagedList: action.payload.files,
+      unstagedItems: Object.entries(action.payload.files).reduce((result, [file, value]) => {
+        value.new.forEach((name) => {
+          result.push({
+            file,
+            type: 'new',
+            name,
+          })
+        })
+
+        value.diff.forEach((name) => {
+          result.push({
+            file,
+            type: 'diff',
+            name,
+          })
+        })
+
+        value.deleted.forEach((name) => {
+          result.push({
+            file,
+            type: 'deleted',
+            name,
+          })
+        })
+
+        return result
+      }, [] as TItem[]),
     }
   }
 
   if (isActionMoveToStaged(action)) {
     return {
       ...state,
-      unstagedList: Object.keys(state.unstagedList).reduce((result, file) => {
-        if (file === action.payload.file) {
-          const fileResult = {
-            ...state.unstagedList[file],
-            [action.payload.type]: state.unstagedList[file][action.payload.type].filter((item) => item !== action.payload.item),
-          } as TFileResult
-
-          const isEmpty = Object.values(fileResult).every((values) => values.length === 0)
-
-          if (!isEmpty) {
-            result[file] = fileResult
-          }
-        } else {
-          result[file] = state.unstagedList[file] as TFileResult
-        }
-
-        return result
-      }, {} as TResult),
-      stagedList: {
-        ...state.stagedList,
-        [action.payload.file]: {
-          ...state.stagedList[action.payload.file],
-          [action.payload.type]: [
-            ...(state.stagedList[action.payload.file] ? state.stagedList[action.payload.file][action.payload.type] : []),
-            action.payload.item,
-          ],
-        },
-      },
+      unstagedItems: state.unstagedItems.filter((item) => !isEqualItems(item, action.payload)),
+      stagedItems: [
+        ...state.stagedItems,
+        action.payload,
+      ],
     }
   }
 
   if (isActionMoveToUnstaged(action)) {
     return {
       ...state,
-      stagedList: Object.keys(state.stagedList).reduce((result, file) => {
-        if (file === action.payload.file) {
-          const fileResult = {
-            ...state.stagedList[file],
-            [action.payload.type]: state.stagedList[file][action.payload.type].filter((item) => item !== action.payload.item),
-          } as TFileResult
-
-          const isEmpty = Object.values(fileResult).every((values) => values.length === 0)
-
-          if (!isEmpty) {
-            result[file] = fileResult
-          }
-        } else {
-          result[file] = state.stagedList[file] as TFileResult
-        }
-
-        return result
-      }, {} as TResult),
-      unstagedList: {
-        ...state.unstagedList,
-        [action.payload.file]: {
-          ...state.unstagedList[action.payload.file],
-          [action.payload.type]: [
-            ...(state.unstagedList[action.payload.file] ? state.unstagedList[action.payload.file][action.payload.type] : []),
-            action.payload.item,
-          ],
-        },
-      },
+      stagedItems: state.stagedItems.filter((item) => !isEqualItems(item, action.payload)),
+      unstagedItems: [
+        ...state.unstagedItems,
+        action.payload,
+      ],
     }
   }
 
   if (isActionSelect(action)) {
     return {
       ...state,
-      selectedFile: action.payload.file,
-      selectedItem: action.payload.item,
-      selectedType: action.payload.type,
+      selectedItem: action.payload,
     }
   }
 

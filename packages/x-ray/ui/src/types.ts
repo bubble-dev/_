@@ -1,7 +1,6 @@
 import { TJsonValue } from 'typeon'
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TResult } from '@x-ray/common-utils'
 
 export type TAnyAction = {
   type: string,
@@ -18,17 +17,20 @@ export type TKind = 'image' | 'text'
 
 export type TFileType = 'old' | 'new'
 
-export type TResultType = 'new' | 'diff' | 'deleted'
+export type TItemType = 'new' | 'diff' | 'deleted'
+
+export type TItem = {
+  file: string,
+  type: TItemType,
+  name: string,
+}
 
 export type TState = {
   kind?: TKind,
-  files?: TResult,
   isSaved: boolean,
   isLoading: boolean,
-  stagedList: TResult,
-  unstagedList: TResult,
-  selectedFile?: string,
-  selectedItem?: string,
-  selectedType?: TResultType,
+  stagedItems: TItem[],
+  unstagedItems: TItem[],
+  selectedItem?: TItem,
   error?: string,
 }
