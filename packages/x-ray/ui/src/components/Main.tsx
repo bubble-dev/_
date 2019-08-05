@@ -15,6 +15,7 @@ import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
 import { List } from './List'
 import { Preview } from './Preview'
 import { Border } from './Border'
+import { Props } from './Props'
 
 const BORDER_SIZE = 2
 const BORDER_COLOR = [0, 0, 0, 1] as TColor
@@ -64,10 +65,23 @@ export const Main = component(
     unstagedWidth: stagedWidth,
   })),
   mapWithProps(({ width, height }) => ({
-    previewTop: TOOLBAR_HEIGHT + BORDER_SIZE,
-    previewLeft: (width - BORDER_SIZE) / 2 + BORDER_SIZE,
-    previewWidth: (width - BORDER_SIZE) / 2,
-    previewHeight: height - TOOLBAR_HEIGHT - BORDER_SIZE,
+    propsTop: TOOLBAR_HEIGHT + BORDER_SIZE,
+    propsLeft: (width - BORDER_SIZE) / 2 + BORDER_SIZE,
+    propsWidth: (width - BORDER_SIZE) / 2,
+    propsHeight: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2,
+  })),
+  mapWithProps(({ propsHeight, propsWidth, propsLeft, propsTop }) => ({
+    previewTop: propsTop + propsHeight + BORDER_SIZE,
+    previewLeft: propsLeft,
+    previewWidth: propsWidth,
+    previewHeight: propsHeight,
+  })),
+  mapWithProps(({ width, height }) => ({
+    verticalSeparatorTop: TOOLBAR_HEIGHT + BORDER_SIZE,
+    verticalSeparatorLeft: (width - BORDER_SIZE) / 2,
+    verticalSeparatorHeight: height - TOOLBAR_HEIGHT - BORDER_SIZE,
+    horizontalSeparatorTop: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2 + TOOLBAR_HEIGHT + BORDER_SIZE,
+    horizontalSeparatorWidth: width,
   }))
 )(({
   width,
@@ -85,6 +99,15 @@ export const Main = component(
   previewLeft,
   previewWidth,
   previewHeight,
+  propsTop,
+  propsLeft,
+  propsWidth,
+  propsHeight,
+  verticalSeparatorTop,
+  verticalSeparatorLeft,
+  verticalSeparatorHeight,
+  horizontalSeparatorTop,
+  horizontalSeparatorWidth,
   onMoveToStaged,
   onMoveToUnstaged,
   onSelect,
@@ -118,9 +141,9 @@ export const Main = component(
       onMove={onMoveToUnstaged}
     />
     <Border
-      top={unstagedTop - BORDER_SIZE}
+      top={horizontalSeparatorTop}
       left={0}
-      width={unstagedWidth}
+      width={horizontalSeparatorWidth}
       height={BORDER_SIZE}
       color={BORDER_COLOR}
     />
@@ -137,11 +160,17 @@ export const Main = component(
       onMove={onMoveToStaged}
     />
     <Border
-      top={previewTop}
-      left={previewLeft - BORDER_SIZE}
+      top={verticalSeparatorTop}
+      left={verticalSeparatorLeft}
       width={BORDER_SIZE}
-      height={previewHeight}
+      height={verticalSeparatorHeight}
       color={BORDER_COLOR}
+    />
+    <Props
+      top={propsTop}
+      left={propsLeft}
+      width={propsWidth}
+      height={propsHeight}
     />
     <Preview
       top={previewTop}

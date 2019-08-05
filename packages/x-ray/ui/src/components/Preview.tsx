@@ -19,10 +19,6 @@ export const Preview = component(
     fileLeft: width / 2,
   }))
 )(({ top, left, width, height, fileLeft, fileTop, kind, selectedItem }) => {
-  if (isUndefined(kind) || isUndefined(selectedItem)) {
-    return null
-  }
-
   return (
     <Block
       top={top}
@@ -30,29 +26,10 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      {selectedItem.type === 'new' && (
-        <File
-          key={`${selectedItem.file}:new:${selectedItem.name}`}
-          kind={kind}
-          file={selectedItem.file}
-          item={selectedItem.name}
-          type="new"
-          top={fileTop}
-          left={fileLeft}
-        />
-      )}
-
-      {selectedItem.type === 'diff' && (
+      <h2>preview:</h2>
+      {!isUndefined(kind) && !isUndefined(selectedItem) && (
         <Fragment>
-          <File
-            key={`${selectedItem.file}:old:${selectedItem.name}`}
-            kind={kind}
-            file={selectedItem.file}
-            item={selectedItem.name}
-            type="old"
-            top={fileTop}
-            left={fileLeft}
-          />
+          {selectedItem.type === 'new' && (
           <File
             key={`${selectedItem.file}:new:${selectedItem.name}`}
             kind={kind}
@@ -62,19 +39,43 @@ export const Preview = component(
             top={fileTop}
             left={fileLeft}
           />
-        </Fragment>
-      )}
+          )}
 
-      {selectedItem.type === 'deleted' && (
-        <File
-          key={`${selectedItem.file}:old:${selectedItem.name}`}
-          kind={kind}
-          file={selectedItem.file}
-          item={selectedItem.name}
-          type="old"
-          top={fileTop}
-          left={fileLeft}
-        />
+          {selectedItem.type === 'diff' && (
+          <Fragment>
+            <File
+              key={`${selectedItem.file}:old:${selectedItem.name}`}
+              kind={kind}
+              file={selectedItem.file}
+              item={selectedItem.name}
+              type="old"
+              top={fileTop}
+              left={fileLeft}
+            />
+            <File
+              key={`${selectedItem.file}:new:${selectedItem.name}`}
+              kind={kind}
+              file={selectedItem.file}
+              item={selectedItem.name}
+              type="new"
+              top={fileTop}
+              left={fileLeft}
+            />
+          </Fragment>
+          )}
+
+          {selectedItem.type === 'deleted' && (
+          <File
+            key={`${selectedItem.file}:old:${selectedItem.name}`}
+            kind={kind}
+            file={selectedItem.file}
+            item={selectedItem.name}
+            type="old"
+            top={fileTop}
+            left={fileLeft}
+          />
+          )}
+        </Fragment>
       )}
     </Block>
   )

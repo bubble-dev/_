@@ -56,13 +56,13 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
           const urlData = url.parse(req.url!, true)
 
           if (urlData.pathname === '/get') {
-            const { file, item, type } = urlData.query as {
+            const { file: shortPath, item, type } = urlData.query as {
               file: string,
               item: string,
               type: 'old' | 'new',
             }
 
-            if (!isString(file)) {
+            if (!isString(shortPath)) {
               throw new Error(`?file param is required in ${req.url}`)
             }
 
@@ -72,6 +72,12 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
 
             if (!isString(type)) {
               throw new Error(`?type param is required in ${req.url}`)
+            }
+
+            const file = pathMap.get(shortPath)
+
+            if (isUndefined(file)) {
+              throw new Error(`Cannot resolve "${shortPath}"`)
             }
 
             if (!Reflect.has(resultData, file)) {
