@@ -133,18 +133,25 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
                 await makeDir(screenshotsDir)
 
                 const tar = await TarFs(tarPath)
+                const fileResult = data[shortPath]
 
-                result[file].new.forEach((item) => {
-                  tar.write(item, resultData[file].new[item].data)
-                })
+                if (Reflect.has(fileResult, 'new')) {
+                  fileResult.new.forEach((item) => {
+                    tar.write(item, resultData[file].new[item].data)
+                  })
+                }
 
-                result[file].diff.forEach((item) => {
-                  tar.write(item, resultData[file].new[item].data)
-                })
+                if (Reflect.has(fileResult, 'diff')) {
+                  fileResult.diff.forEach((item) => {
+                    tar.write(item, resultData[file].new[item].data)
+                  })
+                }
 
-                result[file].deleted.forEach((item) => {
-                  tar.delete(item)
-                })
+                if (Reflect.has(fileResult, 'deleted')) {
+                  fileResult.deleted.forEach((item) => {
+                    tar.delete(item)
+                  })
+                }
 
                 await tar.save()
               }),
