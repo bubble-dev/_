@@ -24,8 +24,7 @@ export const Table = component(
       flexGrow: 1,
       flexShrink: 1,
       alignSelf: 'stretch',
-      maxWidth: '100%',
-      minWidth: 0,
+      width: '100%',
       padding: 0,
       borderColor,
       backgroundColor,
@@ -34,6 +33,7 @@ export const Table = component(
       borderLeftWidth: `${borderLeftWidth}px`,
       borderRightWidth: `${borderRightWidth}px`,
       borderStyle,
+      tableLayout: 'fixed',
     }),
   }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
 )(({ id, children, style }) => (
