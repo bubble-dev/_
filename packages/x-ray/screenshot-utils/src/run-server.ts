@@ -3,9 +3,10 @@ import http from 'http'
 import url from 'url'
 import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
-import { isString } from 'tsfn'
+import { isString, isUndefined } from 'tsfn'
 import pAll from 'p-all'
 import { TResult } from '@x-ray/common-utils'
+import pkgDir from 'pkg-dir'
 import { TResultData } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
@@ -18,6 +19,8 @@ export type TRunServer = {
 }
 
 export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
+  const pathMap = new Map<string, string>()
+
   const server = http
     .createServer(async (req, res) => {
       try {
@@ -27,7 +30,24 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
           if (req.url === '/list') {
             res.end(JSON.stringify({
               kind: 'image',
-              files: result,
+              files: await Object.keys(result).reduce(async (accPromise, longPath) => {
+                const acc = await accPromise
+
+                const packageDir = await pkgDir(path.dirname(longPath))
+
+                if (isUndefined(packageDir)) {
+                  throw new Error(`Cannot find package dir for "${longPath}"`)
+                }
+
+                const shortPath = path.relative(path.resolve('packages/'), packageDir)
+
+                pathMap.set(shortPath, longPath)
+                pathMap.set(longPath, shortPath)
+
+                acc[shortPath] = result[longPath]
+
+                return acc
+              }, Promise.resolve({} as TResult)),
             }))
 
             return
@@ -94,7 +114,13 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
             console.log('SAVE', data)
 
             await pAll(
-              Object.keys(data).map((file) => async () => {
+              Object.keys(data).map((shortPath) => async () => {
+                const file = pathMap.get(shortPath)
+
+                if (isUndefined(file)) {
+                  throw new Error(`Cannot resolve "${shortPath}"`)
+                }
+
                 const screenshotsDir = path.join(path.dirname(file), '__x-ray__')
                 const tarPath = path.join(screenshotsDir, `${platform}-screenshots.tar`)
 
