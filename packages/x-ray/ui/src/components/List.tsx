@@ -57,7 +57,7 @@ export const List = component(
                 onChange={() => onToggle(item)}
               />
               <span onClick={() => onSelect(item)}>
-                {file}: {type}: {name}
+                [{type}] {file} → {name}
               </span>
             </li>
           )
