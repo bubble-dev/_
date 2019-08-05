@@ -13,7 +13,7 @@ import {
 } from '../actions'
 import { TAction, TState, TItem } from '../types'
 import { initialState } from '../store/initial-state'
-import { isEqualItems } from '../utils'
+import { isEqualItems, itemsSorter } from '../utils'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 
@@ -47,55 +47,59 @@ export const reducer: Reducer<DeepReadonly<TState>> = (state, action) => {
     return {
       ...state,
       kind: action.payload.kind,
-      unstagedItems: Object.entries(action.payload.files).reduce((result, [file, value]) => {
-        value.new.forEach((name) => {
-          result.push({
-            file,
-            type: 'new',
-            name,
+      unstagedItems: Object.entries(action.payload.files)
+        .reduce((result, [file, value]) => {
+          value.new.forEach((name) => {
+            result.push({
+              file,
+              type: 'new',
+              name,
+            })
           })
-        })
 
-        value.diff.forEach((name) => {
-          result.push({
-            file,
-            type: 'diff',
-            name,
+          value.diff.forEach((name) => {
+            result.push({
+              file,
+              type: 'diff',
+              name,
+            })
           })
-        })
 
-        value.deleted.forEach((name) => {
-          result.push({
-            file,
-            type: 'deleted',
-            name,
+          value.deleted.forEach((name) => {
+            result.push({
+              file,
+              type: 'deleted',
+              name,
+            })
           })
-        })
 
-        return result
-      }, [] as TItem[]),
+          return result
+        }, [] as TItem[])
+        .sort(itemsSorter),
     }
   }
 
   if (isActionMoveToStaged(action)) {
     return {
       ...state,
-      unstagedItems: state.unstagedItems.filter((item) => !isEqualItems(item, action.payload)),
-      stagedItems: [
-        ...state.stagedItems,
-        action.payload,
-      ],
+      unstagedItems: state.unstagedItems
+        .filter((item) => !isEqualItems(item, action.payload))
+        .sort(itemsSorter),
+      stagedItems: state.stagedItems
+        .concat(action.payload)
+        .sort(itemsSorter),
     }
   }
 
   if (isActionMoveToUnstaged(action)) {
     return {
       ...state,
-      stagedItems: state.stagedItems.filter((item) => !isEqualItems(item, action.payload)),
-      unstagedItems: [
-        ...state.unstagedItems,
-        action.payload,
-      ],
+      stagedItems: state.stagedItems
+        .filter((item) => !isEqualItems(item, action.payload))
+        .sort(itemsSorter),
+      unstagedItems: state.unstagedItems
+        .concat(action.payload)
+        .sort(itemsSorter),
     }
   }
 
