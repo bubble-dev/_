@@ -30,6 +30,7 @@ export const Text = component(
     shouldPreventSelection,
     shouldPreventWrap,
     shouldHideOverflow,
+    textAlign,
   }) => {
     const style: TStyle = {
       color,
@@ -74,6 +75,12 @@ export const Text = component(
 
     if (isUnderlined) {
       style.textDecoration = 'underline'
+    }
+
+    if (textAlign === 'right') {
+      style.textAlign = 'right'
+      style.display = 'block'
+      style.width = '100%'
     }
 
     return {

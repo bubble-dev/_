@@ -13,4 +13,5 @@ export type TTextProps = {
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
   shouldHideOverflow?: boolean,
+  textAlign?: string,
 }
