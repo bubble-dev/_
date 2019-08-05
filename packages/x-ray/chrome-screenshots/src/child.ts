@@ -49,7 +49,7 @@ export default async (options: TOptions) => {
                   const page = pages.shift() as Page
                   const screenshot = await getScreenshot(page, item)
 
-                  const screenshotName = `${item.options.name}.png`
+                  const screenshotName = item.options.name
 
                   pages.push(page)
 
@@ -95,7 +95,7 @@ export default async (options: TOptions) => {
               )
 
               for (const item of tar.list()) {
-                if (!items.find((metaItem) => `${metaItem.options.name}.png` === item)) {
+                if (!items.find((metaItem) => metaItem.options.name === item)) {
                   const data = await tar.read(item) as Buffer
                   const { width, height } = upng.decode(data)
 

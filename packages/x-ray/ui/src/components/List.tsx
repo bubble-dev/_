@@ -44,7 +44,7 @@ export const List = component(
     <button disabled={itemsToMove.length === 0} onClick={onMove}>move</button>
     <ul>
       {
-        items.map((item) => {
+        items.map((item, i) => {
           const { file, type, name } = item
           const isSelected = selectedItem && isEqualItems(selectedItem, item)
           const isChecked = hasItem(itemsToMove, item)
@@ -57,7 +57,7 @@ export const List = component(
                 onChange={() => onToggle(item)}
               />
               <span onClick={() => onSelect(item)}>
-                [{type}] {file} → {name}
+                [{type}] {file}: {String(i).padStart(6, '0')}
               </span>
             </li>
           )

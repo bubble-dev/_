@@ -36,7 +36,7 @@ export default async (options: TOptions) => {
 
               for (const item of items) {
                 const screenshot = await getScreenshot(page, item)
-                const screenshotName = `${item.options.name}.png`
+                const screenshotName = item.options.name
                 const message = await checkScreenshot(screenshot, tar, screenshotName)
 
                 if (shouldBailout) {
@@ -69,7 +69,7 @@ export default async (options: TOptions) => {
               }
 
               for (const item of tar.list()) {
-                if (!items.find((metaItem) => `${metaItem.options.name}.png` === item)) {
+                if (!items.find((metaItem) => metaItem.options.name === item)) {
                   const data = await tar.read(item) as Buffer
                   const { width, height } = upng.decode(data)
 

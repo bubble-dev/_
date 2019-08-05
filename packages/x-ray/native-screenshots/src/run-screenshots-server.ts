@@ -83,7 +83,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
               const { data, path: filePath, name } = JSON.parse(body)
               const screenshotsDir = path.join(path.dirname(filePath), '__x-ray__')
               const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
-              const screenshotName = path.join(`${name}.png`)
+              const screenshotName = name
               const screenshot = Buffer.from(data, 'base64')
 
               if (currentFilePath !== filePath) {
