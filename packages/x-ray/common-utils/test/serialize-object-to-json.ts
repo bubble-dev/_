@@ -1,16 +1,16 @@
 import test from 'blue-tape'
 import { createElement } from 'react'
-import { serializeObjectToJson } from '../src/serialize-object-to-json'
+import { SerializeObjectToJson } from '../src/serialize-object-to-json'
 
-test.only('serializeObjectToJson', (t) => {
+test('serializeObjectToJson', (t) => {
   t.equals(
-    serializeObjectToJson({}),
+    SerializeObjectToJson()({}),
     '{}',
     'should serialize empty object'
   )
 
   t.equals(
-    serializeObjectToJson({
+    SerializeObjectToJson()({
       foo: 'string',
       bar: 42,
       baz: null,
@@ -22,24 +22,24 @@ test.only('serializeObjectToJson', (t) => {
       d: new Date(0),
       e: /a/,
     }),
-    '{"foo":"string","bar":42,"baz":null,"bool":true,"b":"[function(b)]","c":"[symbol(desc)]","s":"[symbol]","d":"1970-01-01T00:00:00.000Z","e":"[regexp(/a/)]"}',
+    '{"foo":"string","bar":42,"baz":null,"bool":true,"b":"[function(b) (0)]","c":"[symbol(desc) (0)]","s":"[symbol (1)]","d":"1970-01-01T00:00:00.000Z","e":"[regexp(/a/) (0)]"}',
     'should serialize empty object'
   )
 
   t.equals(
-    serializeObjectToJson({
+    SerializeObjectToJson()({
       foo: {
         bar: {
           baz: () => {},
         },
       },
     }),
-    '{"foo":{"bar":{"baz":"[function(baz)]"}}}',
+    '{"foo":{"bar":{"baz":"[function(baz) (0)]"}}}',
     'should serialize nested objects'
   )
 
   t.equals(
-    serializeObjectToJson({
+    SerializeObjectToJson()({
       foo: [
         {
           bar: [
@@ -48,25 +48,25 @@ test.only('serializeObjectToJson', (t) => {
         },
       ],
     }),
-    '{"foo":[{"bar":["[function]"]}]}',
+    '{"foo":[{"bar":["[function (0)]"]}]}',
     'should serialize nested arrays'
   )
 
   t.equals(
-    serializeObjectToJson({
+    SerializeObjectToJson()({
       foo: createElement('div'),
     }),
-    '{"foo":"[react(div)]"}',
+    '{"foo":"[react(div) (0)]"}',
     'should serialize react elements'
   )
 
   const Comp = () => null
 
   t.equals(
-    serializeObjectToJson({
+    SerializeObjectToJson()({
       foo: createElement(Comp),
     }),
-    '{"foo":"[react(Comp)]"}',
+    '{"foo":"[react(Comp) (0)]"}',
     'should serialize react elements'
   )
 

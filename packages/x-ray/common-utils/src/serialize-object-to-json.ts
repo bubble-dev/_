@@ -10,22 +10,34 @@ export const getElementName = (element: ReactElement<any>) => {
   return (element.type as FC<any>).displayName || element.type.name
 }
 
-export const serializeObjectToJson = (obj: TAnyObject): string => JSON.stringify(obj, (key, value) => {
-  if (isFunction(value)) {
-    return value.name === '' ? '[function]' : `[function(${value.name})]`
-  }
+export const SerializeObjectToJson = () => {
+  let functionIndex = -1
+  let symbolIndex = -1
+  let regexpIndex = -1
+  let elementIndex = -1
 
-  if (isSymbol(value)) {
-    return isUndefined(value.description) ? '[symbol]' : `[symbol(${value.description})]`
-  }
+  return (obj: TAnyObject): string => JSON.stringify(obj, (key, value) => {
+    if (isFunction(value)) {
+      functionIndex++
 
-  if (types.isRegExp(value)) {
-    return `[regexp(${value.toString()})]`
-  }
+      return value.name === '' ? `[function (${functionIndex})]` : `[function(${value.name}) (${functionIndex})]`
+    }
+    if (isSymbol(value)) {
+      symbolIndex++
 
-  if (isValidElement(value)) {
-    return `[react(${getElementName(value)})]`
-  }
+      return isUndefined(value.description) ? `[symbol (${symbolIndex})]` : `[symbol(${value.description}) (${symbolIndex})]`
+    }
+    if (types.isRegExp(value)) {
+      regexpIndex++
 
-  return value
-})
+      return `[regexp(${value.toString()}) (${regexpIndex})]`
+    }
+    if (isValidElement(value)) {
+      elementIndex++
+
+      return `[react(${getElementName(value)}) (${elementIndex})]`
+    }
+
+    return value
+  })
+}
