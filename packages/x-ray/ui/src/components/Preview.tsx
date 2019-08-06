@@ -6,6 +6,10 @@ import { Block } from './Block'
 import { TRect } from './types'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
+import { SnapshotDiff } from './SnapshotDiff'
+import { SnapshotDeleted } from './SnapshotDeleted'
+import { SnapshotNew } from './SnapshotNew'
+import { ScreenshotDeleted } from './ScreenshotDeleted'
 
 export type TPreview = TRect
 
@@ -36,7 +40,6 @@ export const Preview = component(
               top={fileTop}
               left={fileLeft}
               file={selectedItem.file}
-              type={selectedItem.type}
               props={selectedItem.props}
             />
           )}
@@ -47,18 +50,52 @@ export const Preview = component(
               top={fileTop}
               left={fileLeft}
               file={selectedItem.file}
-              type={selectedItem.type}
               props={selectedItem.props}
             />
           )}
 
           {selectedItem.type === 'deleted' && kind === 'image' && (
-            <ScreenshotNew
+            <ScreenshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={fileTop}
               left={fileLeft}
               file={selectedItem.file}
-              type={selectedItem.type}
+              props={selectedItem.props}
+            />
+          )}
+
+          {selectedItem.type === 'new' && kind === 'text' && (
+            <SnapshotNew
+              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              top={0}
+              left={0}
+              width={width}
+              height={height}
+              file={selectedItem.file}
+              props={selectedItem.props}
+            />
+          )}
+
+          {selectedItem.type === 'diff' && kind === 'text' && (
+            <SnapshotDiff
+              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              top={0}
+              left={0}
+              width={width}
+              height={height}
+              file={selectedItem.file}
+              props={selectedItem.props}
+            />
+          )}
+
+          {selectedItem.type === 'deleted' && kind === 'text' && (
+            <SnapshotDeleted
+              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              top={0}
+              left={0}
+              width={width}
+              height={height}
+              file={selectedItem.file}
               props={selectedItem.props}
             />
           )}

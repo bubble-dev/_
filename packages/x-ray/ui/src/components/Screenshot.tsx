@@ -13,10 +13,10 @@ export const Screenshot = component(
   startWithType<TScreenshot>(),
   mapStoreDispatch,
   mapRef('src', null),
-  onMount(({ file, item, type, dispatch, src, onLoad }) => {
+  onMount(({ file, props, type, dispatch, src, onLoad }) => {
     (async () => {
       try {
-        const { blob, width, height, dpr } = await apiLoadScreenshot({ file, item, type })
+        const { blob, width, height, dpr } = await apiLoadScreenshot({ file, props, type })
         const url = URL.createObjectURL(blob)
 
         src.current = url

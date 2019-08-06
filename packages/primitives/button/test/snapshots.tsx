@@ -14,6 +14,6 @@ export default autoprops.map((props) => {
     options: {
       name: serializeObjectToJson(props),
     },
-    element: <Button {...props}>Button</Button>,
+    element: <Button {...props}>Button_</Button>,
   }
 })

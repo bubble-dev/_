@@ -28,7 +28,7 @@ export default async (options: TOptions) => {
               await pAll(
                 items.map((item) => async () => {
                   const snapshot = await serialize(item.element)
-                  const snapshotName = `${item.options.name}.txt`
+                  const snapshotName = item.options.name
                   const message = await checkSnapshot(Buffer.from(snapshot), tar, snapshotName)
 
                   if (shouldBailout) {

@@ -1,9 +1,10 @@
 import { HOST, PORT } from '../config'
+import { TFileType } from '../types'
 
 export type TApiLoadScreenshotOpts = {
   file: string,
-  type: string,
-  item: string,
+  type: TFileType,
+  props: string,
 }
 
 export type TApiLoadScreenshotResult = {
@@ -16,7 +17,7 @@ export type TApiLoadScreenshotResult = {
 const apiLoadScreenshotCache = new Map<string, TApiLoadScreenshotResult>()
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<TApiLoadScreenshotResult> => {
-  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&item=${encodeURIComponent(opts.item)}`
+  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&item=${encodeURIComponent(opts.props)}`
 
   if (apiLoadScreenshotCache.has(params)) {
     return apiLoadScreenshotCache.get(params)!

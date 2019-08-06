@@ -1,12 +1,13 @@
 import React from 'react'
 import { component, startWithType, mapState, mapHandlers } from 'refun'
 import { Button } from '@primitives/button'
-import { TItem } from '../types'
+import { TOmitKey } from 'tsfn'
+import { TApiLoadScreenshotOpts } from '../api'
 import { Screenshot } from './Screenshot'
 import { Block } from './Block'
 import { TPosition } from './types'
 
-export type TScreenshotDiff = TItem & TPosition
+export type TScreenshotDiff = TOmitKey<TApiLoadScreenshotOpts, 'type'> & TPosition
 
 export const ScreenshotDiff = component(
   startWithType<TScreenshotDiff>(),
@@ -23,7 +24,7 @@ export const ScreenshotDiff = component(
         <Screenshot
           file={file}
           type="old"
-          item={props}
+          props={props}
           width={oldSize.width}
           height={oldSize.height}
           onLoad={onOldSizeChange}
@@ -33,7 +34,7 @@ export const ScreenshotDiff = component(
         <Screenshot
           file={file}
           type="new"
-          item={props}
+          props={props}
           width={newSize.width}
           height={newSize.height}
           onLoad={onNewSizeChange}
