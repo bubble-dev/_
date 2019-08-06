@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType } from 'refun'
+import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapStoreState } from '../store'
 import { Block } from './Block'
@@ -21,7 +21,15 @@ export const Props = component(
   >
     <h2>props:</h2>
     {!isUndefined(selectedItem) && (
-      <pre>{selectedItem.name}</pre>
+      <pre>
+        {
+          JSON.stringify(
+            JSON.parse(selectedItem.props),
+            null,
+            2
+          )
+        }
+      </pre>
     )}
   </Block>
 ))

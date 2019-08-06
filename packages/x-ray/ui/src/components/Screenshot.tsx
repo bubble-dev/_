@@ -1,33 +1,27 @@
 import React from 'react'
-import { startWithType, component, mapState, onMount, mapHandlers } from 'refun'
+import { startWithType, component, onMount, mapHandlers, mapRef } from 'refun'
 import { apiLoadScreenshot, TApiLoadScreenshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
-import { Block } from './Block'
+import { TSize } from './types'
 
-type TScreenshotState = {
-  src: string,
-  width: number,
-  height: number,
-} | null
-
-export type TScreenshot = TApiLoadScreenshotOpts & {
-  top: number,
-  left: number,
+export type TScreenshot = TSize & TApiLoadScreenshotOpts & {
+  onLoad: (size: TSize) => void,
 }
 
 export const Screenshot = component(
   startWithType<TScreenshot>(),
   mapStoreDispatch,
-  mapState('state', 'setState', () => null as TScreenshotState, []),
-  onMount(({ setState, file, item, type, dispatch }) => {
+  mapRef('src', null),
+  onMount(({ file, item, type, dispatch, src, onLoad }) => {
     (async () => {
       try {
         const { blob, width, height, dpr } = await apiLoadScreenshot({ file, item, type })
         const url = URL.createObjectURL(blob)
 
-        setState({
-          src: url,
+        src.current = url
+
+        onLoad({
           width: width / dpr,
           height: height / dpr,
         })
@@ -37,31 +31,24 @@ export const Screenshot = component(
     })()
   }),
   mapHandlers({
-    onLoad: ({ state }) => () => {
-      URL.revokeObjectURL(state!.src)
+    onLoad: ({ src }) => () => {
+      URL.revokeObjectURL(src.current)
     },
   })
-)(({ state, top, left, onLoad }) => {
-  if (state === null) {
+)(({ src, width, height, type, onLoad }) => {
+  if (src === null) {
     return null
   }
 
   return (
-    <Block
-      top={top - state.height / 2}
-      left={left - state.width / 2}
-      width={state.width}
-      height={state.height}
-    >
-      <img
-        style={{
-          border: '1px solid red',
-          width: state.width,
-          height: state.height,
-        }}
-        src={state.src}
-        onLoad={onLoad}
-      />
-    </Block>
+    <img
+      style={{
+        border: `1px solid ${type === 'old' ? '#ff0000' : '#00ff00'}`,
+        width,
+        height,
+      }}
+      src={src.current}
+      onLoad={onLoad}
+    />
   )
 })

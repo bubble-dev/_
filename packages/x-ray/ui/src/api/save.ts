@@ -5,11 +5,11 @@ import { TItem } from '../types'
 export const apiSave = async (items: TItem[]): Promise<void> => {
   const data = items.reduce((result, item) => {
     const file = result[item.file] || {}
-    const names = file[item.type] || []
+    const props = file[item.type] || []
 
     result[item.file] = {
       ...file,
-      [item.type]: names.concat(item.name),
+      [item.type]: props.concat(item.props),
     }
 
     return result

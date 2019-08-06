@@ -22,7 +22,7 @@ export type TItemType = 'new' | 'diff' | 'deleted'
 export type TItem = {
   file: string,
   type: TItemType,
-  name: string,
+  props: string,
 }
 
 export type TState = {

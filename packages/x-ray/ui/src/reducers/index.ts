@@ -53,27 +53,27 @@ export const reducer: Reducer<TState> = (state, action) => {
       kind: action.payload.kind,
       unstagedItems: Object.entries(action.payload.files)
         .reduce((result, [file, value]) => {
-          value.new.forEach((name) => {
+          value.new.forEach((props) => {
             result.push({
               file,
               type: 'new',
-              name,
+              props,
             })
           })
 
-          value.diff.forEach((name) => {
+          value.diff.forEach((props) => {
             result.push({
               file,
               type: 'diff',
-              name,
+              props,
             })
           })
 
-          value.deleted.forEach((name) => {
+          value.deleted.forEach((props) => {
             result.push({
               file,
               type: 'deleted',
-              name,
+              props,
             })
           })
 

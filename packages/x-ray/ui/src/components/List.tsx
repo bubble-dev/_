@@ -45,12 +45,12 @@ export const List = component(
     <ul>
       {
         items.map((item, i) => {
-          const { file, type, name } = item
+          const { file, type, props } = item
           const isSelected = selectedItem && isEqualItems(selectedItem, item)
           const isChecked = hasItem(itemsToMove, item)
 
           return (
-            <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={`${file}:${type}:${name}`}>
+            <li style={{ backgroundColor: isSelected ? '#eee' : '#fff' }} key={`${file}:${type}:${props}`}>
               <input
                 type="checkbox"
                 checked={isChecked}
