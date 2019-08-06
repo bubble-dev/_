@@ -20,10 +20,10 @@ export const Preview = component(
     selectedItem,
   }), ['selectedItem', 'kind']),
   mapWithProps(({ width, height }) => ({
-    fileTop: height / 2,
-    fileLeft: width / 2,
+    halfWidth: width / 2,
+    halfHeight: height / 2,
   }))
-)(({ top, left, width, height, fileLeft, fileTop, kind, selectedItem }) => {
+)(({ top, left, width, height, halfWidth, halfHeight, kind, selectedItem }) => {
   return (
     <Block
       top={top}
@@ -37,8 +37,8 @@ export const Preview = component(
           {selectedItem.type === 'new' && kind === 'image' && (
             <ScreenshotNew
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={fileTop}
-              left={fileLeft}
+              top={halfHeight}
+              left={halfWidth}
               file={selectedItem.file}
               props={selectedItem.props}
             />
@@ -47,8 +47,8 @@ export const Preview = component(
           {selectedItem.type === 'diff' && kind === 'image' && (
             <ScreenshotDiff
               key={`${selectedItem.file}:diff:${selectedItem.props}`}
-              top={fileTop}
-              left={fileLeft}
+              top={halfHeight}
+              left={halfWidth}
               file={selectedItem.file}
               props={selectedItem.props}
             />
@@ -57,8 +57,8 @@ export const Preview = component(
           {selectedItem.type === 'deleted' && kind === 'image' && (
             <ScreenshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={fileTop}
-              left={fileLeft}
+              top={halfHeight}
+              left={halfWidth}
               file={selectedItem.file}
               props={selectedItem.props}
             />
@@ -67,7 +67,7 @@ export const Preview = component(
           {selectedItem.type === 'new' && kind === 'text' && (
             <SnapshotNew
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={0}
+              top={68}
               left={0}
               width={width}
               height={height}
@@ -79,7 +79,7 @@ export const Preview = component(
           {selectedItem.type === 'diff' && kind === 'text' && (
             <SnapshotDiff
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={0}
+              top={68}
               left={0}
               width={width}
               height={height}
@@ -91,7 +91,7 @@ export const Preview = component(
           {selectedItem.type === 'deleted' && kind === 'text' && (
             <SnapshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={0}
+              top={68}
               left={0}
               width={width}
               height={height}
