@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { isUndefined } from 'tsfn'
+import BigInt from 'big-integer'
 import { TMetaFile, PermutationDecimal } from './types'
 import { permToDecimal } from './perm-to-decimal'
 import { decimalToPerm } from './decimal-to-perm'
@@ -9,11 +10,11 @@ import { getNumSkipMutex } from './get-num-skip-mutex'
 const getChildNextPerm = (decimal: PermutationDecimal, childMeta: TMetaFile, childKey: string, required?: string[]): PermutationDecimal | null => {
   if (!isUndefined(required) && required.includes(childKey)) {
     return getNextPerm(decimal, childMeta)
-  } else if (decimal > 0) {
-    return getNextPerm(decimal - 1n, childMeta)
+  } else if (decimal.greater(BigInt.zero)) {
+    return getNextPerm(decimal.minus(BigInt.one), childMeta)
   }
 
-  return decimal + 1n
+  return decimal.plus(BigInt.one)
 }
 
 export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): PermutationDecimal | null => {
@@ -30,7 +31,7 @@ export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): P
   for (let i = 0; i < values.length; ++i) {
     // increment props or children
     if (i < propsKeys.length) {
-      ++values[i]
+      values[i] = values[i].plus(BigInt.one)
     } else {
       const childrenConfig = metaFile.childrenConfig!
       const childKey = childrenConfig.children[i - propsKeys.length]
@@ -41,14 +42,14 @@ export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): P
     }
 
     // if incremented digit overflow
-    if (values[i] === length[i]) {
+    if (values[i].equals(length[i])) {
       // if all digits overflow
       if (i === values.length - 1) {
         return null
       }
 
       // reset overflow digit
-      values[i] = 0n
+      values[i] = BigInt.zero
     } else {
       // done incrementing
       changedIndex = i
@@ -64,9 +65,9 @@ export const getNextPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): P
 
   switch (restriction) {
     case RESTRICTION_MUTEX:
-      return getNextPerm(decimal + getNumSkipMutex(values, length, changedIndex), metaFile)
+      return getNextPerm(decimal.plus(getNumSkipMutex(values, length, changedIndex)), metaFile)
     case RESTRICTION_MUTIN:
-      return getNextPerm(decimal + 1n, metaFile)
+      return getNextPerm(decimal.plus(BigInt.one), metaFile)
   }
 
   return permToDecimal(values, length)

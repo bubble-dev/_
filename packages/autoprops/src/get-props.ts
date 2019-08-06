@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { TAnyObject, isUndefined } from 'tsfn'
+import BigInt from 'big-integer'
 import { TMetaFile, PermutationDecimal } from './types'
 import { decimalToPerm } from './decimal-to-perm'
 import { getIndexedName } from './get-indexed-name'
@@ -15,8 +16,8 @@ const getValue = (valueIndex: number, values: any[], key: string, required?: str
 const getChildValue = (decimal: PermutationDecimal, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
   if (!isUndefined(required) && required.includes(childKey)) {
     return getProps(decimal, childMeta)
-  } else if (decimal > 0) {
-    return getProps(decimal - 1n, childMeta)
+  } else if (decimal.greater(0)) {
+    return getProps(decimal.minus(BigInt.one), childMeta)
   }
 }
 
@@ -30,7 +31,7 @@ export const getProps = (decimal: PermutationDecimal, metaFile: TMetaFile): TAny
   for (; i < propsKeys.length; ++i) {
     const propKey = propsKeys[i]
     const valueIndex = values[i]
-    const value = getValue(Number(valueIndex), metaFile.config.props[propKey], propKey, metaFile.config.required)
+    const value = getValue(valueIndex.toJSNumber(), metaFile.config.props[propKey], propKey, metaFile.config.required)
 
     if (!isUndefined(value)) {
       result[propKey] = value

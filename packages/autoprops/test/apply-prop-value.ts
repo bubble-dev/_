@@ -1,4 +1,5 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { applyPropValue } from '../src'
 
@@ -14,45 +15,38 @@ test('applyPropValue: boolean case', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['a'], true),
-    2n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['a'], true).equals(BigInt(2)),
     'undefined to true'
   )
 
-  t.equals(
-    applyPropValue(2n, meta, ['a'], false),
-    1n,
+  t.true(
+    applyPropValue(BigInt(2), meta, ['a'], false).equals(BigInt(1)),
     'true to false'
   )
 
-  t.equals(
-    applyPropValue(1n, meta, ['a'], undefined),
-    0n,
+  t.true(
+    applyPropValue(BigInt(1), meta, ['a'], undefined).equals(BigInt(0)),
     'false to undefined'
   )
 
-  t.equals(
-    applyPropValue(0n, meta, ['b'], true),
-    3n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['b'], true).equals(BigInt(3)),
     'required false to true'
   )
 
-  t.equals(
-    applyPropValue(4n, meta, ['b'], false),
-    1n,
+  t.true(
+    applyPropValue(BigInt(4), meta, ['b'], false).equals(BigInt(1)),
     'required true to false'
   )
 
-  t.equals(
-    applyPropValue(4n, meta, ['b'], undefined),
-    1n,
+  t.true(
+    applyPropValue(BigInt(4), meta, ['b'], undefined).equals(BigInt(1)),
     'required true to undefined'
   )
 
-  t.equals(
-    applyPropValue(4n, meta, ['b'], 'incorrect'),
-    1n,
+  t.true(
+    applyPropValue(BigInt(4), meta, ['b'], 'incorrect').equals(BigInt(1)),
     'incorrect value'
   )
 
@@ -69,21 +63,18 @@ test('applyPropValue: non primitive values', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['a'], meta.config.props.a[0]),
-    1n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['a'], meta.config.props.a[0]).equals(BigInt(1)),
     'should find function'
   )
 
-  t.equals(
-    applyPropValue(0n, meta, ['a'], meta.config.props.a[1]),
-    2n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['a'], meta.config.props.a[1]).equals(BigInt(2)),
     'should find array'
   )
 
-  t.equals(
-    applyPropValue(0n, meta, ['a'], meta.config.props.a[2]),
-    3n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['a'], meta.config.props.a[2]).equals(BigInt(3)),
     'should find object'
   )
 
@@ -106,9 +97,8 @@ test('applyPropValue: prop mutex', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(1n, meta, ['c'], true),
-    4n,
+  t.true(
+    applyPropValue(BigInt(1), meta, ['c'], true).equals(BigInt(4)),
     'disable prop by mutex'
   )
 
@@ -131,15 +121,13 @@ test('applyPropValue: prop mutin', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['c'], true),
-    7n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['c'], true).equals(BigInt(7)),
     'enable props by mutin'
   )
 
-  t.equals(
-    applyPropValue(7n, meta, ['c'], false),
-    0n,
+  t.true(
+    applyPropValue(BigInt(7), meta, ['c'], false).equals(BigInt(0)),
     'disable props by mutin'
   )
 
@@ -169,21 +157,18 @@ test('applyPropValue: boolean inside child', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(2n, meta, ['children', 'child__0', 'a'], true),
-    4n,
+  t.true(
+    applyPropValue(BigInt(2), meta, ['children', 'child__0', 'a'], true).equals(BigInt(4)),
     'child undefined to true'
   )
 
-  t.equals(
-    applyPropValue(5n, meta, ['children', 'child__0', 'a'], false),
-    3n,
+  t.true(
+    applyPropValue(BigInt(5), meta, ['children', 'child__0', 'a'], false).equals(BigInt(3)),
     'true to false'
   )
 
-  t.equals(
-    applyPropValue(5n, meta, ['children', 'child__0', 'a'], undefined),
-    3n,
+  t.true(
+    applyPropValue(BigInt(5), meta, ['children', 'child__0', 'a'], undefined).equals(BigInt(3)),
     'false to undefined'
   )
 
@@ -202,15 +187,13 @@ test('applyPropPath: enable disable child', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['children', 'child__0'], {}),
-    1n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['children', 'child__0'], {}).equals(BigInt(1)),
     'should enable child'
   )
 
-  t.equals(
-    applyPropValue(1n, meta, ['children', 'child__0'], undefined),
-    0n,
+  t.true(
+    applyPropValue(BigInt(1), meta, ['children', 'child__0'], undefined).equals(BigInt(0)),
     'should disable child'
   )
 
@@ -235,15 +218,13 @@ test('applyPropPath: child mutins', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['children', 'c__0'], true),
-    7n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['children', 'c__0'], true).equals(BigInt(7)),
     'enable child by mutin'
   )
 
-  t.equals(
-    applyPropValue(7n, meta, ['children', 'c__0'], undefined),
-    0n,
+  t.true(
+    applyPropValue(BigInt(7), meta, ['children', 'c__0'], undefined).equals(BigInt(0)),
     'disable child by mutin'
   )
 
@@ -268,9 +249,8 @@ test('applyPropPath: child mutexes', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(1n, meta, ['children', 'c__0'], {}),
-    4n,
+  t.true(
+    applyPropValue(BigInt(1), meta, ['children', 'c__0'], {}).equals(BigInt(4)),
     'should disable child by mutex'
   )
 
@@ -299,9 +279,8 @@ test('applyPropPath: change required child prop', (t) => {
     Component: () => null,
   }
 
-  t.equals(
-    applyPropValue(0n, meta, ['children', 'child__0', 'a'], true),
-    1n,
+  t.true(
+    applyPropValue(BigInt(0), meta, ['children', 'child__0', 'a'], true).equals(BigInt(1)),
     'should enable prop in child'
   )
 
@@ -332,19 +311,19 @@ test('applyPropPath: errors', (t) => {
   }
 
   t.throws(
-    () => applyPropValue(0n, meta, ['children', 'child__0', 'a'], true),
+    () => applyPropValue(BigInt(0), meta, ['children', 'child__0', 'a'], true),
     /was not enabled/,
     'should throw if previous state is not compatible with path'
   )
 
   t.throws(
-    () => applyPropValue(0n, meta, ['b'], true),
+    () => applyPropValue(BigInt(0), meta, ['b'], true),
     /could not find prop/,
     'should throw if path is incorrect'
   )
 
   t.throws(
-    () => applyPropValue(2n, meta, ['children', 'child__0', 'a', 'a'], true),
+    () => applyPropValue(BigInt(2), meta, ['children', 'child__0', 'a', 'a'], true),
     /incorrect path/,
     'should throw if children not exist'
   )

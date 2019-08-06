@@ -1,4 +1,5 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { getNextPerm } from '../src/get-next-perm'
 
@@ -13,11 +14,13 @@ test('getNextPerm: simple case', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const expected = [BigInt(1), BigInt(2), BigInt(3), null]
 
-  t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 3n, null],
+  t.true(
+    decimals
+      .map((value) => getNextPerm(value, meta))
+      .every((val, i) => (val === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return next perm'
   )
 
@@ -40,11 +43,13 @@ test('getNextPerm: props mutex', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7)]
+  const expected = [BigInt(1), BigInt(2), BigInt(4), BigInt(4), BigInt(6), BigInt(6), null, null]
 
-  t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 4n, 4n, 6n, 6n, null, null],
+  t.true(
+    decimals
+      .map((value) => getNextPerm(value, meta))
+      .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return next perm'
   )
 
@@ -66,11 +71,13 @@ test('getNextPerm: props mutin', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7)]
+  const expected = [BigInt(2), BigInt(2), BigInt(5), BigInt(5), BigInt(5), BigInt(7), BigInt(7), null]
 
-  t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
-    [2n, 2n, 5n, 5n, 5n, 7n, 7n, null],
+  t.true(
+    decimals
+      .map((value) => getNextPerm(value, meta))
+      .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return next perm'
   )
 
@@ -105,11 +112,13 @@ test('getNextPerm: children', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const expected = [BigInt(1), BigInt(2), BigInt(3), null]
 
-  t.deepEquals(
-    decimals.map((value) => getNextPerm(value, meta)),
-    [1n, 2n, 3n, null],
+  t.true(
+    decimals
+      .map((value) => getNextPerm(value, meta))
+      .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return next perm'
   )
 

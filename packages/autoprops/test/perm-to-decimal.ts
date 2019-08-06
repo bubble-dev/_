@@ -1,38 +1,42 @@
 import test from 'blue-tape'
+import BigInt from 'big-integer'
 import { permToDecimal } from '../src/perm-to-decimal'
 
 test('permToDecimal', (t) => {
-  const length = [2n, 3n, 4n]
+  const length = [BigInt(2), BigInt(3), BigInt(4)]
   const values = [
-    [0n, 0n, 0n],
-    [1n, 0n, 0n],
-    [0n, 1n, 0n],
-    [1n, 1n, 0n],
-    [0n, 2n, 0n],
-    [1n, 2n, 0n],
-    [0n, 0n, 1n],
-    [1n, 0n, 1n],
-    [0n, 1n, 1n],
-    [1n, 1n, 1n],
-    [0n, 2n, 1n],
-    [1n, 2n, 1n],
-    [0n, 0n, 2n],
-    [1n, 0n, 2n],
-    [0n, 1n, 2n],
-    [1n, 1n, 2n],
-    [0n, 2n, 2n],
-    [1n, 2n, 2n],
-    [0n, 0n, 3n],
-    [1n, 0n, 3n],
-    [0n, 1n, 3n],
-    [1n, 1n, 3n],
-    [0n, 2n, 3n],
-    [1n, 2n, 3n],
+    [BigInt(0), BigInt(0), BigInt(0)],
+    [BigInt(1), BigInt(0), BigInt(0)],
+    [BigInt(0), BigInt(1), BigInt(0)],
+    [BigInt(1), BigInt(1), BigInt(0)],
+    [BigInt(0), BigInt(2), BigInt(0)],
+    [BigInt(1), BigInt(2), BigInt(0)],
+    [BigInt(0), BigInt(0), BigInt(1)],
+    [BigInt(1), BigInt(0), BigInt(1)],
+    [BigInt(0), BigInt(1), BigInt(1)],
+    [BigInt(1), BigInt(1), BigInt(1)],
+    [BigInt(0), BigInt(2), BigInt(1)],
+    [BigInt(1), BigInt(2), BigInt(1)],
+    [BigInt(0), BigInt(0), BigInt(2)],
+    [BigInt(1), BigInt(0), BigInt(2)],
+    [BigInt(0), BigInt(1), BigInt(2)],
+    [BigInt(1), BigInt(1), BigInt(2)],
+    [BigInt(0), BigInt(2), BigInt(2)],
+    [BigInt(1), BigInt(2), BigInt(2)],
+    [BigInt(0), BigInt(0), BigInt(3)],
+    [BigInt(1), BigInt(0), BigInt(3)],
+    [BigInt(0), BigInt(1), BigInt(3)],
+    [BigInt(1), BigInt(1), BigInt(3)],
+    [BigInt(0), BigInt(2), BigInt(3)],
+    [BigInt(1), BigInt(2), BigInt(3)],
   ]
 
-  t.deepEquals(
-    values.map((values) => permToDecimal(values, length)),
-    [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n, 9n, 10n, 11n, 12n, 13n, 14n, 15n, 16n, 17n, 18n, 19n, 20n, 21n, 22n, 23n],
+  const expected = [BigInt(0), BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14), BigInt(15), BigInt(16), BigInt(17), BigInt(18), BigInt(19), BigInt(20), BigInt(21), BigInt(22), BigInt(23)]
+
+  t.true(
+    values
+      .map((values) => permToDecimal(values, length))
+      .every((val, i) => (val === null || expected[i] === null ? val === expected[i] : val.equals(expected[i]!))),
     'should return correct decimal'
   )
 

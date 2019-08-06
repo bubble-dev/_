@@ -1,6 +1,24 @@
 import test from 'blue-tape'
-import { TMetaFile } from '../src/types'
+import BigInt from 'big-integer'
+import { TMetaFile, Permutation } from '../src/types'
 import { decimalToPerm } from '../src/decimal-to-perm'
+
+const permEquals = (a: Permutation, b: Permutation): boolean => {
+  if (a.values.length !== b.values.length) {
+    return false
+  }
+
+  for (let i = 0; i < a.values.length; ++i) {
+    if (a.values[i].notEquals(b.values[i])) {
+      return false
+    }
+    if (a.length[i].notEquals(b.length[i])) {
+      return false
+    }
+  }
+
+  return true
+}
 
 test('decimalToPerm: props', (t) => {
   const meta: TMetaFile = {
@@ -13,28 +31,30 @@ test('decimalToPerm: props', (t) => {
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const expected = [
+    {
+      values: [BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2)],
+    },
+  ]
 
-  t.deepEquals(
-    decimals.map((value) => decimalToPerm(value, meta)),
-    [
-      {
-        values: [0n, 0n],
-        length: [2n, 2n],
-      },
-      {
-        values: [1n, 0n],
-        length: [2n, 2n],
-      },
-      {
-        values: [0n, 1n],
-        length: [2n, 2n],
-      },
-      {
-        values: [1n, 1n],
-        length: [2n, 2n],
-      },
-    ],
+  t.true(
+    decimals
+      .map((value) => decimalToPerm(value, meta))
+      .every((perm, i) => permEquals(perm, expected[i])),
     'should return proper perms'
   )
 
@@ -59,153 +79,188 @@ test('decimalToPerm: props with children', (t) => {
           },
           Component: () => null,
         },
-        child2n: {
+        child2: {
           config: {
             props: {},
           },
           Component: () => null,
         },
       },
-      children: ['child', 'child', 'child2n'],
+      children: ['child', 'child', 'child2'],
       required: ['child'],
     },
     Component: () => null,
   }
 
-  const decimals = [0n, 1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n, 9n, 10n, 11n, 12n, 13n, 14n, 15n, 16n, 17n, 18n, 19n, 20n, 21n, 22n, 23n, 24n, 25n, 26n, 27n, 28n, 29n, 30n, 31n]
+  const decimals = [
+    BigInt(0),
+    BigInt(1),
+    BigInt(2),
+    BigInt(3),
+    BigInt(4),
+    BigInt(5),
+    BigInt(6),
+    BigInt(7),
+    BigInt(8),
+    BigInt(9),
+    BigInt(10),
+    BigInt(11),
+    BigInt(12),
+    BigInt(13),
+    BigInt(14),
+    BigInt(15),
+    BigInt(16),
+    BigInt(17),
+    BigInt(18),
+    BigInt(19),
+    BigInt(20),
+    BigInt(21),
+    BigInt(22),
+    BigInt(23),
+    BigInt(24),
+    BigInt(25),
+    BigInt(26),
+    BigInt(27),
+    BigInt(28),
+    BigInt(29),
+    BigInt(30),
+    BigInt(31),
+  ]
+  const expected = [
+    {
+      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(0), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(1), BigInt(0)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(0), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(0), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(0), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(0), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(0), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(0), BigInt(1), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+    {
+      values: [BigInt(1), BigInt(1), BigInt(1), BigInt(1), BigInt(1)],
+      length: [BigInt(2), BigInt(2), BigInt(2), BigInt(2), BigInt(2)],
+    },
+  ]
 
-  t.deepEquals(
-    decimals.map((value) => decimalToPerm(value, meta)),
-    [
-      {
-        values: [0n, 0n, 0n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 0n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 0n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 0n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 1n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 1n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 1n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 1n, 0n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 0n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 0n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 0n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 0n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 1n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 1n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 1n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 1n, 1n, 0n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 0n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 0n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 0n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 0n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 1n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 1n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 1n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 1n, 0n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 0n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 0n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 0n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 0n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 0n, 1n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 0n, 1n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [0n, 1n, 1n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-      {
-        values: [1n, 1n, 1n, 1n, 1n],
-        length: [2n, 2n, 2n, 2n, 2n],
-      },
-    ],
+  t.true(
+    decimals
+      .map((value) => decimalToPerm(value, meta))
+      .every((perm, i) => permEquals(perm, expected[i])),
     'should return proper perms'
   )
 

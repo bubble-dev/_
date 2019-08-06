@@ -1,5 +1,6 @@
 /* eslint-disable max-params, no-use-before-define */
 import { isUndefined } from 'tsfn'
+import BigInt from 'big-integer'
 import { PermutationDecimal, TMetaFile } from './types'
 import { decimalToPerm } from './decimal-to-perm'
 import { permToDecimal } from './perm-to-decimal'
@@ -9,8 +10,8 @@ import { checkAndDisableMutins, checkAndEnableMutins, checkAndDisableMutexes } f
 const applyChildPropValue = (decimal: PermutationDecimal, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): PermutationDecimal => {
   if (!isUndefined(required) && required.includes(childKey)) {
     return applyPropValue(decimal, childMeta, propPath, propValue)
-  } else if (decimal > 0) {
-    return applyPropValue(decimal - 1n, childMeta, propPath, propValue) + 1n
+  } else if (decimal.greater(BigInt.zero)) {
+    return applyPropValue(decimal.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
   }
 
   throw new Error(`path error: child "${childKey}" was not enabled, but path points inside it`)
@@ -36,7 +37,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
 
     // check selected value = undefined
     if (propValueIndex <= 0) {
-      values[propIndex] = 0n
+      values[propIndex] = BigInt.zero
 
       // check mutin
       if (!isUndefined(metaFile.config.mutin)) {
@@ -74,7 +75,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
     }
 
     if (isUndefined(propValue)) {
-      values[childIndex] = 0n
+      values[childIndex] = BigInt.zero
 
       if (!isUndefined(metaFile.childrenConfig.mutin)) {
         checkAndDisableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
@@ -83,7 +84,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
       return permToDecimal(values, length)
     }
 
-    values[childIndex] = 1n
+    values[childIndex] = BigInt.one
 
     if (!isUndefined(metaFile.childrenConfig.mutin)) {
       checkAndEnableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
