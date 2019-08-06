@@ -43,7 +43,7 @@ export const Screenshot = component(
   return (
     <img
       style={{
-        border: `1px solid ${type === 'old' ? '#ff0000' : '#00ff00'}`,
+        border: `1px solid ${type === 'new' ? '#00ff00' : '#ff0000'}`,
         width,
         height,
       }}
