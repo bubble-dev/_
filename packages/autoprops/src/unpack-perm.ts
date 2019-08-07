@@ -3,10 +3,10 @@ import BigInt, { BigInteger } from 'big-integer'
 import { TMetaFile, Permutation } from './types'
 import { getValuesLength, getLength } from './get-length'
 
-export const unpackPerm = (decimal: BigInteger, metaFile: TMetaFile): Permutation => {
+export const unpackPerm = (int: BigInteger, metaFile: TMetaFile): Permutation => {
   const permValues: BigInteger[] = []
   const permLength: BigInteger[] = []
-  let permValue = decimal
+  let permValue = int
 
   for (const key of Object.keys(metaFile.config.props)) {
     const length = getValuesLength(BigInt(metaFile.config.props[key].length), key, metaFile.config.required)

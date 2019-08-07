@@ -14,18 +14,18 @@ const getValue = (valueIndex: number, values: any[], key: string, required?: str
   }
 }
 
-const getChildValue = (decimal: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
+const getChildValue = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): any => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return getPropsImpl(decimal, childMeta)
-  } else if (decimal.greater(BigInt.zero)) {
-    return getPropsImpl(decimal.minus(BigInt.one), childMeta)
+    return getPropsImpl(int, childMeta)
+  } else if (int.greater(BigInt.zero)) {
+    return getPropsImpl(int.minus(BigInt.one), childMeta)
   }
 }
 
-export const getPropsImpl = (decimal: BigInteger, metaFile: TMetaFile): TAnyObject => {
+export const getPropsImpl = (int: BigInteger, metaFile: TMetaFile): TAnyObject => {
   const propsKeys = Object.keys(metaFile.config.props)
   const result: TAnyObject = {}
-  const { values } = unpackPerm(decimal, metaFile)
+  const { values } = unpackPerm(int, metaFile)
 
   let i = 0
 

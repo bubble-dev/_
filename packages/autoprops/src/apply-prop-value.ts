@@ -9,18 +9,18 @@ import { parseBigInt } from './parse-bigint'
 import { getBaseName, getIndexedNameIndex } from './get-indexed-name'
 import { checkAndDisableMutins, checkAndEnableMutins, checkAndDisableMutexes } from './check-mutex'
 
-const applyChildPropValue = (decimal: BigInteger, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): BigInteger => {
+const applyChildPropValue = (int: BigInteger, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): BigInteger => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return applyPropValueImpl(decimal, childMeta, propPath, propValue)
-  } else if (decimal.greater(BigInt.zero)) {
-    return applyPropValueImpl(decimal.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
+    return applyPropValueImpl(int, childMeta, propPath, propValue)
+  } else if (int.greater(BigInt.zero)) {
+    return applyPropValueImpl(int.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
   }
 
   throw new Error(`path error: child "${childKey}" was not enabled, but path points inside it`)
 }
 
-const applyPropValueImpl = (decimal: BigInteger, metaFile: TMetaFile, propPath: string[], propValue: any): BigInteger => {
-  const { values, length } = unpackPerm(decimal, metaFile)
+const applyPropValueImpl = (int: BigInteger, metaFile: TMetaFile, propPath: string[], propValue: any): BigInteger => {
+  const { values, length } = unpackPerm(int, metaFile)
   const propKeys = Object.keys(metaFile.config.props)
 
   // check if local prop has changed
@@ -61,7 +61,6 @@ const applyPropValueImpl = (decimal: BigInteger, metaFile: TMetaFile, propPath: 
       checkAndDisableMutexes(values, 0, propKeys, propName, metaFile.config.mutex)
     }
 
-    // return pack decimal
     return packPerm(values, length)
   }
 

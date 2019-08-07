@@ -9,19 +9,19 @@ import { stringifyBigInt } from './stringify-bigint'
 import { checkRestriction, RESTRICTION_MUTEX, RESTRICTION_MUTIN } from './check-restriction'
 import { getNumSkipMutex } from './get-num-skip-mutex'
 
-const getChildNextPerm = (decimal: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): BigInteger | null => {
+const getChildNextPerm = (int: BigInteger, childMeta: TMetaFile, childKey: string, required?: string[]): BigInteger | null => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return getNextPermImpl(decimal, childMeta)
-  } else if (decimal.greater(BigInt.zero)) {
-    return getNextPermImpl(decimal.minus(BigInt.one), childMeta)
+    return getNextPermImpl(int, childMeta)
+  } else if (int.greater(BigInt.zero)) {
+    return getNextPermImpl(int.minus(BigInt.one), childMeta)
   }
 
-  return decimal.plus(BigInt.one)
+  return int.plus(BigInt.one)
 }
 
-export const getNextPermImpl = (decimal: BigInteger, metaFile: TMetaFile): BigInteger | null => {
+export const getNextPermImpl = (int: BigInteger, metaFile: TMetaFile): BigInteger | null => {
   const propsKeys = Object.keys(metaFile.config.props)
-  const { values, length } = unpackPerm(decimal, metaFile)
+  const { values, length } = unpackPerm(int, metaFile)
 
   if (values.length === 0) {
     return null
@@ -63,9 +63,9 @@ export const getNextPermImpl = (decimal: BigInteger, metaFile: TMetaFile): BigIn
 
   switch (restriction) {
     case RESTRICTION_MUTEX:
-      return getNextPermImpl(decimal.plus(getNumSkipMutex(values, length, i)), metaFile)
+      return getNextPermImpl(int.plus(getNumSkipMutex(values, length, i)), metaFile)
     case RESTRICTION_MUTIN:
-      return getNextPermImpl(decimal.plus(BigInt.one), metaFile)
+      return getNextPermImpl(int.plus(BigInt.one), metaFile)
   }
 
   return packPerm(values, length)

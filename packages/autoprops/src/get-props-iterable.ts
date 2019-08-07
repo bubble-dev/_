@@ -4,12 +4,12 @@ import { getNextPermImpl } from './get-next-perm'
 import { TMetaFile } from './types'
 
 export const getPropsIterable = (metaFile: TMetaFile) => ({
-  decimal: BigInt.zero as BigInteger | null,
+  int: BigInt.zero as BigInteger | null,
   *[Symbol.iterator]() {
-    while (this.decimal !== null) {
-      yield getPropsImpl(this.decimal, metaFile)
+    while (this.int !== null) {
+      yield getPropsImpl(this.int, metaFile)
 
-      this.decimal = getNextPermImpl(this.decimal, metaFile)
+      this.int = getNextPermImpl(this.int, metaFile)
     }
   },
 })
