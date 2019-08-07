@@ -1,24 +1,26 @@
 /* eslint-disable max-params, no-use-before-define */
 import { isUndefined } from 'tsfn'
-import BigInt from 'big-integer'
-import { PermutationDecimal, TMetaFile } from './types'
-import { decimalToPerm } from './decimal-to-perm'
-import { permToDecimal } from './perm-to-decimal'
+import BigInt, { BigInteger } from 'big-integer'
+import { TMetaFile } from './types'
+import { unpackPerm } from './unpack-perm'
+import { packPerm } from './pack-perm'
+import { stringifyBigInt } from './stringify-bigint'
+import { parseBigInt } from './parse-bigint'
 import { getBaseName, getIndexedNameIndex } from './get-indexed-name'
 import { checkAndDisableMutins, checkAndEnableMutins, checkAndDisableMutexes } from './check-mutex'
 
-const applyChildPropValue = (decimal: PermutationDecimal, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): PermutationDecimal => {
+const applyChildPropValue = (decimal: BigInteger, childMeta: TMetaFile, propPath: string[], propValue: any, childKey: string, required?: string[]): BigInteger => {
   if (!isUndefined(required) && required.includes(childKey)) {
-    return applyPropValue(decimal, childMeta, propPath, propValue)
+    return applyPropValueImpl(decimal, childMeta, propPath, propValue)
   } else if (decimal.greater(BigInt.zero)) {
-    return applyPropValue(decimal.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
+    return applyPropValueImpl(decimal.minus(BigInt.one), childMeta, propPath, propValue).plus(BigInt.one)
   }
 
   throw new Error(`path error: child "${childKey}" was not enabled, but path points inside it`)
 }
 
-export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile, propPath: string[], propValue: any): PermutationDecimal => {
-  const { values, length } = decimalToPerm(decimal, metaFile)
+const applyPropValueImpl = (decimal: BigInteger, metaFile: TMetaFile, propPath: string[], propValue: any): BigInteger => {
+  const { values, length } = unpackPerm(decimal, metaFile)
   const propKeys = Object.keys(metaFile.config.props)
 
   // check if local prop has changed
@@ -44,7 +46,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
         checkAndDisableMutins(values, 0, propKeys, propName, metaFile.config.mutin)
       }
 
-      return permToDecimal(values, length)
+      return packPerm(values, length)
     }
 
     values[propIndex] = BigInt(propValueIndex)
@@ -60,7 +62,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
     }
 
     // return pack decimal
-    return permToDecimal(values, length)
+    return packPerm(values, length)
   }
 
   if (!isUndefined(metaFile.childrenConfig) && propPath[0] === 'children') {
@@ -71,7 +73,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
     if (propPath.length > 2) {
       values[childIndex] = applyChildPropValue(values[childIndex], metaFile.childrenConfig.meta[childBaseName], propPath.slice(2), propValue, childBaseName, metaFile.childrenConfig.required)
 
-      return permToDecimal(values, length)
+      return packPerm(values, length)
     }
 
     if (isUndefined(propValue)) {
@@ -81,7 +83,7 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
         checkAndDisableMutins(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutin)
       }
 
-      return permToDecimal(values, length)
+      return packPerm(values, length)
     }
 
     values[childIndex] = BigInt.one
@@ -94,8 +96,12 @@ export const applyPropValue = (decimal: PermutationDecimal, metaFile: TMetaFile,
       checkAndDisableMutexes(values, propKeys.length, metaFile.childrenConfig.children, childBaseName, metaFile.childrenConfig.mutex)
     }
 
-    return permToDecimal(values, length)
+    return packPerm(values, length)
   }
 
   throw new Error(`prop path error: incorrect path "[${propPath}]"`)
+}
+
+export const applyPropValue = (intStr: string, metaFile: TMetaFile, propPath: string[], propValue: any): string => {
+  return stringifyBigInt(applyPropValueImpl(parseBigInt(intStr), metaFile, propPath, propValue))
 }

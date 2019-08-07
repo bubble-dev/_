@@ -1,8 +1,7 @@
 import BigInt, { BigInteger } from 'big-integer'
-import { PermutationDecimal } from './types'
 
-export const permToDecimal = (values: BigInteger[], length: BigInteger[]): PermutationDecimal => {
-  let result: PermutationDecimal = BigInt.zero
+export const packPerm = (values: BigInteger[], length: BigInteger[]): BigInteger => {
+  let result = BigInt.zero
   let multipliedLength = BigInt.one
 
   for (let i = 0; i < values.length; ++i) {

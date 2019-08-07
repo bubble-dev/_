@@ -1,5 +1,4 @@
 import test from 'blue-tape'
-import BigInt from 'big-integer'
 import { TMetaFile } from '../src/types'
 import { getProps } from '../src'
 
@@ -13,7 +12,7 @@ test('autoprops: getProps single prop', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1), BigInt(2)]
+  const decimals = ['0', '1', '2']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -43,7 +42,7 @@ test('autoprops: getProps required props', (t) => {
   }
 
   t.deepEquals(
-    getProps(BigInt(0), meta),
+    getProps('0', meta),
     {
       a: true,
     },
@@ -51,7 +50,7 @@ test('autoprops: getProps required props', (t) => {
   )
 
   t.deepEquals(
-    getProps(BigInt(1), meta),
+    getProps('1', meta),
     {
       a: true,
       b: true,
@@ -81,7 +80,7 @@ test('autoprops: getProps empty childrenMap', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1)]
+  const decimals = ['0', '1']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -125,7 +124,7 @@ test('autoprops: getProps children with required', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1)]
+  const decimals = ['0', '1']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),
@@ -171,7 +170,7 @@ test('autoprops: getProps same child placed multiple times', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const decimals = ['0', '1', '2', '3']
 
   t.deepEquals(
     decimals.map((value) => getProps(value, meta)),

@@ -1,7 +1,7 @@
 import test from 'blue-tape'
 import BigInt from 'big-integer'
 import { TMetaFile, Permutation } from '../src/types'
-import { decimalToPerm } from '../src/decimal-to-perm'
+import { unpackPerm } from '../src/unpack-perm'
 
 const permEquals = (a: Permutation, b: Permutation): boolean => {
   if (a.values.length !== b.values.length) {
@@ -31,7 +31,7 @@ test('decimalToPerm: props', (t) => {
     Component: () => null,
   }
 
-  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
+  const packed = [BigInt(0), BigInt(1), BigInt(2), BigInt(3)]
   const expected = [
     {
       values: [BigInt(0), BigInt(0)],
@@ -52,8 +52,8 @@ test('decimalToPerm: props', (t) => {
   ]
 
   t.true(
-    decimals
-      .map((value) => decimalToPerm(value, meta))
+    packed
+      .map((value) => unpackPerm(value, meta))
       .every((perm, i) => permEquals(perm, expected[i])),
     'should return proper perms'
   )
@@ -92,40 +92,7 @@ test('decimalToPerm: props with children', (t) => {
     Component: () => null,
   }
 
-  const decimals = [
-    BigInt(0),
-    BigInt(1),
-    BigInt(2),
-    BigInt(3),
-    BigInt(4),
-    BigInt(5),
-    BigInt(6),
-    BigInt(7),
-    BigInt(8),
-    BigInt(9),
-    BigInt(10),
-    BigInt(11),
-    BigInt(12),
-    BigInt(13),
-    BigInt(14),
-    BigInt(15),
-    BigInt(16),
-    BigInt(17),
-    BigInt(18),
-    BigInt(19),
-    BigInt(20),
-    BigInt(21),
-    BigInt(22),
-    BigInt(23),
-    BigInt(24),
-    BigInt(25),
-    BigInt(26),
-    BigInt(27),
-    BigInt(28),
-    BigInt(29),
-    BigInt(30),
-    BigInt(31),
-  ]
+  const decimals = [BigInt(0), BigInt(1), BigInt(2), BigInt(3), BigInt(4), BigInt(5), BigInt(6), BigInt(7), BigInt(8), BigInt(9), BigInt(10), BigInt(11), BigInt(12), BigInt(13), BigInt(14), BigInt(15), BigInt(16), BigInt(17), BigInt(18), BigInt(19), BigInt(20), BigInt(21), BigInt(22), BigInt(23), BigInt(24), BigInt(25), BigInt(26), BigInt(27), BigInt(28), BigInt(29), BigInt(30), BigInt(31)]
   const expected = [
     {
       values: [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)],
@@ -259,7 +226,7 @@ test('decimalToPerm: props with children', (t) => {
 
   t.true(
     decimals
-      .map((value) => decimalToPerm(value, meta))
+      .map((value) => unpackPerm(value, meta))
       .every((perm, i) => permEquals(perm, expected[i])),
     'should return proper perms'
   )

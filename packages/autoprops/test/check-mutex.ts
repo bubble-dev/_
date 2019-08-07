@@ -3,16 +3,16 @@ import BigInt from 'big-integer'
 import { checkAndEnableMutins, checkAndDisableMutins, checkAndDisableMutexes } from '../src/check-mutex'
 
 test('checkAndEnableMutins', (t) => {
-  const values = [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
-  const expected = [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1)]
+  const values = [BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0), BigInt(0)]
+  const expected = [BigInt(0), BigInt(0), BigInt(1), BigInt(1), BigInt(1), BigInt(0)]
 
   checkAndEnableMutins(
     values,
     2,
-    ['a', 'b', 'c'],
+    ['a', 'b', 'c', 'd'],
     'c',
-    [['a', 'b'], ['b', 'c']],
-    undefined
+    [['a', 'b'], ['b', 'c'], ['c', 'd']],
+    ['d']
   )
 
   t.true(
@@ -52,7 +52,7 @@ test('checkAndDisableMutexes', (t) => {
     2,
     ['a', 'b', 'c'],
     'c',
-    [['a', 'b'], ['b', 'c']]
+    [['a', 'b'], ['b', 'c', 'd']]
   )
 
   t.true(

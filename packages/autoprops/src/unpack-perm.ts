@@ -1,9 +1,9 @@
 import { isUndefined } from 'tsfn'
 import BigInt, { BigInteger } from 'big-integer'
-import { TMetaFile, PermutationDecimal, Permutation } from './types'
+import { TMetaFile, Permutation } from './types'
 import { getValuesLength, getLength } from './get-length'
 
-export const decimalToPerm = (decimal: PermutationDecimal, metaFile: TMetaFile): Permutation => {
+export const unpackPerm = (decimal: BigInteger, metaFile: TMetaFile): Permutation => {
   const permValues: BigInteger[] = []
   const permLength: BigInteger[] = []
   let permValue = decimal

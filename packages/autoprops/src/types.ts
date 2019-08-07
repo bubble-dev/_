@@ -35,5 +35,3 @@ export type Permutation = {
   values: BigInteger[],
   length: BigInteger[],
 }
-
-export type PermutationDecimal = BigInteger
