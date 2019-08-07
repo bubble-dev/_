@@ -5,7 +5,7 @@ import { stringifyBigInt } from '../src/stringify-bigint'
 test('stringifyBigInt', (t) => {
   t.equals(
     stringifyBigInt(BigInt(Number.MAX_SAFE_INTEGER)),
-    'jLPPD2sEv',
+    'p18S4dnq7',
     'should stringify'
   )
 

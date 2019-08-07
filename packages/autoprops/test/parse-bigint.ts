@@ -4,7 +4,7 @@ import { parseBigInt } from '../src/parse-bigint'
 
 test('parseBigInt', (t) => {
   t.true(
-    parseBigInt('jLPPD2sEv').equals(BigInt(Number.MAX_SAFE_INTEGER)),
+    parseBigInt('p18S4dnq7').equals(BigInt(Number.MAX_SAFE_INTEGER)),
     'should parse'
   )
 
