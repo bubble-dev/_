@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType } from 'refun'
+import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { mapStoreState } from '../store'
 import { TItem } from '../types'
 import { isEqualItems, hasItem } from '../utils'
@@ -22,13 +22,20 @@ export const List = component(
   startWithType<TList>(),
   mapStoreState(({ selectedItem }) => ({
     selectedItem,
-  }), ['selectedItem'])
+  }), ['selectedItem']),
+  mapWithPropsMemo(({ items }) => ({
+    pagesArray: new Array(Math.ceil(items.length / ITEMS_PER_PAGE)).fill(0),
+  }), ['items']),
+  mapWithPropsMemo(({ items, pageIndex }) => ({
+    currentPageItems: items.slice(pageIndex * ITEMS_PER_PAGE, pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE),
+  }), ['items', 'pageIndex'])
 )(({
-  items,
   itemsToMove,
   pageIndex,
   title,
   selectedItem,
+  pagesArray,
+  currentPageItems,
   top,
   left,
   width,
@@ -49,22 +56,20 @@ export const List = component(
     <button disabled={itemsToMove.length === 0} onClick={onMove}>move</button>
     <ul>
       {
-        new Array(Math.ceil(items.length / ITEMS_PER_PAGE))
-          .fill(0)
-          .map((_, i) => {
-            return (
-              <button
-                key={i}
-                disabled={pageIndex === i}
-                onClick={() => onPageChange(i)}
-              >
-                {i + 1}
-              </button>
-            )
-          })
+        pagesArray.map((_, i) => {
+          return (
+            <button
+              key={i}
+              disabled={pageIndex === i}
+              onClick={() => onPageChange(i)}
+            >
+              {i + 1}
+            </button>
+          )
+        })
       }
       {
-        items.slice(pageIndex * ITEMS_PER_PAGE, pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE).map((item, i) => {
+        currentPageItems.map((item, i) => {
           const { file, type, props } = item
           const isSelected = selectedItem && isEqualItems(selectedItem, item)
           const isChecked = hasItem(itemsToMove, item)
