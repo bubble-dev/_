@@ -9,6 +9,8 @@ import {
   actionToggleAsUnstaged,
   actionMoveToUnstaged,
   actionMoveToStaged,
+  actionChangeStagedPage,
+  actionChangeUnstagedPage,
 } from '../actions'
 import { TItem } from '../types'
 import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
@@ -27,12 +29,14 @@ export type TMain = {
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ itemsToStage, itemsToUnstage, stagedItems, unstagedItems }) => ({
+  mapStoreState(({ itemsToStage, itemsToUnstage, stagedItems, unstagedItems, stagedPageIndex, unstagedPageIndex }) => ({
     itemsToStage,
     itemsToUnstage,
     unstagedItems,
     stagedItems,
-  }), ['itemsToStage', 'itemsToUnstage', 'stagedItems', 'unstagedItems']),
+    stagedPageIndex,
+    unstagedPageIndex,
+  }), ['itemsToStage', 'itemsToUnstage', 'stagedItems', 'unstagedItems', 'stagedPageIndex', 'unstagedPageIndex']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
@@ -52,6 +56,12 @@ export const Main = component(
     },
     onMoveToStaged: ({ dispatch }) => () => {
       dispatch(actionMoveToStaged())
+    },
+    onStagedPageChange: ({ dispatch }) => (index: number) => {
+      dispatch(actionChangeStagedPage(index))
+    },
+    onUnstagedPageChange: ({ dispatch }) => (index: number) => {
+      dispatch(actionChangeUnstagedPage(index))
     },
   }),
   mapWithProps(({ width, height }) => ({
@@ -89,6 +99,8 @@ export const Main = component(
   itemsToUnstage,
   stagedItems,
   unstagedItems,
+  stagedPageIndex,
+  unstagedPageIndex,
   stagedTop,
   stagedWidth,
   stagedHeight,
@@ -113,6 +125,8 @@ export const Main = component(
   onSelect,
   onToggleAsStaged,
   onToggleAsUnstaged,
+  onStagedPageChange,
+  onUnstagedPageChange,
 }) => (
   <Fragment>
     <Toolbar
@@ -132,6 +146,7 @@ export const Main = component(
       title="staged"
       items={stagedItems}
       itemsToMove={itemsToUnstage}
+      pageIndex={stagedPageIndex}
       top={stagedTop}
       left={0}
       width={stagedWidth}
@@ -139,6 +154,7 @@ export const Main = component(
       onSelect={onSelect}
       onToggle={onToggleAsUnstaged}
       onMove={onMoveToUnstaged}
+      onPageChange={onStagedPageChange}
     />
     <Border
       top={horizontalSeparatorTop}
@@ -151,6 +167,7 @@ export const Main = component(
       title="unstaged"
       items={unstagedItems}
       itemsToMove={itemsToStage}
+      pageIndex={unstagedPageIndex}
       left={0}
       top={unstagedTop}
       width={unstagedWidth}
@@ -158,6 +175,7 @@ export const Main = component(
       onSelect={onSelect}
       onToggle={onToggleAsStaged}
       onMove={onMoveToStaged}
+      onPageChange={onUnstagedPageChange}
     />
     <Border
       top={verticalSeparatorTop}

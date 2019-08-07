@@ -3,6 +3,7 @@ import { component, startWithType } from 'refun'
 import { mapStoreState } from '../store'
 import { TItem } from '../types'
 import { isEqualItems, hasItem } from '../utils'
+import { ITEMS_PER_PAGE } from '../config'
 import { Block } from './Block'
 import { TRect } from './types'
 
@@ -10,9 +11,11 @@ export type TList = {
   title: string,
   items: TItem[],
   itemsToMove: TItem[],
+  pageIndex: number,
   onMove: () => void,
   onSelect: (item: TItem) => void,
   onToggle: (item: TItem) => void,
+  onPageChange: (index: number) => void,
 } & TRect
 
 export const List = component(
@@ -23,6 +26,7 @@ export const List = component(
 )(({
   items,
   itemsToMove,
+  pageIndex,
   title,
   selectedItem,
   top,
@@ -32,6 +36,7 @@ export const List = component(
   onMove,
   onSelect,
   onToggle,
+  onPageChange,
 }) => (
   <Block
     top={top}
@@ -44,7 +49,22 @@ export const List = component(
     <button disabled={itemsToMove.length === 0} onClick={onMove}>move</button>
     <ul>
       {
-        items.map((item, i) => {
+        new Array(Math.ceil(items.length / ITEMS_PER_PAGE))
+          .fill(0)
+          .map((_, i) => {
+            return (
+              <button
+                key={i}
+                disabled={pageIndex === i}
+                onClick={() => onPageChange(i)}
+              >
+                {i + 1}
+              </button>
+            )
+          })
+      }
+      {
+        items.slice(pageIndex * ITEMS_PER_PAGE, pageIndex * ITEMS_PER_PAGE + ITEMS_PER_PAGE).map((item, i) => {
           const { file, type, props } = item
           const isSelected = selectedItem && isEqualItems(selectedItem, item)
           const isChecked = hasItem(itemsToMove, item)

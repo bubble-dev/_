@@ -33,6 +33,8 @@ export type TState = {
   itemsToUnstage: TItem[],
   stagedItems: TItem[],
   unstagedItems: TItem[],
+  stagedPageIndex: number,
+  unstagedPageIndex: number,
   selectedItem?: TItem,
   error?: string,
 }

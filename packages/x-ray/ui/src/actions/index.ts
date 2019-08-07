@@ -1,3 +1,5 @@
+export * from './change-staged-page'
+export * from './change-unstaged-page'
 export * from './error'
 export * from './load-list'
 export * from './loading'

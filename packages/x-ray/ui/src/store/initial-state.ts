@@ -5,6 +5,8 @@ export const initialState: TState = {
   itemsToUnstage: [],
   stagedItems: [],
   unstagedItems: [],
+  stagedPageIndex: 0,
+  unstagedPageIndex: 0,
   isSaved: false,
   isLoading: false,
 }

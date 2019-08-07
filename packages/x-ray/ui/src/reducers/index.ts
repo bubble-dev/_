@@ -11,6 +11,8 @@ import {
   isActionSelect,
   isActionToggleAsStaged,
   isActionToggleAsUnstaged,
+  isActionChangeStagedPage,
+  isActionChangeUnstagedPage,
 } from '../actions'
 import { TAction, TState, TItem } from '../types'
 import { initialState } from '../store/initial-state'
@@ -141,6 +143,20 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       selectedItem: action.payload,
+    }
+  }
+
+  if (isActionChangeStagedPage(action)) {
+    return {
+      ...state,
+      stagedPageIndex: action.payload,
+    }
+  }
+
+  if (isActionChangeUnstagedPage(action)) {
+    return {
+      ...state,
+      unstagedPageIndex: action.payload,
     }
   }
 
