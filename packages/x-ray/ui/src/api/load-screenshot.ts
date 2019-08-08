@@ -16,6 +16,10 @@ export type TApiLoadScreenshotResult = {
 
 const apiLoadScreenshotCache = new Map<string, TApiLoadScreenshotResult>()
 
+export const getScreenshotUrl = (opts: TApiLoadScreenshotOpts): string => {
+  return `http://${HOST}:${PORT}/get?file=${encodeURIComponent(opts.file)}&type=${opts.type}&item=${encodeURIComponent(opts.props)}`
+}
+
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<TApiLoadScreenshotResult> => {
   const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&item=${encodeURIComponent(opts.props)}`
 

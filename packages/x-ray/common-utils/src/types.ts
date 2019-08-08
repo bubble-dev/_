@@ -11,12 +11,18 @@ export type TOptions = {
 export type TFileResultType = 'ok' | 'diff' | 'new' | 'deleted'
 
 export type TFileResult = {
-  [key in TFileResultType]: string[]
+  old: {
+    [k: string]: {
+      width: number,
+      height: number,
+    },
+  },
+  new: {
+    [k: string]: {
+      width: number,
+      height: number,
+    },
+  },
 }
 
-export type TResult = { [key: string]: TFileResult }
-
-export type TServerResult = {
-  kind: 'image' | 'text',
-  files: TResult,
-}
+export type TResult = { [filename: string]: TFileResult }

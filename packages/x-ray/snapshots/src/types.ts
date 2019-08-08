@@ -61,3 +61,8 @@ export type TRunSnapshotsResult = {
   resultData: TResultData,
   hasBeenChanged: boolean,
 }
+
+export type TSnapshotsListResult = {
+  type: 'text',
+  files: TResult,
+}

@@ -1,25 +1,23 @@
 import React from 'react'
-import { component, startWithType, mapState } from 'refun'
+import { component, startWithType } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TApiLoadScreenshotOpts } from '../api'
 import { Screenshot } from './Screenshot'
 import { Block } from './Block'
-import { TPosition } from './types'
+import { TRect } from './types'
 
-export type TScreenshotNew = TOmitKey<TApiLoadScreenshotOpts, 'type'> & TPosition
+export type TScreenshotNew = TOmitKey<TApiLoadScreenshotOpts, 'type'> & TRect
 
 export const ScreenshotNew = component(
-  startWithType<TScreenshotNew>(),
-  mapState('size', 'onSizeChange', () => ({ width: 0, height: 0 }), [])
-)(({ top, left, file, props, size, onSizeChange }) => (
-  <Block top={top - size.height / 2} left={left - size.width / 2}>
+  startWithType<TScreenshotNew>()
+)(({ top, left, file, props, width, height }) => (
+  <Block top={top - height / 2} left={left - width / 2}>
     <Screenshot
       file={file}
       type="new"
       props={props}
-      width={size.width}
-      height={size.height}
-      onLoad={onSizeChange}
+      width={width}
+      height={height}
     />
   </Block>
 ))

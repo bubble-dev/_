@@ -13,12 +13,11 @@ const SAVE_FILES_CONCURRENCY = 4
 
 export type TRunServer = {
   platform: string,
-  dpr: number,
   result: TResult,
   resultData: TResultData,
 }
 
-export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
+export const runServer = ({ platform, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
   const pathMap = new Map<string, string>()
 
   const server = http
@@ -29,7 +28,7 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
         if (req.method === 'GET') {
           if (req.url === '/list') {
             res.end(JSON.stringify({
-              kind: 'image',
+              type: 'image',
               files: await Object.keys(result).reduce(async (accPromise, longPath) => {
                 const acc = await accPromise
 
@@ -94,11 +93,8 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
               throw new Error(`Cannot find "${file}" → "${type}" → "${item}"`)
             }
 
-            res.setHeader('Access-Control-Expose-Headers', 'x-ray-width, x-ray-height, x-ray-dpr')
-            res.setHeader('x-ray-width', String(items[type][item].width))
-            res.setHeader('x-ray-height', String(items[type][item].height))
-            res.setHeader('x-ray-dpr', String(dpr))
-            res.end(items[type][item].data, 'binary')
+            res.setHeader('Content-Type', 'image/png')
+            res.end(items[type][item], 'binary')
           }
         }
 
@@ -135,21 +131,15 @@ export const runServer = ({ platform, dpr, result, resultData }: TRunServer) => 
                 const tar = await TarFs(tarPath)
                 const fileResult = data[shortPath]
 
-                if (Reflect.has(fileResult, 'new')) {
-                  fileResult.new.forEach((item) => {
-                    tar.write(item, resultData[file].new[item].data)
-                  })
-                }
-
-                if (Reflect.has(fileResult, 'diff')) {
-                  fileResult.diff.forEach((item) => {
-                    tar.write(item, resultData[file].new[item].data)
-                  })
-                }
-
-                if (Reflect.has(fileResult, 'deleted')) {
-                  fileResult.deleted.forEach((item) => {
+                if (Reflect.has(fileResult, 'old')) {
+                  Object.keys(fileResult.old).forEach((item) => {
                     tar.delete(item)
+                  })
+                }
+
+                if (Reflect.has(fileResult, 'new')) {
+                  Object.keys(fileResult.new).forEach((item) => {
+                    tar.write(item, resultData[file].new[item])
                   })
                 }
 

@@ -63,18 +63,10 @@ export type TItemResult =
 
 export type TFileResultData = {
   old: {
-    [key: string]: {
-      width: number,
-      height: number,
-      data: Buffer,
-    },
+    [key: string]: Buffer,
   },
   new: {
-    [key: string]: {
-      width: number,
-      height: number,
-      data: Buffer,
-    },
+    [key: string]: Buffer,
   },
 }
 
@@ -84,4 +76,9 @@ export type TRunScreesnotsResult = {
   result: TResult,
   resultData: TResultData,
   hasBeenChanged: boolean,
+}
+
+export type TScreenshotsListResult = {
+  type: 'image',
+  files: TResult,
 }

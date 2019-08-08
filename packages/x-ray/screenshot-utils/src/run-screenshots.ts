@@ -3,8 +3,11 @@ import { parent, TResult, TFileResult } from '@x-ray/common-utils'
 import { TAnyObject } from 'tsfn'
 import { TFileResultData, TItemResult, TResultData, TRunScreesnotsResult } from './types'
 
+const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr * 100) / 100
+
 export const runScreenshots = (childFile: string, targetFiles: string[], consurrency: number, options: TAnyObject) => new Promise<TRunScreesnotsResult>((resolve, reject) => {
   const workersCount = Math.min(targetFiles.length, consurrency)
+  const dpr = dprSize(options.dpr as number)
   let targetFileIndex = 0
   let doneWorkersCount = 0
 
@@ -16,10 +19,8 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
     .fill(null)
     .map(() => {
       let targetResult: TFileResult = {
-        ok: [],
-        diff: [],
-        new: [],
-        deleted: [],
+        old: {},
+        new: {},
       }
       let targetResultData: TFileResultData = {
         old: {},
@@ -30,46 +31,41 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
       worker.on('message', async (action: TItemResult) => {
         switch (action.type) {
           case 'OK': {
-            targetResult.ok.push(action.path)
-
             break
           }
           case 'DIFF': {
-            targetResult.diff.push(action.path)
-            targetResultData.old[action.path] = {
-              data: Buffer.from(action.old.data),
-              width: action.old.width,
-              height: action.old.height,
+            targetResult.old[action.path] = {
+              width: dpr(action.old.width),
+              height: dpr(action.old.height),
             }
-            targetResultData.new[action.path] = {
-              data: Buffer.from(action.new.data),
-              width: action.new.width,
-              height: action.new.height,
+            targetResult.new[action.path] = {
+              width: dpr(action.new.width),
+              height: dpr(action.new.height),
             }
+            targetResultData.old[action.path] = Buffer.from(action.old.data)
+            targetResultData.new[action.path] = Buffer.from(action.new.data)
 
             hasBeenChanged = true
 
             break
           }
           case 'NEW': {
-            targetResult.new.push(action.path)
-            targetResultData.new[action.path] = {
-              data: Buffer.from(action.data),
-              width: action.width,
-              height: action.height,
+            targetResult.new[action.path] = {
+              width: dpr(action.width),
+              height: dpr(action.height),
             }
+            targetResultData.new[action.path] = Buffer.from(action.data)
 
             hasBeenChanged = true
 
             break
           }
           case 'DELETED': {
-            targetResult.deleted.push(action.path)
-            targetResultData.old[action.path] = {
-              data: Buffer.from(action.data),
-              width: action.width,
-              height: action.height,
+            targetResult.old[action.path] = {
+              width: dpr(action.width),
+              height: dpr(action.height),
             }
+            targetResultData.old[action.path] = Buffer.from(action.data)
 
             hasBeenChanged = true
 
@@ -88,10 +84,8 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             resultData[relativePath] = targetResultData
 
             targetResult = {
-              ok: [],
-              diff: [],
-              new: [],
-              deleted: [],
+              old: {},
+              new: {},
             }
             targetResultData = {
               old: {},

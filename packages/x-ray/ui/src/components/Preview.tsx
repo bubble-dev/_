@@ -15,15 +15,16 @@ export type TPreview = TRect
 
 export const Preview = component(
   startWithType<TPreview>(),
-  mapStoreState(({ kind, selectedItem }) => ({
-    kind,
+  mapStoreState(({ type, selectedItem, files }) => ({
+    type,
+    files,
     selectedItem,
-  }), ['selectedItem', 'kind']),
+  }), ['selectedItem', 'type']),
   mapWithProps(({ width, height }) => ({
     halfWidth: width / 2,
     halfHeight: height / 2,
   }))
-)(({ top, left, width, height, halfWidth, halfHeight, kind, selectedItem }) => {
+)(({ top, left, width, height, halfWidth, halfHeight, type, selectedItem, files }) => {
   return (
     <Block
       top={top}
@@ -32,39 +33,47 @@ export const Preview = component(
       height={height}
     >
       <h2>preview:</h2>
-      {!isUndefined(kind) && !isUndefined(selectedItem) && (
+      {!isUndefined(type) && !isUndefined(selectedItem) && !isUndefined(files) && (
         <Fragment>
-          {selectedItem.type === 'new' && kind === 'image' && (
+          {selectedItem.type === 'new' && type === 'image' && (
             <ScreenshotNew
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={halfHeight}
               left={halfWidth}
+              width={files[selectedItem.file].new[selectedItem.props].width}
+              height={files[selectedItem.file].new[selectedItem.props].height}
               file={selectedItem.file}
               props={selectedItem.props}
             />
           )}
 
-          {selectedItem.type === 'diff' && kind === 'image' && (
+          {selectedItem.type === 'diff' && type === 'image' && (
             <ScreenshotDiff
               key={`${selectedItem.file}:diff:${selectedItem.props}`}
               top={halfHeight}
               left={halfWidth}
               file={selectedItem.file}
+              oldWidth={files[selectedItem.file].old[selectedItem.props].width}
+              oldHeight={files[selectedItem.file].old[selectedItem.props].height}
+              newWidth={files[selectedItem.file].new[selectedItem.props].width}
+              newHeight={files[selectedItem.file].new[selectedItem.props].height}
               props={selectedItem.props}
             />
           )}
 
-          {selectedItem.type === 'deleted' && kind === 'image' && (
+          {selectedItem.type === 'deleted' && type === 'image' && (
             <ScreenshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={halfHeight}
               left={halfWidth}
+              width={files[selectedItem.file].old[selectedItem.props].width}
+              height={files[selectedItem.file].old[selectedItem.props].height}
               file={selectedItem.file}
               props={selectedItem.props}
             />
           )}
 
-          {selectedItem.type === 'new' && kind === 'text' && (
+          {selectedItem.type === 'new' && type === 'text' && (
             <SnapshotNew
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={68}
@@ -76,7 +85,7 @@ export const Preview = component(
             />
           )}
 
-          {selectedItem.type === 'diff' && kind === 'text' && (
+          {selectedItem.type === 'diff' && type === 'text' && (
             <SnapshotDiff
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={68}
@@ -88,7 +97,7 @@ export const Preview = component(
             />
           )}
 
-          {selectedItem.type === 'deleted' && kind === 'text' && (
+          {selectedItem.type === 'deleted' && type === 'text' && (
             <SnapshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
               top={68}

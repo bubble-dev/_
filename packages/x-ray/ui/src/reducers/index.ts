@@ -52,31 +52,37 @@ export const reducer: Reducer<TState> = (state, action) => {
   if (isActionLoadList(action)) {
     return {
       ...state,
-      kind: action.payload.kind,
+      type: action.payload.type,
+      files: action.payload.files,
       unstagedItems: Object.entries(action.payload.files)
         .reduce((result, [file, value]) => {
-          value.new.forEach((props) => {
-            result.push({
-              file,
-              type: 'new',
-              props,
-            })
-          })
+          const allProps = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
 
-          value.diff.forEach((props) => {
-            result.push({
-              file,
-              type: 'diff',
-              props,
-            })
-          })
-
-          value.deleted.forEach((props) => {
-            result.push({
-              file,
-              type: 'deleted',
-              props,
-            })
+          allProps.forEach((props) => {
+            if (Reflect.has(value.new, props)) {
+              if (Reflect.has(value.old, props)) {
+                // diff
+                result.push({
+                  file,
+                  type: 'diff',
+                  props,
+                })
+              } else {
+                // new
+                result.push({
+                  file,
+                  type: 'new',
+                  props,
+                })
+              }
+            } else {
+              // deleted
+              result.push({
+                file,
+                type: 'deleted',
+                props,
+              })
+            }
           })
 
           return result
