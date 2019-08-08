@@ -1,6 +1,6 @@
 {
   "name": "@rebox/web",
-  "version": "0.2.2",
+  "version": "0.3.4",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -11,6 +11,7 @@
   "main": "src/index.ts",
   "dependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-syntax-bigint": "^7.4.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",

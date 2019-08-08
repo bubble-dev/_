@@ -9,65 +9,79 @@ A collection of React Hook-enabled functions that compose harmoniously with each
 - Propagates TypeScript types through the composition chain **without any losses**.
 - Works entirely with React Hooks instead of class components
 
-## Usage example
+## Usage example (with TypeScript)
 
 ```ts
-import { component, startWithType, mapWithPropsMemo } from 'refun'
+import * as React from "react"
+import {
+  component,
+  mapDefaultProps,
+  mapHandlers,
+  mapHovered,
+  mapState,
+  mapWithPropsMemo,
+  startWithType,
+  TMapHovered
+} from "refun"
+
+type TButton = {
+  isDisabled?: boolean
+  clickCounter?: number
+  id?: string
+} & TMapHovered
 
 export const Button = component(
-  startWithType<TButtonProps>(),
-  mapWithPropsMemo(({ isDisabled }) => ({
-    styles: normalizeStyle({
-      appearance: 'none',
-      background: 'none',
-      border: 0,
-      cursor: isDisabled ? 'auto' : 'pointer',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'row',
-      position: 'relative',
-      alignSelf: 'stretch',
-      flexGrow: 1,
-      flexShrink: 1,
-      minWidth: 0,
-      margin: 0,
-      outline: 0,
-      padding: 0,
-      tapHighlightColor: 'rgba(255, 255, 255, 0)',
-      userSelect: 'none',
+  startWithType<TButton>(),
+  mapDefaultProps({
+    clickCounter: 0,
+    isDisabled: false
+  }),
+  mapState(
+    "clickCounter",
+    "setClickCounter",
+    ({ clickCounter }) => clickCounter,
+    ["clickCounter"]
+  ),
+  mapHandlers({
+    onClick: ({ clickCounter, setClickCounter }) => () =>
+      setClickCounter(clickCounter + 1)
+  }),
+  mapHovered,
+  mapWithPropsMemo(
+    ({ clickCounter, isDisabled, isHovered }) => ({
+      children: `Click count: ${clickCounter}`,
+      style: {
+        cursor: isDisabled ? "auto" : "pointer",
+        borderColor: isHovered ? "black" : "grey"
+      }
     }),
-  }), ['isDisabled'])
-)(({
-  id,
-  accessibilityLabel,
-  isDisabled,
-  styles,
-  onPointerEnter,
-  onPointerLeave,
-  onPress,
-  onPressIn,
-  onPressOut,
-  onFocus,
-  onBlur,
-  children,
-}) => (
-  <button
-    aria-label={accessibilityLabel}
-    disabled={isDisabled}
-    id={id}
-    onClick={onPress}
-    onMouseEnter={onPointerEnter}
-    onMouseLeave={onPointerLeave}
-    onMouseDown={onPressIn}
-    onMouseUp={onPressOut}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    style={styles}
-  >
-    {children}
-  </button>
-))
+    ["clickCounter", "isDisabled", "isHovered"]
+  )
+)(
+  ({
+    id,
+    isDisabled,
+    style,
+    onPointerEnter,
+    onPointerLeave,
+    onClick,
+    children
+  }) => (
+    <button
+      disabled={isDisabled}
+      id={id}
+      onClick={onClick}
+      onMouseEnter={onPointerEnter}
+      onMouseLeave={onPointerLeave}
+      style={style}
+    >
+      {children}
+    </button>
+  )
+)
 ```
+
+[📺 Check out live demo](https://codesandbox.io/s/refun-example-nec8y)
 
 Several things to note:
 
@@ -81,6 +95,40 @@ Several things to note:
     mapWithPropsMemo(({ isDisabled }) => ({
     ...
   ```
+
+> Note: you might notice that `refun` has functions that serve as the equivalent of most of the React Hooks, so it might seem odd that some, such as `useEffect`, are missing. The reason is simply that wrapping them in the composition chain of `refun` provides no benefit: `useEffect` in particular does not result in any prop being added or removed, and there is no implicit state to keep track of, as is the case with the `mapSafeTimeout` and similar functions.
+
+> It is not the goal of `refun` to be a replacement of direct usage of React Hooks, rather a way to use them as a clean and decoupled composition chain and with good TypeScript typings, features that are only relevant to certain Hooks.
+
+## API
+
+- [component](#component)
+- [mapContext](#mapContext)
+- [mapDebouncedHandlerTimeout](#mapDebouncedHandlerTimeout)
+- [mapDebouncedHandlerFactory](#mapDebouncedHandlerFactory)
+- [mapDefaultProps](#mapDefaultProps)
+- [mapFocused](#mapFocused)
+- [mapHandlers](#mapHandlers)
+- [mapHovered](#mapHovered)
+- [mapKeyboardFocused](#mapKeyboardFocused)
+- [mapPressed](#mapPressed)
+- [mapProps](#mapProps)
+- [mapReducer](#mapReducer)
+- [mapRefLayout](#mapRefLayout)
+- [mapRef](#mapRef)
+- [mapSafeRequestAnimationFrame](#mapSafeRequestAnimationFrame)
+- [mapSafeTimeout](#mapSafeTimeout)
+- [mapState](#mapState)
+- [mapThrottledHandlerTimeout](#mapThrottledHandlerTimeout)
+- [mapThrottledHandlerAnimationFrame](#mapThrottledHandlerAnimationFrame)
+- [mapThrottledHandlerFactory](#mapThrottledHandlerFactory)
+- [mapWithAsyncProps](#mapWithAsyncProps)
+- [mapWithProps](#mapWithProps)
+- [mapWithPropsMemo](#mapWithPropsMemo)
+- [onMount](#onMount)
+- [pureComponent](#pureComponent)
+- [startWithType](#startWithType)
+- [StoreContextFactory](#StoreContextFactory)
 
 ## `component`
 
