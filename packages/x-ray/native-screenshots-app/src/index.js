@@ -15,9 +15,9 @@ export class App extends Component {
 
     this.state = {
       fileIndex: 0,
-      elementIndex: 0,
+      iterator: null,
+      item: null,
       path: null,
-      fixture: null,
     }
 
     this.onCapture = this.onCapture.bind(this)
@@ -26,10 +26,12 @@ export class App extends Component {
   componentDidMount() {
     try {
       const { path, content } = files[0]
+      const iterator = content[Symbol.iterator]()
 
       this.setState(() => ({
         path,
-        fixture: content,
+        item: iterator.next().value,
+        iterator,
       }))
     } catch (e) {
       console.log(e)
@@ -45,7 +47,7 @@ export class App extends Component {
       },
       body: JSON.stringify({
         data,
-        name: this.state.fixture[this.state.elementIndex].options.name,
+        name: this.state.item.options.name,
         path: this.state.path,
       }),
       keepalive: true,
@@ -55,19 +57,22 @@ export class App extends Component {
       throw new Error('Server is down')
     }
 
-    if (this.state.elementIndex < this.state.fixture.length - 1) {
-      this.setState((prev) => ({
-        elementIndex: prev.elementIndex + 1,
-      }))
+    const nextResult = this.state.iterator.next()
+
+    if (!nextResult.done) {
+      this.setState({
+        item: nextResult.value,
+      })
     } else if (this.state.fileIndex < files.length - 1) {
       const nextFileIndex = this.state.fileIndex + 1
       const { path, content } = files[nextFileIndex]
+      const iterator = content[Symbol.iterator]()
 
       this.setState(() => ({
-        elementIndex: 0,
+        item: iterator.next().value,
         fileIndex: nextFileIndex,
         path,
-        fixture: content,
+        iterator,
       }))
     } else {
       // finish
@@ -80,31 +85,29 @@ export class App extends Component {
   }
 
   render() {
-    const { fixture, elementIndex, fileIndex } = this.state
+    const { item, fileIndex } = this.state
 
-    if (fixture === null) {
+    if (item === null) {
       return null
     }
 
-    const { options } = fixture[elementIndex]
-
     return (
-      <View style={options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
+      <View style={item.options.hasOwnWidth ? hasOwnWidthStyles : defaultStyles}>
         <ViewShot
           captureMode="mount"
           options={{ result: 'base64' }}
-          key={`${fileIndex}${elementIndex}`}
+          key={`${fileIndex}${item.options.name}`}
           onCapture={this.onCapture}
           onCaptureFailure={this.onCaptureFailure}
         >
           <View
             style={{
-              padding: options.negativeOverflow,
-              maxWidth: options.maxWidth,
-              backgroundColor: options.backgroundColor || '#fff',
+              padding: item.options.negativeOverflow,
+              maxWidth: item.options.maxWidth,
+              backgroundColor: item.options.backgroundColor || '#fff',
             }}
           >
-            {fixture[elementIndex].element}
+            {item.element}
           </View>
         </ViewShot>
       </View>

@@ -1,14 +1,14 @@
 import React from 'react'
-import { createAutoprops } from 'react-autoprops'
+import { getPropsIterable } from 'autoprops'
 import { Text } from '@primitives/text'
-import { SerializeObjectToJson } from '@x-ray/common-utils'
-import { Button } from '../src'
+import { SerializeObjectToJson } from '@x-ray/common-utils/src/serialize-object-to-json'
+import { map } from 'iterama'
+import { Button, TButton } from '../src'
 import * as metaFile from '../meta'
 
-const autoprops = createAutoprops(metaFile)
 const serializeObjectToJson = SerializeObjectToJson()
 
-export default autoprops.map((props) => {
+export default map((props: TButton) => {
   return {
     options: {
       name: serializeObjectToJson(props),
@@ -21,4 +21,4 @@ export default autoprops.map((props) => {
       </Button>
     ),
   }
-})
+})(getPropsIterable(metaFile))

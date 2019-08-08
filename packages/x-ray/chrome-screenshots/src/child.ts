@@ -7,6 +7,7 @@ import { TCheckRequest } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import upng from 'upng-js'
 import { TarFs } from '@x-ray/tar-fs'
+import { map } from 'iterama'
 import getScreenshot from './get'
 import { TOptions } from './types'
 
@@ -35,21 +36,24 @@ export default async (options: TOptions) => {
 
     const pages: Page[] = await Promise.all(pagesPromises)
 
+    const filenames: string[] = []
+
     await new Promise((resolve, reject) => {
       port.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
-              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
               const screenshotsDir = path.join(path.dirname(action.path), '__x-ray__')
               const tar = await TarFs(path.join(screenshotsDir, 'chrome-screenshots.tar'))
 
               await pAll(
-                items.map((item) => async () => {
+                map((item: TMeta) => async () => {
                   const page = pages.shift() as Page
                   const screenshot = await getScreenshot(page, item)
 
                   const screenshotName = item.options.name
+                  filenames.push(screenshotName)
 
                   pages.push(page)
 
@@ -90,12 +94,12 @@ export default async (options: TOptions) => {
                       break
                     }
                   }
-                }),
+                })(items),
                 { concurrency: pages.length }
               )
 
               for (const item of tar.list()) {
-                if (!items.find((metaItem) => metaItem.options.name === item)) {
+                if (!filenames.includes(item)) {
                   const data = await tar.read(item) as Buffer
                   const { width, height } = upng.decode(data)
 

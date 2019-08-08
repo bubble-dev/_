@@ -1,6 +1,5 @@
-import { types } from 'util'
 import { isValidElement, ReactElement, FC } from 'react'
-import { TAnyObject, isFunction, isSymbol, isUndefined } from 'tsfn'
+import { TAnyObject, isFunction, isSymbol, isUndefined, isRegExp } from 'tsfn'
 
 export const getElementName = (element: ReactElement<any>) => {
   if (typeof element.type === 'string') {
@@ -22,16 +21,19 @@ export const SerializeObjectToJson = () => {
 
       return value.name === '' ? `[function (${functionIndex})]` : `[function(${value.name}) (${functionIndex})]`
     }
+
     if (isSymbol(value)) {
       symbolIndex++
 
       return isUndefined(value.description) ? `[symbol (${symbolIndex})]` : `[symbol(${value.description}) (${symbolIndex})]`
     }
-    if (types.isRegExp(value)) {
+
+    if (isRegExp(value)) {
       regexpIndex++
 
       return `[regexp(${value.toString()}) (${regexpIndex})]`
     }
+
     if (isValidElement(value)) {
       elementIndex++
 

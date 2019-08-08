@@ -5,6 +5,7 @@ import pAll from 'p-all'
 import { TarFs } from '@x-ray/tar-fs'
 import serialize from '@x-ray/serialize-react-tree'
 import { TCheckRequest, TOptions } from '@x-ray/common-utils'
+import { map } from 'iterama'
 import { checkSnapshot } from './check-snapshot'
 import { TMeta } from './types'
 
@@ -15,18 +16,19 @@ const CONCURRENCY = 4
 export default async (options: TOptions) => {
   try {
     const { platform } = options
+    const filenames: string[] = []
 
     await new Promise((resolve, reject) => {
       port.on('message', async (action: TCheckRequest) => {
         try {
           switch (action.type) {
             case 'FILE': {
-              const { default: items } = await import(action.path) as { default: TMeta[] }
+              const { default: items } = await import(action.path) as { default: Iterable<TMeta> }
               const snapshotsDir = path.join(path.dirname(action.path), '__x-ray__')
               const tar = await TarFs(path.join(snapshotsDir, `${platform}-snapshots.tar`))
 
               await pAll(
-                items.map((item) => async () => {
+                map((item: TMeta) => async () => {
                   const snapshot = await serialize(item.element)
                   const snapshotName = item.options.name
                   const message = await checkSnapshot(Buffer.from(snapshot), tar, snapshotName)
@@ -56,12 +58,12 @@ export default async (options: TOptions) => {
                       break
                     }
                   }
-                }),
+                })(items),
                 { concurrency: CONCURRENCY }
               )
 
               for (const item of tar.list()) {
-                if (!items.find((metaItem) => metaItem.options.name === item)) {
+                if (!filenames.includes(item)) {
                   const data = await tar.read(item) as Buffer
 
                   port.postMessage({

@@ -14,6 +14,7 @@
     "@x-ray/common-utils": "^0.1.0",
     "@x-ray/serialize-react-tree": "^0.2.0",
     "@x-ray/tar-fs": "^0.0.0",
+    "iterama": "^0.1.1",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
     "tsfn": "^0.1.2"

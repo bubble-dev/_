@@ -1,23 +1,19 @@
 import React from 'react'
-import { createAutoprops } from 'react-autoprops'
-import { SerializeObjectToJson } from '@x-ray/common-utils'
-import { Input } from '../src'
+import { SerializeObjectToJson } from '@x-ray/common-utils/src/serialize-object-to-json'
+import { getPropsIterable } from 'autoprops'
+import { map } from 'iterama'
+import { Input, TInput } from '../src'
 import * as metaFile from '../meta'
 
-// createChildren(metaFile.childrenConfig, children)
-
-const autoprops = createAutoprops(metaFile)
 const serializeObjectToJson = SerializeObjectToJson()
 
-export default autoprops.map((props) => {
-  return {
-    options: {
-      name: serializeObjectToJson(props),
-      hasOwnWidth: true,
-      maxWidth: 600,
-    },
-    element: (
-      <Input {...props}/>
-    ),
-  }
-})
+export default map((props: TInput) => ({
+  options: {
+    name: serializeObjectToJson(props),
+    hasOwnWidth: true,
+    maxWidth: 600,
+  },
+  element: (
+    <Input {...props}/>
+  ),
+}))(getPropsIterable(metaFile))

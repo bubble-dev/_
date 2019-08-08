@@ -1,4 +1,4 @@
-/* eslint-disable promise/param-names */
+/* eslint-disable require-atomic-updates */
 import path from 'path'
 import http from 'http'
 import upng from 'upng-js'
