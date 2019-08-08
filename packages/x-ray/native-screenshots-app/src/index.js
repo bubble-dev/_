@@ -10,6 +10,23 @@ const hasOwnWidthStyles = {
 }
 
 export class App extends Component {
+  async componentDidCatch(error) {
+    console.log(error)
+
+    await fetch('http://localhost:3002/error', {
+      method: 'POST',
+      body: error.message,
+    })
+  }
+
+  render() {
+    return (
+      <Main/>
+    )
+  }
+}
+
+class Main extends Component {
   constructor(...args) {
     super(...args)
 
@@ -24,18 +41,14 @@ export class App extends Component {
   }
 
   componentDidMount() {
-    try {
-      const { path, content } = files[0]
-      const iterator = content[Symbol.iterator]()
+    const { path, content } = files[0]
+    const iterator = content[Symbol.iterator]()
 
-      this.setState(() => ({
-        path,
-        item: iterator.next().value,
-        iterator,
-      }))
-    } catch (e) {
-      console.log(e)
-    }
+    this.setState(() => ({
+      path,
+      item: iterator.next().value,
+      iterator,
+    }))
   }
 
   async onCapture(data) {
@@ -54,7 +67,7 @@ export class App extends Component {
     })
 
     if (!res.ok) {
-      throw new Error('Server is down')
+      return
     }
 
     const nextResult = this.state.iterator.next()

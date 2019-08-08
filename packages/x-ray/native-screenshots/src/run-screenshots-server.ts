@@ -72,82 +72,99 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
 
     const server = http
       .createServer(async (req, res) => {
-        if (req.method === 'POST' && req.url === '/upload') {
-          let body = ''
+        if (req.method === 'POST') {
+          if (req.url === '/upload') {
+            let body = ''
 
-          req
-            .on('data', (chunk) => {
-              body += chunk
-            })
-            .on('end', async () => {
-              const { data, path: filePath, name } = JSON.parse(body)
-              const screenshotsDir = path.join(path.dirname(filePath), '__x-ray__')
-              const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
-              const screenshotName = name
-              const screenshot = Buffer.from(data, 'base64')
+            req
+              .on('data', (chunk) => {
+                body += chunk
+              })
+              .on('end', async () => {
+                const { data, path: filePath, name } = JSON.parse(body)
+                const screenshotsDir = path.join(path.dirname(filePath), '__x-ray__')
+                const screenshotsTarPath = path.join(screenshotsDir, `${options.platform}-screenshots.tar`)
+                const screenshotName = name
+                const screenshot = Buffer.from(data, 'base64')
 
-              if (currentFilePath !== filePath) {
-                await onFileDone(currentTar, currentFilePath)
+                if (currentFilePath !== filePath) {
+                  await onFileDone(currentTar, currentFilePath)
 
-                currentFilePath = filePath
+                  currentFilePath = filePath
 
-                if (!isUndefined(currentTar)) {
-                  await currentTar.close()
+                  if (!isUndefined(currentTar)) {
+                    await currentTar.close()
+                  }
+
+                  currentTar = await TarFs(screenshotsTarPath)
                 }
 
-                currentTar = await TarFs(screenshotsTarPath)
-              }
+                const action = await checkScreenshot(screenshot, currentTar, screenshotName)
 
-              const action = await checkScreenshot(screenshot, currentTar, screenshotName)
+                if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
+                  res.writeHead(500)
+                  res.end()
 
-              if (shouldBailout && (action.type === 'DIFF' || action.type === 'NEW')) {
+                  return server.close(() => screenshotsReject(null)) // eslint-disable-line
+                }
+
+                // switch
+                switch (action.type) {
+                  case 'OK': {
+                    targetResult.ok.push(action.path)
+
+                    break
+                  }
+                  case 'DIFF': {
+                    targetResult.diff.push(action.path)
+                    targetResultData.old[action.path] = {
+                      data: Buffer.from(action.old.data),
+                      width: action.old.width,
+                      height: action.old.height,
+                    }
+                    targetResultData.new[action.path] = {
+                      data: Buffer.from(action.new.data),
+                      width: action.new.width,
+                      height: action.new.height,
+                    }
+
+                    hasBeenChanged = true
+
+                    break
+                  }
+                  case 'NEW': {
+                    targetResult.new.push(action.path)
+                    targetResultData.new[action.path] = {
+                      data: Buffer.from(action.data),
+                      width: action.width,
+                      height: action.height,
+                    }
+
+                    hasBeenChanged = true
+
+                    break
+                  }
+                }
+
+                res.writeHead(200)
+                res.end()
+              })
+          } else if (req.url === '/error') {
+            let body = ''
+
+            req
+              .on('data', (chunk) => {
+                body += chunk
+              })
+              .on('end', () => {
+                console.error(body)
+
                 res.writeHead(500)
                 res.end()
 
                 return server.close(() => screenshotsReject(null)) // eslint-disable-line
-              }
-
-              // switch
-              switch (action.type) {
-                case 'OK': {
-                  targetResult.ok.push(action.path)
-
-                  break
-                }
-                case 'DIFF': {
-                  targetResult.diff.push(action.path)
-                  targetResultData.old[action.path] = {
-                    data: Buffer.from(action.old.data),
-                    width: action.old.width,
-                    height: action.old.height,
-                  }
-                  targetResultData.new[action.path] = {
-                    data: Buffer.from(action.new.data),
-                    width: action.new.width,
-                    height: action.new.height,
-                  }
-
-                  hasBeenChanged = true
-
-                  break
-                }
-                case 'NEW': {
-                  targetResult.new.push(action.path)
-                  targetResultData.new[action.path] = {
-                    data: Buffer.from(action.data),
-                    width: action.width,
-                    height: action.height,
-                  }
-
-                  hasBeenChanged = true
-
-                  break
-                }
-              }
-
-              res.writeHead(200)
-              res.end()
-            })
+              })
+          }
         } else {
           res.writeHead(200)
           res.end()
