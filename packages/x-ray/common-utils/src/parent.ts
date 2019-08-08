@@ -1,4 +1,4 @@
-import { Worker } from 'worker_threads' // eslint-disable-line
+import { Worker } from 'worker_threads'
 import { TAnyObject } from 'tsfn'
 
 const setupFile = require.resolve('./setup')

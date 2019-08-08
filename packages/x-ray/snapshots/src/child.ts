@@ -1,4 +1,4 @@
-/* eslint-disable no-throw-literal, import/no-unresolved */
+/* eslint-disable no-throw-literal */
 import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import pAll from 'p-all'

@@ -1,4 +1,4 @@
-/* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough, import/no-unresolved */
+/* eslint-disable no-throw-literal, no-duplicate-case, no-fallthrough */
 import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import foxr from 'foxr'
