@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapHandlers, mapThrottledHandlerTimeout, mapState, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapHandlers, mapThrottledHandlerTimeout, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout } from 'refun'
 import { TColor } from 'colorido'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import {
@@ -92,29 +92,47 @@ export const Main = component(
     }
   }, ['width']),
   mapState('scrollTop', 'setScrollTop', () => 0, []),
+  mapState('prevScrollTop', 'setPrevScrollTop', () => null as number | null, []),
   mapHandlers(({
-    onScroll: ({ setScrollTop }) => (scrollTop) => {
+    onScroll1: ({ setScrollTop, setPrevScrollTop, prevScrollTop }) => (scrollTop) => {
       setScrollTop(scrollTop)
+
+      if (prevScrollTop === null) {
+        setPrevScrollTop(scrollTop)
+      }
+    },
+    onScroll2: ({ setPrevScrollTop }) => () => {
+      setPrevScrollTop(null)
     },
   })),
-  mapThrottledHandlerTimeout('onScroll', 50)
-)(({ cols, maxHeight, width, height, scrollTop, onScroll }) => (
+  mapThrottledHandlerTimeout('onScroll1', 50),
+  mapDebouncedHandlerTimeout('onScroll2', 100),
+  mapHandlers({
+    onScroll: ({ onScroll1, onScroll2 }) => (scrollTop) => {
+      onScroll1(scrollTop)
+      onScroll2()
+    },
+  })
+)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, onScroll }) => (
   <Block left={0} top={0} width={width} height={height} shouldScroll onScroll={onScroll}>
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
     {cols.reduce((result, col, i) => (
       result.concat(
-        col.map((item: any, j: number) => (
-          (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100) && (
+        col.map((item: any, j: number) => {
+          const isVisible = (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100)
+          const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
+
+          return isVisible && (
             <Background
               key={`${i}_${j}`}
               top={item.top}
               left={item.left}
               width={item.width}
               height={item.height}
-              color={[0, 0, 0, 1]}
+              color={[isNew ? 255 : 0, 0, 0, 1]}
             />
           )
-        ))
+        })
       )
     ), [])}
   </Block>
