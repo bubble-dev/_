@@ -31,22 +31,30 @@ export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapWithPropsMemo(({ width }) => {
+  mapWithPropsMemo(() => ({
+    items: new Array(10000)
+      .fill(0)
+      .map(() => ({
+        top: 0,
+        left: 0,
+        width: Math.random() * 100 + 50,
+        height: Math.random() * 100 + 100,
+      })),
+  }), []),
+  mapWithPropsMemo(({ width, items }) => {
     const colCount = Math.floor((width + COL_SPACE) / (COL_WIDTH + COL_SPACE))
     const top = new Array(colCount).fill(0)
     const cols: any[] = new Array(colCount)
       .fill(0)
       .map(() => [])
 
-    new Array(100)
-      .fill(0)
-      .map(() => {
+    items
+      .map((item) => {
         const itemWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
-        const itemHeight = Math.random() * 100 + 50
+        const itemHeight = item.width / itemWidth * item.height
 
         const result = {
-          top: 0,
-          left: 0,
+          ...item,
           width: itemWidth,
           height: itemHeight,
         }
@@ -92,23 +100,20 @@ export const Main = component(
   mapThrottledHandlerTimeout('onScroll', 50)
 )(({ cols, maxHeight, width, height, scrollTop, onScroll }) => (
   <Block left={0} top={0} width={width} height={height} shouldScroll onScroll={onScroll}>
-    <Block left={0} top={0} width={0} height={maxHeight}/>
+    <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
     {cols.reduce((result, col, i) => (
       result.concat(
         col.map((item: any, j: number) => (
-          <Background
-            key={`${i}${j}`}
-            top={item.top}
-            left={item.left}
-            width={item.width}
-            height={item.height}
-            color={[
-              (item.top + item.height < scrollTop + 100) || (item.top > scrollTop + height - 100) ? 255 : 0,
-              0,
-              0,
-              1,
-            ]}
-          />
+          (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100) && (
+            <Background
+              key={`${i}_${j}`}
+              top={item.top}
+              left={item.left}
+              width={item.width}
+              height={item.height}
+              color={[0, 0, 0, 1]}
+            />
+          )
         ))
       )
     ), [])}
