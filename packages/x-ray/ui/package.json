@@ -15,6 +15,7 @@
     "@primitives/button": "^0.4.1",
     "@primitives/root": "^0.3.1",
     "@x-ray/common-utils": "^0.1.1",
+    "bsc": "^0.2.1",
     "colorido": "^0.1.0",
     "diff": "^4.0.1",
     "elegir": "^0.3.3",

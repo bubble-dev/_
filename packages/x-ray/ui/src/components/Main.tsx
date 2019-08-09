@@ -1,27 +1,12 @@
 import React from 'react'
 import { component, startWithType, mapHandlers, mapThrottledHandlerTimeout, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout } from 'refun'
 import { TColor } from 'colorido'
-import { Button } from '@primitives/button'
+import bsc from 'bsc'
 import { mapStoreState, mapStoreDispatch } from '../store'
-import {
-  actionLoadList,
-  actionSelect,
-  actionToggleAsStaged,
-  actionToggleAsUnstaged,
-  actionMoveToUnstaged,
-  actionMoveToStaged,
-  actionChangeStagedPage,
-  actionChangeUnstagedPage,
-} from '../actions'
-import { TItem } from '../types'
+import { actionSelect } from '../actions'
 import { TSize } from './types'
-import { Toolbar, TOOLBAR_HEIGHT } from './Toolbar'
-import { List } from './List'
-import { Preview } from './Preview'
 import { Background } from './Background'
-import { Props } from './Props'
 import { Block } from './Block'
-import { BlockRef } from './BlockRef'
 
 const COL_WIDTH = 100
 const COL_SPACE = 20
@@ -32,6 +17,7 @@ export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
+  mapStoreDispatch,
   mapWithPropsMemo(() => ({
     items: new Array(10000)
       .fill(0)
@@ -94,7 +80,6 @@ export const Main = component(
   }, ['width']),
   mapState('scrollTop', 'setScrollTop', () => 0, []),
   mapState('prevScrollTop', 'setPrevScrollTop', () => null as number | null, []),
-  mapState('pressedPos', 'setPressedPos', () => null as [number, number] | null, ['width']),
   mapHandlers(({
     onScroll1: ({ setScrollTop, setPrevScrollTop, prevScrollTop }) => (scrollTop) => {
       setScrollTop(scrollTop)
@@ -106,8 +91,30 @@ export const Main = component(
     onScroll2: ({ setPrevScrollTop }) => () => {
       setPrevScrollTop(null)
     },
-    onPress: ({ setPressedPos, scrollTop }) => (x: number, y: number) => {
-      setPressedPos([x, y + scrollTop])
+    onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {
+      for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
+        const firstItem = cols[colIndex][0]
+
+        if (x < firstItem.left || firstItem.left + firstItem.width < x) {
+          continue
+        }
+
+        const itemIndex = bsc(cols[colIndex], (item: any) => {
+          if (y + scrollTop < item.top) {
+            return -1
+          }
+
+          if (y + scrollTop > item.top + item.height) {
+            return 1
+          }
+
+          return 0
+        })
+
+        if (itemIndex >= 0) {
+          dispatch(actionSelect(cols[colIndex][itemIndex]))
+        }
+      }
     },
   })),
   mapThrottledHandlerTimeout('onScroll1', 50),
@@ -118,7 +125,7 @@ export const Main = component(
       onScroll2()
     },
   })
-)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, pressedPos, onScroll, onPress }) => (
+)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, onScroll, onPress }) => (
   <Block
     left={0}
     top={0}
@@ -134,7 +141,6 @@ export const Main = component(
         col.map((item: any, j: number) => {
           const isVisible = (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100)
           const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
-          const isSelected = pressedPos !== null && pressedPos[0] > item.left && pressedPos[0] < item.left + item.width && pressedPos[1] > item.top && pressedPos[1] < item.top + item.height
 
           return isVisible && (
             <Background
@@ -143,7 +149,7 @@ export const Main = component(
               left={item.left}
               width={item.width}
               height={item.height}
-              color={[isNew ? 255 : 0, isSelected ? 255 : 0, 0, 1]}
+              color={[isNew ? 255 : 0, 0, 0, 1]}
             />
           )
         })
