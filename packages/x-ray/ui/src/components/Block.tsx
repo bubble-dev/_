@@ -1,7 +1,7 @@
-import React, { Ref, HTMLProps, CSSProperties, ReactNode } from 'react'
+import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { isUndefined, isNumber } from 'tsfn'
+import { isUndefined, isNumber, isFunction } from 'tsfn'
 
 export type TBlock = {
   width?: number,
@@ -23,6 +23,7 @@ export type TBlock = {
   blendMode?: CSSProperties['mixBlendMode'],
   children?: ReactNode,
   ref?: Ref<HTMLDivElement>,
+  onScroll?: (scrollTop: number) => void,
 }
 
 export const Block = component(
@@ -55,6 +56,7 @@ export const Block = component(
       shouldFlow,
       shouldIgnorePointerEvents,
       shouldForceAcceleration,
+      onScroll,
     }) => {
       const styles: TStyle = {
         // display: 'flex',
@@ -147,6 +149,10 @@ export const Block = component(
 
       if (!isUndefined(ref)) {
         props.ref = ref
+      }
+
+      if (isFunction(onScroll)) {
+        props.onScroll = (e: SyntheticEvent<HTMLDivElement>) => onScroll(e.currentTarget.scrollTop)
       }
 
       return props

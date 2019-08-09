@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { requestAnimationFrame, cancelAnimationFrame, UNDEFINED } from 'tsfn'
+import { requestAnimationFrame, cancelAnimationFrame, UNDEFINED, isFunction } from 'tsfn'
 import { useEffectFn } from './utils'
 
 export const mapThrottledHandlerFactory = (setFn: Function, clearFn: Function) =>
