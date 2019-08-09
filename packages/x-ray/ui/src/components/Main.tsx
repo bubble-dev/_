@@ -1,6 +1,7 @@
 import React from 'react'
 import { component, startWithType, mapHandlers, mapThrottledHandlerTimeout, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout } from 'refun'
 import { TColor } from 'colorido'
+import { Button } from '@primitives/button'
 import { mapStoreState, mapStoreDispatch } from '../store'
 import {
   actionLoadList,
@@ -93,6 +94,7 @@ export const Main = component(
   }, ['width']),
   mapState('scrollTop', 'setScrollTop', () => 0, []),
   mapState('prevScrollTop', 'setPrevScrollTop', () => null as number | null, []),
+  mapState('pressedPos', 'setPressedPos', () => null as [number, number] | null, ['width']),
   mapHandlers(({
     onScroll1: ({ setScrollTop, setPrevScrollTop, prevScrollTop }) => (scrollTop) => {
       setScrollTop(scrollTop)
@@ -104,6 +106,9 @@ export const Main = component(
     onScroll2: ({ setPrevScrollTop }) => () => {
       setPrevScrollTop(null)
     },
+    onPress: ({ setPressedPos, scrollTop }) => (x: number, y: number) => {
+      setPressedPos([x, y + scrollTop])
+    },
   })),
   mapThrottledHandlerTimeout('onScroll1', 50),
   mapDebouncedHandlerTimeout('onScroll2', 100),
@@ -113,14 +118,23 @@ export const Main = component(
       onScroll2()
     },
   })
-)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, onScroll }) => (
-  <Block left={0} top={0} width={width} height={height} shouldScroll onScroll={onScroll}>
+)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, pressedPos, onScroll, onPress }) => (
+  <Block
+    left={0}
+    top={0}
+    width={width}
+    height={height}
+    shouldScroll
+    onScroll={onScroll}
+    onPress={onPress}
+  >
     <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
     {cols.reduce((result, col, i) => (
       result.concat(
         col.map((item: any, j: number) => {
           const isVisible = (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100)
           const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
+          const isSelected = pressedPos !== null && pressedPos[0] > item.left && pressedPos[0] < item.left + item.width && pressedPos[1] > item.top && pressedPos[1] < item.top + item.height
 
           return isVisible && (
             <Background
@@ -129,7 +143,7 @@ export const Main = component(
               left={item.left}
               width={item.width}
               height={item.height}
-              color={[isNew ? 255 : 0, 0, 0, 1]}
+              color={[isNew ? 255 : 0, isSelected ? 255 : 0, 0, 1]}
             />
           )
         })
@@ -137,175 +151,3 @@ export const Main = component(
     ), [])}
   </Block>
 ))
-
-// export const Main = component(
-//   startWithType<TMain>(),
-//   mapStoreState(({ itemsToStage, itemsToUnstage, stagedItems, unstagedItems, stagedPageIndex, unstagedPageIndex }) => ({
-//     itemsToStage,
-//     itemsToUnstage,
-//     unstagedItems,
-//     stagedItems,
-//     stagedPageIndex,
-//     unstagedPageIndex,
-//   }), ['itemsToStage', 'itemsToUnstage', 'stagedItems', 'unstagedItems', 'stagedPageIndex', 'unstagedPageIndex']),
-//   mapStoreDispatch,
-//   onMount(({ dispatch }) => {
-//     dispatch(actionLoadList())
-//   }),
-//   mapHandlers({
-//     onSelect: ({ dispatch }) => (item: TItem) => {
-//       dispatch(actionSelect(item))
-//     },
-//     onToggleAsStaged: ({ dispatch }) => (item: TItem) => {
-//       dispatch(actionToggleAsStaged(item))
-//     },
-//     onToggleAsUnstaged: ({ dispatch }) => (item: TItem) => {
-//       dispatch(actionToggleAsUnstaged(item))
-//     },
-//     onMoveToUnstaged: ({ dispatch }) => () => {
-//       dispatch(actionMoveToUnstaged())
-//     },
-//     onMoveToStaged: ({ dispatch }) => () => {
-//       dispatch(actionMoveToStaged())
-//     },
-//     onStagedPageChange: ({ dispatch }) => (index: number) => {
-//       dispatch(actionChangeStagedPage(index))
-//     },
-//     onUnstagedPageChange: ({ dispatch }) => (index: number) => {
-//       dispatch(actionChangeUnstagedPage(index))
-//     },
-//   }),
-//   mapWithProps(({ width, height }) => ({
-//     stagedTop: TOOLBAR_HEIGHT + BORDER_SIZE,
-//     stagedHeight: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2,
-//     stagedWidth: (width - BORDER_SIZE) / 2,
-//   })),
-//   mapWithProps(({ stagedTop, stagedWidth, stagedHeight }) => ({
-//     unstagedTop: stagedTop + stagedHeight + BORDER_SIZE,
-//     unstagedHeight: stagedHeight,
-//     unstagedWidth: stagedWidth,
-//   })),
-//   mapWithProps(({ width, height }) => ({
-//     propsTop: TOOLBAR_HEIGHT + BORDER_SIZE,
-//     propsLeft: (width - BORDER_SIZE) / 2 + BORDER_SIZE,
-//     propsWidth: (width - BORDER_SIZE) / 2,
-//     propsHeight: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2,
-//   })),
-//   mapWithProps(({ propsHeight, propsWidth, propsLeft, propsTop }) => ({
-//     previewTop: propsTop + propsHeight + BORDER_SIZE,
-//     previewLeft: propsLeft,
-//     previewWidth: propsWidth,
-//     previewHeight: propsHeight,
-//   })),
-//   mapWithProps(({ width, height }) => ({
-//     verticalSeparatorTop: TOOLBAR_HEIGHT + BORDER_SIZE,
-//     verticalSeparatorLeft: (width - BORDER_SIZE) / 2,
-//     verticalSeparatorHeight: height - TOOLBAR_HEIGHT - BORDER_SIZE,
-//     horizontalSeparatorTop: (height - TOOLBAR_HEIGHT - BORDER_SIZE * 2) / 2 + TOOLBAR_HEIGHT + BORDER_SIZE,
-//     horizontalSeparatorWidth: width,
-//   }))
-// )(({
-//   width,
-//   itemsToStage,
-//   itemsToUnstage,
-//   stagedItems,
-//   unstagedItems,
-//   stagedPageIndex,
-//   unstagedPageIndex,
-//   stagedTop,
-//   stagedWidth,
-//   stagedHeight,
-//   unstagedTop,
-//   unstagedWidth,
-//   unstagedHeight,
-//   previewTop,
-//   previewLeft,
-//   previewWidth,
-//   previewHeight,
-//   propsTop,
-//   propsLeft,
-//   propsWidth,
-//   propsHeight,
-//   verticalSeparatorTop,
-//   verticalSeparatorLeft,
-//   verticalSeparatorHeight,
-//   horizontalSeparatorTop,
-//   horizontalSeparatorWidth,
-//   onMoveToStaged,
-//   onMoveToUnstaged,
-//   onSelect,
-//   onToggleAsStaged,
-//   onToggleAsUnstaged,
-//   onStagedPageChange,
-//   onUnstagedPageChange,
-// }) => (
-//   <Fragment>
-//     <Toolbar
-//       top={0}
-//       left={0}
-//       width={width}
-//       itemsToSave={stagedItems}
-//     />
-//     <Border
-//       top={TOOLBAR_HEIGHT}
-//       left={0}
-//       width={width}
-//       height={BORDER_SIZE}
-//       color={BORDER_COLOR}
-//     />
-//     <List
-//       title="staged"
-//       items={stagedItems}
-//       itemsToMove={itemsToUnstage}
-//       pageIndex={stagedPageIndex}
-//       top={stagedTop}
-//       left={0}
-//       width={stagedWidth}
-//       height={stagedHeight}
-//       onSelect={onSelect}
-//       onToggle={onToggleAsUnstaged}
-//       onMove={onMoveToUnstaged}
-//       onPageChange={onStagedPageChange}
-//     />
-//     <Border
-//       top={horizontalSeparatorTop}
-//       left={0}
-//       width={horizontalSeparatorWidth}
-//       height={BORDER_SIZE}
-//       color={BORDER_COLOR}
-//     />
-//     <List
-//       title="unstaged"
-//       items={unstagedItems}
-//       itemsToMove={itemsToStage}
-//       pageIndex={unstagedPageIndex}
-//       left={0}
-//       top={unstagedTop}
-//       width={unstagedWidth}
-//       height={unstagedHeight}
-//       onSelect={onSelect}
-//       onToggle={onToggleAsStaged}
-//       onMove={onMoveToStaged}
-//       onPageChange={onUnstagedPageChange}
-//     />
-//     <Border
-//       top={verticalSeparatorTop}
-//       left={verticalSeparatorLeft}
-//       width={BORDER_SIZE}
-//       height={verticalSeparatorHeight}
-//       color={BORDER_COLOR}
-//     />
-//     <Props
-//       top={propsTop}
-//       left={propsLeft}
-//       width={propsWidth}
-//       height={propsHeight}
-//     />
-//     <Preview
-//       top={previewTop}
-//       left={previewLeft}
-//       width={previewWidth}
-//       height={previewHeight}
-//     />
-//   </Fragment>
-// ))

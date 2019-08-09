@@ -1,4 +1,4 @@
-import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent } from 'react'
+import React, { Ref, HTMLProps, CSSProperties, ReactNode, SyntheticEvent, MouseEvent } from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isUndefined, isNumber, isFunction } from 'tsfn'
@@ -24,6 +24,7 @@ export type TBlock = {
   children?: ReactNode,
   ref?: Ref<HTMLDivElement>,
   onScroll?: (scrollTop: number) => void,
+  onPress?: (x: number, y: number) => void,
 }
 
 export const Block = component(
@@ -57,6 +58,7 @@ export const Block = component(
       shouldIgnorePointerEvents,
       shouldForceAcceleration,
       onScroll,
+      onPress,
     }) => {
       const styles: TStyle = {
         // display: 'flex',
@@ -153,6 +155,10 @@ export const Block = component(
 
       if (isFunction(onScroll)) {
         props.onScroll = (e: SyntheticEvent<HTMLDivElement>) => onScroll(e.currentTarget.scrollTop)
+      }
+
+      if (isFunction(onPress)) {
+        props.onClick = (e: MouseEvent<HTMLDivElement>) => onPress(e.pageX, e.pageY)
       }
 
       return props
