@@ -34,6 +34,6 @@ export type TState = {
   files?: TResult,
   isSaved: boolean,
   isLoading: boolean,
-  selectedItem?: TItem,
+  selectedItem: TItem | null,
   error?: string,
 }

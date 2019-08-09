@@ -4,7 +4,7 @@ import { TOmitKey } from 'tsfn'
 import { TColor } from 'colorido'
 import { component, startWithType, mapWithProps } from 'refun'
 
-export type TAnimationColor = TOmitKey<TAnimation<TColor>, 'easing' | 'time'>
+export type TAnimationColor = TOmitKey<TAnimation<TColor>, 'easing'>
 
 export const AnimationColor = component(
   startWithType<TAnimationColor>(),
@@ -16,8 +16,8 @@ export const AnimationColor = component(
       values[3],
     ]),
   }))
-)(({ children, values }) => (
-  <Animation easing={easeInOutCubic} time={200} values={values}>{children}</Animation>
+)(({ children, values, time }) => (
+  <Animation easing={easeInOutCubic} time={time} values={values}>{children}</Animation>
 ))
 
 AnimationColor.displayName = 'AnimationColor'

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapThrottledHandlerTimeout, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout } from 'refun'
 import { TColor } from 'colorido'
 import bsc from 'bsc'
@@ -7,6 +7,7 @@ import { actionSelect } from '../actions'
 import { TSize } from './types'
 import { Background } from './Background'
 import { Block } from './Block'
+import { Popup } from './Popup'
 
 const COL_WIDTH = 100
 const COL_SPACE = 20
@@ -17,6 +18,9 @@ export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
+  mapStoreState(({ selectedItem }) => ({
+    selectedItem,
+  }), ['selectedItem']),
   mapStoreDispatch,
   mapWithPropsMemo(() => ({
     items: new Array(10000)
@@ -112,7 +116,12 @@ export const Main = component(
         })
 
         if (itemIndex >= 0) {
-          dispatch(actionSelect(cols[colIndex][itemIndex]))
+          const item = cols[colIndex][itemIndex]
+
+          dispatch(actionSelect({
+            ...item,
+            top: item.top - scrollTop,
+          }))
         }
       }
     },
@@ -125,35 +134,56 @@ export const Main = component(
       onScroll2()
     },
   })
-)(({ cols, maxHeight, width, height, scrollTop, prevScrollTop, onScroll, onPress }) => (
-  <Block
-    left={0}
-    top={0}
-    width={width}
-    height={height}
-    shouldScroll
-    onScroll={onScroll}
-    onPress={onPress}
-  >
-    <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
-    {cols.reduce((result, col, i) => (
-      result.concat(
-        col.map((item: any, j: number) => {
-          const isVisible = (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100)
-          const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
+)(({
+  cols,
+  maxHeight,
+  width,
+  height,
+  scrollTop,
+  prevScrollTop,
+  selectedItem,
+  onScroll,
+  onPress,
+}) => (
+  <Fragment>
+    <Block
+      left={0}
+      top={0}
+      width={width}
+      height={height}
+      shouldScroll
+      onScroll={onScroll}
+      onPress={onPress}
+    >
+      <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
+      {cols.reduce((result, col, i) => (
+        result.concat(
+          col.map((item: any, j: number) => {
+            const isVisible = (item.top + item.height > scrollTop - 100) && (item.top < scrollTop + height + 100)
+            const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
 
-          return isVisible && (
-            <Background
-              key={`${i}_${j}`}
-              top={item.top}
-              left={item.left}
-              width={item.width}
-              height={item.height}
-              color={[isNew ? 255 : 0, 0, 0, 1]}
-            />
-          )
-        })
-      )
-    ), [])}
-  </Block>
+            return isVisible && (
+              <Block
+                key={`${i}_${j}`}
+                top={item.top}
+                left={item.left}
+                width={item.width}
+                height={item.height}
+              >
+                <Background color={[isNew ? 255 : 0, 0, 0, 1]} animationTime={200}/>
+              </Block>
+            )
+          })
+        )
+      ), [])}
+    </Block>
+    {selectedItem && (
+      <Popup
+        left={0}
+        top={0}
+        width={width}
+        height={height}
+      />
+    )}
+  </Fragment>
 ))
