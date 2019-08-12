@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, ReactElement } from 'react'
-import { isUndefined } from 'tsfn'
+import { isUndefined, isFunction } from 'tsfn'
 import { TEasingFn } from './types'
 
 export type TAnimation<T> = {
@@ -7,6 +7,7 @@ export type TAnimation<T> = {
   values: T,
   children: (args: T) => ReactElement,
   easing: TEasingFn,
+  onAnimationEnd?: () => void,
 }
 
 const REFRESH_RATE = 1000 / 60
@@ -30,7 +31,7 @@ const isShallowEqualArray = (a: any[], b: any[]): boolean => {
   return true
 }
 
-export const Animation = <T extends number[]>({ time, children, values, easing }: TAnimation<T>) => {
+export const Animation = <T extends number[]>({ time, children, values, easing, onAnimationEnd }: TAnimation<T>) => {
   const rafId = useRef<any>()
   const [state, setState] = useState(0)
   const stateRef = useRef(state)
@@ -47,6 +48,10 @@ export const Animation = <T extends number[]>({ time, children, values, easing }
 
       if (nextState > THRESHOLD) {
         setState(1)
+
+        if (isFunction(onAnimationEnd)) {
+          onAnimationEnd()
+        }
       } else {
         setState(nextState)
         rafId.current = requestAnimationFrame(loop)
