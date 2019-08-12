@@ -3,10 +3,10 @@ import { Background as PrimitiveBackground, TBackground as TPrimitiveBackground 
 import { AnimationColor } from './AnimationColor'
 
 export type TBackground = TPrimitiveBackground & {
-  animationTime: number,
+  animationTime?: number,
 }
 
-export const Background: FC<TBackground> = ({ color, animationTime, ...props }) => (
+export const Background: FC<TBackground> = ({ color, animationTime = 200, ...props }) => (
   <AnimationColor values={color} time={animationTime}>
     {(color) => (
       <PrimitiveBackground

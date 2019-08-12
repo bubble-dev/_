@@ -27,7 +27,9 @@ export type TItemType = 'new' | 'diff' | 'deleted'
 //   props: string,
 // }
 
-export type TItem = TRect
+export type TItem = TRect & {
+  type: TItemType,
+}
 
 export type TState = {
   type?: TType,

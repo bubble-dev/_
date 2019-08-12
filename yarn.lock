@@ -1173,7 +1173,7 @@
     "@nodelib/fs.scandir" "2.1.1"
     fastq "^1.6.0"
 
-"@psxcode/compose@^0.1.2":
+"@psxcode/compose@^0.1.2", "@psxcode/compose@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@psxcode/compose/-/compose-0.1.3.tgz#187070a648724ab715824fd598d7c80deae5c136"
   integrity sha512-G/TRTwHrlrp3eumPMKXM3LgMao2ZfFpVgvIlIrE5kOBAm803Bq4LJwDYZvIdKIO/RtVHP0NKjncPQ6Jzq7TwVA==

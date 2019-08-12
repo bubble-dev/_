@@ -1,46 +1,54 @@
-import React from 'react'
-import { component, startWithType, mapState, mapHandlers } from 'refun'
-import { Button } from '@primitives/button'
-import { TOmitKey } from 'tsfn'
-import { TApiLoadScreenshotOpts } from '../api'
-import { Screenshot } from './Screenshot'
+import React, { Fragment } from 'react'
+import { startWithType, pureComponent } from 'refun'
 import { Block } from './Block'
 import { TPosition } from './types'
+import { Background } from './Background'
+import { Border } from './Border'
 
-export type TScreenshotDiff = TOmitKey<TApiLoadScreenshotOpts, 'type'> & TPosition & {
+export type TScreenshotDiff = TPosition & {
   oldWidth: number,
   oldHeight: number,
   newWidth: number,
   newHeight: number,
+  oldAlpha: number,
+  newAlpha: number,
 }
 
-export const ScreenshotDiff = component(
-  startWithType<TScreenshotDiff>(),
-  mapState('state', 'setState', () => false, []),
-  mapHandlers({
-    onClick: ({ state, setState }) => () => setState(!state),
-  })
-)(({ top, left, file, props, state, oldWidth, oldHeight, newWidth, newHeight, onClick }) => (
-  <Block top={top - oldHeight / 2} left={left - oldWidth / 2}>
-    <Button onPress={onClick}>
-      <Block opacity={state ? 0 : 1}>
-        <Screenshot
-          file={file}
-          type="old"
-          props={props}
-          width={oldWidth}
-          height={oldHeight}
-        />
-      </Block>
-      <Block opacity={state ? 1 : 0}>
-        <Screenshot
-          file={file}
-          type="new"
-          props={props}
-          width={newWidth}
-          height={newHeight}
-        />
-      </Block>
-    </Button>
-  </Block>
+export const ScreenshotDiff = pureComponent(
+  startWithType<TScreenshotDiff>()
+)(({ left, top, oldWidth, oldHeight, newWidth, newHeight, oldAlpha, newAlpha }) => (
+  <Fragment>
+    <Block
+      top={top}
+      left={left}
+      width={oldWidth}
+      height={oldHeight}
+      opacity={oldAlpha}
+    >
+      <Background color={[255, 255, 255, 1]}/>
+      <Border
+        topWidth={2}
+        leftWidth={2}
+        rightWidth={2}
+        bottomWidth={2}
+        color={[255, 0, 0, 1]}
+      />
+    </Block>
+    <Block
+      top={top}
+      left={left}
+      width={newWidth}
+      height={newHeight}
+      opacity={newAlpha}
+    >
+      <Background color={[255, 255, 255, 1]}/>
+      <Border
+        topWidth={2}
+        leftWidth={2}
+        rightWidth={2}
+        bottomWidth={2}
+        color={[0, 0, 255, 1]}
+      />
+    </Block>
+  </Fragment>
 ))

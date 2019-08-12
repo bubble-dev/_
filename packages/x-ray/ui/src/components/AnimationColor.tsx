@@ -16,8 +16,8 @@ export const AnimationColor = component(
       values[3],
     ]),
   }))
-)(({ children, values, time }) => (
-  <Animation easing={easeInOutCubic} time={time} values={values}>{children}</Animation>
+)(({ children, values, time, onAnimationEnd }) => (
+  <Animation easing={easeInOutCubic} time={time} values={values} onAnimationEnd={onAnimationEnd}>{children}</Animation>
 ))
 
 AnimationColor.displayName = 'AnimationColor'

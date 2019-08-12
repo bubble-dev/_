@@ -11,7 +11,8 @@ const POPUP_OFFSET = 50
 
 const STATE_CLOSE = 0
 const STATE_OPENING = 1
-const STATE_CLOSING = 2
+const STATE_OPEN = 2
+const STATE_CLOSING = 3
 
 export type TPopup = TRect
 
@@ -23,12 +24,20 @@ export const Popup = component(
   mapStoreDispatch,
   mapState('state', 'setState', () => STATE_CLOSE, []),
   mapHandlers({
-    onBackdropPress: ({ dispatch, setState }) => () => {
+    onBackdropPress: ({ setState }) => () => {
       setState(STATE_CLOSING)
-
-      setTimeout(() => {
-        dispatch(actionSelect(null))
-      }, 500)
+    },
+    onClose: ({ dispatch, setState }) => () => {
+      setState(STATE_CLOSE)
+      dispatch(actionSelect(null))
+    },
+    onOpen: ({ setState }) => () => {
+      setState(STATE_OPEN)
+    },
+  }),
+  mapHandlers({
+    onAnimationEnd: ({ state, onOpen, onClose }) => () => {
+      state === STATE_OPENING ? onOpen() : onClose()
     },
   }),
   mapWithProps(({ top, left, width, height, state, selectedItem }) => {
@@ -36,7 +45,7 @@ export const Popup = component(
       throw new Error('Invalid selectedItem')
     }
 
-    if (state === STATE_OPENING) {
+    if (state === STATE_OPENING || state === STATE_OPEN) {
       return {
         popupLeft: left + POPUP_OFFSET,
         popupTop: top + POPUP_OFFSET,
@@ -57,9 +66,29 @@ export const Popup = component(
   onMount(({ setState }) => {
     setState(STATE_OPENING)
   })
-)(({ left, top, width, height, alpha, popupLeft, popupTop, popupWidth, popupHeight, onBackdropPress }) => (
-  <Block left={left} top={top} width={width} height={height} onPress={onBackdropPress}>
-    <Animation time={500} values={[popupLeft, popupTop, popupWidth, popupHeight]} easing={easeInOutCubic}>
+)(({
+  left,
+  top,
+  width,
+  height,
+  alpha,
+  state,
+  children,
+  popupLeft,
+  popupTop,
+  popupWidth,
+  popupHeight,
+  onBackdropPress,
+  onAnimationEnd,
+}) => (
+  <Block left={left} top={top} width={width} height={height}>
+    <Block left={left} top={top} width={width} height={height} onPress={onBackdropPress}/>
+    <Animation
+      time={500}
+      values={[popupLeft, popupTop, popupWidth, popupHeight]}
+      easing={easeInOutCubic}
+      onAnimationEnd={onAnimationEnd}
+    >
       {([popupLeft, popupTop, popupWidth, popupHeight]) => (
         <Block
           left={popupLeft}
@@ -68,6 +97,11 @@ export const Popup = component(
           height={popupHeight}
         >
           <Background color={[127, 127, 127, alpha]} animationTime={500}/>
+          {state === STATE_OPEN && (
+            <Block>
+              {children}
+            </Block>
+          )}
         </Block>
       )}
     </Animation>

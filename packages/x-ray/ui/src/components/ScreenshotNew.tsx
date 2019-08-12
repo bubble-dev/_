@@ -1,23 +1,23 @@
 import React from 'react'
-import { component, startWithType } from 'refun'
-import { TOmitKey } from 'tsfn'
-import { TApiLoadScreenshotOpts } from '../api'
-import { Screenshot } from './Screenshot'
+import { startWithType, pureComponent } from 'refun'
 import { Block } from './Block'
+import { Background } from './Background'
 import { TRect } from './types'
+import { Border } from './Border'
 
-export type TScreenshotNew = TOmitKey<TApiLoadScreenshotOpts, 'type'> & TRect
+export type TScreenshotNew = TRect
 
-export const ScreenshotNew = component(
+export const ScreenshotNew = pureComponent(
   startWithType<TScreenshotNew>()
-)(({ top, left, file, props, width, height }) => (
-  <Block top={top - height / 2} left={left - width / 2}>
-    <Screenshot
-      file={file}
-      type="new"
-      props={props}
-      width={width}
-      height={height}
+)(({ top, left, width, height }) => (
+  <Block top={top} left={left} width={width} height={height}>
+    <Background color={[255, 255, 255, 1]}/>
+    <Border
+      topWidth={2}
+      leftWidth={2}
+      rightWidth={2}
+      bottomWidth={2}
+      color={[0, 127, 0, 1]}
     />
   </Block>
 ))
