@@ -1,8 +1,8 @@
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
+import { TRect } from '../types'
 import { Block } from './Block'
 import { Background } from './Background'
-import { TRect } from './types'
 import { Border } from './Border'
 
 export type TScreenshotNew = TRect

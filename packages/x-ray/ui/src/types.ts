@@ -42,13 +42,16 @@ export type TItem = TSize & {
   newHeight: number,
 })
 
-export type TItemWithPosition = TItem & TPosition
+export type TGridItem = TItem & TPosition & {
+  gridWidth: number,
+  gridHeight: number,
+}
 
 export type TState = {
   type?: TType,
   isSaved: boolean,
   isLoading: boolean,
   items: TItem[],
-  selectedItem: TItemWithPosition | null,
+  selectedItem: TGridItem | null,
   error?: string,
 }

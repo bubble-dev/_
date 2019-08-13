@@ -1,7 +1,7 @@
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
+import { TRect } from '../types'
 import { Block } from './Block'
-import { TRect } from './types'
 import { Background } from './Background'
 import { Border } from './Border'
 

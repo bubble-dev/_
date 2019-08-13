@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps } from 'refun'
+import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange, onMount } from 'refun'
 import { isUndefined } from 'tsfn'
+import { easeInOutCubic, Animation } from '@primitives/animation'
 import { mapStoreState } from '../store'
-import { Block } from './Block'
 import { TRect } from '../types'
+import { DIFF_TIMEOUT } from '../config'
+import { Block } from './Block'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
 import { SnapshotDiff } from './SnapshotDiff'
@@ -22,8 +24,32 @@ export const Preview = component(
   mapWithProps(({ width, height }) => ({
     halfWidth: width / 2,
     halfHeight: height / 2,
-  }))
-)(({ top, left, width, height, halfWidth, halfHeight, type, selectedItem, files }) => {
+  })),
+  // diff state
+  mapState('diffState', 'setDiffState', () => false, []),
+  mapSafeTimeout('setSafeTimeout'),
+  mapHandlers({
+    toggleDiffState: ({ setDiffState, diffState }) => () => {
+      setDiffState(!diffState)
+    },
+  }),
+  mapRef('clearDiffTimeout', null as any),
+  onChange(({ toggleDiffState, clearDiffTimeout, setSafeTimeout, selectedItem }) => {
+    if (clearDiffTimeout.current !== null) {
+      clearDiffTimeout.current()
+      clearDiffTimeout.current = null
+    }
+
+    if (selectedItem !== null && selectedItem.type === 'diff') {
+      clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
+    }
+  }, ['diffState', 'selectedItem']),
+  onMount(({ clearDiffTimeout, toggleDiffState, setSafeTimeout, selectedItem }) => {
+    if (selectedItem !== null && selectedItem.type === 'diff') {
+      clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
+    }
+  })
+)(({ top, left, width, height, halfWidth, halfHeight, type, selectedItem, diffState }) => {
   return (
     <Block
       top={top}
@@ -32,43 +58,43 @@ export const Preview = component(
       height={height}
     >
       <h2>preview:</h2>
-      {!isUndefined(type) && selectedItem !== null && !isUndefined(files) && (
+      {!isUndefined(type) && selectedItem !== null && (
         <Fragment>
           {selectedItem.type === 'new' && type === 'image' && (
             <ScreenshotNew
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={halfHeight}
-              left={halfWidth}
-              width={files[selectedItem.file].new[selectedItem.props].width}
-              height={files[selectedItem.file].new[selectedItem.props].height}
-              file={selectedItem.file}
-              props={selectedItem.props}
+              top={halfHeight - selectedItem.height / 2}
+              left={halfWidth - selectedItem.width / 2}
+              width={selectedItem.width}
+              height={selectedItem.height}
             />
           )}
 
           {selectedItem.type === 'diff' && type === 'image' && (
-            <ScreenshotDiff
-              key={`${selectedItem.file}:diff:${selectedItem.props}`}
-              top={halfHeight}
-              left={halfWidth}
-              file={selectedItem.file}
-              oldWidth={files[selectedItem.file].old[selectedItem.props].width}
-              oldHeight={files[selectedItem.file].old[selectedItem.props].height}
-              newWidth={files[selectedItem.file].new[selectedItem.props].width}
-              newHeight={files[selectedItem.file].new[selectedItem.props].height}
-              props={selectedItem.props}
-            />
+            <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
+              {([alpha]) => (
+                <ScreenshotDiff
+                  key={`${selectedItem.file}:diff:${selectedItem.props}`}
+                  top={halfHeight - selectedItem.height / 2}
+                  left={halfWidth - selectedItem.width / 2}
+                  oldWidth={selectedItem.width}
+                  oldHeight={selectedItem.height}
+                  newWidth={selectedItem.newWidth}
+                  newHeight={selectedItem.newHeight}
+                  oldAlpha={1 - alpha}
+                  newAlpha={alpha}
+                />
+              )}
+            </Animation>
           )}
 
           {selectedItem.type === 'deleted' && type === 'image' && (
             <ScreenshotDeleted
               key={`${selectedItem.file}:new:${selectedItem.props}`}
-              top={halfHeight}
-              left={halfWidth}
-              width={files[selectedItem.file].old[selectedItem.props].width}
-              height={files[selectedItem.file].old[selectedItem.props].height}
-              file={selectedItem.file}
-              props={selectedItem.props}
+              top={halfHeight - selectedItem.height / 2}
+              left={halfWidth - selectedItem.width / 2}
+              width={selectedItem.width}
+              height={selectedItem.height}
             />
           )}
 

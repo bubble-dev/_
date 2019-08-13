@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent } from 'refun'
+import { TPosition } from '../types'
 import { Block } from './Block'
-import { TPosition } from './types'
 import { Background } from './Background'
 import { Border } from './Border'
 

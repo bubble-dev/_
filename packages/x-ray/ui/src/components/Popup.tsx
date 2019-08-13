@@ -7,6 +7,7 @@ import { TRect } from '../types'
 import { Block } from './Block'
 import { Background } from './Background'
 import { Props } from './Props'
+import { Preview } from './Preview'
 
 const POPUP_OFFSET = 50
 
@@ -73,8 +74,8 @@ export const Popup = component(
     return {
       popupLeft: selectedItem.left,
       popupTop: selectedItem.top,
-      popupWidth: selectedItem.width,
-      popupHeight: selectedItem.height,
+      popupWidth: selectedItem.gridWidth,
+      popupHeight: selectedItem.gridHeight,
       alpha: 0,
       shouldNotAnimate,
     }
@@ -103,7 +104,6 @@ export const Popup = component(
   height,
   alpha,
   state,
-  selectedItem,
   popupLeft,
   popupTop,
   popupWidth,
@@ -144,7 +144,12 @@ export const Popup = component(
                 left={propsLeft}
                 width={propsWidth}
                 height={propsHeight}
-                item={selectedItem!}
+              />
+              <Preview
+                top={previewTop}
+                left={previewLeft}
+                width={previewWidth}
+                height={previewHeight}
               />
             </Fragment>
           )}

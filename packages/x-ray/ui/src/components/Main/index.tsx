@@ -4,7 +4,7 @@ import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionSelect } from '../../actions'
-import { TSize, TItemWithPosition } from '../../types'
+import { TSize, TGridItem } from '../../types'
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
@@ -29,9 +29,9 @@ export const Main = component(
   mapStoreDispatch,
   mapWithPropsMemo(({ width, items }) => {
     const colCount = Math.floor((width + COL_SPACE) / (COL_WIDTH + COL_SPACE))
-    const itemWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
+    const gridWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
     const top = new Array(colCount).fill(0)
-    const cols: TItemWithPosition[][] = new Array(colCount)
+    const cols: TGridItem[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
 
@@ -44,18 +44,28 @@ export const Main = component(
         }
       }
 
-      const itemHeight = item.width / itemWidth * item.height
-      const result: TItemWithPosition = {
+      let gridHeight: number
+
+      if (item.type === 'diff') {
+        const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
+        const largestHeight = item.height > item.newHeight ? item.height : item.newHeight
+
+        gridHeight = gridWidth / largestWidth * largestHeight
+      } else {
+        gridHeight = gridWidth / item.width * item.height
+      }
+
+      const result: TGridItem = {
         ...item,
-        width: itemWidth,
-        height: itemHeight,
+        gridWidth,
+        gridHeight,
         top: top[minIndex],
-        left: minIndex * (itemWidth + COL_SPACE),
+        left: minIndex * (gridWidth + COL_SPACE),
       }
 
       cols[minIndex].push(result)
 
-      top[minIndex] += itemHeight + COL_SPACE
+      top[minIndex] += gridHeight + COL_SPACE
     })
 
     let maxIndex = 0
@@ -77,7 +87,7 @@ export const Main = component(
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
-        if (x < firstItem.left || firstItem.left + firstItem.width < x) {
+        if (x < firstItem.left || firstItem.left + firstItem.gridWidth < x) {
           continue
         }
 
@@ -86,7 +96,7 @@ export const Main = component(
             return -1
           }
 
-          if (y + scrollTop > item.top + item.height) {
+          if (y + scrollTop > item.top + item.gridHeight) {
             return 1
           }
 
@@ -133,7 +143,7 @@ export const Main = component(
           <Fragment>
             {cols.reduce((result, col, i) => (
               result.concat(
-                col.map((item: any, j: number) => {
+                col.map((item: TGridItem, j: number) => {
                   const isVisible = isVisibleItem(item, scrollTop, height)
                   const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
 
@@ -143,46 +153,58 @@ export const Main = component(
                         key={`${i}_${j}`}
                         top={item.top}
                         left={item.left}
-                        width={item.width}
-                        height={item.height}
+                        width={item.gridWidth}
+                        height={item.gridHeight}
                       >
                         <Background color={[0, 0, 0, 1]}/>
                       </Block>
                     )
                   }
 
-                  return isVisible && (
-                    <Fragment key={`${i}_${j}`}>
-                      {item.type === 'new' && (
+                  if (isVisible) {
+                    if (item.type === 'new') {
+                      return (
                         <ScreenshotNew
+                          key={`${i}_${j}`}
                           top={item.top}
                           left={item.left}
-                          width={item.width}
-                          height={item.height}
+                          width={item.gridWidth}
+                          height={item.gridHeight}
                         />
-                      )}
-                      {item.type === 'diff' && (
-                        <ScreenshotDiff
-                          top={item.top}
-                          left={item.left}
-                          oldWidth={item.width}
-                          newWidth={item.width}
-                          oldHeight={item.height}
-                          newHeight={item.height}
-                          oldAlpha={alpha}
-                          newAlpha={1 - alpha}
-                        />
-                      )}
-                      {item.type === 'deleted' && (
+                      )
+                    }
+
+                    if (item.type === 'deleted') {
+                      return (
                         <ScreenshotDeleted
+                          key={`${i}_${j}`}
                           top={item.top}
                           left={item.left}
-                          width={item.width}
-                          height={item.height}
+                          width={item.gridWidth}
+                          height={item.gridHeight}
                         />
-                      )}
-                    </Fragment>
-                  )
+                      )
+                    }
+
+                    if (item.type === 'diff') {
+                      const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
+                      const scale = item.gridWidth / largestWidth
+
+                      return (
+                        <ScreenshotDiff
+                          key={`${i}_${j}`}
+                          top={item.top}
+                          left={item.left}
+                          oldWidth={item.width * scale}
+                          oldHeight={item.height * scale}
+                          newWidth={item.newWidth * scale}
+                          newHeight={item.newHeight * scale}
+                          oldAlpha={1 - alpha}
+                          newAlpha={alpha}
+                        />
+                      )
+                    }
+                  }
                 })
               )
             ), [] as ReactNode[])}

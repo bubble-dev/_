@@ -1,16 +1,15 @@
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange, onMount } from 'refun'
-import { TItem } from '../../types'
+import { TGridItem } from '../../types'
+import { DIFF_TIMEOUT } from '../../config'
 import { hasDiffItems } from './has-diff-items'
-
-const DIFF_TIMEOUT = 1000
 
 export type TMapDiffState = {
   height: number,
   scrollTop: number,
   prevScrollTop: number | null,
-  selectedItem: TItem | null,
-  cols: TItem[][],
+  selectedItem: TGridItem | null,
+  cols: TGridItem[][],
 }
 
 export const mapDiffState = <P extends TMapDiffState>() => pipe(

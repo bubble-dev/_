@@ -1,10 +1,10 @@
-import { TActionWithPayload, TAnyAction, TItemWithPosition } from '../types'
+import { TActionWithPayload, TAnyAction, TGridItem } from '../types'
 
 const TYPE_SELECT = 'SELECT'
 
-export type TActionSelect = TActionWithPayload<typeof TYPE_SELECT, TItemWithPosition | null>
+export type TActionSelect = TActionWithPayload<typeof TYPE_SELECT, TGridItem | null>
 
-export const actionSelect = (payload: TItemWithPosition | null): TActionSelect => ({
+export const actionSelect = (payload: TGridItem | null): TActionSelect => ({
   type: TYPE_SELECT,
   payload,
 })

@@ -31,4 +31,5 @@ export const initialState: TState = {
         height: Math.random() * 100 + 100,
       }
     }),
+  type: 'image',
 }
