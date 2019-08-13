@@ -23,6 +23,7 @@ export type TBlock = {
   blendMode?: CSSProperties['mixBlendMode'],
   children?: ReactNode,
   ref?: Ref<HTMLDivElement>,
+  style?: TStyle,
   onScroll?: (scrollTop: number) => void,
   onPress?: (x: number, y: number) => void,
 }
@@ -52,6 +53,7 @@ export const Block = component(
       opacity,
       children,
       blendMode,
+      style,
       shouldScroll,
       shouldHideOverflow,
       shouldFlow,
@@ -61,8 +63,7 @@ export const Block = component(
       onPress,
     }) => {
       const styles: TStyle = {
-        // display: 'flex',
-        // flexDirection: 'row',
+        ...style,
         position: 'absolute',
         left: 0,
         top: 0,

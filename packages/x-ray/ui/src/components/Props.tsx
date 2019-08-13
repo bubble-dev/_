@@ -19,7 +19,6 @@ export const Props = component(
     width={width}
     height={height}
   >
-    <h2>props:</h2>
     {!isUndefined(selectedItem) && (
       <pre>
         {

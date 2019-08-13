@@ -57,7 +57,6 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      <h2>preview:</h2>
       {!isUndefined(type) && selectedItem !== null && (
         <Fragment>
           {selectedItem.type === 'new' && type === 'image' && (

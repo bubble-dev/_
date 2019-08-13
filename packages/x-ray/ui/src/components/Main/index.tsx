@@ -2,10 +2,10 @@ import React, { Fragment, ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
+import { Border } from '@primitives/border'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionSelect } from '../../actions'
 import { TSize, TGridItem } from '../../types'
-import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
 import { ScreenshotNew } from '../ScreenshotNew'
@@ -28,9 +28,9 @@ export const Main = component(
   }), ['selectedItem', 'items']),
   mapStoreDispatch,
   mapWithPropsMemo(({ width, items }) => {
-    const colCount = Math.floor((width + COL_SPACE) / (COL_WIDTH + COL_SPACE))
-    const gridWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
-    const top = new Array(colCount).fill(0)
+    const colCount = Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE))
+    const gridWidth = ((width - (COL_SPACE * (colCount + 1))) / colCount)
+    const top = new Array(colCount).fill(COL_SPACE)
     const cols: TGridItem[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
@@ -60,7 +60,7 @@ export const Main = component(
         gridWidth,
         gridHeight,
         top: top[minIndex],
-        left: minIndex * (gridWidth + COL_SPACE),
+        left: minIndex * (gridWidth + COL_SPACE) + COL_SPACE,
       }
 
       cols[minIndex].push(result)
@@ -156,7 +156,17 @@ export const Main = component(
                         width={item.gridWidth}
                         height={item.gridHeight}
                       >
-                        <Background color={[0, 0, 0, 1]}/>
+                        <Border
+                          color={[0, 0, 0, 1]}
+                          topWidth={2}
+                          leftWidth={2}
+                          rightWidth={2}
+                          bottomWidth={2}
+                          overflowLeft={2}
+                          overflowRight={2}
+                          overflowTop={2}
+                          overflowBottom={2}
+                        />
                       </Block>
                     )
                   }

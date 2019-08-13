@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
+import { Background } from '@primitives/background'
 import { mapStoreDispatch, mapStoreState } from '../store'
 import { actionSelect } from '../actions'
 import { TRect } from '../types'
 import { Block } from './Block'
-import { Background } from './Background'
 import { Props } from './Props'
 import { Preview } from './Preview'
+import { Shadow } from './Shadow'
 
 const POPUP_OFFSET = 50
 
@@ -124,21 +125,22 @@ export const Popup = component(
     <Block left={left} top={top} width={width} height={height} onPress={onBackdropPress}/>
     <Animation
       time={500}
-      values={[popupLeft, popupTop, popupWidth, popupHeight]}
+      values={[popupLeft, popupTop, popupWidth, popupHeight, alpha]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
       shouldNotAnimate={shouldNotAnimate}
     >
-      {([popupLeft, popupTop, popupWidth, popupHeight]) => (
+      {([popupLeft, popupTop, popupWidth, popupHeight, alpha]) => (
         <Block
           left={popupLeft}
           top={popupTop}
           width={popupWidth}
           height={popupHeight}
         >
-          <Background color={[127, 127, 127, alpha]} animationTime={500}/>
+          <Background color={[255, 255, 255, alpha]}/>
           {state === STATE_OPEN && (
             <Fragment>
+              <Shadow color={[0, 0, 0, alpha]} blurRadius={20} spreadRadius={1}/>
               <Props
                 top={propsTop}
                 left={propsLeft}
