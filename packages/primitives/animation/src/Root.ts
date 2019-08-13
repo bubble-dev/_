@@ -7,6 +7,7 @@ export type TAnimation<T> = {
   values: T,
   children: (args: T) => ReactElement,
   easing: TEasingFn,
+  shouldNotAnimate?: boolean,
   onAnimationEnd?: () => void,
 }
 
@@ -31,20 +32,24 @@ const isShallowEqualArray = (a: any[], b: any[]): boolean => {
   return true
 }
 
-export const Animation = <T extends number[]>({ time, children, values, easing, onAnimationEnd }: TAnimation<T>) => {
+export const Animation = <T extends number[]>({ time, children, values, easing, shouldNotAnimate, onAnimationEnd }: TAnimation<T>) => {
   const rafId = useRef<any>()
   const [state, setState] = useState(0)
   const stateRef = useRef(state)
+  const shouldNotAnimateRef = useRef(shouldNotAnimate)
   const loopRef = useRef<() => void>()
   const valuesRef = useRef(values)
   const fromValuesRef = useRef(values)
   const resultRef = useRef(values)
 
   stateRef.current = state
+  shouldNotAnimateRef.current = shouldNotAnimate
 
   if (isUndefined(loopRef.current)) {
     const loop = () => {
-      const nextState = stateRef.current + REFRESH_RATE / time
+      const nextState = shouldNotAnimateRef.current
+        ? 1
+        : stateRef.current + REFRESH_RATE / time
 
       if (nextState > THRESHOLD) {
         setState(1)
