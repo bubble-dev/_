@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { mapStoreDispatch, mapStoreState } from '../store'
 import { actionSelect } from '../actions'
+import { TRect } from '../types'
 import { Block } from './Block'
-import { TRect } from './types'
 import { Background } from './Background'
+import { Props } from './Props'
 
 const POPUP_OFFSET = 50
 
@@ -37,13 +38,26 @@ export const Popup = component(
   }),
   mapHandlers({
     onAnimationEnd: ({ state, onOpen, onClose }) => () => {
-      state === STATE_OPENING ? onOpen() : onClose()
+      switch (state) {
+        case STATE_CLOSING: {
+          onClose()
+
+          break
+        }
+        case STATE_OPENING: {
+          onOpen()
+
+          break
+        }
+      }
     },
   }),
   mapWithProps(({ top, left, width, height, state, selectedItem }) => {
     if (selectedItem === null) {
       throw new Error('Invalid selectedItem')
     }
+
+    const shouldNotAnimate = state === STATE_OPEN || state === STATE_CLOSE
 
     if (state === STATE_OPENING || state === STATE_OPEN) {
       return {
@@ -52,6 +66,7 @@ export const Popup = component(
         popupWidth: width - POPUP_OFFSET * 2,
         popupHeight: height - POPUP_OFFSET * 2,
         alpha: 1,
+        shouldNotAnimate,
       }
     }
 
@@ -61,10 +76,25 @@ export const Popup = component(
       popupWidth: selectedItem.width,
       popupHeight: selectedItem.height,
       alpha: 0,
+      shouldNotAnimate,
     }
   }),
   onMount(({ setState }) => {
     setState(STATE_OPENING)
+  }),
+  mapWithProps(({ popupWidth, popupHeight }) => {
+    const halfWidth = popupWidth / 2
+
+    return ({
+      propsWidth: halfWidth,
+      propsHeight: popupHeight,
+      propsLeft: 0,
+      propsTop: 0,
+      previewWidth: halfWidth,
+      previewHeight: popupHeight,
+      previewLeft: halfWidth,
+      previewTop: 0,
+    })
   })
 )(({
   left,
@@ -73,11 +103,20 @@ export const Popup = component(
   height,
   alpha,
   state,
-  children,
+  selectedItem,
   popupLeft,
   popupTop,
   popupWidth,
   popupHeight,
+  propsLeft,
+  propsTop,
+  propsWidth,
+  propsHeight,
+  previewLeft,
+  previewTop,
+  previewWidth,
+  previewHeight,
+  shouldNotAnimate,
   onBackdropPress,
   onAnimationEnd,
 }) => (
@@ -88,6 +127,7 @@ export const Popup = component(
       values={[popupLeft, popupTop, popupWidth, popupHeight]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
+      shouldNotAnimate={shouldNotAnimate}
     >
       {([popupLeft, popupTop, popupWidth, popupHeight]) => (
         <Block
@@ -98,9 +138,15 @@ export const Popup = component(
         >
           <Background color={[127, 127, 127, alpha]} animationTime={500}/>
           {state === STATE_OPEN && (
-            <Block>
-              {children}
-            </Block>
+            <Fragment>
+              <Props
+                top={propsTop}
+                left={propsLeft}
+                width={propsWidth}
+                height={propsHeight}
+                item={selectedItem!}
+              />
+            </Fragment>
           )}
         </Block>
       )}

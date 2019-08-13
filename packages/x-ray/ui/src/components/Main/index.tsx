@@ -4,77 +4,59 @@ import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionSelect } from '../../actions'
-import { TSize } from '../types'
+import { TSize, TItemWithPosition } from '../../types'
 import { Background } from '../Background'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
-import { TItem, TItemType } from '../../types'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
 const COL_WIDTH = 100
 const COL_SPACE = 20
-const TYPES: TItemType[] = ['new', 'new', 'new', 'new', 'diff', 'deleted', 'deleted', 'deleted', 'deleted', 'deleted', 'deleted']
 
 export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ selectedItem }) => ({
+  mapStoreState(({ selectedItem, items }) => ({
     selectedItem,
-  }), ['selectedItem']),
+    items,
+  }), ['selectedItem', 'items']),
   mapStoreDispatch,
-  mapWithPropsMemo(() => ({
-    items: new Array(10000)
-      .fill(0)
-      .map(() => ({
-        top: 0,
-        left: 0,
-        width: Math.random() * 100 + 50,
-        height: Math.random() * 100 + 100,
-        type: TYPES[Math.round(Math.random() * (TYPES.length - 1))],
-      })),
-  }), []),
   mapWithPropsMemo(({ width, items }) => {
     const colCount = Math.floor((width + COL_SPACE) / (COL_WIDTH + COL_SPACE))
+    const itemWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
     const top = new Array(colCount).fill(0)
-    const cols: TItem[][] = new Array(colCount)
+    const cols: TItemWithPosition[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
 
-    items
-      .map((item) => {
-        const itemWidth = ((width - (COL_SPACE * (colCount - 1))) / colCount)
-        const itemHeight = item.width / itemWidth * item.height
+    items.forEach((item) => {
+      let minIndex = 0
 
-        const result = {
-          ...item,
-          width: itemWidth,
-          height: itemHeight,
+      for (let i = 1; i < top.length; ++i) {
+        if (top[i] < top[minIndex]) {
+          minIndex = i
         }
+      }
 
-        return result
-      })
-      .forEach((item) => {
-        let minIndex = 0
+      const itemHeight = item.width / itemWidth * item.height
+      const result: TItemWithPosition = {
+        ...item,
+        width: itemWidth,
+        height: itemHeight,
+        top: top[minIndex],
+        left: minIndex * (itemWidth + COL_SPACE),
+      }
 
-        for (let i = 1; i < top.length; ++i) {
-          if (top[i] < top[minIndex]) {
-            minIndex = i
-          }
-        }
+      cols[minIndex].push(result)
 
-        item.top = top[minIndex]
-        item.left = minIndex * (item.width + COL_SPACE)
-
-        cols[minIndex].push(item)
-
-        top[minIndex] += item.height + COL_SPACE
-      })
+      top[minIndex] += itemHeight + COL_SPACE
+    })
 
     let maxIndex = 0
 
@@ -88,7 +70,7 @@ export const Main = component(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['width']),
+  }, ['width', 'items']),
   mapScrollState(),
   mapHandlers({
     onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {
@@ -214,9 +196,7 @@ export const Main = component(
         top={0}
         width={width}
         height={height}
-      >
-        {JSON.stringify(selectedItem)}
-      </Popup>
+      />
     )}
   </Fragment>
 ))

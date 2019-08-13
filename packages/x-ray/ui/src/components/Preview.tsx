@@ -3,7 +3,7 @@ import { component, startWithType, mapWithProps } from 'refun'
 import { isUndefined } from 'tsfn'
 import { mapStoreState } from '../store'
 import { Block } from './Block'
-import { TRect } from './types'
+import { TRect } from '../types'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
 import { SnapshotDiff } from './SnapshotDiff'
@@ -15,9 +15,8 @@ export type TPreview = TRect
 
 export const Preview = component(
   startWithType<TPreview>(),
-  mapStoreState(({ type, selectedItem, files }) => ({
+  mapStoreState(({ type, selectedItem }) => ({
     type,
-    files,
     selectedItem,
   }), ['selectedItem', 'type']),
   mapWithProps(({ width, height }) => ({
@@ -33,7 +32,7 @@ export const Preview = component(
       height={height}
     >
       <h2>preview:</h2>
-      {!isUndefined(type) && !isUndefined(selectedItem) && !isUndefined(files) && (
+      {!isUndefined(type) && selectedItem !== null && !isUndefined(files) && (
         <Fragment>
           {selectedItem.type === 'new' && type === 'image' && (
             <ScreenshotNew

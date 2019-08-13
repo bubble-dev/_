@@ -47,8 +47,7 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       type: action.payload.type,
-      files: action.payload.files,
-      unstagedItems: Object.entries(action.payload.files)
+      items: Object.entries(action.payload.files)
         .reduce((result, [file, value]) => {
           const allProps = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
 
@@ -57,24 +56,32 @@ export const reducer: Reducer<TState> = (state, action) => {
               if (Reflect.has(value.old, props)) {
                 // diff
                 result.push({
-                  file,
                   type: 'diff',
+                  file,
                   props,
+                  width: value.old[props].width,
+                  height: value.old[props].height,
+                  newWidth: value.new[props].width,
+                  newHeight: value.new[props].height,
                 })
               } else {
                 // new
                 result.push({
-                  file,
                   type: 'new',
+                  file,
                   props,
+                  width: value.new[props].width,
+                  height: value.new[props].height,
                 })
               }
             } else {
               // deleted
               result.push({
-                file,
                 type: 'deleted',
+                file,
                 props,
+                width: value.old[props].width,
+                height: value.old[props].height,
               })
             }
           })

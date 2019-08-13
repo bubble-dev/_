@@ -1,18 +1,16 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { component, startWithType } from 'refun'
 import { isUndefined } from 'tsfn'
-import { mapStoreState } from '../store'
+import { TItem, TRect } from '../types'
 import { Block } from './Block'
-import { TRect } from './types'
 
-export type TProps = TRect
+export type TProps = TRect & {
+  item: TItem,
+}
 
 export const Props = component(
-  startWithType<TProps>(),
-  mapStoreState(({ selectedItem }) => ({
-    selectedItem,
-  }), ['selectedItem'])
-)(({ top, left, width, height, selectedItem }) => (
+  startWithType<TProps>()
+)(({ top, left, width, height, item }) => (
   <Block
     top={top}
     left={left}
@@ -20,14 +18,10 @@ export const Props = component(
     height={height}
   >
     <h2>props:</h2>
-    {!isUndefined(selectedItem) && (
+    {!isUndefined(item) && (
       <pre>
         {
-          JSON.stringify(
-            JSON.parse(selectedItem.props),
-            null,
-            2
-          )
+          JSON.stringify(item, null, 2)
         }
       </pre>
     )}

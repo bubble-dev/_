@@ -1,8 +1,18 @@
 import { TJsonValue } from 'typeon'
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TResult } from '@x-ray/common-utils'
-import { TRect } from './components/types'
+
+export type TPosition = {
+  top: number,
+  left: number,
+}
+
+export type TSize = {
+  width: number,
+  height: number,
+}
+
+export type TRect = TPosition & TSize
 
 export type TAnyAction = {
   type: string,
@@ -19,23 +29,26 @@ export type TType = 'image' | 'text'
 
 export type TFileType = 'old' | 'new'
 
-export type TItemType = 'new' | 'diff' | 'deleted'
+export type TItemType = 'new' | 'deleted' | 'diff'
 
-// export type TItem = {
-//   file: string,
-//   type: TItemType,
-//   props: string,
-// }
+export type TItem = TSize & {
+  file: string,
+  props: string,
+} & ({
+  type: 'new' | 'deleted',
+} | {
+  type: 'diff',
+  newWidth: number,
+  newHeight: number,
+})
 
-export type TItem = TRect & {
-  type: TItemType,
-}
+export type TItemWithPosition = TItem & TPosition
 
 export type TState = {
   type?: TType,
-  files?: TResult,
   isSaved: boolean,
   isLoading: boolean,
-  selectedItem: TItem | null,
+  items: TItem[],
+  selectedItem: TItemWithPosition | null,
   error?: string,
 }
