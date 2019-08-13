@@ -2,6 +2,8 @@ import { TState, TItemType } from '../types'
 
 const TYPES: TItemType[] = ['new', 'new', 'new', 'new', 'diff', 'deleted', 'deleted', 'deleted', 'deleted', 'deleted', 'deleted']
 
+const randomSize = () => Math.floor(Math.random() * 10) * 10 + 50
+
 export const initialState: TState = {
   isSaved: false,
   isLoading: false,
@@ -16,10 +18,10 @@ export const initialState: TState = {
           type,
           file: '',
           props: '',
-          width: Math.random() * 100 + 50,
-          height: Math.random() * 100 + 100,
-          newWidth: Math.random() * 100 + 50,
-          newHeight: Math.random() * 100 + 100,
+          width: randomSize(),
+          height: randomSize(),
+          newWidth: randomSize(),
+          newHeight: randomSize(),
         }
       }
 
@@ -27,8 +29,8 @@ export const initialState: TState = {
         type,
         file: '',
         props: '',
-        width: Math.random() * 100 + 50,
-        height: Math.random() * 100 + 100,
+        width: randomSize(),
+        height: randomSize(),
       }
     }),
   type: 'image',

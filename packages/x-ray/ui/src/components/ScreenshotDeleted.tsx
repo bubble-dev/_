@@ -1,22 +1,34 @@
 import React from 'react'
 import { startWithType, pureComponent } from 'refun'
+import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
+import { TApiLoadScreenshotOpts } from '../api'
 import { Block } from './Block'
-import { Background } from './Background'
 import { Border } from './Border'
+import { Screenshot } from './Screenshot'
 
-export type TScreenshotDeleted = TRect
+export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'>
 
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
-)(({ top, left, width, height }) => (
+)(({ top, left, width, height, file, props }) => (
   <Block top={top} left={left} width={width} height={height}>
-    <Background color={[255, 255, 255, 1]}/>
+    <Screenshot
+      file={file}
+      props={props}
+      type="old"
+      width={width}
+      height={height}
+    />
     <Border
       topWidth={2}
       leftWidth={2}
       rightWidth={2}
       bottomWidth={2}
+      overflowTop={2}
+      overflowLeft={2}
+      overflowRight={2}
+      overflowBottom={2}
       color={[127, 0, 0, 1]}
     />
   </Block>

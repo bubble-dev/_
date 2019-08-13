@@ -170,6 +170,8 @@ export const Main = component(
                           left={item.left}
                           width={item.gridWidth}
                           height={item.gridHeight}
+                          file={item.file}
+                          props={item.props}
                         />
                       )
                     }
@@ -182,6 +184,8 @@ export const Main = component(
                           left={item.left}
                           width={item.gridWidth}
                           height={item.gridHeight}
+                          file={item.file}
+                          props={item.props}
                         />
                       )
                     }
@@ -201,6 +205,8 @@ export const Main = component(
                           newHeight={item.newHeight * scale}
                           oldAlpha={1 - alpha}
                           newAlpha={alpha}
+                          file={item.file}
+                          props={item.props}
                         />
                       )
                     }

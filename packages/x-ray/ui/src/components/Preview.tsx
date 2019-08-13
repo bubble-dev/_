@@ -67,6 +67,8 @@ export const Preview = component(
               left={halfWidth - selectedItem.width / 2}
               width={selectedItem.width}
               height={selectedItem.height}
+              file={selectedItem.file}
+              props={selectedItem.props}
             />
           )}
 
@@ -83,6 +85,8 @@ export const Preview = component(
                   newHeight={selectedItem.newHeight}
                   oldAlpha={1 - alpha}
                   newAlpha={alpha}
+                  file={selectedItem.file}
+                  props={selectedItem.props}
                 />
               )}
             </Animation>
@@ -95,6 +99,8 @@ export const Preview = component(
               left={halfWidth - selectedItem.width / 2}
               width={selectedItem.width}
               height={selectedItem.height}
+              file={selectedItem.file}
+              props={selectedItem.props}
             />
           )}
 
