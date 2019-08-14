@@ -6,7 +6,7 @@ import pAll from 'p-all'
 import { TCheckRequest } from '@x-ray/common-utils'
 import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
 import upng from 'upng-js'
-import { TarFs } from '@x-ray/tar-fs'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { map } from 'iterama'
 import getScreenshot from './get'
 import { TOptions } from './types'
@@ -52,12 +52,11 @@ export default async (options: TOptions) => {
                   const page = pages.shift() as Page
                   const screenshot = await getScreenshot(page, item)
 
-                  const screenshotName = item.id
-                  filenames.push(screenshotName)
+                  filenames.push(item.id)
 
                   pages.push(page)
 
-                  const message = await checkScreenshot(screenshot, tar, screenshotName)
+                  const message = await checkScreenshot(screenshot, tar, item.id)
 
                   switch (message.type) {
                     case 'DIFF':
@@ -67,7 +66,7 @@ export default async (options: TOptions) => {
 
                         port.postMessage({
                           type: 'BAILOUT',
-                          path: message.path,
+                          id: item.id,
                         })
 
                         port.close()
@@ -79,17 +78,29 @@ export default async (options: TOptions) => {
 
                   switch (message.type) {
                     case 'OK': {
-                      port.postMessage(message)
+                      port.postMessage({
+                        ...message,
+                        id: item.id,
+                        serializedElement: item.serializedElement,
+                      })
 
                       break
                     }
                     case 'DIFF': {
-                      port.postMessage(message)
+                      port.postMessage({
+                        ...message,
+                        id: item.id,
+                        serializedElement: item.serializedElement,
+                      })
 
                       break
                     }
                     case 'NEW': {
-                      port.postMessage(message)
+                      port.postMessage({
+                        ...message,
+                        id: item.id,
+                        serializedElement: item.serializedElement,
+                      })
 
                       break
                     }
@@ -98,14 +109,16 @@ export default async (options: TOptions) => {
                 { concurrency: pages.length }
               )
 
-              for (const item of tar.list()) {
-                if (!filenames.includes(item)) {
-                  const data = await tar.read(item) as Buffer
+              for (const filename of tar.list()) {
+                if (!filenames.includes(filename)) {
+                  const { data, meta } = await tar.read(filename) as TTarDataWithMeta
+
                   const { width, height } = upng.decode(data.buffer as ArrayBuffer)
 
                   port.postMessage({
                     type: 'DELETED',
-                    path: item,
+                    id: filename,
+                    serializedElement: meta,
                     data,
                     width,
                     height,

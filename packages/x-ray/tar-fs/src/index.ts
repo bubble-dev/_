@@ -2,6 +2,7 @@
 import path from 'path'
 import crypto from 'crypto'
 import fs from 'pifs'
+import { TAnyObject } from 'tsfn'
 
 const HEADER_SIZE = 512
 
@@ -86,15 +87,23 @@ type TFileMeta = {
 }
 
 type TIndexFile = {
-  [id: string]: string,
+  [longId: string]: {
+    id: string,
+    meta: TAnyObject,
+  },
+}
+
+export type TTarDataWithMeta = {
+  data: Buffer,
+  meta: TAnyObject,
 }
 
 export type TTarFs = {
   has: (fileName: string) => boolean,
   list: () => string[],
-  read: (fileName: string) => Promise<Buffer | null>,
+  read: (fileName: string) => Promise<TTarDataWithMeta | null>,
   delete: (fileName: string) => void,
-  write: (fileName: string, data: Buffer) => void,
+  write: (fileName: string, dataWithMeta: TTarDataWithMeta) => void,
   save: () => Promise<void>,
   close: () => Promise<void>,
 }
@@ -102,7 +111,7 @@ export type TTarFs = {
 export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
   let fd: number | null = null
   const files = new Map<string, TFileMeta>()
-  const filesToWrite = new Map<string, Buffer>()
+  const filesToWrite = new Map<string, TTarDataWithMeta>()
   const filesToDelete = new Set<string>()
   let indexFile: TIndexFile = {}
   let pos = 0
@@ -122,10 +131,10 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
     indexFile = JSON.parse(dataBuffer.toString())
     const indexFileInverted = Object.entries(indexFile).reduce((result, [key, value]) => {
-      result[value] = key
+      result[value.id] = key
 
       return result
-    }, {} as TIndexFile)
+    }, {} as { [k: string]: string })
 
     pos += HEADER_SIZE + dataSize + (HEADER_SIZE - dataSize % HEADER_SIZE)
 
@@ -183,13 +192,16 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
 
       await fs.read(fd, dataBuffer, 0, size, position)
 
-      return dataBuffer
+      return {
+        data: dataBuffer,
+        meta: indexFile[fileName].meta,
+      }
     },
     delete: (fileName) => {
       filesToDelete.add(fileName)
     },
-    write: (fileName, data) => {
-      filesToWrite.set(fileName, data)
+    write: (fileName, dataWithMeta) => {
+      filesToWrite.set(fileName, dataWithMeta)
     },
     save: async () => {
       if (filesToWrite.size === 0 && filesToDelete.size === 0) {
@@ -209,7 +221,10 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       }
 
       for (const fileName of filesToWrite.keys()) {
-        indexFile[fileName] = `${hash(fileName)}${path.extname(fileName)}`
+        indexFile[fileName] = {
+          id: `${hash(fileName)}${path.extname(fileName)}`,
+          meta: filesToWrite.get(fileName)!.meta,
+        }
       }
 
       const indexFileBuffer = Buffer.from(JSON.stringify(indexFile))
@@ -225,9 +240,9 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
         for (const fileName of files.keys()) {
           // updated file
           if (filesToWrite.has(fileName)) {
-            const dataBuffer = filesToWrite.get(fileName)!
+            const { data: dataBuffer } = filesToWrite.get(fileName)!
             const dataBufferSize = dataBuffer.byteLength
-            const headerBuffer = generateHeader(indexFile[fileName], dataBufferSize)
+            const headerBuffer = generateHeader(indexFile[fileName].id, dataBufferSize)
 
             await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
             await fs.write(tempFd, dataBuffer, 0, dataBufferSize, tempPos + HEADER_SIZE)
@@ -254,9 +269,9 @@ export const TarFs = async (tarFilePath: string): Promise<TTarFs> => {
       for (const filePath of filesToWrite.keys()) {
         // new file
         if (!files.has(filePath)) {
-          const dataBuffer = filesToWrite.get(filePath)!
+          const { data: dataBuffer } = filesToWrite.get(filePath)!
           const size = dataBuffer.byteLength
-          const headerBuffer = generateHeader(indexFile[filePath], size)
+          const headerBuffer = generateHeader(indexFile[filePath].id, size)
 
           await fs.write(tempFd, headerBuffer, 0, HEADER_SIZE, tempPos)
           await fs.write(tempFd, dataBuffer, 0, size, tempPos + HEADER_SIZE)

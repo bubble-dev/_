@@ -34,38 +34,42 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
             break
           }
           case 'DIFF': {
-            targetResult.old[action.path] = {
+            targetResult.old[action.id] = {
+              serializedElement: action.serializedElement,
               width: dpr(action.old.width),
               height: dpr(action.old.height),
             }
-            targetResult.new[action.path] = {
+            targetResult.new[action.id] = {
+              serializedElement: action.serializedElement,
               width: dpr(action.new.width),
               height: dpr(action.new.height),
             }
-            targetResultData.old[action.path] = Buffer.from(action.old.data)
-            targetResultData.new[action.path] = Buffer.from(action.new.data)
+            targetResultData.old[action.id] = Buffer.from(action.old.data)
+            targetResultData.new[action.id] = Buffer.from(action.new.data)
 
             hasBeenChanged = true
 
             break
           }
           case 'NEW': {
-            targetResult.new[action.path] = {
+            targetResult.new[action.id] = {
+              serializedElement: action.serializedElement,
               width: dpr(action.width),
               height: dpr(action.height),
             }
-            targetResultData.new[action.path] = Buffer.from(action.data)
+            targetResultData.new[action.id] = Buffer.from(action.data)
 
             hasBeenChanged = true
 
             break
           }
           case 'DELETED': {
-            targetResult.old[action.path] = {
+            targetResult.old[action.id] = {
+              serializedElement: action.serializedElement,
               width: dpr(action.width),
               height: dpr(action.height),
             }
-            targetResultData.old[action.path] = Buffer.from(action.data)
+            targetResultData.old[action.id] = Buffer.from(action.data)
 
             hasBeenChanged = true
 

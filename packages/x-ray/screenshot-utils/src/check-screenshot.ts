@@ -1,6 +1,6 @@
 // @ts-ignore
 import imageminPngout from 'imagemin-pngout'
-import { TTarFs } from '@x-ray/tar-fs'
+import { TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import upng from 'upng-js'
 import { TCheckResult } from './types'
 import { hasPngDiff } from './has-png-diff'
@@ -9,11 +9,7 @@ const optimizePng = imageminPngout({ strategy: 2 })
 
 export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName: string): Promise<TCheckResult> => {
   if (tar.has(screenshotName)) {
-    const existingData = await tar.read(screenshotName)
-
-    if (existingData === null) {
-      throw new Error(`Unable to read file "${screenshotName}"`)
-    }
+    const { data: existingData } = await tar.read(screenshotName) as TTarDataWithMeta
 
     const pngOld = upng.decode(existingData)
     const pngNew = upng.decode(data)
@@ -21,7 +17,6 @@ export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName:
     if (!hasPngDiff(pngOld, pngNew)) {
       return {
         type: 'OK',
-        path: screenshotName,
       }
     }
 
@@ -29,7 +24,6 @@ export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName:
 
     return {
       type: 'DIFF',
-      path: screenshotName,
       old: {
         data: existingData,
         width: pngOld.width,
@@ -48,7 +42,6 @@ export const checkScreenshot = async (data: Buffer, tar: TTarFs, screenshotName:
 
   return {
     type: 'NEW',
-    path: screenshotName,
     data: optimizedScreenshot,
     width: pngNew.width,
     height: pngNew.height,

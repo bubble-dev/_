@@ -139,7 +139,10 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
                 if (Reflect.has(fileResult, 'new')) {
                   Object.keys(fileResult.new).forEach((item) => {
-                    tar.write(item, resultData[file].new[item])
+                    tar.write(item, {
+                      meta: result[file].new[item].serializedElement,
+                      data: resultData[file].new[item],
+                    })
                   })
                 }
 

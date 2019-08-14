@@ -1,8 +1,11 @@
 import { ReactElement } from 'react' // eslint-disable-line
 import { TResult } from '@x-ray/common-utils'
+import { TLineElement } from 'syntx'
+import { TAnyObject } from 'tsfn'
 
 export type TMeta = {
   id: string,
+  serializedElement: TLineElement[][],
   element: ReactElement<any>,
   options: {
     hasOwnWidth?: boolean,
@@ -15,11 +18,9 @@ export type TMeta = {
 export type TCheckResult =
   {
     type: 'OK',
-    path: string,
   } |
   {
     type: 'DIFF',
-    path: string,
     old: {
       data: Buffer,
       width: number,
@@ -33,21 +34,23 @@ export type TCheckResult =
   } |
   {
     type: 'NEW',
-    path: string,
     data: Buffer,
     width: number,
     height: number,
   } |
   {
     type: 'DELETED',
-    path: string,
     data: Buffer,
     width: number,
     height: number,
   }
 
 export type TItemResult =
-  TCheckResult |
+{
+  id: string,
+  serializedElement: TAnyObject,
+} &
+  (TCheckResult |
   {
     type: 'DONE',
     path: string,
@@ -58,8 +61,8 @@ export type TItemResult =
   } |
   {
     type: 'BAILOUT',
-    path: string,
-  }
+    id: string,
+  })
 
 export type TFileResultData = {
   old: {

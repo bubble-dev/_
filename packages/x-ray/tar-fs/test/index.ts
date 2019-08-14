@@ -55,7 +55,10 @@ test('x-ray/next: TarFs', async (t) => {
     )
   }
 
-  tarFs.write('file-3.txt', Buffer.from('file-3'))
+  tarFs.write('file-3.txt', {
+    data: Buffer.from('file-3'),
+    meta: {},
+  })
 
   t.deepEqual(
     Array.from(tarFs.list()),
