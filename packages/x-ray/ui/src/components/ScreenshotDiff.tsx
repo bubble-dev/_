@@ -7,7 +7,7 @@ import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
 
-export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type' | 'width' | 'height'> & {
+export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
   oldWidth: number,
   oldHeight: number,
   newWidth: number,

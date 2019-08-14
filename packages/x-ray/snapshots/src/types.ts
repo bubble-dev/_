@@ -2,9 +2,7 @@ import { ReactElement } from 'react'
 import { TResult } from '@x-ray/common-utils'
 
 export type TMeta = {
-  options: {
-    name: string,
-  },
+  id: string,
   element: ReactElement<any>,
 }
 

@@ -1,10 +1,11 @@
 import React, { Fragment, ReactNode } from 'react'
-import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapHandlers, mapWithPropsMemo, onMount } from 'refun'
 import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
+import { isUndefined } from 'tsfn'
 import { mapStoreState, mapStoreDispatch } from '../../store'
-import { actionSelect } from '../../actions'
+import { actionSelect, actionLoadList } from '../../actions'
 import { TSize, TGridItem } from '../../types'
 import { Block } from '../Block'
 import { Popup } from '../Popup'
@@ -15,7 +16,7 @@ import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
-const COL_WIDTH = 100
+const COL_WIDTH = 200
 const COL_SPACE = 20
 
 export type TMain = TSize
@@ -27,9 +28,19 @@ export const Main = component(
     items,
   }), ['selectedItem', 'items']),
   mapStoreDispatch,
+  onMount(({ dispatch }) => {
+    dispatch(actionLoadList())
+  }),
   mapWithPropsMemo(({ width, items }) => {
+    if (isUndefined(items)) {
+      return {
+        cols: [],
+        maxHeight: 0,
+      }
+    }
+
     const colCount = Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE))
-    const gridWidth = ((width - (COL_SPACE * (colCount + 1))) / colCount)
+    const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
     const top = new Array(colCount).fill(COL_SPACE)
     const cols: TGridItem[][] = new Array(colCount)
       .fill(0)
@@ -87,7 +98,7 @@ export const Main = component(
       for (let colIndex = 0; colIndex < cols.length; ++colIndex) {
         const firstItem = cols[colIndex][0]
 
-        if (x < firstItem.left || firstItem.left + firstItem.gridWidth < x) {
+        if (!isUndefined(firstItem) && (x < firstItem.left || firstItem.left + firstItem.gridWidth < x)) {
           continue
         }
 
@@ -141,16 +152,17 @@ export const Main = component(
       <Animation values={[diffState ? 1 : 0]} time={200} easing={easeInOutCubic}>
         {([alpha]) => (
           <Fragment>
-            {cols.reduce((result, col, i) => (
+            {cols.reduce((result, col) => (
               result.concat(
-                col.map((item: TGridItem, j: number) => {
+                col.map((item: TGridItem) => {
                   const isVisible = isVisibleItem(item, scrollTop, height)
-                  const isNew = prevScrollTop !== null && ((item.top + item.height < prevScrollTop) || (item.top > prevScrollTop + height))
+                  const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
+                  const key = `${item.file}:${item.type}:${item.props}`
 
                   if (isVisible && isNew) {
                     return (
                       <Block
-                        key={`${i}_${j}`}
+                        key={key}
                         top={item.top}
                         left={item.left}
                         width={item.gridWidth}
@@ -175,7 +187,7 @@ export const Main = component(
                     if (item.type === 'new') {
                       return (
                         <ScreenshotNew
-                          key={`${i}_${j}`}
+                          key={key}
                           top={item.top}
                           left={item.left}
                           width={item.gridWidth}
@@ -189,7 +201,7 @@ export const Main = component(
                     if (item.type === 'deleted') {
                       return (
                         <ScreenshotDeleted
-                          key={`${i}_${j}`}
+                          key={key}
                           top={item.top}
                           left={item.left}
                           width={item.gridWidth}
@@ -206,7 +218,7 @@ export const Main = component(
 
                       return (
                         <ScreenshotDiff
-                          key={`${i}_${j}`}
+                          key={key}
                           top={item.top}
                           left={item.left}
                           oldWidth={item.width * scale}

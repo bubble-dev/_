@@ -48,10 +48,10 @@ export type TGridItem = TItem & TPosition & {
 }
 
 export type TState = {
-  type?: TType,
+  error?: string,
   isSaved: boolean,
   isLoading: boolean,
-  items: TItem[],
   selectedItem: TGridItem | null,
-  error?: string,
+  items?: TItem[],
+  type?: TType,
 }

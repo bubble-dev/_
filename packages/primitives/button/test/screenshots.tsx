@@ -1,24 +1,16 @@
 import React from 'react'
-import { getPropsIterable } from 'autoprops'
-import { Text } from '@primitives/text'
-import { SerializeObjectToJson } from '@x-ray/common-utils/src/serialize-object-to-json'
-import { map } from 'iterama'
-import { Button, TButton } from '../src'
+import { mapPropsIterable } from 'autoprops'
+import { TMeta } from '@x-ray/screenshot-utils'
+import { Button } from '../src'
 import * as metaFile from '../meta'
 
-const serializeObjectToJson = SerializeObjectToJson()
-
-export default map((props: TButton) => {
-  return {
-    options: {
-      name: serializeObjectToJson(props),
-      hasOwnWidth: true,
-      maxWidth: 600,
-    },
-    element: (
-      <Button {...props}>
-        <Text>Button_</Text>
-      </Button>
-    ),
-  }
-})(getPropsIterable(metaFile))
+export default mapPropsIterable(metaFile, ({ id, props }): TMeta => ({
+  id,
+  options: {
+    hasOwnWidth: true,
+    maxWidth: 600,
+  },
+  element: (
+    <Button {...props}/>
+  ),
+}))

@@ -1,17 +1,26 @@
-import { TChildrenConfig, TComponentConfig } from 'react-autoprops'
+import { TChildrenConfig, TComponentConfig } from 'autoprops'
+import { Text } from '@primitives/text'
+import { TButton } from './src/types'
 
-// export const childrenConfig: TChildrenConfig = {
-//   meta: {
-//     icon: RadicalButtonIconMeta,
-//     loader: RadicalButtonLoaderMeta,
-//   },
-//   children: ['icon', 'loader'],
-// }
+export const childrenConfig: TChildrenConfig = {
+  meta: {
+    text: {
+      config: {
+        props: {
+          children: ['Button'],
+        },
+        required: ['children'],
+      },
+      Component: Text,
+    },
+  },
+  children: ['text'],
+  required: ['text'],
+}
 
-export const config: TComponentConfig = {
+export const config: TComponentConfig<TButton> = {
   props: {
     isDisabled: [true],
-    a: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
   },
 }
 

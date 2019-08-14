@@ -39,7 +39,6 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
 
     await runServer({
       platform: options.platform,
-      dpr: options.dpr,
       result,
       resultData,
     })

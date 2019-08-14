@@ -1,17 +1,10 @@
 import React from 'react'
-import { SerializeObjectToJson } from '@x-ray/common-utils'
-import { map } from 'iterama'
-import { getPropsIterable } from 'autoprops'
-import { Input, TInput } from '../src'
+import { mapPropsIterable } from 'autoprops'
+import { TMeta } from '@x-ray/snapshots'
+import { Input } from '../src'
 import * as metaFile from '../meta'
 
-const serializeObjectToJson = SerializeObjectToJson()
-
-export default map((props: TInput) => {
-  return {
-    options: {
-      name: serializeObjectToJson(props),
-    },
-    element: <Input {...props}/>,
-  }
-})(getPropsIterable(metaFile))
+export default mapPropsIterable(metaFile, ({ id, props }): TMeta => ({
+  id,
+  element: <Input {...props}/>,
+}))

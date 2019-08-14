@@ -2,14 +2,14 @@ import { ReactElement } from 'react' // eslint-disable-line
 import { TResult } from '@x-ray/common-utils'
 
 export type TMeta = {
+  id: string,
+  element: ReactElement<any>,
   options: {
-    name: string,
     hasOwnWidth?: boolean,
     negativeOverflow?: number,
     backgroundColor?: string,
     maxWidth?: number,
   },
-  element: ReactElement<any>,
 }
 
 export type TCheckResult =

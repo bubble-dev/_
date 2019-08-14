@@ -52,7 +52,7 @@ export default async (options: TOptions) => {
                   const page = pages.shift() as Page
                   const screenshot = await getScreenshot(page, item)
 
-                  const screenshotName = item.options.name
+                  const screenshotName = item.id
                   filenames.push(screenshotName)
 
                   pages.push(page)
@@ -101,7 +101,7 @@ export default async (options: TOptions) => {
               for (const item of tar.list()) {
                 if (!filenames.includes(item)) {
                   const data = await tar.read(item) as Buffer
-                  const { width, height } = upng.decode(data)
+                  const { width, height } = upng.decode(data.buffer as ArrayBuffer)
 
                   port.postMessage({
                     type: 'DELETED',
