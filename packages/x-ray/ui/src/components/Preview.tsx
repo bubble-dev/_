@@ -2,15 +2,14 @@ import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHandlers, mapRef, onChange, onMount } from 'refun'
 import { isUndefined } from 'tsfn'
 import { easeInOutCubic, Animation } from '@primitives/animation'
+import { elegir } from 'elegir'
 import { mapStoreState } from '../store'
 import { TRect, TGridItem } from '../types'
 import { DIFF_TIMEOUT } from '../config'
 import { Block } from './Block'
 import { ScreenshotDiff } from './ScreenshotDiff'
 import { ScreenshotNew } from './ScreenshotNew'
-import { SnapshotDiff } from './SnapshotDiff'
-import { SnapshotDeleted } from './SnapshotDeleted'
-import { SnapshotNew } from './SnapshotNew'
+import { Snapshot } from './Snapshot'
 import { ScreenshotDeleted } from './ScreenshotDeleted'
 
 export type TPreview = TRect & {
@@ -94,7 +93,7 @@ export const Preview = component(
 
           {selectedItem.type === 'deleted' && type === 'image' && (
             <ScreenshotDeleted
-              key={`${selectedItem.file}:new:${selectedItem.id}`}
+              key={`${selectedItem.file}:deleted:${selectedItem.id}`}
               top={halfHeight - selectedItem.height / 2}
               left={halfWidth - selectedItem.width / 2}
               width={selectedItem.width}
@@ -104,39 +103,23 @@ export const Preview = component(
             />
           )}
 
-          {selectedItem.type === 'new' && type === 'text' && (
-            <SnapshotNew
-              key={`${selectedItem.file}:new:${selectedItem.id}`}
+          {type === 'text' && (
+            <Snapshot
+              key={`${selectedItem.file}:${selectedItem.type}:${selectedItem.id}`}
               top={68}
               left={0}
               width={width}
               height={height}
               file={selectedItem.file}
               id={selectedItem.id}
-            />
-          )}
-
-          {selectedItem.type === 'diff' && type === 'text' && (
-            <SnapshotDiff
-              key={`${selectedItem.file}:new:${selectedItem.id}`}
-              top={68}
-              left={0}
-              width={width}
-              height={height}
-              file={selectedItem.file}
-              id={selectedItem.id}
-            />
-          )}
-
-          {selectedItem.type === 'deleted' && type === 'text' && (
-            <SnapshotDeleted
-              key={`${selectedItem.file}:new:${selectedItem.id}`}
-              top={68}
-              left={0}
-              width={width}
-              height={height}
-              file={selectedItem.file}
-              id={selectedItem.id}
+              type={elegir(
+                selectedItem.type === 'new',
+                'new',
+                selectedItem.type === 'deleted',
+                'old',
+                true,
+                'diff'
+              )}
             />
           )}
         </Fragment>

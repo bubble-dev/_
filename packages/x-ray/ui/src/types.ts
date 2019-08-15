@@ -28,7 +28,8 @@ export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TSta
 
 export type TType = 'image' | 'text'
 
-export type TFileType = 'old' | 'new'
+export type TScreenshotFileType = 'old' | 'new'
+export type TSnapshotFileType = 'old' | 'new' | 'diff'
 
 export type TItemType = 'new' | 'deleted' | 'diff'
 

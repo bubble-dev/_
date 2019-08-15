@@ -5,9 +5,8 @@ import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
 import { isString, isUndefined } from 'tsfn'
 import pAll from 'p-all'
-import { TResult } from '@x-ray/common-utils'
 import pkgDir from 'pkg-dir'
-import { TResultData } from './types'
+import { TResultData, TResult } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 

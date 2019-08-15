@@ -2,12 +2,12 @@
 import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import pAll from 'p-all'
-import { TarFs } from '@x-ray/tar-fs'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import serialize from '@x-ray/serialize-react-tree'
 import { TCheckRequest, TOptions } from '@x-ray/common-utils'
 import { map } from 'iterama'
 import { checkSnapshot } from './check-snapshot'
-import { TMeta } from './types'
+import { TMeta, TItemResult } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const port = parentPort as any as MessagePort
@@ -38,8 +38,8 @@ export default async (options: TOptions) => {
                       case 'NEW': {
                         port.postMessage({
                           type: 'BAILOUT',
-                          path: message.path,
-                        })
+                          id: item.id,
+                        } as TItemResult)
 
                         port.close()
 
@@ -49,10 +49,13 @@ export default async (options: TOptions) => {
                   }
 
                   switch (message.type) {
-                    case 'OK':
                     case 'DIFF':
                     case 'NEW': {
-                      port.postMessage(message)
+                      port.postMessage({
+                        ...message,
+                        id: item.id,
+                        serializedElement: item.serializedElement,
+                      } as TItemResult)
 
                       break
                     }
@@ -61,22 +64,23 @@ export default async (options: TOptions) => {
                 { concurrency: CONCURRENCY }
               )
 
-              for (const item of tar.list()) {
-                if (!filenames.includes(item)) {
-                  const data = await tar.read(item) as Buffer
+              for (const filename of tar.list()) {
+                if (!filenames.includes(filename)) {
+                  const { data, meta } = await tar.read(filename) as TTarDataWithMeta
 
                   port.postMessage({
                     type: 'DELETED',
-                    path: item,
+                    id: filename,
+                    serializedElement: meta,
                     data,
-                  })
+                  } as TItemResult)
                 }
               }
 
               port.postMessage({
                 type: 'DONE',
                 path: action.path,
-              })
+              } as TItemResult)
 
               break
             }
@@ -97,7 +101,7 @@ export default async (options: TOptions) => {
       port.postMessage({
         type: 'ERROR',
         data: err.message,
-      })
+      } as TItemResult)
     }
   }
 }

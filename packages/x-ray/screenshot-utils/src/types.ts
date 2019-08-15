@@ -1,5 +1,4 @@
 import { ReactElement } from 'react' // eslint-disable-line
-import { TResult } from '@x-ray/common-utils'
 import { TLineElement } from 'syntx'
 import { TAnyObject } from 'tsfn'
 
@@ -44,6 +43,27 @@ export type TCheckResult =
     width: number,
     height: number,
   }
+
+export type TFileResult = {
+  old: {
+    [k: string]: {
+      serializedElement: TAnyObject,
+      width: number,
+      height: number,
+    },
+  },
+  new: {
+    [k: string]: {
+      serializedElement: TAnyObject,
+      width: number,
+      height: number,
+    },
+  },
+}
+
+export type TResult = {
+  [filename: string]: TFileResult,
+}
 
 export type TItemResult =
   (TCheckResult & {

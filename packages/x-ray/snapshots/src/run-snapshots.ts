@@ -1,6 +1,23 @@
 import path from 'path'
-import { parent, TOptions, TResult, TFileResult } from '@x-ray/common-utils'
-import { TRunSnapshotsResult, TResultData, TFileResultData, TItemResult } from './types'
+import { TOptions } from '@x-ray/common-utils'
+import { makeWorker } from '@x-ray/worker-utils'
+import { diffArrays } from 'diff'
+import { TRunSnapshotsResult, TResultData, TFileResultData, TItemResult, TResult, TFileResult, TFileResultLine } from './types'
+
+const getDataSize = (lines: TFileResultLine[]) => {
+  let maxWidth = 0
+
+  for (const line of lines) {
+    if (line.value.length > maxWidth) {
+      maxWidth = line.value.length
+    }
+  }
+
+  return {
+    width: maxWidth,
+    height: lines.length,
+  }
+}
 
 export const runSnapshots = (childFile: string, targetFiles: string[], consurrency: number, options: TOptions) => new Promise<TRunSnapshotsResult>((resolve, reject) => {
   const workersCount = Math.min(targetFiles.length, consurrency)
@@ -15,44 +32,96 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
     .fill(null)
     .map(() => {
       let targetResult: TFileResult = {
-        ok: [],
-        diff: [],
-        new: [],
-        deleted: [],
+        old: {},
+        new: {},
+        diff: {},
       }
       let targetResultData: TFileResultData = {
         old: {},
         new: {},
+        diff: {},
       }
-      const worker = parent(childFile, options)
+      const worker = makeWorker(childFile, options)
 
       worker.on('message', async (action: TItemResult) => {
         switch (action.type) {
           case 'OK': {
-            targetResult.ok.push(action.path)
-
             break
           }
           case 'DIFF': {
-            targetResult.diff.push(action.path)
-            targetResultData.old[action.path] = Buffer.from(action.oldData)
-            targetResultData.new[action.path] = Buffer.from(action.newData)
+            const oldData = Buffer.from(action.oldData)
+              .toString()
+              .split('\n')
+            const newData = Buffer.from(action.newData)
+              .toString()
+              .split('\n')
+
+            const diffData = diffArrays(oldData, newData)
+
+            const data = diffData.reduce((result, chunk) => {
+              return result.concat(
+                chunk.value.map((line) => {
+                  if (chunk.added) {
+                    return {
+                      value: line,
+                      type: 'added',
+                    }
+                  }
+
+                  if (chunk.removed) {
+                    return {
+                      value: line,
+                      type: 'removed',
+                    }
+                  }
+
+                  return {
+                    value: line,
+                  }
+                })
+              )
+            }, [] as TFileResultLine[])
+
+            targetResult.diff[action.id] = {
+              serializedElement: action.serializedElement,
+              ...getDataSize(data),
+            }
 
             hasBeenChanged = true
 
             break
           }
           case 'NEW': {
-            targetResult.new.push(action.path)
-            targetResultData.new[action.path] = Buffer.from(action.data)
+            const data: TFileResultLine[] = Buffer.from(action.data)
+              .toString()
+              .split('\n')
+              .map((line) => ({
+                value: line,
+              }))
+
+            targetResult.new[action.id] = {
+              serializedElement: action.serializedElement,
+              ...getDataSize(data),
+            }
+            targetResultData.new[action.id] = data
 
             hasBeenChanged = true
 
             break
           }
           case 'DELETED': {
-            targetResult.deleted.push(action.path)
-            targetResultData.old[action.path] = Buffer.from(action.data)
+            const data = Buffer.from(action.data)
+              .toString()
+              .split('\n')
+              .map((line) => ({
+                value: line,
+              }))
+
+            targetResult.old[action.id] = {
+              serializedElement: action.serializedElement,
+              ...getDataSize(data),
+            }
+            targetResultData.old[action.id] = data
 
             hasBeenChanged = true
 
@@ -71,14 +140,14 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             resultData[relativePath] = targetResultData
 
             targetResult = {
-              ok: [],
-              diff: [],
-              new: [],
-              deleted: [],
+              old: {},
+              new: {},
+              diff: {},
             }
             targetResultData = {
               old: {},
               new: {},
+              diff: {},
             }
 
             if (targetFileIndex < targetFiles.length) {

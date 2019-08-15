@@ -58,10 +58,10 @@ export default async (options: TOptions) => {
 
                   const message = await checkScreenshot(screenshot, tar, item.id)
 
-                  switch (message.type) {
-                    case 'DIFF':
-                    case 'NEW': {
-                      if (shouldBailout) {
+                  if (shouldBailout) {
+                    switch (message.type) {
+                      case 'DIFF':
+                      case 'NEW': {
                         await browser.disconnect()
 
                         port.postMessage({

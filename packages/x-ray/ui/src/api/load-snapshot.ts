@@ -1,18 +1,17 @@
+import { TFileResultLine } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
-import { TFileType } from '../types'
+import { TSnapshotFileType } from '../types'
 
 export type TApiLoadSnapshotOpts = {
   file: string,
-  type: TFileType,
-  props: string,
+  type: TSnapshotFileType,
+  id: string,
 }
 
-export type TApiLoadSnapshotResult = string
+const apiLoadSnapshotCache = new Map<string, TFileResultLine[]>()
 
-const apiLoadSnapshotCache = new Map<string, TApiLoadSnapshotResult>()
-
-export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TApiLoadSnapshotResult> => {
-  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&item=${encodeURIComponent(opts.props)}`
+export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TFileResultLine[]> => {
+  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&id=${encodeURIComponent(opts.id)}`
 
   if (apiLoadSnapshotCache.has(params)) {
     return apiLoadSnapshotCache.get(params)!
@@ -24,7 +23,8 @@ export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TApiL
     throw new Error(`Load snapshot (${response.status}): ${response.statusText}`)
   }
 
-  const result = await response.text()
+  const resultStr = await response.text()
+  const result = JSON.parse(resultStr)
 
   apiLoadSnapshotCache.set(params, result)
 

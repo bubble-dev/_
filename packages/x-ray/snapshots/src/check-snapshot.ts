@@ -1,9 +1,9 @@
-import { TTarFs } from '@x-ray/tar-fs'
+import { TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckResult } from './types'
 
 export const checkSnapshot = async (data: Buffer, tar: TTarFs, snapshotName: string): Promise<TCheckResult> => {
   if (tar.has(snapshotName)) {
-    const existingData = await tar.read(snapshotName)
+    const { data: existingData } = await tar.read(snapshotName) as TTarDataWithMeta
 
     if (existingData === null) {
       throw new Error(`Unable to read file "${snapshotName}"`)
@@ -12,13 +12,11 @@ export const checkSnapshot = async (data: Buffer, tar: TTarFs, snapshotName: str
     if (Buffer.compare(data, existingData) === 0) {
       return {
         type: 'OK',
-        path: snapshotName,
       }
     }
 
     return {
       type: 'DIFF',
-      path: snapshotName,
       oldData: existingData,
       newData: data,
     }
@@ -26,7 +24,6 @@ export const checkSnapshot = async (data: Buffer, tar: TTarFs, snapshotName: str
 
   return {
     type: 'NEW',
-    path: snapshotName,
     data,
   }
 }

@@ -1,12 +1,12 @@
 import { HOST, PORT } from '../config'
-import { TFileType } from '../types'
+import { TScreenshotFileType } from '../types'
 
 const apiLoadScreenshotCache = new Map<string, Blob>()
 
 export type TApiLoadScreenshotOpts = {
   file: string,
   id: string,
-  type: TFileType,
+  type: TScreenshotFileType,
 }
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<Blob> => {

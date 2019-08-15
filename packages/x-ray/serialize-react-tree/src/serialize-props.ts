@@ -87,6 +87,10 @@ const serializeObject = (obj: { [k: string]: any }, indent: number) => {
   let index = 0
 
   for (const [key, value] of entries) {
+    if (typeof value === 'undefined') {
+      continue
+    }
+
     if (index !== 0) {
       result += ',\n'
     }
@@ -122,11 +126,6 @@ const serializeObject = (obj: { [k: string]: any }, indent: number) => {
       continue
     }
 
-    if (typeof value === 'undefined') {
-      result += 'undefined'
-      continue
-    }
-
     if (value === null) {
       result += 'null'
       continue
@@ -159,6 +158,10 @@ const serializeProps = (props: { [k: string]: any }, indent: number) => {
   let index = 0
 
   for (const [key, value] of entries) {
+    if (typeof value === 'undefined') {
+      continue
+    }
+
     if (index !== 0) {
       result += '\n'
     }
@@ -195,11 +198,6 @@ const serializeProps = (props: { [k: string]: any }, indent: number) => {
 
     if (is.function_(value)) {
       result += '{() => {}}'
-      continue
-    }
-
-    if (typeof value === 'undefined') {
-      result += '{undefined}'
       continue
     }
 

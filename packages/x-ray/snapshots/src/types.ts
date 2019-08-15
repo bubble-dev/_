@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
-import { TResult } from '@x-ray/common-utils'
 import { TLineElement } from 'syntx'
+import { TAnyObject } from 'tsfn'
 
 export type TMeta = {
   id: string,
@@ -11,27 +11,26 @@ export type TMeta = {
 export type TCheckResult =
   {
     type: 'OK',
-    path: string,
   } |
   {
     type: 'DIFF',
-    path: string,
     oldData: Buffer,
     newData: Buffer,
   } |
   {
     type: 'NEW',
-    path: string,
     data: Buffer,
   } |
   {
     type: 'DELETED',
-    path: string,
     data: Buffer,
   }
 
 export type TItemResult =
-  TCheckResult |
+  (TCheckResult & {
+    id: string,
+    serializedElement: TAnyObject,
+  }) |
   {
     type: 'DONE',
     path: string,
@@ -42,15 +41,51 @@ export type TItemResult =
   } |
   {
     type: 'BAILOUT',
-    path: string,
+    id: string,
   }
+
+export type TFileResult = {
+  old: {
+    [k: string]: {
+      serializedElement: TAnyObject,
+      width: number,
+      height: number,
+    },
+  },
+  new: {
+    [k: string]: {
+      serializedElement: TAnyObject,
+      width: number,
+      height: number,
+    },
+  },
+  diff: {
+    [k: string]: {
+      serializedElement: TAnyObject,
+      width: number,
+      height: number,
+    },
+  },
+}
+
+export type TResult = {
+  [filename: string]: TFileResult,
+}
+
+export type TFileResultLine = {
+  value: string,
+  type?: 'added' | 'removed',
+}
 
 export type TFileResultData = {
   old: {
-    [key: string]: Buffer,
+    [key: string]: TFileResultLine[],
   },
   new: {
-    [key: string]: Buffer,
+    [key: string]: TFileResultLine[],
+  },
+  diff: {
+    [key: string]: TFileResultLine[],
   },
 }
 

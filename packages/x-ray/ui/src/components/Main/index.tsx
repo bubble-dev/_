@@ -4,6 +4,7 @@ import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
+import { elegir } from 'elegir'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionSelect, actionLoadList } from '../../actions'
 import { TSize, TGridItem } from '../../types'
@@ -12,21 +13,21 @@ import { Popup } from '../Popup'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
+import { Snapshot } from '../Snapshot'
+import { COL_SPACE, COL_WIDTH } from '../../config'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
-
-const COL_WIDTH = 200
-const COL_SPACE = 20
 
 export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ selectedItem, items }) => ({
+  mapStoreState(({ type, selectedItem, items }) => ({
+    type,
     selectedItem,
     items,
-  }), ['selectedItem', 'items']),
+  }), ['selectedItem', 'items', 'type']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
@@ -135,6 +136,7 @@ export const Main = component(
   prevScrollTop,
   selectedItem,
   diffState,
+  type,
   onScroll,
   onPress,
 }) => (
@@ -184,7 +186,7 @@ export const Main = component(
                   }
 
                   if (isVisible) {
-                    if (item.type === 'new') {
+                    if (type === 'image' && item.type === 'new') {
                       return (
                         <ScreenshotNew
                           key={key}
@@ -198,7 +200,7 @@ export const Main = component(
                       )
                     }
 
-                    if (item.type === 'deleted') {
+                    if (type === 'image' && item.type === 'deleted') {
                       return (
                         <ScreenshotDeleted
                           key={key}
@@ -212,7 +214,7 @@ export const Main = component(
                       )
                     }
 
-                    if (item.type === 'diff') {
+                    if (type === 'image' && item.type === 'diff') {
                       const largestWidth = item.width > item.newWidth ? item.width : item.newWidth
                       const scale = item.gridWidth / largestWidth
 
@@ -229,6 +231,28 @@ export const Main = component(
                           newAlpha={alpha}
                           file={item.file}
                           id={item.id}
+                        />
+                      )
+                    }
+
+                    if (type === 'text') {
+                      return (
+                        <Snapshot
+                          key={key}
+                          top={item.top}
+                          left={item.left}
+                          width={item.gridWidth}
+                          height={item.gridHeight}
+                          file={item.file}
+                          id={item.id}
+                          type={elegir(
+                            item.type === 'new',
+                            'new',
+                            item.type === 'deleted',
+                            'old',
+                            true,
+                            'diff'
+                          )}
                         />
                       )
                     }
