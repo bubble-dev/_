@@ -1,8 +1,10 @@
 import { ReactElement } from 'react'
 import { TResult } from '@x-ray/common-utils'
+import { TLineElement } from 'syntx'
 
 export type TMeta = {
   id: string,
+  serializedElement: TLineElement[][],
   element: ReactElement<any>,
 }
 

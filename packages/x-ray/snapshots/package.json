@@ -17,6 +17,7 @@
     "iterama": "^0.1.1",
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
+    "syntx": "^0.3.0",
     "tsfn": "^0.1.2"
   },
   "devDependencies": {

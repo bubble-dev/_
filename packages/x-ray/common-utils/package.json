@@ -18,6 +18,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "react": "^16.8.6",
+    "syntx": "^0.3.0",
     "tsfn": "^0.1.2"
   },
   "devDependencies": {
