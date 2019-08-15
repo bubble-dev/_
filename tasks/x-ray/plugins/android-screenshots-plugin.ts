@@ -34,7 +34,7 @@ export default (appPath: string) =>
 
       logMessage('device is ready')
 
-      const runScreenshots = await runScreenshotsServer({ platform: 'android' })
+      const runScreenshots = await runScreenshotsServer({ platform: 'android', dpr: 3 })
 
       await installApp({ appPath })
 
@@ -57,7 +57,6 @@ export default (appPath: string) =>
 
         await runUiServer({
           platform: 'android',
-          dpr: 3,
           result,
           resultData,
         })

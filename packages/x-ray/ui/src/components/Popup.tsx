@@ -9,6 +9,7 @@ import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { Preview } from './Preview'
 import { Shadow } from './Shadow'
+import { Border } from './Border'
 
 const POPUP_OFFSET = 50
 
@@ -138,10 +139,21 @@ export const Popup = component(
           width={popupWidth}
           height={popupHeight}
         >
+          <Border
+            color={[0, 0, 0, alpha]}
+            leftWidth={2}
+            topWidth={2}
+            rightWidth={2}
+            bottomWidth={2}
+            overflowLeft={2}
+            overflowTop={2}
+            overflowRight={2}
+            overflowBottom={2}
+          />
           <Background color={[255, 255, 255, alpha]}/>
           {state === STATE_OPEN && selectedItem !== null && (
             <Fragment>
-              <Shadow color={[0, 0, 0, alpha]} blurRadius={20} spreadRadius={1}/>
+              <Shadow color={[0, 0, 0, alpha]} blurRadius={20}/>
               <SourceCode
                 top={propsTop}
                 left={propsLeft}

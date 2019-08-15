@@ -1,7 +1,7 @@
 import React from 'react'
 import { mapPropsIterable } from 'autoprops'
 import { TMeta } from '@x-ray/screenshot-utils'
-import { serializeElement } from '@x-ray/common-utils'
+import { serializeElement } from '@x-ray/common-utils/src/serialize-element'
 import { Input } from '../src'
 import * as metaFile from '../meta'
 

@@ -60,7 +60,8 @@ class Main extends Component {
       },
       body: JSON.stringify({
         data,
-        name: this.state.item.options.name,
+        id: this.state.item.id,
+        serializedElement: this.state.item.serializedElement,
         path: this.state.path,
       }),
       keepalive: true,
@@ -109,19 +110,16 @@ class Main extends Component {
         <ViewShot
           captureMode="mount"
           options={{ result: 'base64' }}
-          key={`${fileIndex}${item.options.name}`}
+          key={`${fileIndex}:${item.id}`}
+          style={{
+            padding: item.options.negativeOverflow,
+            maxWidth: item.options.maxWidth,
+            backgroundColor: item.options.backgroundColor || '#fff',
+          }}
           onCapture={this.onCapture}
           onCaptureFailure={this.onCaptureFailure}
         >
-          <View
-            style={{
-              padding: item.options.negativeOverflow,
-              maxWidth: item.options.maxWidth,
-              backgroundColor: item.options.backgroundColor || '#fff',
-            }}
-          >
-            {item.element}
-          </View>
+          {item.element}
         </ViewShot>
       </View>
     )

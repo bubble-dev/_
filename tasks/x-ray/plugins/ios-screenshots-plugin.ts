@@ -39,7 +39,7 @@ export default (appPath: string) =>
 
       logMessage('app is installed')
 
-      const runScreenshots = await runScreenshotsServer({ platform: 'ios' })
+      const runScreenshots = await runScreenshotsServer({ platform: 'ios', dpr: 2 })
 
       await launchApp({ appId: 'org.bubble-dev.xray' })
 
@@ -58,7 +58,6 @@ export default (appPath: string) =>
 
         await runUiServer({
           platform: 'ios',
-          dpr: 2,
           result,
           resultData,
         })
