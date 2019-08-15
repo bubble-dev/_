@@ -77,24 +77,7 @@ export default async (options: TOptions) => {
                   }
 
                   switch (message.type) {
-                    case 'OK': {
-                      port.postMessage({
-                        ...message,
-                        id: item.id,
-                        serializedElement: item.serializedElement,
-                      } as TItemResult)
-
-                      break
-                    }
-                    case 'DIFF': {
-                      port.postMessage({
-                        ...message,
-                        id: item.id,
-                        serializedElement: item.serializedElement,
-                      } as TItemResult)
-
-                      break
-                    }
+                    case 'DIFF':
                     case 'NEW': {
                       port.postMessage({
                         ...message,
@@ -153,7 +136,7 @@ export default async (options: TOptions) => {
       port.postMessage({
         type: 'ERROR',
         data: err.message,
-      })
+      } as TItemResult)
     }
   }
 }

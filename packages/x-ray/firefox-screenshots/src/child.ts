@@ -3,8 +3,8 @@ import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import foxr from 'foxr'
 import upng from 'upng-js'
-import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
-import { TarFs } from '@x-ray/tar-fs'
+import { checkScreenshot, TMeta, TItemResult } from '@x-ray/screenshot-utils'
+import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckRequest } from '@x-ray/common-utils'
 import getScreenshot from './get'
 import { TOptions } from './types'
@@ -36,8 +36,7 @@ export default async (options: TOptions) => {
 
               for (const item of items) {
                 const screenshot = await getScreenshot(page, item)
-                const screenshotName = item.options.name
-                const message = await checkScreenshot(screenshot, tar, screenshotName)
+                const message = await checkScreenshot(screenshot, tar, item.id)
 
                 if (shouldBailout) {
                   switch (message.type) {
@@ -47,8 +46,8 @@ export default async (options: TOptions) => {
 
                       port.postMessage({
                         type: 'BAILOUT',
-                        path: message.path,
-                      })
+                        id: item.id,
+                      } as TItemResult)
 
                       port.close()
 
@@ -58,35 +57,39 @@ export default async (options: TOptions) => {
                 }
 
                 switch (message.type) {
-                  case 'OK':
                   case 'DIFF':
                   case 'NEW': {
-                    port.postMessage(message)
+                    port.postMessage({
+                      ...message,
+                      id: item.id,
+                      serializedElement: item.serializedElement,
+                    } as TItemResult)
 
                     break
                   }
                 }
               }
 
-              for (const item of tar.list()) {
-                if (!items.find((metaItem) => metaItem.options.name === item)) {
-                  const data = await tar.read(item) as Buffer
+              for (const filename of tar.list()) {
+                if (!items.find((metaItem) => metaItem.id === filename)) {
+                  const { data, meta } = await tar.read(filename) as TTarDataWithMeta
                   const { width, height } = upng.decode(data)
 
                   port.postMessage({
                     type: 'DELETED',
-                    path: item,
+                    id: filename,
+                    serializedElement: meta,
                     data,
                     width,
                     height,
-                  })
+                  } as TItemResult)
                 }
               }
 
               port.postMessage({
                 type: 'DONE',
                 path: action.path,
-              })
+              } as TItemResult)
 
               break
             }
@@ -108,7 +111,7 @@ export default async (options: TOptions) => {
       port.postMessage({
         type: 'ERROR',
         data: err.message,
-      })
+      } as TItemResult)
     }
   }
 }

@@ -12,6 +12,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
   const options: TOptions = {
     ...defaultOptions,
     ...userOptions,
+    dpr: 1,
   }
 
   console.time('screenshots')
@@ -27,7 +28,6 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
 
     await runServer({
       platform: options.platform,
-      dpr: 1,
       result,
       resultData,
     })
