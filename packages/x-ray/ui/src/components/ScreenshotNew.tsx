@@ -11,11 +11,11 @@ export type TScreenshotNew = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'>
 
 export const ScreenshotNew = pureComponent(
   startWithType<TScreenshotNew>()
-)(({ top, left, width, height, file, props }) => (
+)(({ top, left, width, height, file, id }) => (
   <Block top={top} left={left} width={width} height={height}>
     <Screenshot
       file={file}
-      props={props}
+      id={id}
       type="new"
       width={width}
       height={height}

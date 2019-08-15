@@ -16,7 +16,8 @@ export const actionLoadList = (): TActionAsync<TActionLoadList | TActionError | 
 
       dispatch({ type: TYPE_LOAD_LIST, payload: result })
     } catch (err) {
-      dispatch(actionError(err.message))
+      console.log(err)
+      dispatch(actionError(err))
     } finally {
       dispatch(actionLoadingEnd())
     }

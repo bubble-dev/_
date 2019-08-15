@@ -46,11 +46,10 @@ export type TCheckResult =
   }
 
 export type TItemResult =
-{
-  id: string,
-  serializedElement: TAnyObject,
-} &
-  (TCheckResult |
+  (TCheckResult & {
+    id: string,
+    serializedElement: TAnyObject,
+  }) |
   {
     type: 'DONE',
     path: string,
@@ -62,7 +61,7 @@ export type TItemResult =
   {
     type: 'BAILOUT',
     id: string,
-  })
+  }
 
 export type TFileResultData = {
   old: {

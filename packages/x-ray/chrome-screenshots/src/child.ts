@@ -4,7 +4,7 @@ import { parentPort, MessagePort } from 'worker_threads'
 import puppeteer, { Page } from 'puppeteer-core'
 import pAll from 'p-all'
 import { TCheckRequest } from '@x-ray/common-utils'
-import { checkScreenshot, TMeta } from '@x-ray/screenshot-utils'
+import { checkScreenshot, TMeta, TItemResult } from '@x-ray/screenshot-utils'
 import upng from 'upng-js'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { map } from 'iterama'
@@ -67,7 +67,7 @@ export default async (options: TOptions) => {
                         port.postMessage({
                           type: 'BAILOUT',
                           id: item.id,
-                        })
+                        } as TItemResult)
 
                         port.close()
 
@@ -82,7 +82,7 @@ export default async (options: TOptions) => {
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      })
+                      } as TItemResult)
 
                       break
                     }
@@ -91,7 +91,7 @@ export default async (options: TOptions) => {
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      })
+                      } as TItemResult)
 
                       break
                     }
@@ -100,7 +100,7 @@ export default async (options: TOptions) => {
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      })
+                      } as TItemResult)
 
                       break
                     }
@@ -122,7 +122,7 @@ export default async (options: TOptions) => {
                     data,
                     width,
                     height,
-                  })
+                  } as TItemResult)
                 }
               }
 
@@ -131,7 +131,7 @@ export default async (options: TOptions) => {
               port.postMessage({
                 type: 'DONE',
                 path: action.path,
-              })
+              } as TItemResult)
 
               break
             }

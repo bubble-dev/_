@@ -55,9 +55,9 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
           const urlData = url.parse(req.url!, true)
 
           if (urlData.pathname === '/get') {
-            const { file: shortPath, item, type } = urlData.query as {
+            const { file: shortPath, id, type } = urlData.query as {
               file: string,
-              item: string,
+              id: string,
               type: 'old' | 'new',
             }
 
@@ -65,8 +65,8 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
               throw new Error(`?file param is required in ${req.url}`)
             }
 
-            if (!isString(item)) {
-              throw new Error(`?item param is required in ${req.url}`)
+            if (!isString(id)) {
+              throw new Error(`?id param is required in ${req.url}`)
             }
 
             if (!isString(type)) {
@@ -89,12 +89,12 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
               throw new Error(`Cannot find "${file}" → "${type}"`)
             }
 
-            if (!Reflect.has(items[type], item)) {
-              throw new Error(`Cannot find "${file}" → "${type}" → "${item}"`)
+            if (!Reflect.has(items[type], id)) {
+              throw new Error(`Cannot find "${file}" → "${type}" → "${id}"`)
             }
 
             res.setHeader('Content-Type', 'image/png')
-            res.end(items[type][item], 'binary')
+            res.end(items[type][id], 'binary')
           }
         }
 
@@ -138,10 +138,10 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 }
 
                 if (Reflect.has(fileResult, 'new')) {
-                  Object.keys(fileResult.new).forEach((item) => {
-                    tar.write(item, {
-                      meta: result[file].new[item].serializedElement,
-                      data: resultData[file].new[item],
+                  Object.keys(fileResult.new).forEach((id) => {
+                    tar.write(id, {
+                      meta: result[file].new[id].serializedElement,
+                      data: resultData[file].new[id],
                     })
                   })
                 }

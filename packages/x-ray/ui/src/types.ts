@@ -1,6 +1,7 @@
 import { TJsonValue } from 'typeon'
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
+import { TLineElement } from 'syntx'
 
 export type TPosition = {
   top: number,
@@ -33,7 +34,8 @@ export type TItemType = 'new' | 'deleted' | 'diff'
 
 export type TItem = TSize & {
   file: string,
-  props: string,
+  id: string,
+  serializedElement: TLineElement[][],
 } & ({
   type: 'new' | 'deleted',
 } | {

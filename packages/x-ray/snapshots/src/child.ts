@@ -30,8 +30,7 @@ export default async (options: TOptions) => {
               await pAll(
                 map((item: TMeta) => async () => {
                   const snapshot = await serialize(item.element)
-                  const snapshotName = item.options.name
-                  const message = await checkSnapshot(Buffer.from(snapshot), tar, snapshotName)
+                  const message = await checkSnapshot(Buffer.from(snapshot), tar, item.id)
 
                   if (shouldBailout) {
                     switch (message.type) {

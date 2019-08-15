@@ -12,17 +12,25 @@ export const Screenshot = component(
   mapStoreDispatch,
   mapState('src', 'setSrc', () => null as string | null, []),
   onMount(({ dispatch, setSrc, ...opts }) => {
-    (async () => {
+    let isMounted = true
+
+    ;(async () => {
       try {
         const blob = await apiLoadScreenshot(opts)
         const url = URL.createObjectURL(blob)
 
-        setSrc(url)
+        if (isMounted) {
+          setSrc(url)
+        }
       } catch (err) {
         console.log(err)
         dispatch(actionError(err.message))
       }
     })()
+
+    return () => {
+      isMounted = false
+    }
   }),
   mapHandlers({
     onLoad: ({ src }) => () => {

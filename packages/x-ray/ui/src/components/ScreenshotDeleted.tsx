@@ -11,11 +11,11 @@ export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'
 
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
-)(({ top, left, width, height, file, props }) => (
+)(({ top, left, width, height, file, id }) => (
   <Block top={top} left={left} width={width} height={height}>
     <Screenshot
       file={file}
-      props={props}
+      id={id}
       type="old"
       width={width}
       height={height}

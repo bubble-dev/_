@@ -3,7 +3,7 @@ import { component, startWithType, mapWithProps, mapState, mapSafeTimeout, mapHa
 import { isUndefined } from 'tsfn'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { mapStoreState } from '../store'
-import { TRect } from '../types'
+import { TRect, TGridItem } from '../types'
 import { DIFF_TIMEOUT } from '../config'
 import { Block } from './Block'
 import { ScreenshotDiff } from './ScreenshotDiff'
@@ -13,14 +13,15 @@ import { SnapshotDeleted } from './SnapshotDeleted'
 import { SnapshotNew } from './SnapshotNew'
 import { ScreenshotDeleted } from './ScreenshotDeleted'
 
-export type TPreview = TRect
+export type TPreview = TRect & {
+  selectedItem: TGridItem,
+}
 
 export const Preview = component(
   startWithType<TPreview>(),
-  mapStoreState(({ type, selectedItem }) => ({
+  mapStoreState(({ type }) => ({
     type,
-    selectedItem,
-  }), ['selectedItem', 'type']),
+  }), ['type']),
   mapWithProps(({ width, height }) => ({
     halfWidth: width / 2,
     halfHeight: height / 2,
@@ -40,12 +41,12 @@ export const Preview = component(
       clearDiffTimeout.current = null
     }
 
-    if (selectedItem !== null && selectedItem.type === 'diff') {
+    if (selectedItem.type === 'diff') {
       clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
     }
   }, ['diffState', 'selectedItem']),
   onMount(({ clearDiffTimeout, toggleDiffState, setSafeTimeout, selectedItem }) => {
-    if (selectedItem !== null && selectedItem.type === 'diff') {
+    if (selectedItem.type === 'diff') {
       clearDiffTimeout.current = setSafeTimeout(toggleDiffState, DIFF_TIMEOUT)
     }
   })
@@ -57,17 +58,17 @@ export const Preview = component(
       width={width}
       height={height}
     >
-      {!isUndefined(type) && selectedItem !== null && (
+      {!isUndefined(type) && (
         <Fragment>
           {selectedItem.type === 'new' && type === 'image' && (
             <ScreenshotNew
-              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              key={`${selectedItem.file}:new:${selectedItem.id}`}
               top={halfHeight - selectedItem.height / 2}
               left={halfWidth - selectedItem.width / 2}
               width={selectedItem.width}
               height={selectedItem.height}
               file={selectedItem.file}
-              props={selectedItem.props}
+              id={selectedItem.id}
             />
           )}
 
@@ -75,7 +76,7 @@ export const Preview = component(
             <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
               {([alpha]) => (
                 <ScreenshotDiff
-                  key={`${selectedItem.file}:diff:${selectedItem.props}`}
+                  key={`${selectedItem.file}:diff:${selectedItem.id}`}
                   top={halfHeight - selectedItem.height / 2}
                   left={halfWidth - selectedItem.width / 2}
                   oldWidth={selectedItem.width}
@@ -85,7 +86,7 @@ export const Preview = component(
                   oldAlpha={1 - alpha}
                   newAlpha={alpha}
                   file={selectedItem.file}
-                  props={selectedItem.props}
+                  id={selectedItem.id}
                 />
               )}
             </Animation>
@@ -93,49 +94,49 @@ export const Preview = component(
 
           {selectedItem.type === 'deleted' && type === 'image' && (
             <ScreenshotDeleted
-              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              key={`${selectedItem.file}:new:${selectedItem.id}`}
               top={halfHeight - selectedItem.height / 2}
               left={halfWidth - selectedItem.width / 2}
               width={selectedItem.width}
               height={selectedItem.height}
               file={selectedItem.file}
-              props={selectedItem.props}
+              id={selectedItem.id}
             />
           )}
 
           {selectedItem.type === 'new' && type === 'text' && (
             <SnapshotNew
-              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              key={`${selectedItem.file}:new:${selectedItem.id}`}
               top={68}
               left={0}
               width={width}
               height={height}
               file={selectedItem.file}
-              props={selectedItem.props}
+              id={selectedItem.id}
             />
           )}
 
           {selectedItem.type === 'diff' && type === 'text' && (
             <SnapshotDiff
-              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              key={`${selectedItem.file}:new:${selectedItem.id}`}
               top={68}
               left={0}
               width={width}
               height={height}
               file={selectedItem.file}
-              props={selectedItem.props}
+              id={selectedItem.id}
             />
           )}
 
           {selectedItem.type === 'deleted' && type === 'text' && (
             <SnapshotDeleted
-              key={`${selectedItem.file}:new:${selectedItem.props}`}
+              key={`${selectedItem.file}:new:${selectedItem.id}`}
               top={68}
               left={0}
               width={width}
               height={height}
               file={selectedItem.file}
-              props={selectedItem.props}
+              id={selectedItem.id}
             />
           )}
         </Fragment>

@@ -19,11 +19,11 @@ export const itemsSorter = (a: TItem, b: TItem): -1 | 0 | 1 => {
     }
 
     if (a.type === b.type) {
-      if (a.props.length < b.props.length) {
+      if (a.id.length < b.id.length) {
         return -1
       }
 
-      if (a.props.length > b.props.length) {
+      if (a.id.length > b.id.length) {
         return 1
       }
     }

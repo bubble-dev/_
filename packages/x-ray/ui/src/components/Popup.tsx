@@ -5,8 +5,8 @@ import { Background } from '@primitives/background'
 import { mapStoreDispatch, mapStoreState } from '../store'
 import { actionSelect } from '../actions'
 import { TRect } from '../types'
+import { SourceCode } from './SourceCode'
 import { Block } from './Block'
-import { Props } from './Props'
 import { Preview } from './Preview'
 import { Shadow } from './Shadow'
 
@@ -105,6 +105,7 @@ export const Popup = component(
   height,
   alpha,
   state,
+  selectedItem,
   popupLeft,
   popupTop,
   popupWidth,
@@ -138,20 +139,22 @@ export const Popup = component(
           height={popupHeight}
         >
           <Background color={[255, 255, 255, alpha]}/>
-          {state === STATE_OPEN && (
+          {state === STATE_OPEN && selectedItem !== null && (
             <Fragment>
               <Shadow color={[0, 0, 0, alpha]} blurRadius={20} spreadRadius={1}/>
-              <Props
+              <SourceCode
                 top={propsTop}
                 left={propsLeft}
                 width={propsWidth}
                 height={propsHeight}
+                selectedItem={selectedItem}
               />
               <Preview
                 top={previewTop}
                 left={previewLeft}
                 width={previewWidth}
                 height={previewHeight}
+                selectedItem={selectedItem}
               />
             </Fragment>
           )}

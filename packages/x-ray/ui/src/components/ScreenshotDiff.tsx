@@ -28,7 +28,7 @@ export const ScreenshotDiff = pureComponent(
   oldAlpha,
   newAlpha,
   file,
-  props,
+  id,
 }) => (
   <Fragment>
     <Block
@@ -40,7 +40,7 @@ export const ScreenshotDiff = pureComponent(
     >
       <Screenshot
         file={file}
-        props={props}
+        id={id}
         type="old"
         width={oldWidth}
         height={oldHeight}
@@ -66,7 +66,7 @@ export const ScreenshotDiff = pureComponent(
     >
       <Screenshot
         file={file}
-        props={props}
+        id={id}
         type="new"
         width={newWidth}
         height={newHeight}

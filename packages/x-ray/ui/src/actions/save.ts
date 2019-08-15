@@ -16,6 +16,7 @@ export const actionSave = (items: TItem[]): TActionAsync<TActionSave | TActionEr
 
       dispatch({ type: TYPE_SAVE })
     } catch (err) {
+      console.log(err)
       dispatch(actionError(err.message))
     } finally {
       dispatch(actionLoadingEnd())

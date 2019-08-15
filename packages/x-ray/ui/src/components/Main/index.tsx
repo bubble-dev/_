@@ -157,7 +157,7 @@ export const Main = component(
                 col.map((item: TGridItem) => {
                   const isVisible = isVisibleItem(item, scrollTop, height)
                   const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
-                  const key = `${item.file}:${item.type}:${item.props}`
+                  const key = `${item.file}:${item.type}:${item.id}`
 
                   if (isVisible && isNew) {
                     return (
@@ -193,7 +193,7 @@ export const Main = component(
                           width={item.gridWidth}
                           height={item.gridHeight}
                           file={item.file}
-                          props={item.props}
+                          id={item.id}
                         />
                       )
                     }
@@ -207,7 +207,7 @@ export const Main = component(
                           width={item.gridWidth}
                           height={item.gridHeight}
                           file={item.file}
-                          props={item.props}
+                          id={item.id}
                         />
                       )
                     }
@@ -228,7 +228,7 @@ export const Main = component(
                           oldAlpha={1 - alpha}
                           newAlpha={alpha}
                           file={item.file}
-                          props={item.props}
+                          id={item.id}
                         />
                       )
                     }

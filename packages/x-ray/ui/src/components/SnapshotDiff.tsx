@@ -44,6 +44,7 @@ export const SnapshotDiff = component(
 
         setState(data)
       } catch (err) {
+        console.log(err)
         dispatch(actionError(err.message))
       }
     })()

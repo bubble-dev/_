@@ -1,5 +1,6 @@
 import { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
+import { TLineElement } from 'syntx'
 import {
   isActionLoadingStart,
   isActionLoadingEnd,
@@ -49,29 +50,31 @@ export const reducer: Reducer<TState> = (state, action) => {
       type: action.payload.type,
       items: Object.entries(action.payload.files)
         .reduce((result, [file, value]) => {
-          const allProps = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
+          const allIds = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
 
-          allProps.forEach((props) => {
-            if (Reflect.has(value.new, props)) {
-              if (Reflect.has(value.old, props)) {
+          allIds.forEach((id) => {
+            if (Reflect.has(value.new, id)) {
+              if (Reflect.has(value.old, id)) {
                 // diff
                 result.push({
                   type: 'diff',
                   file,
-                  props,
-                  width: value.old[props].width,
-                  height: value.old[props].height,
-                  newWidth: value.new[props].width,
-                  newHeight: value.new[props].height,
+                  id,
+                  serializedElement: value.old[id].serializedElement as TLineElement[][],
+                  width: value.old[id].width,
+                  height: value.old[id].height,
+                  newWidth: value.new[id].width,
+                  newHeight: value.new[id].height,
                 })
               } else {
                 // new
                 result.push({
                   type: 'new',
                   file,
-                  props,
-                  width: value.new[props].width,
-                  height: value.new[props].height,
+                  id,
+                  serializedElement: value.new[id].serializedElement as TLineElement[][],
+                  width: value.new[id].width,
+                  height: value.new[id].height,
                 })
               }
             } else {
@@ -79,9 +82,10 @@ export const reducer: Reducer<TState> = (state, action) => {
               result.push({
                 type: 'deleted',
                 file,
-                props,
-                width: value.old[props].width,
-                height: value.old[props].height,
+                id,
+                serializedElement: value.old[id].serializedElement as TLineElement[][],
+                width: value.old[id].width,
+                height: value.old[id].height,
               })
             }
           })
