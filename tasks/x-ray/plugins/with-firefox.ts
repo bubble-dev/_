@@ -3,7 +3,6 @@ import plugin, { StartPlugin } from '@start/plugin'
 
 export default (target: StartPlugin<{}, any>) =>
   plugin('with-firefox', ({ reporter }) => async () => {
-    const path = await import('path')
     const { default: execa } = await import('execa')
 
     const targetRunner = await target
@@ -33,8 +32,6 @@ export default (target: StartPlugin<{}, any>) =>
           '2828:2828',
           '--name',
           'foxr-firefox',
-          '-v',
-          `${path.resolve('packages/klarna/bubble-ui/assets/fonts/native')}:/home/firefox/.fonts`,
           'deepsweet/firefox-headless-remote:64',
         ],
         execaOptions

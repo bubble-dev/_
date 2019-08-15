@@ -1376,7 +1376,7 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/blue-tape@^0.1.32", "@types/blue-tape@^0.1.33":
+"@types/blue-tape@^0.1.32":
   version "0.1.33"
   resolved "https://registry.yarnpkg.com/@types/blue-tape/-/blue-tape-0.1.33.tgz#61796d4f0455a00a61be59e52288cb3428209804"
   integrity sha512-l5cQcLM3aPh55bBQ4geWQ8hZ4Ew+s4RvyhMaBpgW3aJ2HUfRgwd8ENKrk/utC4Hz1dJAiehyIa4vN6emxBMaog==

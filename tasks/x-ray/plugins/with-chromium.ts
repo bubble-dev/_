@@ -3,7 +3,6 @@ import plugin, { StartPlugin } from '@start/plugin'
 
 export default (target: StartPlugin<{}, void>) =>
   plugin('with-chromium', ({ reporter }) => async () => {
-    const path = await import('path')
     const { default: execa } = await import('execa')
 
     const targetRunner = await target
@@ -31,8 +30,6 @@ export default (target: StartPlugin<{}, void>) =>
           '9222:9222',
           '--name',
           'chromium-headless-remote',
-          '-v',
-          `${path.resolve('packages/klarna/bubble-ui/assets/fonts/native')}:/home/chromium/.fonts`,
           'deepsweet/chromium-headless-remote:73',
         ],
         execaOptions

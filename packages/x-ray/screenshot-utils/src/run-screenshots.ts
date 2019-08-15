@@ -1,6 +1,7 @@
 import path from 'path'
-import { parent, TResult, TFileResult } from '@x-ray/common-utils'
+import { TResult, TFileResult } from '@x-ray/common-utils'
 import { TAnyObject } from 'tsfn'
+import { makeWorker } from '@x-ray/worker-utils'
 import { TFileResultData, TItemResult, TResultData, TRunScreesnotsResult } from './types'
 
 const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr * 100) / 100
@@ -26,7 +27,7 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
         old: {},
         new: {},
       }
-      const worker = parent(childFile, options)
+      const worker = makeWorker(childFile, options)
 
       worker.on('message', async (action: TItemResult) => {
         switch (action.type) {
