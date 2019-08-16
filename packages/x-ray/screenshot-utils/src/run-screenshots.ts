@@ -1,7 +1,7 @@
 import path from 'path'
 import { TAnyObject } from 'tsfn'
 import { makeWorker } from '@x-ray/worker-utils'
-import { TFileResultData, TItemResult, TResultData, TRunScreesnotsResult, TResult, TFileResult } from './types'
+import { TScreenshotsFileResultData, TScreenshotsItemResult, TScreenshotsResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from './types'
 
 const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr * 100) / 100
 
@@ -11,24 +11,24 @@ export const runScreenshots = (childFile: string, targetFiles: string[], consurr
   let targetFileIndex = 0
   let doneWorkersCount = 0
 
-  const result: TResult = {}
-  const resultData: TResultData = {}
+  const result: TScreenshotsResult = {}
+  const resultData: TScreenshotsResultData = {}
   let hasBeenChanged = false
 
   const workers = Array(workersCount)
     .fill(null)
     .map(() => {
-      let targetResult: TFileResult = {
+      let targetResult: TScreenshotsFileResult = {
         old: {},
         new: {},
       }
-      let targetResultData: TFileResultData = {
+      let targetResultData: TScreenshotsFileResultData = {
         old: {},
         new: {},
       }
       const worker = makeWorker(childFile, options)
 
-      worker.on('message', async (action: TItemResult) => {
+      worker.on('message', async (action: TScreenshotsItemResult) => {
         switch (action.type) {
           case 'OK': {
             break

@@ -6,12 +6,14 @@ import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { TRect } from '../types'
+import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT } from '../config'
 import { Block } from './Block'
+import { Border } from './Border'
 
-export type TSnapshot = TApiLoadSnapshotOpts & TRect
+export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect
 
-export const Snapshot = component(
-  startWithType<TSnapshot>(),
+export const SnapshotGridItem = component(
+  startWithType<TSnapshotGridItem>(),
   mapStoreDispatch,
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
   onMount(({ setState, file, id, type, dispatch }) => {
@@ -43,13 +45,13 @@ export const Snapshot = component(
     <Block top={top} left={left} width={width} height={height}>
       <pre
         style={{
-          fontSize: 4,
-          lineHeight: '6px',
+          fontSize: SNAPSHOT_GRID_FONT_SIZE,
+          lineHeight: `${SNAPSHOT_GRID_LINE_HEIGHT}px`,
           fontFamily: 'monospace',
-          border: '1px solid red',
           width,
           height,
-          overflow: 'scroll',
+          margin: 0,
+          overflow: 'hidden',
         }}
       >
         {state.map((item, i) => (
@@ -70,6 +72,17 @@ export const Snapshot = component(
           </div>
         ))}
       </pre>
+      <Border
+        topWidth={2}
+        leftWidth={2}
+        rightWidth={2}
+        bottomWidth={2}
+        overflowTop={2}
+        overflowLeft={2}
+        overflowRight={2}
+        overflowBottom={2}
+        color={[0, 127, 0, 1]}
+      />
     </Block>
   )
 })

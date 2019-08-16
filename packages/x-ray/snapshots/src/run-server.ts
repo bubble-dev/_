@@ -6,14 +6,14 @@ import { TarFs } from '@x-ray/tar-fs'
 import { isString, isUndefined } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TResultData, TResult } from './types'
+import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
 export type TRunServer = {
   platform: string,
-  result: TResult,
-  resultData: TResultData,
+  result: TSnapshotsResult,
+  resultData: TSnapshotsResultData,
 }
 
 export const runServer = ({ platform, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 acc[shortPath] = result[longPath]
 
                 return acc
-              }, Promise.resolve({} as TResult)),
+              }, Promise.resolve({} as TSnapshotsResult)),
             }))
 
             return
@@ -57,7 +57,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
             const { file: shortPath, id, type } = urlData.query as {
               file: string,
               id: string,
-              type: 'old' | 'new' | 'diff',
+              type: TSnapshotResultType,
             }
 
             if (!isString(shortPath)) {
@@ -98,7 +98,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
-            const data = await new Promise<TResult>((resolve, reject) => {
+            const data = await new Promise<TSnapshotsResult>((resolve, reject) => {
               let body = ''
 
               req
@@ -129,8 +129,8 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 const tar = await TarFs(tarPath)
                 const fileResult = data[shortPath]
 
-                if (Reflect.has(fileResult, 'old')) {
-                  Object.keys(fileResult.old).forEach((item) => {
+                if (Reflect.has(fileResult, 'deleted')) {
+                  Object.keys(fileResult.deleted).forEach((item) => {
                     tar.delete(item)
                   })
                 }

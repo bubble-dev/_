@@ -3,7 +3,7 @@ import path from 'path'
 import { parentPort, MessagePort } from 'worker_threads'
 import foxr from 'foxr'
 import upng from 'upng-js'
-import { checkScreenshot, TMeta, TItemResult } from '@x-ray/screenshot-utils'
+import { checkScreenshot, TMeta, TScreenshotsItemResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { TCheckRequest } from '@x-ray/common-utils'
 import getScreenshot from './get'
@@ -47,7 +47,7 @@ export default async (options: TOptions) => {
                       port.postMessage({
                         type: 'BAILOUT',
                         id: item.id,
-                      } as TItemResult)
+                      } as TScreenshotsItemResult)
 
                       port.close()
 
@@ -63,7 +63,7 @@ export default async (options: TOptions) => {
                       ...message,
                       id: item.id,
                       serializedElement: item.serializedElement,
-                    } as TItemResult)
+                    } as TScreenshotsItemResult)
 
                     break
                   }
@@ -82,14 +82,14 @@ export default async (options: TOptions) => {
                     data,
                     width,
                     height,
-                  } as TItemResult)
+                  } as TScreenshotsItemResult)
                 }
               }
 
               port.postMessage({
                 type: 'DONE',
                 path: action.path,
-              } as TItemResult)
+              } as TScreenshotsItemResult)
 
               break
             }
@@ -111,7 +111,7 @@ export default async (options: TOptions) => {
       port.postMessage({
         type: 'ERROR',
         data: err.message,
-      } as TItemResult)
+      } as TScreenshotsItemResult)
     }
   }
 }

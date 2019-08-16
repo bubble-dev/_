@@ -2,14 +2,18 @@ import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
-import { mapStoreDispatch, mapStoreState } from '../store'
-import { actionSelect } from '../actions'
-import { TRect } from '../types'
+import { mapStoreDispatch } from '../store'
+import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
+import { actionDeselect } from '../actions'
 import { SourceCode } from './SourceCode'
 import { Block } from './Block'
-import { Preview } from './Preview'
+import { ScreenshotPreview } from './ScreenshotPreview'
 import { Shadow } from './Shadow'
 import { Border } from './Border'
+import { SnapshotPreview } from './SnapshotPreview'
+
+const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TScreenshotGridItem => type === 'image' && item !== null
+const isSnapshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TSnapshotGridItem => type === 'text' && item !== null
 
 const POPUP_OFFSET = 50
 
@@ -18,13 +22,13 @@ const STATE_OPENING = 1
 const STATE_OPEN = 2
 const STATE_CLOSING = 3
 
-export type TPopup = TRect
+export type TPopup = TRect & {
+  type: TType,
+  item: TGridItem,
+}
 
 export const Popup = component(
   startWithType<TPopup>(),
-  mapStoreState(({ selectedItem }) => ({
-    selectedItem,
-  }), ['selectedItem']),
   mapStoreDispatch,
   mapState('state', 'setState', () => STATE_CLOSE, []),
   mapHandlers({
@@ -33,7 +37,7 @@ export const Popup = component(
     },
     onClose: ({ dispatch, setState }) => () => {
       setState(STATE_CLOSE)
-      dispatch(actionSelect(null))
+      dispatch(actionDeselect())
     },
     onOpen: ({ setState }) => () => {
       setState(STATE_OPEN)
@@ -55,11 +59,7 @@ export const Popup = component(
       }
     },
   }),
-  mapWithProps(({ top, left, width, height, state, selectedItem }) => {
-    if (selectedItem === null) {
-      throw new Error('Invalid selectedItem')
-    }
-
+  mapWithProps(({ top, left, width, height, state, item }) => {
     const shouldNotAnimate = state === STATE_OPEN || state === STATE_CLOSE
 
     if (state === STATE_OPENING || state === STATE_OPEN) {
@@ -74,10 +74,10 @@ export const Popup = component(
     }
 
     return {
-      popupLeft: selectedItem.left,
-      popupTop: selectedItem.top,
-      popupWidth: selectedItem.gridWidth,
-      popupHeight: selectedItem.gridHeight,
+      popupLeft: item.left,
+      popupTop: item.top,
+      popupWidth: item.gridWidth,
+      popupHeight: item.gridHeight,
       alpha: 0,
       shouldNotAnimate,
     }
@@ -106,7 +106,8 @@ export const Popup = component(
   height,
   alpha,
   state,
-  selectedItem,
+  item,
+  type,
   popupLeft,
   popupTop,
   popupWidth,
@@ -151,7 +152,7 @@ export const Popup = component(
             overflowBottom={2}
           />
           <Background color={[255, 255, 255, alpha]}/>
-          {state === STATE_OPEN && selectedItem !== null && (
+          {state === STATE_OPEN && item !== null && (
             <Fragment>
               <Shadow color={[0, 0, 0, alpha]} blurRadius={20}/>
               <SourceCode
@@ -159,15 +160,26 @@ export const Popup = component(
                 left={propsLeft}
                 width={propsWidth}
                 height={propsHeight}
-                selectedItem={selectedItem}
+                item={item}
               />
-              <Preview
-                top={previewTop}
-                left={previewLeft}
-                width={previewWidth}
-                height={previewHeight}
-                selectedItem={selectedItem}
-              />
+              {isScreenshotGridItem(type, item) && (
+                <ScreenshotPreview
+                  top={previewTop}
+                  left={previewLeft}
+                  width={previewWidth}
+                  height={previewHeight}
+                  item={item}
+                />
+              )}
+              {isSnapshotGridItem(type, item) && (
+                <SnapshotPreview
+                  top={previewTop}
+                  left={previewLeft}
+                  width={previewWidth}
+                  height={previewHeight}
+                  item={item}
+                />
+              )}
             </Fragment>
           )}
         </Block>

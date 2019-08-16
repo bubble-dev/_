@@ -2,7 +2,7 @@ import path from 'path'
 import { TOptions } from '@x-ray/common-utils'
 import { makeWorker } from '@x-ray/worker-utils'
 import { diffArrays } from 'diff'
-import { TRunSnapshotsResult, TResultData, TFileResultData, TItemResult, TResult, TFileResult, TFileResultLine } from './types'
+import { TRunSnapshotsResult, TSnapshotsResultData, TSnapshotsFileResultData, TSnapshotsItemResult, TSnapshotsResult, TSnapshotsFileResult, TFileResultLine } from './types'
 
 const getDataSize = (lines: TFileResultLine[]) => {
   let maxWidth = 0
@@ -24,26 +24,26 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
   let targetFileIndex = 0
   let doneWorkersCount = 0
 
-  const result: TResult = {}
-  const resultData: TResultData = {}
+  const result: TSnapshotsResult = {}
+  const resultData: TSnapshotsResultData = {}
   let hasBeenChanged = false
 
   const workers = Array(workersCount)
     .fill(null)
     .map(() => {
-      let targetResult: TFileResult = {
-        old: {},
+      let targetResult: TSnapshotsFileResult = {
+        deleted: {},
         new: {},
         diff: {},
       }
-      let targetResultData: TFileResultData = {
-        old: {},
+      let targetResultData: TSnapshotsFileResultData = {
+        deleted: {},
         new: {},
         diff: {},
       }
       const worker = makeWorker(childFile, options)
 
-      worker.on('message', async (action: TItemResult) => {
+      worker.on('message', async (action: TSnapshotsItemResult) => {
         switch (action.type) {
           case 'OK': {
             break
@@ -117,11 +117,11 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
                 value: line,
               }))
 
-            targetResult.old[action.id] = {
+            targetResult.deleted[action.id] = {
               serializedElement: action.serializedElement,
               ...getDataSize(data),
             }
-            targetResultData.old[action.id] = data
+            targetResultData.deleted[action.id] = data
 
             hasBeenChanged = true
 
@@ -140,12 +140,12 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             resultData[relativePath] = targetResultData
 
             targetResult = {
-              old: {},
+              deleted: {},
               new: {},
               diff: {},
             }
             targetResultData = {
-              old: {},
+              deleted: {},
               new: {},
               diff: {},
             }

@@ -8,7 +8,7 @@ export type TMeta = {
   element: ReactElement<any>,
 }
 
-export type TCheckResult =
+export type TSnapshotsCheckResult =
   {
     type: 'OK',
   } |
@@ -26,8 +26,8 @@ export type TCheckResult =
     data: Buffer,
   }
 
-export type TItemResult =
-  (TCheckResult & {
+export type TSnapshotsItemResult =
+  (TSnapshotsCheckResult & {
     id: string,
     serializedElement: TAnyObject,
   }) |
@@ -44,32 +44,20 @@ export type TItemResult =
     id: string,
   }
 
-export type TFileResult = {
-  old: {
+export type TSnapshotResultType = 'new' | 'diff' | 'deleted'
+
+export type TSnapshotsFileResult = {
+  [k in TSnapshotResultType]: {
     [k: string]: {
       serializedElement: TAnyObject,
       width: number,
       height: number,
     },
-  },
-  new: {
-    [k: string]: {
-      serializedElement: TAnyObject,
-      width: number,
-      height: number,
-    },
-  },
-  diff: {
-    [k: string]: {
-      serializedElement: TAnyObject,
-      width: number,
-      height: number,
-    },
-  },
+  }
 }
 
-export type TResult = {
-  [filename: string]: TFileResult,
+export type TSnapshotsResult = {
+  [filename: string]: TSnapshotsFileResult,
 }
 
 export type TFileResultLine = {
@@ -77,27 +65,21 @@ export type TFileResultLine = {
   type?: 'added' | 'removed',
 }
 
-export type TFileResultData = {
-  old: {
+export type TSnapshotsFileResultData = {
+  [k in TSnapshotResultType]: {
     [key: string]: TFileResultLine[],
-  },
-  new: {
-    [key: string]: TFileResultLine[],
-  },
-  diff: {
-    [key: string]: TFileResultLine[],
-  },
+  }
 }
 
-export type TResultData = { [key: string]: TFileResultData }
+export type TSnapshotsResultData = { [key: string]: TSnapshotsFileResultData }
 
 export type TRunSnapshotsResult = {
-  result: TResult,
-  resultData: TResultData,
+  result: TSnapshotsResult,
+  resultData: TSnapshotsResultData,
   hasBeenChanged: boolean,
 }
 
 export type TSnapshotsListResult = {
   type: 'text',
-  files: TResult,
+  files: TSnapshotsResult,
 }

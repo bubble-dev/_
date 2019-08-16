@@ -6,14 +6,14 @@ import { TarFs } from '@x-ray/tar-fs'
 import { isString, isUndefined } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TResultData, TResult } from './types'
+import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
 export type TRunServer = {
   platform: string,
-  result: TResult,
-  resultData: TResultData,
+  result: TScreenshotsResult,
+  resultData: TScreenshotsResultData,
 }
 
 export const runServer = ({ platform, result, resultData }: TRunServer) => new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 acc[shortPath] = result[longPath]
 
                 return acc
-              }, Promise.resolve({} as TResult)),
+              }, Promise.resolve({} as TScreenshotsResult)),
             }))
 
             return
@@ -57,7 +57,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
             const { file: shortPath, id, type } = urlData.query as {
               file: string,
               id: string,
-              type: 'old' | 'new',
+              type: TScreenshotResultType,
             }
 
             if (!isString(shortPath)) {
@@ -99,7 +99,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
-            const data = await new Promise<TResult>((resolve, reject) => {
+            const data = await new Promise<TScreenshotsResult>((resolve, reject) => {
               let body = ''
 
               req

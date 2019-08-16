@@ -1,7 +1,7 @@
 import { TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
-import { TCheckResult } from './types'
+import { TSnapshotsCheckResult } from './types'
 
-export const checkSnapshot = async (data: Buffer, tar: TTarFs, snapshotName: string): Promise<TCheckResult> => {
+export const checkSnapshot = async (data: Buffer, tar: TTarFs, snapshotName: string): Promise<TSnapshotsCheckResult> => {
   if (tar.has(snapshotName)) {
     const { data: existingData } = await tar.read(snapshotName) as TTarDataWithMeta
 

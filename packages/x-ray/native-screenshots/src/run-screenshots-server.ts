@@ -1,10 +1,9 @@
 import path from 'path'
 import http from 'http'
 import upng from 'upng-js'
-import { checkScreenshot, TResultData, TFileResultData, TRunScreesnotsResult } from '@x-ray/screenshot-utils'
+import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { isUndefined, isString } from 'tsfn'
-import { TResult, TFileResult } from '@x-ray/common-utils'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -16,15 +15,15 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
     let currentTar: TTarFs
     let currentFilePath: string
 
-    const result: TResult = {}
-    const resultData: TResultData = {}
+    const result: TScreenshotsResult = {}
+    const resultData: TScreenshotsResultData = {}
     let hasBeenChanged = false
 
-    let targetResult: TFileResult = {
+    let targetResult: TScreenshotsFileResult = {
       old: {},
       new: {},
     }
-    let targetResultData: TFileResultData = {
+    let targetResultData: TScreenshotsFileResultData = {
       old: {},
       new: {},
     }

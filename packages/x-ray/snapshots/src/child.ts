@@ -7,7 +7,7 @@ import serialize from '@x-ray/serialize-react-tree'
 import { TCheckRequest, TOptions } from '@x-ray/common-utils'
 import { map } from 'iterama'
 import { checkSnapshot } from './check-snapshot'
-import { TMeta, TItemResult } from './types'
+import { TMeta, TSnapshotsItemResult } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
 const port = parentPort as any as MessagePort
@@ -39,7 +39,7 @@ export default async (options: TOptions) => {
                         port.postMessage({
                           type: 'BAILOUT',
                           id: item.id,
-                        } as TItemResult)
+                        } as TSnapshotsItemResult)
 
                         port.close()
 
@@ -55,7 +55,7 @@ export default async (options: TOptions) => {
                         ...message,
                         id: item.id,
                         serializedElement: item.serializedElement,
-                      } as TItemResult)
+                      } as TSnapshotsItemResult)
 
                       break
                     }
@@ -73,14 +73,14 @@ export default async (options: TOptions) => {
                     id: filename,
                     serializedElement: meta,
                     data,
-                  } as TItemResult)
+                  } as TSnapshotsItemResult)
                 }
               }
 
               port.postMessage({
                 type: 'DONE',
                 path: action.path,
-              } as TItemResult)
+              } as TSnapshotsItemResult)
 
               break
             }
@@ -101,7 +101,7 @@ export default async (options: TOptions) => {
       port.postMessage({
         type: 'ERROR',
         data: err.message,
-      } as TItemResult)
+      } as TSnapshotsItemResult)
     }
   }
 }

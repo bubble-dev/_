@@ -1,11 +1,10 @@
-import { TFileResultLine } from '@x-ray/snapshots'
+import { TFileResultLine, TSnapshotResultType } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
-import { TSnapshotFileType } from '../types'
 
 export type TApiLoadSnapshotOpts = {
   file: string,
-  type: TSnapshotFileType,
   id: string,
+  type: TSnapshotResultType,
 }
 
 const apiLoadSnapshotCache = new Map<string, TFileResultLine[]>()

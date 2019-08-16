@@ -28,16 +28,15 @@ export type TActionAsync<A extends TAnyAction> = ThunkAction<Promise<void>, TSta
 
 export type TType = 'image' | 'text'
 
-export type TScreenshotFileType = 'old' | 'new'
-export type TSnapshotFileType = 'old' | 'new' | 'diff'
-
 export type TItemType = 'new' | 'deleted' | 'diff'
 
 export type TItem = TSize & {
   file: string,
   id: string,
   serializedElement: TLineElement[][],
-} & ({
+}
+
+export type TScreenshotItem = TItem & ({
   type: 'new' | 'deleted',
 } | {
   type: 'diff',
@@ -45,16 +44,29 @@ export type TItem = TSize & {
   newHeight: number,
 })
 
+export type TSnapshotItem = TItem & {
+  type: 'new' | 'deleted' | 'diff',
+}
+
 export type TGridItem = TItem & TPosition & {
   gridWidth: number,
   gridHeight: number,
 }
 
+export type TScreenshotGridItem = TScreenshotItem & TGridItem
+
+export type TSnapshotGridItem = TSnapshotItem & TGridItem
+
 export type TState = {
   error?: string,
   isSaved: boolean,
   isLoading: boolean,
-  selectedItem: TGridItem | null,
-  items?: TItem[],
-  type?: TType,
-}
+} & ({
+  type?: 'text',
+  items?: TSnapshotItem[],
+  selectedItem: TSnapshotGridItem | null,
+} | {
+  type?: 'image',
+  items?: TScreenshotItem[],
+  selectedItem: TScreenshotGridItem | null,
+})

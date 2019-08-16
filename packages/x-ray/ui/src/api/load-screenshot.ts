@@ -1,12 +1,12 @@
+import { TScreenshotResultType } from '@x-ray/screenshot-utils'
 import { HOST, PORT } from '../config'
-import { TScreenshotFileType } from '../types'
 
 const apiLoadScreenshotCache = new Map<string, Blob>()
 
 export type TApiLoadScreenshotOpts = {
   file: string,
   id: string,
-  type: TScreenshotFileType,
+  type: TScreenshotResultType,
 }
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<Blob> => {

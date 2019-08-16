@@ -1,8 +1,8 @@
 import { TResult } from '@x-ray/common-utils'
 import { HOST, PORT } from '../config'
-import { TItem } from '../types'
+import { TScreenshotItem } from '../types'
 
-export const apiSave = async (items: TItem[]): Promise<void> => {
+export const apiSave = async (items: TScreenshotItem[]): Promise<void> => {
   const data = items.reduce((result, item) => {
     const file = result[item.file] || {}
     const props = file[item.type] || []

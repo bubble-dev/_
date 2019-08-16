@@ -1,3 +1,2 @@
-export * from './is-equal-items'
-export * from './has-item'
-export * from './items-sorter'
+export * from './screenshots-sorter'
+export * from './snapshots-sorter'

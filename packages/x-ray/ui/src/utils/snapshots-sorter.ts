@@ -1,6 +1,6 @@
-import { TItem } from '../types'
+import { TSnapshotItem } from '../types'
 
-export const itemsSorter = (a: TItem, b: TItem): -1 | 0 | 1 => {
+export const snapshotsSorter = (a: TSnapshotItem, b: TSnapshotItem): -1 | 0 | 1 => {
   if (a.file < b.file) {
     return -1
   }

@@ -14,7 +14,7 @@ export type TMeta = {
   },
 }
 
-export type TCheckResult =
+export type TScreenshotsCheckResult =
   {
     type: 'OK',
   } |
@@ -44,29 +44,24 @@ export type TCheckResult =
     height: number,
   }
 
-export type TFileResult = {
-  old: {
+export type TScreenshotResultType = 'old' | 'new'
+
+export type TScreenshotsFileResult = {
+  [k in TScreenshotResultType]: {
     [k: string]: {
       serializedElement: TAnyObject,
       width: number,
       height: number,
     },
-  },
-  new: {
-    [k: string]: {
-      serializedElement: TAnyObject,
-      width: number,
-      height: number,
-    },
-  },
+  }
 }
 
-export type TResult = {
-  [filename: string]: TFileResult,
+export type TScreenshotsResult = {
+  [filename: string]: TScreenshotsFileResult,
 }
 
-export type TItemResult =
-  (TCheckResult & {
+export type TScreenshotsItemResult =
+  (TScreenshotsCheckResult & {
     id: string,
     serializedElement: TAnyObject,
   }) |
@@ -83,24 +78,21 @@ export type TItemResult =
     id: string,
   }
 
-export type TFileResultData = {
-  old: {
+export type TScreenshotsFileResultData = {
+  [k in TScreenshotResultType]: {
     [key: string]: Buffer,
-  },
-  new: {
-    [key: string]: Buffer,
-  },
+  }
 }
 
-export type TResultData = { [key: string]: TFileResultData }
+export type TScreenshotsResultData = { [key: string]: TScreenshotsFileResultData }
 
 export type TRunScreesnotsResult = {
-  result: TResult,
-  resultData: TResultData,
+  result: TScreenshotsResult,
+  resultData: TScreenshotsResultData,
   hasBeenChanged: boolean,
 }
 
 export type TScreenshotsListResult = {
   type: 'image',
-  files: TResult,
+  files: TScreenshotsResult,
 }
