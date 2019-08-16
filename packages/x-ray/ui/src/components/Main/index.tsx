@@ -47,7 +47,7 @@ export const Main = component(
         width={width}
         height={height}
         items={items}
-        shouldAnimate={selectedItem !== null}
+        shouldAnimate={selectedItem === null}
       />
     )}
     {isSnapshots(type, items) && (

@@ -3,10 +3,10 @@ import http from 'http'
 import url from 'url'
 import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
-import { isString, isUndefined } from 'tsfn'
+import { isString, isUndefined, objectHas } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType } from './types'
+import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType, TScreenshotsSave } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
@@ -99,7 +99,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
-            const data = await new Promise<TScreenshotsResult>((resolve, reject) => {
+            const data = await new Promise<TScreenshotsSave>((resolve, reject) => {
               let body = ''
 
               req
@@ -130,14 +130,14 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 const tar = await TarFs(tarPath)
                 const fileResult = data[shortPath]
 
-                if (Reflect.has(fileResult, 'old')) {
-                  Object.keys(fileResult.old).forEach((item) => {
+                if (objectHas(fileResult, 'old')) {
+                  fileResult.old.forEach((item) => {
                     tar.delete(item)
                   })
                 }
 
-                if (Reflect.has(fileResult, 'new')) {
-                  Object.keys(fileResult.new).forEach((id) => {
+                if (objectHas(fileResult, 'new')) {
+                  fileResult.new.forEach((id) => {
                     tar.write(id, {
                       meta: result[file].new[id].serializedElement,
                       data: resultData[file].new[id],
