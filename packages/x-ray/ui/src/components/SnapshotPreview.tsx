@@ -1,12 +1,16 @@
 import React from 'react'
 import { component, startWithType, mapState, onMount } from 'refun'
-import { elegir } from 'elegir'
 import { TFileResultLine } from '@x-ray/snapshots'
+import { Text } from '@primitives/text'
 import { TRect, TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
 import { Block } from './Block'
+import { Background } from './Background'
+
+const LINE_HEIGHT = 18
+const CHAR_WIDTH = 8.39
 
 export type TSnapshotPreview = TRect & {
   item: TSnapshotGridItem,
@@ -36,40 +40,39 @@ export const SnapshotPreview = component(
       isMounted = false
     }
   })
-)(({ top, left, width, height, state }) => {
+)(({ top, left, width, height, state, item }) => {
   if (state === null) {
     return null
   }
 
   return (
     <Block top={top} left={left} width={width} height={height} shouldScroll>
-      <pre style={{
-        fontSize: 14,
-        lineHeight: '18px',
-        fontFamily: 'monospace',
-        width,
-        height,
-        margin: 0,
-      }}
-      >
-        {state.map((line, i) => (
-          <div
-            style={{
-              backgroundColor: elegir(
-                line.type === 'added',
-                '#00ff00',
-                line.type === 'removed',
-                '#ff0000',
-                true,
-                '#ffffff'
-              ),
-            }}
-            key={i}
-          >
-            {line.value}
-          </div>
-        ))}
-      </pre>
+      <Block height={state.length * LINE_HEIGHT}/>
+      {state.map((line, i) => (
+        <Block
+          top={i * LINE_HEIGHT}
+          height={LINE_HEIGHT}
+          width={item.width * CHAR_WIDTH}
+          key={i}
+        >
+          {line.type === 'added' && (
+            <Background color={[127, 255, 127, 1]}/>
+          )}
+          {line.type === 'removed' && (
+            <Background color={[255, 127, 127, 1]}/>
+          )}
+          <Block>
+            <Text
+              fontFamily="monospace"
+              fontSize={14}
+              lineHeight={LINE_HEIGHT}
+              shouldPreserveWhitespace
+            >
+              {line.value}
+            </Text>
+          </Block>
+        </Block>
+      ))}
     </Block>
   )
 })

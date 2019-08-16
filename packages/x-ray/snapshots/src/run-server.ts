@@ -148,7 +148,10 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
                 if (objectHas(fileResult, 'diff')) {
                   fileResult.diff.forEach((id) => {
-                    const data = resultData[file].diff[id].map(({ value }) => value).join('\n')
+                    const data = resultData[file].diff[id]
+                      .filter(({ type }) => type !== 'removed')
+                      .map(({ value }) => value)
+                      .join('\n')
 
                     tar.write(id, {
                       meta: result[file].diff[id].serializedElement,

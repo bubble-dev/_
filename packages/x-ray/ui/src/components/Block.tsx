@@ -67,6 +67,7 @@ export const Block = component(
         position: 'absolute',
         left: 0,
         top: 0,
+        lineHeight: 0,
       }
 
       if (!isUndefined(styles.lineHeight)) {

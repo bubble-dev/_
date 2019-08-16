@@ -3,6 +3,7 @@ import { startWithType, component, mapState, onMount, mapWithPropsMemo } from 'r
 import { TFileResultLine } from '@x-ray/snapshots'
 import { elegir } from 'elegir'
 import { TColor } from 'colorido'
+import { Text } from '@primitives/text'
 import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -10,6 +11,8 @@ import { TRect } from '../types'
 import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
+import { Background } from './Background'
+import { LINE_HEIGHT } from './SourceCode/constants'
 
 export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect
 
@@ -54,35 +57,31 @@ export const SnapshotGridItem = component(
 
   return (
     <Block top={top} left={left} width={width} height={height}>
-      <pre
-        style={{
-          fontSize: SNAPSHOT_GRID_FONT_SIZE,
-          lineHeight: `${SNAPSHOT_GRID_LINE_HEIGHT}px`,
-          fontFamily: 'monospace',
-          width,
-          height,
-          margin: 0,
-          overflow: 'hidden',
-        }}
-      >
-        {state.map((line, i) => (
-          <div
-            style={{
-              backgroundColor: elegir(
-                line.type === 'added',
-                '#00ff00',
-                line.type === 'removed',
-                '#ff0000',
-                true,
-                '#ffffff'
-              ),
-            }}
-            key={i}
-          >
-            {line.value}
-          </div>
-        ))}
-      </pre>
+      {state.map((line, i) => (
+        <Block
+          top={i * SNAPSHOT_GRID_LINE_HEIGHT}
+          height={SNAPSHOT_GRID_LINE_HEIGHT}
+          width={width}
+          key={i}
+        >
+          {line.type === 'added' && (
+            <Background color={[127, 255, 127, 1]}/>
+          )}
+          {line.type === 'removed' && (
+            <Background color={[255, 127, 127, 1]}/>
+          )}
+          <Block height={LINE_HEIGHT}>
+            <Text
+              fontFamily="monospace"
+              fontSize={SNAPSHOT_GRID_FONT_SIZE}
+              lineHeight={SNAPSHOT_GRID_LINE_HEIGHT}
+              shouldPreserveWhitespace
+            >
+              {line.value}
+            </Text>
+          </Block>
+        </Block>
+      ))}
       <Border
         topWidth={2}
         leftWidth={2}
