@@ -18,13 +18,15 @@ export type TChildrenConfig = {
   required?: string[],
 }
 
+type TKeyOf<T> = (keyof T) & string
+
 export type TComponentConfig<T = TAnyObject> = {
   props: {
     [k in keyof T]: T[k][]
   },
-  required?: (keyof T)[],
-  mutex?: (keyof T)[][],
-  mutin?: (keyof T)[][],
+  required?: TKeyOf<T>[],
+  mutex?: TKeyOf<T>[][],
+  mutin?: TKeyOf<T>[][],
 }
 
 export type TChildrenMap = {

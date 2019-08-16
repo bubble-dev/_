@@ -60,6 +60,12 @@ export type TScreenshotsResult = {
   [filename: string]: TScreenshotsFileResult,
 }
 
+export type TScreenshotsSave = {
+  [filename: string]: {
+    [type in TScreenshotResultType]?: string[]
+  },
+}
+
 export type TScreenshotsItemResult =
   (TScreenshotsCheckResult & {
     id: string,

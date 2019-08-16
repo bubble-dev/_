@@ -1,7 +1,8 @@
 import React from 'react'
-import { startWithType, component, mapState, onMount } from 'refun'
+import { startWithType, component, mapState, onMount, mapWithPropsMemo } from 'refun'
 import { TFileResultLine } from '@x-ray/snapshots'
 import { elegir } from 'elegir'
+import { TColor } from 'colorido'
 import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
@@ -35,8 +36,18 @@ export const SnapshotGridItem = component(
     return () => {
       isMounted = false
     }
-  })
-)(({ state, top, left, width, height }) => {
+  }),
+  mapWithPropsMemo(({ type }) => ({
+    borderColor: elegir(
+      type === 'new',
+      [0, 127, 0, 1] as TColor,
+      type === 'diff',
+      [0, 0, 127, 1] as TColor,
+      true,
+      [127, 0, 0, 1] as TColor
+    ),
+  }), ['type'])
+)(({ state, top, left, width, height, borderColor }) => {
   if (state === null) {
     return null
   }
@@ -54,13 +65,13 @@ export const SnapshotGridItem = component(
           overflow: 'hidden',
         }}
       >
-        {state.map((item, i) => (
+        {state.map((line, i) => (
           <div
             style={{
               backgroundColor: elegir(
-                item.type === 'added',
+                line.type === 'added',
                 '#00ff00',
-                item.type === 'removed',
+                line.type === 'removed',
                 '#ff0000',
                 true,
                 '#ffffff'
@@ -68,7 +79,7 @@ export const SnapshotGridItem = component(
             }}
             key={i}
           >
-            {item.value}
+            {line.value}
           </div>
         ))}
       </pre>
@@ -81,7 +92,7 @@ export const SnapshotGridItem = component(
         overflowLeft={2}
         overflowRight={2}
         overflowBottom={2}
-        color={[0, 127, 0, 1]}
+        color={borderColor}
       />
     </Block>
   )

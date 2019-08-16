@@ -1,5 +1,5 @@
 import { Reducer } from 'redux'
-import { isUndefined } from 'tsfn'
+import { isUndefined, objectHas } from 'tsfn'
 import { TLineElement } from 'syntx'
 import {
   isActionLoadingStart,
@@ -57,8 +57,8 @@ export const reducer: Reducer<TState> = (state, action) => {
             const allIds = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
 
             allIds.forEach((id) => {
-              if (Reflect.has(value.new, id)) {
-                if (Reflect.has(value.old, id)) {
+              if (objectHas(value.new, id)) {
+                if (objectHas(value.old, id)) {
                   // diff
                   result.push({
                     type: 'diff',
@@ -105,20 +105,20 @@ export const reducer: Reducer<TState> = (state, action) => {
         type: 'text',
         items: Object.entries(action.payload.files)
           .reduce((result, [file, value]) => {
-            if (Reflect.has(value, 'diff')) {
+            if (objectHas(value, 'diff')) {
               Object.keys(value.diff).forEach((id) => {
                 result.push({
                   type: 'diff',
                   file,
                   id,
-                  serializedElement: value.old[id].serializedElement as TLineElement[][],
-                  width: value.old[id].width,
-                  height: value.old[id].height,
+                  serializedElement: value.diff[id].serializedElement as TLineElement[][],
+                  width: value.diff[id].width,
+                  height: value.diff[id].height,
                 })
               })
             }
 
-            if (Reflect.has(value, 'new')) {
+            if (objectHas(value, 'new')) {
               Object.keys(value.new).forEach((id) => {
                 result.push({
                   type: 'new',
@@ -131,15 +131,15 @@ export const reducer: Reducer<TState> = (state, action) => {
               })
             }
 
-            if (Reflect.has(value, 'old')) {
-              Object.keys(value.old).forEach((id) => {
+            if (objectHas(value, 'deleted')) {
+              Object.keys(value.deleted).forEach((id) => {
                 result.push({
                   type: 'deleted',
                   file,
                   id,
-                  serializedElement: value.old[id].serializedElement as TLineElement[][],
-                  width: value.old[id].width,
-                  height: value.old[id].height,
+                  serializedElement: value.deleted[id].serializedElement as TLineElement[][],
+                  width: value.deleted[id].width,
+                  height: value.deleted[id].height,
                 })
               })
             }

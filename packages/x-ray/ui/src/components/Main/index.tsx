@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, onMount } from 'refun'
+import { component, startWithType, onMount, mapHandlers } from 'refun'
 import { isDefined } from 'tsfn'
+import { Button } from '@primitives/button'
 import { mapStoreState, mapStoreDispatch } from '../../store'
-import { actionLoadList } from '../../actions'
+import { actionLoadList, actionSave } from '../../actions'
 import { TSize, TType, TScreenshotItem, TSnapshotItem } from '../../types'
 import { Popup } from '../Popup'
+import { Block } from '../Block'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
@@ -23,6 +25,13 @@ export const Main = component(
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
+  }),
+  mapHandlers({
+    onSave: ({ type, items, dispatch }) => () => {
+      if (isDefined(type) && isDefined(items)) {
+        dispatch(actionSave(type, items))
+      }
+    },
   })
 )(({
   width,
@@ -30,6 +39,7 @@ export const Main = component(
   selectedItem,
   items,
   type,
+  onSave,
 }) => (
   <Fragment>
     {isScreenshots(type, items) && (
@@ -57,5 +67,8 @@ export const Main = component(
         item={selectedItem}
       />
     )}
+    <Block top={0} left={0}>
+      <Button onPress={onSave}>Save</Button>
+    </Block>
   </Fragment>
 ))

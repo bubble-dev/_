@@ -53,7 +53,6 @@ export default async (options: TOptions) => {
                   const screenshot = await getScreenshot(page, item)
 
                   filenames.push(item.id)
-
                   pages.push(page)
 
                   const message = await checkScreenshot(screenshot, tar, item.id)

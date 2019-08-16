@@ -60,6 +60,12 @@ export type TSnapshotsResult = {
   [filename: string]: TSnapshotsFileResult,
 }
 
+export type TSnapshotsSave = {
+  [filename: string]: {
+    [type in TSnapshotResultType]?: string[]
+  },
+}
+
 export type TFileResultLine = {
   value: string,
   type?: 'added' | 'removed',

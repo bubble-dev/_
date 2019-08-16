@@ -86,6 +86,7 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
               serializedElement: action.serializedElement,
               ...getDataSize(data),
             }
+            targetResultData.diff[action.id] = data
 
             hasBeenChanged = true
 

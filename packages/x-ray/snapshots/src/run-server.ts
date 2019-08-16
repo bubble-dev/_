@@ -3,10 +3,10 @@ import http from 'http'
 import url from 'url'
 import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
-import { isString, isUndefined } from 'tsfn'
+import { isString, isUndefined, objectHas } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType } from './types'
+import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
@@ -98,7 +98,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
-            const data = await new Promise<TSnapshotsResult>((resolve, reject) => {
+            const data = await new Promise<TSnapshotsSave>((resolve, reject) => {
               let body = ''
 
               req
@@ -129,14 +129,14 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 const tar = await TarFs(tarPath)
                 const fileResult = data[shortPath]
 
-                if (Reflect.has(fileResult, 'deleted')) {
-                  Object.keys(fileResult.deleted).forEach((item) => {
+                if (objectHas(fileResult, 'deleted')) {
+                  fileResult.deleted.forEach((item) => {
                     tar.delete(item)
                   })
                 }
 
-                if (Reflect.has(fileResult, 'new')) {
-                  Object.keys(fileResult.new).forEach((id) => {
+                if (objectHas(fileResult, 'new')) {
+                  fileResult.new.forEach((id) => {
                     const data = resultData[file].new[id].map(({ value }) => value).join('\n')
 
                     tar.write(id, {
@@ -146,8 +146,8 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                   })
                 }
 
-                if (Reflect.has(fileResult, 'diff')) {
-                  Object.keys(fileResult.diff).forEach((id) => {
+                if (objectHas(fileResult, 'diff')) {
+                  fileResult.diff.forEach((id) => {
                     const data = resultData[file].diff[id].map(({ value }) => value).join('\n')
 
                     tar.write(id, {

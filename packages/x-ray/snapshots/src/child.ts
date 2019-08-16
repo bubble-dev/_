@@ -32,6 +32,8 @@ export default async (options: TOptions) => {
                   const snapshot = await serialize(item.element)
                   const message = await checkSnapshot(Buffer.from(snapshot), tar, item.id)
 
+                  filenames.push(item.id)
+
                   if (shouldBailout) {
                     switch (message.type) {
                       case 'DIFF':
