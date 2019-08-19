@@ -7,12 +7,14 @@ import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
 
-export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'>
+export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'> & {
+  isDiscarded: boolean,
+}
 
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
-)(({ top, left, width, height, file, id }) => (
-  <Block top={top} left={left} width={width} height={height}>
+)(({ top, left, width, height, file, id, isDiscarded }) => (
+  <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? 0.5 : 1}>
     <Screenshot
       file={file}
       id={id}

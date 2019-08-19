@@ -60,6 +60,7 @@ export const ScreenshotPreview = component(
             height={item.height}
             file={item.file}
             id={item.id}
+            isDiscarded={false}
           />
         )}
 
@@ -78,6 +79,7 @@ export const ScreenshotPreview = component(
                 newAlpha={alpha}
                 file={item.file}
                 id={item.id}
+                isDiscarded={false}
               />
             )}
           </Animation>
@@ -92,6 +94,7 @@ export const ScreenshotPreview = component(
             height={item.height}
             file={item.file}
             id={item.id}
+            isDiscarded={false}
           />
         )}
       </Fragment>

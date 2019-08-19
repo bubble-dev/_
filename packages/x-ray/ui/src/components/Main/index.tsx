@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, onMount, mapHandlers } from 'refun'
-import { isDefined } from 'tsfn'
 import { Button } from '@primitives/button'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
@@ -10,26 +9,27 @@ import { Block } from '../Block'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
-const isScreenshots = (type?: TType, items?: any): items is TScreenshotItem[] => type === 'image' && isDefined(items)
-const isSnapshots = (type?: TType, items?: any): items is TSnapshotItem[] => type === 'text' && isDefined(items)
+const isScreenshots = (items: any[], type: TType | null): items is TScreenshotItem[] => type === 'image' && items.length > 0
+const isSnapshots = (items: any[], type: TType | null): items is TSnapshotItem[] => type === 'text' && items.length > 0
 
 export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ type, selectedItem, items }) => ({
+  mapStoreState(({ type, selectedItem, items, discardedItems }) => ({
     type,
     selectedItem,
     items,
-  }), ['selectedItem', 'items', 'type']),
+    discardedItems,
+  }), ['selectedItem', 'items', 'type', 'discardedItems']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
   }),
   mapHandlers({
-    onSave: ({ type, items, dispatch }) => () => {
-      if (isDefined(type) && isDefined(items)) {
-        dispatch(actionSave(type, items))
+    onSave: ({ type, items, discardedItems, dispatch }) => () => {
+      if (type !== null && items.length > 0) {
+        dispatch(actionSave(type, items, discardedItems))
       }
     },
   })
@@ -38,26 +38,29 @@ export const Main = component(
   height,
   selectedItem,
   items,
+  discardedItems,
   type,
   onSave,
 }) => (
   <Fragment>
-    {isScreenshots(type, items) && (
+    {isScreenshots(items, type) && (
       <ScreenshotGrid
         width={width}
         height={height}
         items={items}
+        discardedItems={discardedItems}
         shouldAnimate={selectedItem === null}
       />
     )}
-    {isSnapshots(type, items) && (
+    {isSnapshots(items, type) && (
       <SnapshotGrid
         width={width}
         height={height}
         items={items}
+        discardedItems={discardedItems}
       />
     )}
-    {isDefined(type) && selectedItem !== null && (
+    {type !== null && selectedItem !== null && (
       <Popup
         left={0}
         top={0}

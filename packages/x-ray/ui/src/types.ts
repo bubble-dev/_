@@ -61,12 +61,13 @@ export type TState = {
   error?: string,
   isSaved: boolean,
   isLoading: boolean,
+  discardedItems: TItem[],
 } & ({
-  type?: 'text',
-  items?: TSnapshotItem[],
+  type: 'text' | null,
+  items: TSnapshotItem[],
   selectedItem: TSnapshotGridItem | null,
 } | {
-  type?: 'image',
-  items?: TScreenshotItem[],
+  type: 'image' | null,
+  items: TScreenshotItem[],
   selectedItem: TScreenshotGridItem | null,
 })

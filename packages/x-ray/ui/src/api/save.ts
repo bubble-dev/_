@@ -94,7 +94,7 @@ const saveSnapshots = (items: TSnapshotItem[]): TSnapshotsSave => {
 const isScreenshots = (type: TType, items: TItem[]): items is TScreenshotItem[] => type === 'image' && items.length > 0
 const isSnapshots = (type: TType, items: TItem[]): items is TSnapshotItem[] => type === 'text' && items.length > 0
 
-export const apiSave = async (type: TType, items: (TScreenshotItem | TSnapshotItem)[]): Promise<void> => {
+export const apiSave = async (type: TType, items: TItem[]): Promise<void> => {
   let data
 
   if (isScreenshots(type, items)) {

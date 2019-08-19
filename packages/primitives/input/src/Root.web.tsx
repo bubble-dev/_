@@ -28,7 +28,7 @@ export const Input = component(
       paddingTop,
     }) => {
       const style: TStyle = {
-        backgroundColor: 'rgba(0, 0, 0, 0)',
+        backgroundColor: 'rgba(1, 0, 0, 0)',
         border: 0,
         color,
         fontFamily,

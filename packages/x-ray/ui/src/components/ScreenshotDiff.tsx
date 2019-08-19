@@ -14,6 +14,7 @@ export type TScreenshotDiff = TPosition & TOmitKey<TApiLoadScreenshotOpts, 'type
   newHeight: number,
   oldAlpha: number,
   newAlpha: number,
+  isDiscarded: boolean,
 }
 
 export const ScreenshotDiff = pureComponent(
@@ -29,6 +30,7 @@ export const ScreenshotDiff = pureComponent(
   newAlpha,
   file,
   id,
+  isDiscarded,
 }) => (
   <Fragment>
     <Block
@@ -36,7 +38,7 @@ export const ScreenshotDiff = pureComponent(
       left={left}
       width={oldWidth}
       height={oldHeight}
-      opacity={oldAlpha}
+      opacity={Math.min(oldAlpha, isDiscarded ? 0.5 : 1)}
     >
       <Screenshot
         file={file}
@@ -62,7 +64,7 @@ export const ScreenshotDiff = pureComponent(
       left={left}
       width={newWidth}
       height={newHeight}
-      opacity={newAlpha}
+      opacity={Math.min(newAlpha, isDiscarded ? 0.5 : 1)}
     >
       <Screenshot
         file={file}

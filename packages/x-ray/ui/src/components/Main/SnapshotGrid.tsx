@@ -2,10 +2,10 @@ import React, { ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { Border } from '@primitives/border'
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSize, TSnapshotGridItem, TSnapshotItem } from '../../types'
+import { TSize, TSnapshotGridItem, TSnapshotItem, TItem } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT } from '../../config'
@@ -14,6 +14,7 @@ import { isVisibleItem } from './is-visible-item'
 
 export type TSnapshotGrid = TSize & {
   items: TSnapshotItem[],
+  discardedItems: TItem[],
 }
 
 export const SnapshotGrid = component(
@@ -99,6 +100,7 @@ export const SnapshotGrid = component(
   })
 )(({
   cols,
+  discardedItems,
   maxHeight,
   width,
   height,
@@ -125,6 +127,8 @@ export const SnapshotGrid = component(
           const key = `${item.file}:${item.type}:${item.id}`
 
           if (isVisible && isNew) {
+            console.log('NEW')
+
             return (
               <Block
                 key={key}
@@ -149,6 +153,8 @@ export const SnapshotGrid = component(
           }
 
           if (isVisible) {
+            // const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
+
             return (
               <SnapshotGridItem
                 key={key}
@@ -159,6 +165,7 @@ export const SnapshotGrid = component(
                 file={item.file}
                 id={item.id}
                 type={item.type}
+                isDiscarded={false}
               />
             )
           }

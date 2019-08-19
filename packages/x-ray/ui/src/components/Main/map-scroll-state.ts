@@ -18,7 +18,7 @@ export const mapScrollState = <P extends {}>() => pipe(
     },
   })),
   mapThrottledHandlerAnimationFrame('onScroll1'),
-  mapDebouncedHandlerTimeout('onScroll2', 100),
+  mapDebouncedHandlerTimeout('onScroll2', 300),
   mapHandlers({
     onScroll: ({ onScroll1, onScroll2 }) => (scrollTop) => {
       onScroll1(scrollTop)

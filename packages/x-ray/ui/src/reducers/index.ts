@@ -10,6 +10,7 @@ import {
   isActionSelectSnapshot,
   isActionSelectScreenshot,
   isActionDeselect,
+  isActionDiscardItem,
 } from '../actions'
 import { TAction, TState, TScreenshotItem, TSnapshotItem } from '../types'
 import { initialState } from '../store/initial-state'
@@ -51,6 +52,7 @@ export const reducer: Reducer<TState> = (state, action) => {
       return {
         ...state,
         selectedItem: null,
+        discardedItems: [],
         type: 'image',
         items: Object.entries(action.payload.files)
           .reduce((result, [file, value]) => {
@@ -102,6 +104,7 @@ export const reducer: Reducer<TState> = (state, action) => {
       return {
         ...state,
         selectedItem: null,
+        discardedItems: [],
         type: 'text',
         items: Object.entries(action.payload.files)
           .reduce((result, [file, value]) => {
@@ -172,10 +175,24 @@ export const reducer: Reducer<TState> = (state, action) => {
     }
   }
 
+  if (isActionDiscardItem(action)) {
+    const item = state.items.find((item) => item.file === action.payload.file && item.id === action.payload.id)
+
+    if (isUndefined(item) || state.discardedItems.includes(item)) {
+      return state
+    }
+
+    return {
+      ...state,
+      discardedItems: state.discardedItems.concat(item),
+    }
+  }
+
   if (isActionSave(action)) {
     return {
       ...state,
       isSaved: true,
+      discardedItems: [],
     }
   }
 

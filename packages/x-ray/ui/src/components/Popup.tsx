@@ -2,9 +2,10 @@ import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState, mapWithProps, onMount } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { Background } from '@primitives/background'
+import { Button } from '@primitives/button'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
-import { actionDeselect } from '../actions'
+import { actionDeselect, actionDiscardItem } from '../actions'
 import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
@@ -41,6 +42,9 @@ export const Popup = component(
     },
     onOpen: ({ setState }) => () => {
       setState(STATE_OPEN)
+    },
+    onDiscard: ({ dispatch, item }) => () => {
+      dispatch(actionDiscardItem(item))
     },
   }),
   mapHandlers({
@@ -90,9 +94,9 @@ export const Popup = component(
 
     return ({
       propsWidth: halfWidth,
-      propsHeight: popupHeight,
+      propsHeight: popupHeight - 20,
       propsLeft: 0,
-      propsTop: 0,
+      propsTop: 20,
       previewWidth: halfWidth,
       previewHeight: popupHeight,
       previewLeft: halfWidth,
@@ -121,6 +125,7 @@ export const Popup = component(
   previewWidth,
   previewHeight,
   shouldNotAnimate,
+  onDiscard,
   onBackdropPress,
   onAnimationEnd,
 }) => (
@@ -155,6 +160,9 @@ export const Popup = component(
           {state === STATE_OPEN && item !== null && (
             <Fragment>
               <Shadow color={[0, 0, 0, alpha]} blurRadius={20}/>
+              <Block>
+                <Button onPress={onDiscard}>Discard</Button>
+              </Block>
               <SourceCode
                 top={propsTop}
                 left={propsLeft}

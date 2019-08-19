@@ -3,10 +3,10 @@ import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
-import { isUndefined } from 'tsfn'
+import { isUndefined, isDefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TSize, TScreenshotGridItem, TScreenshotItem } from '../../types'
+import { TSize, TScreenshotGridItem, TScreenshotItem, TItem } from '../../types'
 import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
@@ -18,6 +18,7 @@ import { isVisibleItem } from './is-visible-item'
 
 export type TScreenshotGrid = TSize & {
   items: TScreenshotItem[],
+  discardedItems: TItem[],
   shouldAnimate: boolean,
 }
 
@@ -114,6 +115,7 @@ export const ScreenshotGrid = component(
   mapDiffState()
 )(({
   cols,
+  discardedItems,
   maxHeight,
   width,
   height,
@@ -168,6 +170,8 @@ export const ScreenshotGrid = component(
                 }
 
                 if (isVisible) {
+                  const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
+
                   if (item.type === 'new') {
                     return (
                       <ScreenshotNew
@@ -178,6 +182,7 @@ export const ScreenshotGrid = component(
                         height={item.gridHeight}
                         file={item.file}
                         id={item.id}
+                        isDiscarded={isDiscarded}
                       />
                     )
                   }
@@ -192,6 +197,7 @@ export const ScreenshotGrid = component(
                         height={item.gridHeight}
                         file={item.file}
                         id={item.id}
+                        isDiscarded={isDiscarded}
                       />
                     )
                   }
@@ -213,6 +219,7 @@ export const ScreenshotGrid = component(
                         newAlpha={alpha}
                         file={item.file}
                         id={item.id}
+                        isDiscarded={isDiscarded}
                       />
                     )
                   }

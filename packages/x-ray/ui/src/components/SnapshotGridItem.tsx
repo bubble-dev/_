@@ -14,7 +14,9 @@ import { Border } from './Border'
 import { Background } from './Background'
 import { LINE_HEIGHT } from './SourceCode/constants'
 
-export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect
+export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect & {
+  isDiscarded: boolean,
+}
 
 export const SnapshotGridItem = component(
   startWithType<TSnapshotGridItem>(),
@@ -50,13 +52,13 @@ export const SnapshotGridItem = component(
       [127, 0, 0, 1] as TColor
     ),
   }), ['type'])
-)(({ state, top, left, width, height, borderColor }) => {
+)(({ state, top, left, width, height, borderColor, isDiscarded }) => {
   if (state === null) {
     return null
   }
 
   return (
-    <Block top={top} left={left} width={width} height={height}>
+    <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? 0.5 : 1}>
       {state.map((line, i) => (
         <Block
           top={i * SNAPSHOT_GRID_LINE_HEIGHT}
