@@ -127,8 +127,6 @@ export const SnapshotGrid = component(
           const key = `${item.file}:${item.type}:${item.id}`
 
           if (isVisible && isNew) {
-            console.log('NEW')
-
             return (
               <Block
                 key={key}
@@ -153,7 +151,7 @@ export const SnapshotGrid = component(
           }
 
           if (isVisible) {
-            // const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
+            const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
 
             return (
               <SnapshotGridItem
@@ -165,7 +163,7 @@ export const SnapshotGrid = component(
                 file={item.file}
                 id={item.id}
                 type={item.type}
-                isDiscarded={false}
+                isDiscarded={isDiscarded}
               />
             )
           }

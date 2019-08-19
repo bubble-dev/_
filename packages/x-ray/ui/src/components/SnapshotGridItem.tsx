@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, component, mapState, onMount, mapWithPropsMemo } from 'refun'
+import { startWithType, mapState, onMount, mapWithPropsMemo, pureComponent } from 'refun'
 import { TFileResultLine } from '@x-ray/snapshots'
 import { elegir } from 'elegir'
 import { TColor } from 'colorido'
@@ -18,7 +18,7 @@ export type TSnapshotGridItem = TApiLoadSnapshotOpts & TRect & {
   isDiscarded: boolean,
 }
 
-export const SnapshotGridItem = component(
+export const SnapshotGridItem = pureComponent(
   startWithType<TSnapshotGridItem>(),
   mapStoreDispatch,
   mapState('state', 'setState', () => null as TFileResultLine[] | null, []),
