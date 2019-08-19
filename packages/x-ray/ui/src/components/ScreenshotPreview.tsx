@@ -53,12 +53,11 @@ export const ScreenshotPreview = component(
       <Fragment>
         {item.type === 'new' && (
           <ScreenshotNew
-            key={`${item.file}:new:${item.id}`}
+            key={item.id}
             top={halfHeight - item.height / 2}
             left={halfWidth - item.width / 2}
             width={item.width}
             height={item.height}
-            file={item.file}
             id={item.id}
             isDiscarded={false}
           />
@@ -68,7 +67,7 @@ export const ScreenshotPreview = component(
           <Animation time={200} easing={easeInOutCubic} values={[diffState ? 1 : 0]}>
             {([alpha]) => (
               <ScreenshotDiff
-                key={`${item.file}:diff:${item.id}`}
+                key={item.id}
                 top={halfHeight - item.height / 2}
                 left={halfWidth - item.width / 2}
                 oldWidth={item.width}
@@ -77,7 +76,6 @@ export const ScreenshotPreview = component(
                 newHeight={item.newHeight}
                 oldAlpha={1 - alpha}
                 newAlpha={alpha}
-                file={item.file}
                 id={item.id}
                 isDiscarded={false}
               />
@@ -87,12 +85,11 @@ export const ScreenshotPreview = component(
 
         {item.type === 'deleted' && (
           <ScreenshotDeleted
-            key={`${item.file}:deleted:${item.id}`}
+            key={item.id}
             top={halfHeight - item.height / 2}
             left={halfWidth - item.width / 2}
             width={item.width}
             height={item.height}
-            file={item.file}
             id={item.id}
             isDiscarded={false}
           />

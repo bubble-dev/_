@@ -43,8 +43,9 @@ export const Popup = component(
     onOpen: ({ setState }) => () => {
       setState(STATE_OPEN)
     },
-    onDiscard: ({ dispatch, item }) => () => {
-      dispatch(actionDiscardItem(item))
+    onDiscard: ({ dispatch, item, setState }) => () => {
+      dispatch(actionDiscardItem(item.id))
+      setState(STATE_CLOSING)
     },
   }),
   mapHandlers({

@@ -3,10 +3,10 @@ import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { easeInOutCubic, Animation } from '@primitives/animation'
 import { Border } from '@primitives/border'
-import { isUndefined, isDefined } from 'tsfn'
+import { isUndefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TSize, TScreenshotGridItem, TScreenshotItem, TItem } from '../../types'
+import { TSize, TScreenshotGridItem, TScreenshotItems } from '../../types'
 import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
@@ -17,8 +17,8 @@ import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
 export type TScreenshotGrid = TSize & {
-  items: TScreenshotItem[],
-  discardedItems: TItem[],
+  items: TScreenshotItems,
+  discardedItems: string[],
   shouldAnimate: boolean,
 }
 
@@ -33,7 +33,7 @@ export const ScreenshotGrid = component(
       .fill(0)
       .map(() => [])
 
-    items.forEach((item) => {
+    Object.entries(items).forEach(([id, item]) => {
       let minIndex = 0
 
       for (let i = 1; i < top.length; ++i) {
@@ -55,6 +55,7 @@ export const ScreenshotGrid = component(
 
       const result: TScreenshotGridItem = {
         ...item,
+        id,
         gridWidth,
         gridHeight,
         top: top[minIndex],
@@ -143,12 +144,11 @@ export const ScreenshotGrid = component(
               col.map((item: TScreenshotGridItem) => {
                 const isVisible = isVisibleItem(item, scrollTop, height)
                 const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
-                const key = `${item.file}:${item.type}:${item.id}`
 
                 if (isVisible && isNew) {
                   return (
                     <Block
-                      key={key}
+                      key={item.id}
                       top={item.top}
                       left={item.left}
                       width={item.gridWidth}
@@ -170,18 +170,17 @@ export const ScreenshotGrid = component(
                 }
 
                 if (isVisible) {
-                  const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
+                  const isDiscarded = discardedItems.includes(item.id)
 
                   if (item.type === 'new') {
                     return (
                       <ScreenshotNew
-                        key={key}
+                        key={item.id}
+                        id={item.id}
                         top={item.top}
                         left={item.left}
                         width={item.gridWidth}
                         height={item.gridHeight}
-                        file={item.file}
-                        id={item.id}
                         isDiscarded={isDiscarded}
                       />
                     )
@@ -190,13 +189,12 @@ export const ScreenshotGrid = component(
                   if (item.type === 'deleted') {
                     return (
                       <ScreenshotDeleted
-                        key={key}
+                        key={item.id}
+                        id={item.id}
                         top={item.top}
                         left={item.left}
                         width={item.gridWidth}
                         height={item.gridHeight}
-                        file={item.file}
-                        id={item.id}
                         isDiscarded={isDiscarded}
                       />
                     )
@@ -208,7 +206,8 @@ export const ScreenshotGrid = component(
 
                     return (
                       <ScreenshotDiff
-                        key={key}
+                        key={item.id}
+                        id={item.id}
                         top={item.top}
                         left={item.left}
                         oldWidth={item.width * scale}
@@ -217,8 +216,6 @@ export const ScreenshotGrid = component(
                         newHeight={item.newHeight * scale}
                         oldAlpha={1 - alpha}
                         newAlpha={alpha}
-                        file={item.file}
-                        id={item.id}
                         isDiscarded={isDiscarded}
                       />
                     )

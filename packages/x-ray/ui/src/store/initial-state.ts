@@ -5,6 +5,6 @@ export const initialState: TState = {
   isLoading: false,
   type: null,
   selectedItem: null,
-  items: [],
+  items: {},
   discardedItems: [],
 }

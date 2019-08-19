@@ -4,13 +4,12 @@ import { HOST, PORT } from '../config'
 const apiLoadScreenshotCache = new Map<string, Blob>()
 
 export type TApiLoadScreenshotOpts = {
-  file: string,
   id: string,
   type: TScreenshotResultType,
 }
 
 export const apiLoadScreenshot = async (opts: TApiLoadScreenshotOpts): Promise<Blob> => {
-  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&id=${encodeURIComponent(opts.id)}`
+  const params = `type=${opts.type}&id=${encodeURIComponent(opts.id)}`
 
   if (apiLoadScreenshotCache.has(params)) {
     return apiLoadScreenshotCache.get(params)!

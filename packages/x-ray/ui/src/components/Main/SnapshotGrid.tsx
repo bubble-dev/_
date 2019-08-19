@@ -2,10 +2,10 @@ import React, { ReactNode } from 'react'
 import { component, startWithType, mapHandlers, mapWithPropsMemo } from 'refun'
 import bsc from 'bsc'
 import { Border } from '@primitives/border'
-import { isUndefined, isDefined } from 'tsfn'
+import { isUndefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSize, TSnapshotGridItem, TSnapshotItem, TItem } from '../../types'
+import { TSize, TSnapshotGridItem, TSnapshotItems } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT } from '../../config'
@@ -13,8 +13,8 @@ import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
 export type TSnapshotGrid = TSize & {
-  items: TSnapshotItem[],
-  discardedItems: TItem[],
+  items: TSnapshotItems,
+  discardedItems: string[],
 }
 
 export const SnapshotGrid = component(
@@ -28,7 +28,7 @@ export const SnapshotGrid = component(
       .fill(0)
       .map(() => [])
 
-    items.forEach((item) => {
+    Object.entries(items).forEach(([id, item]) => {
       let minIndex = 0
 
       for (let i = 1; i < top.length; ++i) {
@@ -41,6 +41,7 @@ export const SnapshotGrid = component(
 
       const result: TSnapshotGridItem = {
         ...item,
+        id,
         gridWidth,
         gridHeight,
         top: top[minIndex],
@@ -124,12 +125,11 @@ export const SnapshotGrid = component(
         col.map((item: TSnapshotGridItem) => {
           const isVisible = isVisibleItem(item, scrollTop, height)
           const isNew = prevScrollTop !== null && ((item.top + item.gridHeight < prevScrollTop) || (item.top > prevScrollTop + height))
-          const key = `${item.file}:${item.type}:${item.id}`
 
           if (isVisible && isNew) {
             return (
               <Block
-                key={key}
+                key={item.id}
                 top={item.top}
                 left={item.left}
                 width={item.gridWidth}
@@ -151,18 +151,17 @@ export const SnapshotGrid = component(
           }
 
           if (isVisible) {
-            const isDiscarded = isDefined(discardedItems.find((discarded) => discarded.file === item.file && discarded.id === item.id))
+            const isDiscarded = discardedItems.includes(item.id)
 
             return (
               <SnapshotGridItem
-                key={key}
+                key={item.id}
+                id={item.id}
+                type={item.type}
                 top={item.top}
                 left={item.left}
                 width={item.gridWidth}
                 height={item.gridHeight}
-                file={item.file}
-                id={item.id}
-                type={item.type}
                 isDiscarded={isDiscarded}
               />
             )

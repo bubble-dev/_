@@ -3,7 +3,7 @@ import http from 'http'
 import url from 'url'
 import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
-import { isString, isUndefined, objectHas } from 'tsfn'
+import { isString, isUndefined, objectHas, isDefined, TAnyObject } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
 import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave } from './types'
@@ -42,10 +42,22 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 pathMap.set(shortPath, longPath)
                 pathMap.set(longPath, shortPath)
 
-                acc[shortPath] = result[longPath]
+                return Object.entries(result[longPath]).reduce((acc, [type, items]) => {
+                  return Object.entries(items).reduce((acc, [id, item]) => {
+                    acc[`${shortPath}:${id}`] = {
+                      type,
+                      ...item,
+                    }
 
-                return acc
-              }, Promise.resolve({} as TSnapshotsResult)),
+                    return acc
+                  }, acc)
+                }, acc as { [id: string]: {
+                  type: string,
+                  serializedElement: TAnyObject,
+                  width: number,
+                  height: number,
+                }, })
+              }, Promise.resolve({} as any)),
             }))
 
             return
@@ -54,11 +66,13 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
           const urlData = url.parse(req.url!, true)
 
           if (urlData.pathname === '/get') {
-            const { file: shortPath, id, type } = urlData.query as {
-              file: string,
+            const query = urlData.query as {
               id: string,
               type: TSnapshotResultType,
             }
+
+            const { type } = query
+            const [shortPath, id] = query.id.split(':')
 
             if (!isString(shortPath)) {
               throw new Error(`?file param is required in ${req.url}`)
@@ -98,7 +112,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'POST') {
           if (req.url === '/save') {
-            const data = await new Promise<TSnapshotsSave>((resolve, reject) => {
+            const ids = await new Promise<TSnapshotsSave>((resolve, reject) => {
               let body = ''
 
               req
@@ -111,7 +125,19 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 })
             })
 
-            console.log('SAVE', data)
+            console.log('SAVE', ids)
+
+            const data = ids.reduce((result, item) => {
+              const [shortPath, id] = item.split(':')
+
+              if (!Array.isArray(result[shortPath])) {
+                result[shortPath] = []
+              }
+
+              result[shortPath].push(id)
+
+              return result
+            }, {} as { [k: string]: string[] })
 
             await pAll(
               Object.keys(data).map((shortPath) => async () => {
@@ -127,37 +153,39 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 await makeDir(snapshotDir)
 
                 const tar = await TarFs(tarPath)
-                const fileResult = data[shortPath]
+                const ids = data[shortPath]
 
-                if (objectHas(fileResult, 'deleted')) {
-                  fileResult.deleted.forEach((item) => {
-                    tar.delete(item)
-                  })
+                ids.forEach((id) => {
+                  tar.delete(id)
+                })
+
+                if (objectHas(resultData[file], 'new')) {
+                  ids
+                    .filter((id) => isDefined(resultData[file].new[id]))
+                    .forEach((id) => {
+                      const data = resultData[file].new[id].map(({ value }) => value).join('\n')
+
+                      tar.write(id, {
+                        meta: result[file].new[id].serializedElement,
+                        data: Buffer.from(data),
+                      })
+                    })
                 }
 
-                if (objectHas(fileResult, 'new')) {
-                  fileResult.new.forEach((id) => {
-                    const data = resultData[file].new[id].map(({ value }) => value).join('\n')
+                if (objectHas(resultData[file], 'diff')) {
+                  ids
+                    .filter((id) => isDefined(resultData[file].diff[id]))
+                    .forEach((id) => {
+                      const data = resultData[file].diff[id]
+                        .filter(({ type }) => type !== 'removed')
+                        .map(({ value }) => value)
+                        .join('\n')
 
-                    tar.write(id, {
-                      meta: result[file].new[id].serializedElement,
-                      data: Buffer.from(data),
+                      tar.write(id, {
+                        meta: result[file].diff[id].serializedElement,
+                        data: Buffer.from(data),
+                      })
                     })
-                  })
-                }
-
-                if (objectHas(fileResult, 'diff')) {
-                  fileResult.diff.forEach((id) => {
-                    const data = resultData[file].diff[id]
-                      .filter(({ type }) => type !== 'removed')
-                      .map(({ value }) => value)
-                      .join('\n')
-
-                    tar.write(id, {
-                      meta: result[file].diff[id].serializedElement,
-                      data: Buffer.from(data),
-                    })
-                  })
                 }
 
                 await tar.save()

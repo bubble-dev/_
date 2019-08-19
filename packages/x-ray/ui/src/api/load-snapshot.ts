@@ -2,7 +2,6 @@ import { TFileResultLine, TSnapshotResultType } from '@x-ray/snapshots'
 import { HOST, PORT } from '../config'
 
 export type TApiLoadSnapshotOpts = {
-  file: string,
   id: string,
   type: TSnapshotResultType,
 }
@@ -10,7 +9,7 @@ export type TApiLoadSnapshotOpts = {
 const apiLoadSnapshotCache = new Map<string, TFileResultLine[]>()
 
 export const apiLoadSnapshot = async (opts: TApiLoadSnapshotOpts): Promise<TFileResultLine[]> => {
-  const params = `file=${encodeURIComponent(opts.file)}&type=${opts.type}&id=${encodeURIComponent(opts.id)}`
+  const params = `type=${opts.type}&id=${encodeURIComponent(opts.id)}`
 
   if (apiLoadSnapshotCache.has(params)) {
     return apiLoadSnapshotCache.get(params)!

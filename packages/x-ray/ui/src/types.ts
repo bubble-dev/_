@@ -31,8 +31,6 @@ export type TType = 'image' | 'text'
 export type TItemType = 'new' | 'deleted' | 'diff'
 
 export type TItem = TSize & {
-  file: string,
-  id: string,
   serializedElement: TLineElement[][],
 }
 
@@ -49,6 +47,7 @@ export type TSnapshotItem = TItem & {
 }
 
 export type TGridItem = TItem & TPosition & {
+  id: string,
   gridWidth: number,
   gridHeight: number,
 }
@@ -57,17 +56,25 @@ export type TScreenshotGridItem = TScreenshotItem & TGridItem
 
 export type TSnapshotGridItem = TSnapshotItem & TGridItem
 
+export type TSnapshotItems = {
+  [k: string]: TSnapshotItem,
+}
+
+export type TScreenshotItems = {
+  [k: string]: TScreenshotItem,
+}
+
 export type TState = {
   error?: string,
   isSaved: boolean,
   isLoading: boolean,
-  discardedItems: TItem[],
+  discardedItems: string[],
 } & ({
   type: 'text' | null,
-  items: TSnapshotItem[],
+  items: TSnapshotItems,
   selectedItem: TSnapshotGridItem | null,
 } | {
   type: 'image' | null,
-  items: TScreenshotItem[],
+  items: TScreenshotItems,
   selectedItem: TScreenshotGridItem | null,
 })

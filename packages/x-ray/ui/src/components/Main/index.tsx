@@ -3,14 +3,14 @@ import { component, startWithType, onMount, mapHandlers } from 'refun'
 import { Button } from '@primitives/button'
 import { mapStoreState, mapStoreDispatch } from '../../store'
 import { actionLoadList, actionSave } from '../../actions'
-import { TSize, TType, TScreenshotItem, TSnapshotItem } from '../../types'
+import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
-const isScreenshots = (items: any[], type: TType | null): items is TScreenshotItem[] => type === 'image' && items.length > 0
-const isSnapshots = (items: any[], type: TType | null): items is TSnapshotItem[] => type === 'text' && items.length > 0
+const isScreenshots = (items: any, type: TType | null): items is TScreenshotItems => type === 'image' && Object.keys(items).length > 0
+const isSnapshots = (items: any, type: TType | null): items is TSnapshotItems => type === 'text' && Object.keys(items).length > 0
 
 export type TMain = TSize
 
@@ -28,8 +28,10 @@ export const Main = component(
   }),
   mapHandlers({
     onSave: ({ type, items, discardedItems, dispatch }) => () => {
-      if (type !== null && items.length > 0) {
-        dispatch(actionSave(type, items, discardedItems))
+      const itemKeys = Object.keys(items)
+
+      if (type !== null && itemKeys.length > 0) {
+        dispatch(actionSave(itemKeys, discardedItems))
       }
     },
   })

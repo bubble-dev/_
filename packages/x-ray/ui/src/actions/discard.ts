@@ -1,10 +1,10 @@
-import { TActionWithPayload, TAnyAction, TItem } from '../types'
+import { TActionWithPayload, TAnyAction } from '../types'
 
 const TYPE_DISCARD_ITEM = 'DISCARD_ITEM'
 
-export type TActionDiscardItem = TActionWithPayload<typeof TYPE_DISCARD_ITEM, TItem>
+export type TActionDiscardItem = TActionWithPayload<typeof TYPE_DISCARD_ITEM, string>
 
-export const actionDiscardItem = (payload: TItem): TActionDiscardItem => ({
+export const actionDiscardItem = (payload: string): TActionDiscardItem => ({
   type: TYPE_DISCARD_ITEM,
   payload,
 })

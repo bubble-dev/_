@@ -12,9 +12,10 @@ import {
   isActionDeselect,
   isActionDiscardItem,
 } from '../actions'
-import { TAction, TState, TScreenshotItem, TSnapshotItem } from '../types'
+import { TAction, TState, TScreenshotItems, TSnapshotItems } from '../types'
 import { initialState } from '../store/initial-state'
-import { screenshotsSorter, snapshotsSorter } from '../utils'
+
+const getId = (file: string, id: string): string => `${file}:${id}`
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 
@@ -58,47 +59,42 @@ export const reducer: Reducer<TState> = (state, action) => {
           .reduce((result, [file, value]) => {
             const allIds = new Set([...Object.keys(value.new), ...Object.keys(value.old)])
 
-            allIds.forEach((id) => {
-              if (objectHas(value.new, id)) {
-                if (objectHas(value.old, id)) {
+            allIds.forEach((itemId) => {
+              const id = getId(file, itemId)
+
+              if (objectHas(value.new, itemId)) {
+                if (objectHas(value.old, itemId)) {
                   // diff
-                  result.push({
+                  result[id] = {
                     type: 'diff',
-                    file,
-                    id,
-                    serializedElement: value.old[id].serializedElement as TLineElement[][],
-                    width: value.old[id].width,
-                    height: value.old[id].height,
-                    newWidth: value.new[id].width,
-                    newHeight: value.new[id].height,
-                  })
+                    serializedElement: value.old[itemId].serializedElement as TLineElement[][],
+                    width: value.old[itemId].width,
+                    height: value.old[itemId].height,
+                    newWidth: value.new[itemId].width,
+                    newHeight: value.new[itemId].height,
+                  }
                 } else {
                   // new
-                  result.push({
+                  result[id] = {
                     type: 'new',
-                    file,
-                    id,
-                    serializedElement: value.new[id].serializedElement as TLineElement[][],
-                    width: value.new[id].width,
-                    height: value.new[id].height,
-                  })
+                    serializedElement: value.new[itemId].serializedElement as TLineElement[][],
+                    width: value.new[itemId].width,
+                    height: value.new[itemId].height,
+                  }
                 }
               } else {
                 // deleted
-                result.push({
+                result[id] = {
                   type: 'deleted',
-                  file,
-                  id,
-                  serializedElement: value.old[id].serializedElement as TLineElement[][],
-                  width: value.old[id].width,
-                  height: value.old[id].height,
-                })
+                  serializedElement: value.old[itemId].serializedElement as TLineElement[][],
+                  width: value.old[itemId].width,
+                  height: value.old[itemId].height,
+                }
               }
             })
 
             return result
-          }, [] as TScreenshotItem[])
-          .sort(screenshotsSorter),
+          }, {} as TScreenshotItems),
       }
     } else if (action.payload.type === 'text') {
       return {
@@ -106,50 +102,50 @@ export const reducer: Reducer<TState> = (state, action) => {
         selectedItem: null,
         discardedItems: [],
         type: 'text',
-        items: Object.entries(action.payload.files)
-          .reduce((result, [file, value]) => {
-            if (objectHas(value, 'diff')) {
-              Object.keys(value.diff).forEach((id) => {
-                result.push({
-                  type: 'diff',
-                  file,
-                  id,
-                  serializedElement: value.diff[id].serializedElement as TLineElement[][],
-                  width: value.diff[id].width,
-                  height: value.diff[id].height,
-                })
-              })
-            }
+        items: action.payload.files,
+        // items: Object.entries(action.payload.files)
+        //   .reduce((result, [file, value]) => {
+        //     if (objectHas(value, 'diff')) {
+        //       Object.keys(value.diff).forEach((itemId) => {
+        //         const id = getId(file, itemId)
 
-            if (objectHas(value, 'new')) {
-              Object.keys(value.new).forEach((id) => {
-                result.push({
-                  type: 'new',
-                  file,
-                  id,
-                  serializedElement: value.new[id].serializedElement as TLineElement[][],
-                  width: value.new[id].width,
-                  height: value.new[id].height,
-                })
-              })
-            }
+        //         result[id] = {
+        //           type: 'diff',
+        //           serializedElement: value.diff[itemId].serializedElement as TLineElement[][],
+        //           width: value.diff[itemId].width,
+        //           height: value.diff[itemId].height,
+        //         }
+        //       })
+        //     }
 
-            if (objectHas(value, 'deleted')) {
-              Object.keys(value.deleted).forEach((id) => {
-                result.push({
-                  type: 'deleted',
-                  file,
-                  id,
-                  serializedElement: value.deleted[id].serializedElement as TLineElement[][],
-                  width: value.deleted[id].width,
-                  height: value.deleted[id].height,
-                })
-              })
-            }
+        //     if (objectHas(value, 'new')) {
+        //       Object.keys(value.new).forEach((itemId) => {
+        //         const id = getId(file, itemId)
 
-            return result
-          }, [] as TSnapshotItem[])
-          .sort(snapshotsSorter),
+        //         result[id] = {
+        //           type: 'new',
+        //           serializedElement: value.new[itemId].serializedElement as TLineElement[][],
+        //           width: value.new[itemId].width,
+        //           height: value.new[itemId].height,
+        //         }
+        //       })
+        //     }
+
+        //     if (objectHas(value, 'deleted')) {
+        //       Object.keys(value.deleted).forEach((itemId) => {
+        //         const id = getId(file, itemId)
+
+        //         result[id] = {
+        //           type: 'deleted',
+        //           serializedElement: value.deleted[itemId].serializedElement as TLineElement[][],
+        //           width: value.deleted[itemId].width,
+        //           height: value.deleted[itemId].height,
+        //         }
+        //       })
+        //     }
+
+        //     return result
+        //   }, {} as TSnapshotItems),
       }
     }
   }
@@ -176,15 +172,13 @@ export const reducer: Reducer<TState> = (state, action) => {
   }
 
   if (isActionDiscardItem(action)) {
-    const item = state.items.find((item) => item.file === action.payload.file && item.id === action.payload.id)
-
-    if (isUndefined(item) || state.discardedItems.includes(item)) {
+    if (state.discardedItems.includes(action.payload)) {
       return state
     }
 
     return {
       ...state,
-      discardedItems: state.discardedItems.concat(item),
+      discardedItems: state.discardedItems.concat(action.payload),
     }
   }
 

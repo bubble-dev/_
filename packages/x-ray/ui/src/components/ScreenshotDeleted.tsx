@@ -3,6 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TRect } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
+import { COLOR_BORDER_DELETED } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -13,10 +14,9 @@ export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'
 
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
-)(({ top, left, width, height, file, id, isDiscarded }) => (
+)(({ top, left, width, height, id, isDiscarded }) => (
   <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? 0.5 : 1}>
     <Screenshot
-      file={file}
       id={id}
       type="old"
       width={width}
@@ -31,7 +31,7 @@ export const ScreenshotDeleted = pureComponent(
       overflowLeft={2}
       overflowRight={2}
       overflowBottom={2}
-      color={[127, 0, 0, 1]}
+      color={COLOR_BORDER_DELETED}
     />
   </Block>
 ))

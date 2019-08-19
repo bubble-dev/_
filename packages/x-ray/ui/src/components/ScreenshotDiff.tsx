@@ -3,6 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
+import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -28,7 +29,6 @@ export const ScreenshotDiff = pureComponent(
   newHeight,
   oldAlpha,
   newAlpha,
-  file,
   id,
   isDiscarded,
 }) => (
@@ -41,7 +41,6 @@ export const ScreenshotDiff = pureComponent(
       opacity={Math.min(oldAlpha, isDiscarded ? 0.5 : 1)}
     >
       <Screenshot
-        file={file}
         id={id}
         type="old"
         width={oldWidth}
@@ -56,7 +55,7 @@ export const ScreenshotDiff = pureComponent(
         overflowLeft={2}
         overflowRight={2}
         overflowBottom={2}
-        color={[255, 0, 0, 1]}
+        color={COLOR_BORDER_DELETED}
       />
     </Block>
     <Block
@@ -67,7 +66,6 @@ export const ScreenshotDiff = pureComponent(
       opacity={Math.min(newAlpha, isDiscarded ? 0.5 : 1)}
     >
       <Screenshot
-        file={file}
         id={id}
         type="new"
         width={newWidth}
@@ -82,7 +80,7 @@ export const ScreenshotDiff = pureComponent(
         overflowLeft={2}
         overflowRight={2}
         overflowBottom={2}
-        color={[0, 0, 255, 1]}
+        color={COLOR_BORDER_NEW}
       />
     </Block>
   </Fragment>
