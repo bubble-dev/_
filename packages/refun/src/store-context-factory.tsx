@@ -42,6 +42,8 @@ export const StoreContextFactory = <S extends {}, D extends Dispatch> (store: St
   const mapStoreState = mapReduxState<S, D>(Context)
   const mapStoreDispatch = mapReduxDispatch<S, D>(Context)
 
+  StoreProvider.displayName = 'StoreProvider'
+
   return {
     StoreProvider,
     mapStoreState,
