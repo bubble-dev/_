@@ -55,3 +55,5 @@ export const Screenshot = component(
     />
   )
 })
+
+Screenshot.displayName = 'Screenshot'

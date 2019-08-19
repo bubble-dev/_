@@ -31,3 +31,5 @@ export const SourceCode = component(
     ))}
   </Block>
 ))
+
+SourceCode.displayName = 'SourceCode'

@@ -187,3 +187,5 @@ export const Popup = component(
     </Animation>
   </Block>
 ))
+
+Popup.displayName = 'Popup'

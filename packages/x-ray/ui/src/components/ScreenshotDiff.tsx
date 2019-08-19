@@ -85,3 +85,5 @@ export const ScreenshotDiff = pureComponent(
     </Block>
   </Fragment>
 ))
+
+ScreenshotDiff.displayName = 'ScreenshotDiff'

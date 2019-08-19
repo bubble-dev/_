@@ -96,3 +96,5 @@ export const SnapshotGridItem = component(
     </Block>
   )
 })
+
+SnapshotGridItem.displayName = 'SnapshotGridItem'

@@ -167,3 +167,5 @@ export const SnapshotGrid = component(
     ), [] as ReactNode[])}
   </Block>
 ))
+
+SnapshotGrid.displayName = 'SnapshotGrid'

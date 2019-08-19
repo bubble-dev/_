@@ -33,3 +33,5 @@ export const ScreenshotDeleted = pureComponent(
     />
   </Block>
 ))
+
+ScreenshotDeleted.displayName = 'ScreenshotDeleted'

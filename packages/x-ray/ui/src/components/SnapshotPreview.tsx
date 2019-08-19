@@ -76,3 +76,5 @@ export const SnapshotPreview = component(
     </Block>
   )
 })
+
+SnapshotPreview.displayName = 'SnapshotPreview'

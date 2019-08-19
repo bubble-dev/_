@@ -72,3 +72,5 @@ export const Main = component(
     </Block>
   </Fragment>
 ))
+
+Main.displayName = 'Main'

@@ -225,3 +225,5 @@ export const ScreenshotGrid = component(
     </Animation>
   </Block>
 ))
+
+ScreenshotGrid.displayName = 'ScreenshotGrid'

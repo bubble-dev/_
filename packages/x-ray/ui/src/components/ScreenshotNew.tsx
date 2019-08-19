@@ -33,3 +33,5 @@ export const ScreenshotNew = pureComponent(
     />
   </Block>
 ))
+
+ScreenshotNew.displayName = 'ScrenshotNew'

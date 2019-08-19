@@ -98,3 +98,5 @@ export const ScreenshotPreview = component(
     </Block>
   )
 })
+
+ScreenshotPreview.displayName = 'ScreenshotPreview'
