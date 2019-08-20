@@ -6,7 +6,7 @@ import { TarFs } from '@x-ray/tar-fs'
 import { isString, isUndefined, objectHas, isDefined } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType, TScreenshotsSave, TScreenshotsList } from './types'
+import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType, TScreenshotsSave, TScreenshotItems } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
@@ -42,17 +42,33 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 pathMap.set(shortPath, longPath)
                 pathMap.set(longPath, shortPath)
 
-                return Object.entries(result[longPath]).reduce((acc, [type, items]) => {
-                  return Object.entries(items).reduce((acc, [id, item]) => {
-                    acc[`${shortPath}:${id}`] = {
-                      type: type as TScreenshotResultType,
-                      ...item,
-                    }
+                const allIds = new Set([...Object.keys(result[longPath].new), ...Object.keys(result[longPath].old)])
 
-                    return acc
-                  }, acc)
+                return Array.from(allIds).reduce((acc, id) => {
+                  if (Reflect.has(result[longPath].new, id)) {
+                    if (Reflect.has(result[longPath].old, id)) {
+                      acc[`${shortPath}:${id}`] = {
+                        type: 'diff',
+                        ...result[longPath].old[id],
+                        newWidth: result[longPath].new[id].width,
+                        newHeight: result[longPath].new[id].height,
+                      }
+                    } else {
+                      acc[`${shortPath}:${id}`] = {
+                        type: 'new',
+                        ...result[longPath].new[id],
+                      }
+                    }
+                  } else {
+                    acc[`${shortPath}:${id}`] = {
+                      type: 'deleted',
+                      ...result[longPath].old[id],
+                    }
+                  }
+
+                  return acc
                 }, acc)
-              }, Promise.resolve({} as TScreenshotsList)),
+              }, Promise.resolve({} as TScreenshotItems)),
             }))
 
             return

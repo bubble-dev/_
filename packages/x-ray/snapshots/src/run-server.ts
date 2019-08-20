@@ -6,7 +6,7 @@ import { TarFs } from '@x-ray/tar-fs'
 import { isString, isUndefined, objectHas, isDefined } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave, TSnapshotsList } from './types'
+import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave, TSnapshotItems } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
@@ -52,7 +52,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                     return acc
                   }, acc)
                 }, acc)
-              }, Promise.resolve({} as TSnapshotsList)),
+              }, Promise.resolve({} as TSnapshotItems)),
             }))
 
             return

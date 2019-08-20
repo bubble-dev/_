@@ -1,7 +1,13 @@
 import { TJsonValue } from 'typeon'
 import { TExtend } from 'tsfn'
 import { ThunkAction } from 'redux-thunk'
-import { TLineElement } from 'syntx'
+import { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
+import { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
+import { TItem } from '@x-ray/common-utils'
+
+export { TItem } from '@x-ray/common-utils'
+export { TSnapshotItem, TSnapshotItems } from '@x-ray/snapshots'
+export { TScreenshotItem, TScreenshotItems } from '@x-ray/screenshot-utils'
 
 export type TPosition = {
   top: number,
@@ -30,22 +36,6 @@ export type TType = 'image' | 'text'
 
 export type TItemType = 'new' | 'deleted' | 'diff'
 
-export type TItem = TSize & {
-  serializedElement: TLineElement[][],
-}
-
-export type TScreenshotItem = TItem & ({
-  type: 'new' | 'deleted',
-} | {
-  type: 'diff',
-  newWidth: number,
-  newHeight: number,
-})
-
-export type TSnapshotItem = TItem & {
-  type: 'new' | 'deleted' | 'diff',
-}
-
 export type TGridItem = TItem & TPosition & {
   id: string,
   gridWidth: number,
@@ -55,14 +45,6 @@ export type TGridItem = TItem & TPosition & {
 export type TScreenshotGridItem = TScreenshotItem & TGridItem
 
 export type TSnapshotGridItem = TSnapshotItem & TGridItem
-
-export type TSnapshotItems = {
-  [k: string]: TSnapshotItem,
-}
-
-export type TScreenshotItems = {
-  [k: string]: TScreenshotItem,
-}
 
 export type TState = {
   error?: string,

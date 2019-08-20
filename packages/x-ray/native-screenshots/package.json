@@ -15,6 +15,7 @@
     "@x-ray/screenshot-utils": "^0.1.0",
     "@x-ray/tar-fs": "^0.0.0",
     "graceful-fs": "^4.1.11",
+    "syntx": "^0.3.0",
     "tsfn": "^0.1.2",
     "upng-js": "^2.1.0"
   },

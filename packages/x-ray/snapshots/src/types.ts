@@ -1,5 +1,6 @@
 import { ReactElement } from 'react'
 import { TLineElement } from 'syntx'
+import { TItem } from '@x-ray/common-utils'
 
 export type TMeta = {
   id: string,
@@ -43,10 +44,8 @@ export type TSnapshotsItemResult =
     id: string,
   }
 
-export type TItem = {
-  serializedElement: TLineElement[][],
-  width: number,
-  height: number,
+export type TSnapshotItem = TItem & {
+  type: 'new' | 'deleted' | 'diff',
 }
 
 export type TSnapshotResultType = 'new' | 'diff' | 'deleted'
@@ -82,13 +81,11 @@ export type TRunSnapshotsResult = {
   hasBeenChanged: boolean,
 }
 
-export type TSnapshotsList = {
-  [id: string]: TItem & {
-    type: TSnapshotResultType,
-  },
+export type TSnapshotItems = {
+  [id: string]: TSnapshotItem,
 }
 
 export type TSnapshotsListResult = {
   type: 'text',
-  items: TSnapshotsList,
+  items: TSnapshotItems,
 }

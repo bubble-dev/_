@@ -4,6 +4,7 @@ import upng from 'upng-js'
 import { checkScreenshot, TScreenshotsResultData, TScreenshotsFileResultData, TRunScreesnotsResult, TScreenshotsResult, TScreenshotsFileResult } from '@x-ray/screenshot-utils'
 import { TarFs, TTarFs, TTarDataWithMeta } from '@x-ray/tar-fs'
 import { isUndefined, isString } from 'tsfn'
+import { TLineElement } from 'syntx'
 import { TOptions } from './types'
 
 const shouldBailout = Boolean(process.env.XRAY_CI)
@@ -41,7 +42,7 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
           targetResult.old[itemName] = {
             width: dpr(width),
             height: dpr(height),
-            serializedElement: meta,
+            serializedElement: meta as TLineElement[][],
           }
           targetResultData.old[itemName] = data
 

@@ -3,7 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW } from '../config'
+import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -38,7 +38,7 @@ export const ScreenshotDiff = pureComponent(
       left={left}
       width={oldWidth}
       height={oldHeight}
-      opacity={Math.min(oldAlpha, isDiscarded ? 0.5 : 1)}
+      opacity={Math.min(oldAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
     >
       <Screenshot
         id={id}
@@ -63,7 +63,7 @@ export const ScreenshotDiff = pureComponent(
       left={left}
       width={newWidth}
       height={newHeight}
-      opacity={Math.min(newAlpha, isDiscarded ? 0.5 : 1)}
+      opacity={Math.min(newAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
     >
       <Screenshot
         id={id}

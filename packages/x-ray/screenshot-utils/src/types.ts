@@ -1,5 +1,6 @@
 import { ReactElement } from 'react' // eslint-disable-line
 import { TLineElement } from 'syntx'
+import { TItem } from '@x-ray/common-utils'
 
 export type TMeta = {
   id: string,
@@ -43,11 +44,13 @@ export type TScreenshotsCheckResult =
     height: number,
   }
 
-export type TItem = {
-  serializedElement: TLineElement[][],
-  width: number,
-  height: number,
-}
+export type TScreenshotItem = TItem & ({
+  type: 'new' | 'deleted',
+} | {
+  type: 'diff',
+  newWidth: number,
+  newHeight: number,
+})
 
 export type TScreenshotResultType = 'old' | 'new'
 
@@ -87,7 +90,9 @@ export type TScreenshotsFileResultData = {
   }
 }
 
-export type TScreenshotsResultData = { [key: string]: TScreenshotsFileResultData }
+export type TScreenshotsResultData = {
+  [key: string]: TScreenshotsFileResultData,
+}
 
 export type TRunScreesnotsResult = {
   result: TScreenshotsResult,
@@ -95,17 +100,11 @@ export type TRunScreesnotsResult = {
   hasBeenChanged: boolean,
 }
 
-export type TScreenshotsList = {
-  [id: string]: TItem & ({
-    type: 'new' | 'old',
-  } | {
-    type: 'diff',
-    newWidth: number,
-    newHeight: number,
-  }),
+export type TScreenshotItems = {
+  [id: string]: TScreenshotItem,
 }
 
 export type TScreenshotsListResult = {
   type: 'image',
-  items: TScreenshotsList,
+  items: TScreenshotItems,
 }
