@@ -3,10 +3,10 @@ import http from 'http'
 import url from 'url'
 import makeDir from 'make-dir'
 import { TarFs } from '@x-ray/tar-fs'
-import { isString, isUndefined, objectHas, isDefined, TAnyObject } from 'tsfn'
+import { isString, isUndefined, objectHas, isDefined } from 'tsfn'
 import pAll from 'p-all'
 import pkgDir from 'pkg-dir'
-import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave } from './types'
+import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave, TSnapshotsList } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
 
@@ -28,7 +28,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
           if (req.url === '/list') {
             res.end(JSON.stringify({
               type: 'text',
-              files: await Object.keys(result).reduce(async (accPromise, longPath) => {
+              items: await Object.keys(result).reduce(async (accPromise, longPath) => {
                 const acc = await accPromise
 
                 const packageDir = await pkgDir(path.dirname(longPath))
@@ -45,19 +45,14 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                 return Object.entries(result[longPath]).reduce((acc, [type, items]) => {
                   return Object.entries(items).reduce((acc, [id, item]) => {
                     acc[`${shortPath}:${id}`] = {
-                      type,
+                      type: type as TSnapshotResultType,
                       ...item,
                     }
 
                     return acc
                   }, acc)
-                }, acc as { [id: string]: {
-                  type: string,
-                  serializedElement: TAnyObject,
-                  width: number,
-                  height: number,
-                }, })
-              }, Promise.resolve({} as any)),
+                }, acc)
+              }, Promise.resolve({} as TSnapshotsList)),
             }))
 
             return
@@ -73,10 +68,6 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
             const { type } = query
             const [shortPath, id] = query.id.split(':')
-
-            if (!isString(shortPath)) {
-              throw new Error(`?file param is required in ${req.url}`)
-            }
 
             if (!isString(id)) {
               throw new Error(`?id param is required in ${req.url}`)

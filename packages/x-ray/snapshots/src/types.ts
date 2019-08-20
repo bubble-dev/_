@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 import { TLineElement } from 'syntx'
-import { TAnyObject } from 'tsfn'
 
 export type TMeta = {
   id: string,
@@ -29,7 +28,7 @@ export type TSnapshotsCheckResult =
 export type TSnapshotsItemResult =
   (TSnapshotsCheckResult & {
     id: string,
-    serializedElement: TAnyObject,
+    serializedElement: TLineElement[][],
   }) |
   {
     type: 'DONE',
@@ -44,15 +43,17 @@ export type TSnapshotsItemResult =
     id: string,
   }
 
+export type TItem = {
+  serializedElement: TLineElement[][],
+  width: number,
+  height: number,
+}
+
 export type TSnapshotResultType = 'new' | 'diff' | 'deleted'
 
 export type TSnapshotsFileResult = {
-  [k in TSnapshotResultType]: {
-    [k: string]: {
-      serializedElement: TAnyObject,
-      width: number,
-      height: number,
-    },
+  [type in TSnapshotResultType]: {
+    [id: string]: TItem,
   }
 }
 
@@ -81,7 +82,13 @@ export type TRunSnapshotsResult = {
   hasBeenChanged: boolean,
 }
 
+export type TSnapshotsList = {
+  [id: string]: TItem & {
+    type: TSnapshotResultType,
+  },
+}
+
 export type TSnapshotsListResult = {
   type: 'text',
-  files: TSnapshotsResult,
+  items: TSnapshotsList,
 }

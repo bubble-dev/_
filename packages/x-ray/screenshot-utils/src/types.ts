@@ -1,6 +1,5 @@
 import { ReactElement } from 'react' // eslint-disable-line
 import { TLineElement } from 'syntx'
-import { TAnyObject } from 'tsfn'
 
 export type TMeta = {
   id: string,
@@ -44,15 +43,17 @@ export type TScreenshotsCheckResult =
     height: number,
   }
 
+export type TItem = {
+  serializedElement: TLineElement[][],
+  width: number,
+  height: number,
+}
+
 export type TScreenshotResultType = 'old' | 'new'
 
 export type TScreenshotsFileResult = {
   [k in TScreenshotResultType]: {
-    [k: string]: {
-      serializedElement: TAnyObject,
-      width: number,
-      height: number,
-    },
+    [k: string]: TItem,
   }
 }
 
@@ -60,16 +61,12 @@ export type TScreenshotsResult = {
   [filename: string]: TScreenshotsFileResult,
 }
 
-export type TScreenshotsSave = {
-  [filename: string]: {
-    [type in TScreenshotResultType]?: string[]
-  },
-}
+export type TScreenshotsSave = string[]
 
 export type TScreenshotsItemResult =
   (TScreenshotsCheckResult & {
     id: string,
-    serializedElement: TAnyObject,
+    serializedElement: TLineElement[][],
   }) |
   {
     type: 'DONE',
@@ -98,7 +95,17 @@ export type TRunScreesnotsResult = {
   hasBeenChanged: boolean,
 }
 
+export type TScreenshotsList = {
+  [id: string]: TItem & ({
+    type: 'new' | 'old',
+  } | {
+    type: 'diff',
+    newWidth: number,
+    newHeight: number,
+  }),
+}
+
 export type TScreenshotsListResult = {
   type: 'image',
-  files: TScreenshotsResult,
+  items: TScreenshotsList,
 }
