@@ -6,7 +6,9 @@ import { Button } from '@primitives/button'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
-import { COLOR_RED } from '../config'
+import { COLOR_RED, COLOR_GREEN } from '../config'
+import { onKeyDown } from '../maps/on-keydown'
+import { actionUndiscardItem } from '../actions/undiscard'
 import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
@@ -27,11 +29,15 @@ const STATE_CLOSING = 3
 export type TPopup = TRect & {
   type: TType,
   item: TGridItem,
+  discardedItems: string[],
 }
 
 export const Popup = component(
   startWithType<TPopup>(),
   mapStoreDispatch,
+  mapWithProps(({ item, discardedItems }) => ({
+    isDiscarded: discardedItems.includes(item.id),
+  })),
   mapState('state', 'setState', () => STATE_CLOSE, []),
   mapHandlers({
     onBackdropPress: ({ setState }) => () => {
@@ -44,8 +50,8 @@ export const Popup = component(
     onOpen: ({ setState }) => () => {
       setState(STATE_OPEN)
     },
-    onDiscard: ({ dispatch, item, setState }) => () => {
-      dispatch(actionDiscardItem(item.id))
+    onDiscardToggle: ({ dispatch, item, setState, isDiscarded }) => () => {
+      dispatch(isDiscarded ? actionUndiscardItem(item.id) : actionDiscardItem(item.id))
       setState(STATE_CLOSING)
     },
   }),
@@ -63,6 +69,14 @@ export const Popup = component(
           break
         }
       }
+    },
+  }),
+  onKeyDown({
+    Escape: ({ onBackdropPress }) => {
+      onBackdropPress()
+    },
+    ' ': ({ onDiscardToggle }) => {
+      onDiscardToggle()
     },
   }),
   mapWithProps(({ top, left, width, height, state, item }) => {
@@ -130,7 +144,8 @@ export const Popup = component(
   previewWidth,
   previewHeight,
   shouldNotAnimate,
-  onDiscard,
+  isDiscarded,
+  onDiscardToggle,
   onBackdropPress,
   onAnimationEnd,
 }) => (
@@ -166,8 +181,8 @@ export const Popup = component(
             {state === STATE_OPEN && item !== null && (
               <Fragment>
                 <Block width={popupWidth} height={BUTTON_HEIGHT} style={{ display: 'flex' }}>
-                  <Button onPress={onDiscard}>Discard</Button>
-                  <Background color={COLOR_RED}/>
+                  <Background color={isDiscarded ? COLOR_GREEN : COLOR_RED}/>
+                  <Button onPress={onDiscardToggle}/>
                 </Block>
                 <SourceCode
                   top={sourceCodeTop}

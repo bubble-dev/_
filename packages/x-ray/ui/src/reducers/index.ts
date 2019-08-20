@@ -13,6 +13,7 @@ import {
 } from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
+import { isActionUndiscardItem } from '../actions/undiscard'
 
 export type TReducer<S extends {}> = (state: S, action: TAction<any>) => S
 
@@ -96,6 +97,17 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       discardedItems: state.discardedItems.concat(action.payload),
+    }
+  }
+
+  if (isActionUndiscardItem(action)) {
+    if (!state.discardedItems.includes(action.payload)) {
+      return state
+    }
+
+    return {
+      ...state,
+      discardedItems: state.discardedItems.filter((item) => item !== action.payload),
     }
   }
 

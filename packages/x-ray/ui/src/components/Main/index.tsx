@@ -7,7 +7,7 @@ import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COLOR_BLACK, COLOR_GREEN } from '../../config'
+import { COLOR_GREEN } from '../../config'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
@@ -86,6 +86,7 @@ export const Main = component(
         height={height}
         type={type}
         item={selectedItem}
+        discardedItems={discardedItems}
       />
     )}
   </Fragment>
