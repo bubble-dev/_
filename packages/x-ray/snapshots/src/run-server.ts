@@ -9,6 +9,7 @@ import pkgDir from 'pkg-dir'
 import { TSnapshotsResultData, TSnapshotsResult, TSnapshotResultType, TSnapshotsSave, TSnapshotItems } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
+const PACKAGE_DIR_CONCURRENCY = 4
 
 export type TRunServer = {
   platform: string,
@@ -26,24 +27,29 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'GET') {
           if (req.url === '/list') {
+            const shortPaths = await pAll(Object.keys(result).map((longPath) => async () => {
+              const packageDir = await pkgDir(path.dirname(longPath))
+
+              if (isUndefined(packageDir)) {
+                throw new Error(`Cannot find package dir for "${longPath}"`)
+              }
+
+              const shortPath = path.relative(path.resolve('packages/'), packageDir)
+
+              pathMap.set(shortPath, longPath)
+              pathMap.set(longPath, shortPath)
+
+              return shortPath
+            }), { concurrency: PACKAGE_DIR_CONCURRENCY })
+
             res.end(JSON.stringify({
               type: 'text',
-              items: await Object.keys(result).reduce(async (accPromise, longPath) => {
-                const acc = await accPromise
-
-                const packageDir = await pkgDir(path.dirname(longPath))
-
-                if (isUndefined(packageDir)) {
-                  throw new Error(`Cannot find package dir for "${longPath}"`)
-                }
-
-                const shortPath = path.relative(path.resolve('packages/'), packageDir)
-
-                pathMap.set(shortPath, longPath)
-                pathMap.set(longPath, shortPath)
-
+              files: shortPaths,
+              items: await Object.keys(result).reduce((acc, longPath) => {
                 return Object.entries(result[longPath]).reduce((acc, [type, items]) => {
                   return Object.entries(items).reduce((acc, [id, item]) => {
+                    const shortPath = pathMap.get(longPath)!
+
                     acc[`${shortPath}:${id}`] = {
                       type: type as TSnapshotResultType,
                       ...item,
@@ -52,7 +58,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
                     return acc
                   }, acc)
                 }, acc)
-              }, Promise.resolve({} as TSnapshotItems)),
+              }, {} as TSnapshotItems),
             }))
 
             return

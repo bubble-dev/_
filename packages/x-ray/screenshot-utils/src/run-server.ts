@@ -9,6 +9,7 @@ import pkgDir from 'pkg-dir'
 import { TScreenshotsResultData, TScreenshotsResult, TScreenshotResultType, TScreenshotsSave, TScreenshotItems } from './types'
 
 const SAVE_FILES_CONCURRENCY = 4
+const PACKAGE_DIR_CONCURRENCY = 4
 
 export type TRunServer = {
   platform: string,
@@ -26,23 +27,27 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
         if (req.method === 'GET') {
           if (req.url === '/list') {
+            const shortPaths = await pAll(Object.keys(result).map((longPath) => async () => {
+              const packageDir = await pkgDir(path.dirname(longPath))
+
+              if (isUndefined(packageDir)) {
+                throw new Error(`Cannot find package dir for "${longPath}"`)
+              }
+
+              const shortPath = path.relative(path.resolve('packages/'), packageDir)
+
+              pathMap.set(shortPath, longPath)
+              pathMap.set(longPath, shortPath)
+
+              return shortPath
+            }), { concurrency: PACKAGE_DIR_CONCURRENCY })
+
             res.end(JSON.stringify({
               type: 'image',
-              items: await Object.keys(result).reduce(async (accPromise, longPath) => {
-                const acc = await accPromise
-
-                const packageDir = await pkgDir(path.dirname(longPath))
-
-                if (isUndefined(packageDir)) {
-                  throw new Error(`Cannot find package dir for "${longPath}"`)
-                }
-
-                const shortPath = path.relative(path.resolve('packages/'), packageDir)
-
-                pathMap.set(shortPath, longPath)
-                pathMap.set(longPath, shortPath)
-
+              files: shortPaths,
+              items: Object.keys(result).reduce((acc, longPath) => {
                 const allIds = new Set([...Object.keys(result[longPath].new), ...Object.keys(result[longPath].old)])
+                const shortPath = pathMap.get(longPath)!
 
                 return Array.from(allIds).reduce((acc, id) => {
                   if (Reflect.has(result[longPath].new, id)) {
@@ -68,7 +73,7 @@ export const runServer = ({ platform, result, resultData }: TRunServer) => new P
 
                   return acc
                 }, acc)
-              }, Promise.resolve({} as TScreenshotItems)),
+              }, {} as TScreenshotItems),
             }))
 
             return

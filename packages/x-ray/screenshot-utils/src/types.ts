@@ -106,5 +106,6 @@ export type TScreenshotItems = {
 
 export type TScreenshotsListResult = {
   type: 'image',
+  files: string[],
   items: TScreenshotItems,
 }

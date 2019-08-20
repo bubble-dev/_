@@ -87,5 +87,6 @@ export type TSnapshotItems = {
 
 export type TSnapshotsListResult = {
   type: 'text',
+  files: string[],
   items: TSnapshotItems,
 }
