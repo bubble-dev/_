@@ -86,6 +86,14 @@ export default async (options: TOptions) => {
 
                       break
                     }
+                    case 'OK': {
+                      port.postMessage({
+                        type: 'OK',
+                        id: item.id,
+                      })
+
+                      break
+                    }
                   }
                 })(items),
                 { concurrency: pages.length }

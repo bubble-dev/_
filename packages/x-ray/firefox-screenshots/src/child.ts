@@ -67,6 +67,14 @@ export default async (options: TOptions) => {
 
                     break
                   }
+                  case 'OK': {
+                    port.postMessage({
+                      type: 'OK',
+                      id: item.id,
+                    })
+
+                    break
+                  }
                 }
               }
 
