@@ -39,6 +39,9 @@ export const ScreenshotDiff = pureComponent(
       width={oldWidth}
       height={oldHeight}
       opacity={Math.min(oldAlpha, isDiscarded ? DISCARD_ALPHA : 1)}
+      style={{
+        cursor: 'pointer',
+      }}
     >
       <Screenshot
         id={id}

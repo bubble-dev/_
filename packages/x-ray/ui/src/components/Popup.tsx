@@ -6,12 +6,9 @@ import { Button } from '@primitives/button'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
-import { BORDER_WIDTH } from '../config'
 import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
-import { Shadow } from './Shadow'
-import { Border } from './Border'
 import { SnapshotPreview } from './SnapshotPreview'
 
 const isScreenshotGridItem = (type: TType | undefined, item: TGridItem | null): item is TScreenshotGridItem => type === 'image' && item !== null
@@ -132,7 +129,6 @@ export const Popup = component(
   onAnimationEnd,
 }) => (
   <Block left={left} top={top} width={width} height={height}>
-    <Block left={left} top={top} width={width} height={height} onPress={onBackdropPress}/>
     <Animation
       time={500}
       values={[popupLeft, popupTop, popupWidth, popupHeight, alpha]}
@@ -141,58 +137,57 @@ export const Popup = component(
       shouldNotAnimate={shouldNotAnimate}
     >
       {([popupLeft, popupTop, popupWidth, popupHeight, alpha]) => (
-        <Block
-          left={popupLeft}
-          top={popupTop}
-          width={popupWidth}
-          height={popupHeight}
-        >
-          <Border
-            color={[0, 0, 0, alpha]}
-            leftWidth={BORDER_WIDTH}
-            topWidth={BORDER_WIDTH}
-            rightWidth={BORDER_WIDTH}
-            bottomWidth={BORDER_WIDTH}
-            overflowLeft={BORDER_WIDTH}
-            overflowTop={BORDER_WIDTH}
-            overflowRight={BORDER_WIDTH}
-            overflowBottom={BORDER_WIDTH}
-          />
-          <Background color={[255, 255, 255, alpha]}/>
-          {state === STATE_OPEN && item !== null && (
-            <Fragment>
-              <Shadow color={[0, 0, 0, alpha]} blurRadius={20}/>
-              <Block>
-                <Button onPress={onDiscard}>Discard</Button>
-              </Block>
-              <SourceCode
-                top={propsTop}
-                left={propsLeft}
-                width={propsWidth}
-                height={propsHeight}
-                item={item}
-              />
-              {isScreenshotGridItem(type, item) && (
-                <ScreenshotPreview
-                  top={previewTop}
-                  left={previewLeft}
-                  width={previewWidth}
-                  height={previewHeight}
+        <Fragment>
+          <Block
+            left={left}
+            top={top}
+            width={width}
+            height={height}
+            onPress={onBackdropPress}
+          >
+            <Background color={[0, 0, 0, Math.min(alpha, 0.5)]}/>
+          </Block>
+          <Block
+            left={popupLeft}
+            top={popupTop}
+            width={popupWidth}
+            height={popupHeight}
+          >
+            <Background color={[255, 255, 255, alpha]}/>
+            {state === STATE_OPEN && item !== null && (
+              <Fragment>
+                <Block>
+                  <Button onPress={onDiscard}>Discard</Button>
+                </Block>
+                <SourceCode
+                  top={propsTop}
+                  left={propsLeft}
+                  width={propsWidth}
+                  height={propsHeight}
                   item={item}
                 />
-              )}
-              {isSnapshotGridItem(type, item) && (
-                <SnapshotPreview
-                  top={previewTop}
-                  left={previewLeft}
-                  width={previewWidth}
-                  height={previewHeight}
-                  item={item}
-                />
-              )}
-            </Fragment>
-          )}
-        </Block>
+                {isScreenshotGridItem(type, item) && (
+                  <ScreenshotPreview
+                    top={previewTop}
+                    left={previewLeft}
+                    width={previewWidth}
+                    height={previewHeight}
+                    item={item}
+                  />
+                )}
+                {isSnapshotGridItem(type, item) && (
+                  <SnapshotPreview
+                    top={previewTop}
+                    left={previewLeft}
+                    width={previewWidth}
+                    height={previewHeight}
+                    item={item}
+                  />
+                )}
+              </Fragment>
+            )}
+          </Block>
+        </Fragment>
       )}
     </Animation>
   </Block>

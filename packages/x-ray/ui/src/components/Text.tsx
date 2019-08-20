@@ -7,10 +7,12 @@ import {
   startWithType,
 } from 'refun'
 import { isNumber } from 'tsfn'
+import { TColor, colorToString } from 'colorido'
+import { COLOR_BLACK } from '../config'
 
 export type TTextProps = {
   id?: string,
-  color?: string,
+  color?: TColor,
   fontFamily?: string,
   fontWeight?: TStyle['fontWeight'],
   fontSize?: number,
@@ -31,6 +33,7 @@ export const Text = component(
     shouldPreventWrap: false,
     sholdHideOverflow: false,
     isUnderlined: false,
+    color: COLOR_BLACK,
   }),
   mapWithProps(({
     color,
@@ -46,7 +49,7 @@ export const Text = component(
     shouldHideOverflow,
   }) => {
     const style: TStyle = {
-      color,
+      color: colorToString(color),
       fontFamily,
       fontWeight,
       fontSize,

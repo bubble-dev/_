@@ -15,7 +15,16 @@ export type TScreenshotDeleted = TRect & TOmitKey<TApiLoadScreenshotOpts, 'type'
 export const ScreenshotDeleted = pureComponent(
   startWithType<TScreenshotDeleted>()
 )(({ top, left, width, height, id, isDiscarded }) => (
-  <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? DISCARD_ALPHA : 1}>
+  <Block
+    top={top}
+    left={left}
+    width={width}
+    height={height}
+    opacity={isDiscarded ? DISCARD_ALPHA : 1}
+    style={{
+      cursor: 'pointer',
+    }}
+  >
     <Screenshot
       id={id}
       type="old"

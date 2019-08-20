@@ -52,7 +52,16 @@ export const SnapshotGridItem = pureComponent(
     ),
   }), ['type'])
 )(({ state, top, left, width, height, borderColor, isDiscarded }) => (
-  <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? DISCARD_ALPHA : 1}>
+  <Block
+    top={top}
+    left={left}
+    width={width}
+    height={height}
+    opacity={isDiscarded ? DISCARD_ALPHA : 1}
+    style={{
+      cursor: 'pointer',
+    }}
+  >
     {state !== null && state.map((line, i) => (
       <Block
         top={i * SNAPSHOT_GRID_LINE_HEIGHT}

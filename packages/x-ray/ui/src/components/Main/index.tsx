@@ -6,8 +6,12 @@ import { actionLoadList, actionSave } from '../../actions'
 import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
+import { Background } from '../Background'
+import { COLOR_BLACK } from '../../config'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
+
+const SAVE_BUTTON_SIZE = 48
 
 const isScreenshots = (items: any, type: TType | null): items is TScreenshotItems => type === 'image' && Object.keys(items).length > 0
 const isSnapshots = (items: any, type: TType | null): items is TSnapshotItems => type === 'text' && Object.keys(items).length > 0
@@ -62,6 +66,18 @@ export const Main = component(
         discardedItems={discardedItems}
       />
     )}
+    <Block
+      top={height - SAVE_BUTTON_SIZE - 10}
+      left={width - SAVE_BUTTON_SIZE - 10}
+      width={SAVE_BUTTON_SIZE}
+      height={SAVE_BUTTON_SIZE}
+      style={{
+        display: 'flex',
+      }}
+    >
+      <Background color={COLOR_BLACK}/>
+      <Button onPress={onSave}/>
+    </Block>
     {type !== null && selectedItem !== null && (
       <Popup
         left={0}
@@ -72,9 +88,6 @@ export const Main = component(
         item={selectedItem}
       />
     )}
-    <Block top={0} left={0}>
-      <Button onPress={onSave}>Save</Button>
-    </Block>
   </Fragment>
 ))
 
