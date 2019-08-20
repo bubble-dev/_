@@ -7,7 +7,7 @@ import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { TRect } from '../types'
-import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
+import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED, DISCARD_ALPHA, BORDER_WIDTH } from '../config'
 import { Text } from './Text'
 import { Block } from './Block'
 import { Border } from './Border'
@@ -52,7 +52,7 @@ export const SnapshotGridItem = pureComponent(
     ),
   }), ['type'])
 )(({ state, top, left, width, height, borderColor, isDiscarded }) => (
-  <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? 0.5 : 1}>
+  <Block top={top} left={left} width={width} height={height} opacity={isDiscarded ? DISCARD_ALPHA : 1}>
     {state !== null && state.map((line, i) => (
       <Block
         top={i * SNAPSHOT_GRID_LINE_HEIGHT}
@@ -78,14 +78,14 @@ export const SnapshotGridItem = pureComponent(
       </Block>
     ))}
     <Border
-      topWidth={2}
-      leftWidth={2}
-      rightWidth={2}
-      bottomWidth={2}
-      overflowTop={2}
-      overflowLeft={2}
-      overflowRight={2}
-      overflowBottom={2}
+      topWidth={BORDER_WIDTH}
+      leftWidth={BORDER_WIDTH}
+      rightWidth={BORDER_WIDTH}
+      bottomWidth={BORDER_WIDTH}
+      overflowTop={BORDER_WIDTH}
+      overflowLeft={BORDER_WIDTH}
+      overflowRight={BORDER_WIDTH}
+      overflowBottom={BORDER_WIDTH}
       color={borderColor}
     />
   </Block>

@@ -8,7 +8,7 @@ import { actionSelectSnapshot } from '../../actions'
 import { TSize, TSnapshotGridItem, TSnapshotItems } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
-import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT } from '../../config'
+import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_WIDTH, COLOR_BLACK } from '../../config'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
@@ -111,15 +111,13 @@ export const SnapshotGrid = component(
   onPress,
 }) => (
   <Block
-    left={0}
-    top={0}
     width={width}
     height={height}
     shouldScroll
     onScroll={onScroll}
     onPress={onPress}
   >
-    <Block left={0} top={0} width={0} height={maxHeight} shouldFlow/>
+    <Block width={0} height={maxHeight} shouldFlow/>
     {cols.reduce((result, col) => (
       result.concat(
         col.map((item: TSnapshotGridItem) => {
@@ -136,15 +134,15 @@ export const SnapshotGrid = component(
                 height={item.gridHeight}
               >
                 <Border
-                  color={[0, 0, 0, 1]}
-                  topWidth={2}
-                  leftWidth={2}
-                  rightWidth={2}
-                  bottomWidth={2}
-                  overflowLeft={2}
-                  overflowRight={2}
-                  overflowTop={2}
-                  overflowBottom={2}
+                  color={COLOR_BLACK}
+                  topWidth={BORDER_WIDTH}
+                  leftWidth={BORDER_WIDTH}
+                  rightWidth={BORDER_WIDTH}
+                  bottomWidth={BORDER_WIDTH}
+                  overflowLeft={BORDER_WIDTH}
+                  overflowRight={BORDER_WIDTH}
+                  overflowTop={BORDER_WIDTH}
+                  overflowBottom={BORDER_WIDTH}
                 />
               </Block>
             )

@@ -11,7 +11,7 @@ import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
 import { ScreenshotDiff } from '../ScreenshotDiff'
-import { COL_SPACE, COL_WIDTH } from '../../config'
+import { COL_SPACE, COL_WIDTH, BORDER_WIDTH, COLOR_BLACK } from '../../config'
 import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
@@ -155,15 +155,15 @@ export const ScreenshotGrid = component(
                       height={item.gridHeight}
                     >
                       <Border
-                        color={[0, 0, 0, 1]}
-                        topWidth={2}
-                        leftWidth={2}
-                        rightWidth={2}
-                        bottomWidth={2}
-                        overflowLeft={2}
-                        overflowRight={2}
-                        overflowTop={2}
-                        overflowBottom={2}
+                        color={COLOR_BLACK}
+                        topWidth={BORDER_WIDTH}
+                        leftWidth={BORDER_WIDTH}
+                        rightWidth={BORDER_WIDTH}
+                        bottomWidth={BORDER_WIDTH}
+                        overflowLeft={BORDER_WIDTH}
+                        overflowRight={BORDER_WIDTH}
+                        overflowTop={BORDER_WIDTH}
+                        overflowBottom={BORDER_WIDTH}
                       />
                     </Block>
                   )

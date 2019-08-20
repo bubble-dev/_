@@ -3,7 +3,7 @@ import { startWithType, pureComponent } from 'refun'
 import { TOmitKey } from 'tsfn'
 import { TPosition } from '../types'
 import { TApiLoadScreenshotOpts } from '../api'
-import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA } from '../config'
+import { COLOR_BORDER_DELETED, COLOR_BORDER_NEW, DISCARD_ALPHA, BORDER_WIDTH } from '../config'
 import { Block } from './Block'
 import { Border } from './Border'
 import { Screenshot } from './Screenshot'
@@ -47,14 +47,14 @@ export const ScreenshotDiff = pureComponent(
         height={oldHeight}
       />
       <Border
-        topWidth={2}
-        leftWidth={2}
-        rightWidth={2}
-        bottomWidth={2}
-        overflowTop={2}
-        overflowLeft={2}
-        overflowRight={2}
-        overflowBottom={2}
+        topWidth={BORDER_WIDTH}
+        leftWidth={BORDER_WIDTH}
+        rightWidth={BORDER_WIDTH}
+        bottomWidth={BORDER_WIDTH}
+        overflowTop={BORDER_WIDTH}
+        overflowLeft={BORDER_WIDTH}
+        overflowRight={BORDER_WIDTH}
+        overflowBottom={BORDER_WIDTH}
         color={COLOR_BORDER_DELETED}
       />
     </Block>
@@ -72,14 +72,14 @@ export const ScreenshotDiff = pureComponent(
         height={newHeight}
       />
       <Border
-        topWidth={2}
-        leftWidth={2}
-        rightWidth={2}
-        bottomWidth={2}
-        overflowTop={2}
-        overflowLeft={2}
-        overflowRight={2}
-        overflowBottom={2}
+        topWidth={BORDER_WIDTH}
+        leftWidth={BORDER_WIDTH}
+        rightWidth={BORDER_WIDTH}
+        bottomWidth={BORDER_WIDTH}
+        overflowTop={BORDER_WIDTH}
+        overflowLeft={BORDER_WIDTH}
+        overflowRight={BORDER_WIDTH}
+        overflowBottom={BORDER_WIDTH}
         color={COLOR_BORDER_NEW}
       />
     </Block>

@@ -6,6 +6,7 @@ import { TRect, TSnapshotGridItem } from '../types'
 import { mapStoreDispatch } from '../store'
 import { apiLoadSnapshot } from '../api'
 import { actionError } from '../actions'
+import { COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED } from '../config'
 import { Block } from './Block'
 import { Background } from './Background'
 
@@ -56,10 +57,10 @@ export const SnapshotPreview = component(
           key={i}
         >
           {line.type === 'added' && (
-            <Background color={[127, 255, 127, 1]}/>
+            <Background color={COLOR_LINE_BG_ADDED}/>
           )}
           {line.type === 'removed' && (
-            <Background color={[255, 127, 127, 1]}/>
+            <Background color={COLOR_LINE_BG_REMOVED}/>
           )}
           <Block>
             <Text

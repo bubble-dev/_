@@ -6,6 +6,7 @@ import { Button } from '@primitives/button'
 import { mapStoreDispatch } from '../store'
 import { TRect, TType, TGridItem, TSnapshotGridItem, TScreenshotGridItem } from '../types'
 import { actionDeselect, actionDiscardItem } from '../actions'
+import { BORDER_WIDTH } from '../config'
 import { SourceCode } from './SourceCode'
 import { Block } from './Block'
 import { ScreenshotPreview } from './ScreenshotPreview'
@@ -148,14 +149,14 @@ export const Popup = component(
         >
           <Border
             color={[0, 0, 0, alpha]}
-            leftWidth={2}
-            topWidth={2}
-            rightWidth={2}
-            bottomWidth={2}
-            overflowLeft={2}
-            overflowTop={2}
-            overflowRight={2}
-            overflowBottom={2}
+            leftWidth={BORDER_WIDTH}
+            topWidth={BORDER_WIDTH}
+            rightWidth={BORDER_WIDTH}
+            bottomWidth={BORDER_WIDTH}
+            overflowLeft={BORDER_WIDTH}
+            overflowTop={BORDER_WIDTH}
+            overflowRight={BORDER_WIDTH}
+            overflowBottom={BORDER_WIDTH}
           />
           <Background color={[255, 255, 255, alpha]}/>
           {state === STATE_OPEN && item !== null && (
