@@ -10,11 +10,14 @@ export const SNAPSHOT_GRID_LINE_HEIGHT = 8
 export const DISCARD_ALPHA = 0.3
 export const BORDER_WIDTH = 2
 
-export const COLOR_BORDER_NEW: TColor = [0, 127, 0, 1]
-export const COLOR_BORDER_DIFF: TColor = [0, 0, 127, 1]
-export const COLOR_BORDER_DELETED: TColor = [127, 0, 0, 1]
-export const COLOR_LINE_BG_ADDED: TColor = [127, 255, 127, 1]
-export const COLOR_LINE_BG_REMOVED: TColor = [255, 127, 127, 1]
 export const COLOR_BLACK: TColor = [0, 0, 0, 1]
 export const COLOR_WHITE: TColor = [255, 255, 255, 1]
-export const COLOR_BLUE: TColor = [0, 0, 255, 1]
+export const COLOR_RED: TColor = [200, 127, 127, 1]
+export const COLOR_GREEN: TColor = [127, 200, 127, 1]
+export const COLOR_BLUE: TColor = [127, 127, 200, 1]
+
+export const COLOR_BORDER_NEW: TColor = COLOR_GREEN
+export const COLOR_BORDER_DIFF: TColor = COLOR_BLUE
+export const COLOR_BORDER_DELETED: TColor = COLOR_RED
+export const COLOR_LINE_BG_ADDED: TColor = COLOR_GREEN
+export const COLOR_LINE_BG_REMOVED: TColor = COLOR_RED

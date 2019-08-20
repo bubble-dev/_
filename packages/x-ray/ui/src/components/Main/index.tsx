@@ -7,7 +7,7 @@ import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COLOR_BLACK } from '../../config'
+import { COLOR_BLACK, COLOR_GREEN } from '../../config'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
@@ -75,7 +75,7 @@ export const Main = component(
         display: 'flex',
       }}
     >
-      <Background color={COLOR_BLACK}/>
+      <Background color={COLOR_GREEN}/>
       <Button onPress={onSave}/>
     </Block>
     {type !== null && selectedItem !== null && (
