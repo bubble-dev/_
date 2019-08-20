@@ -15,9 +15,7 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
     dpr: 1,
   }
 
-  console.time('screenshots')
   const { result, resultData, hasBeenChanged } = await runScreenshots(childFile, targetFiles, 1, options)
-  console.timeEnd('screenshots')
 
   if (hasBeenChanged) {
     const closeReboxServer = await run({
@@ -25,6 +23,8 @@ export const runFiles = async (targetFiles: string[], userOptions: TUserOptions)
       entryPointPath: 'packages/x-ray/ui/src/index.tsx',
       isQuiet: true,
     })
+
+    console.log('open http://localhost:3000/ to approve or discard changes')
 
     await runServer({
       platform: options.platform,

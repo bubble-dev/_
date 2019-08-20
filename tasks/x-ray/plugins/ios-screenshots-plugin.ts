@@ -45,9 +45,7 @@ export default (appPath: string) =>
 
       logMessage('app is launched')
 
-      console.time('screenshots')
       const { result, resultData, hasBeenChanged } = await runScreenshots()
-      console.timeEnd('screenshots')
 
       if (hasBeenChanged) {
         const closeReboxServer = await runWeb({
@@ -55,6 +53,8 @@ export default (appPath: string) =>
           entryPointPath: 'packages/x-ray/ui/src/index.tsx',
           isQuiet: true,
         })
+
+        console.log('open http://localhost:3000/ to approve or discard changes')
 
         await runUiServer({
           platform: 'ios',

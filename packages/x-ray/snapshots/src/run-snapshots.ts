@@ -21,12 +21,16 @@ const getDataSize = (lines: TFileResultLine[]) => {
 
 export const runSnapshots = (childFile: string, targetFiles: string[], consurrency: number, options: TOptions) => new Promise<TRunSnapshotsResult>((resolve, reject) => {
   const workersCount = Math.min(targetFiles.length, consurrency)
-  let targetFileIndex = 0
-  let doneWorkersCount = 0
-
   const result: TSnapshotsResult = {}
   const resultData: TSnapshotsResultData = {}
+  let targetFileIndex = 0
+  let doneWorkersCount = 0
   let hasBeenChanged = false
+  const startTime = Date.now()
+  let okCount = 0
+  let newCount = 0
+  let deletedCount = 0
+  let diffCount = 0
 
   const workers = Array(workersCount)
     .fill(null)
@@ -46,6 +50,8 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
       worker.on('message', async (action: TSnapshotsItemResult) => {
         switch (action.type) {
           case 'OK': {
+            okCount++
+
             break
           }
           case 'DIFF': {
@@ -90,6 +96,8 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
 
             hasBeenChanged = true
 
+            diffCount++
+
             break
           }
           case 'NEW': {
@@ -108,6 +116,8 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
 
             hasBeenChanged = true
 
+            newCount++
+
             break
           }
           case 'DELETED': {
@@ -125,6 +135,8 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             targetResultData.deleted[action.id] = data
 
             hasBeenChanged = true
+
+            deletedCount++
 
             break
           }
@@ -165,6 +177,12 @@ export const runSnapshots = (childFile: string, targetFiles: string[], consurren
             doneWorkersCount++
 
             if (doneWorkersCount === workers.length) {
+              console.log(`ok: ${okCount}`)
+              console.log(`new: ${newCount}`)
+              console.log(`deleted: ${deletedCount}`)
+              console.log(`diff: ${diffCount}`)
+              console.log(`done in ${Date.now() - startTime}ms`)
+
               resolve({
                 result,
                 resultData,

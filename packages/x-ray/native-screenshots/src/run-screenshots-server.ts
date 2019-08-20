@@ -13,12 +13,16 @@ const dprSize = (dpr: number) => (size: number): number => Math.round(size / dpr
 export const runScreenshotsServer = (options: TOptions) => new Promise<() => Promise<TRunScreesnotsResult>>((serverResolve) => {
   const dpr = dprSize(options.dpr)
   const screenshotsPromise = new Promise<TRunScreesnotsResult>((screenshotsResolve, screenshotsReject) => {
-    let currentTar: TTarFs
-    let currentFilePath: string
-
     const result: TScreenshotsResult = {}
     const resultData: TScreenshotsResultData = {}
+    let currentTar: TTarFs
+    let currentFilePath: string
     let hasBeenChanged = false
+    const startTime = Date.now()
+    let okCount = 0
+    let newCount = 0
+    let deletedCount = 0
+    let diffCount = 0
 
     let targetResult: TScreenshotsFileResult = {
       old: {},
@@ -35,6 +39,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
           if (Reflect.has(targetResult.old, itemName)) {
             continue
           }
+
+          deletedCount++
 
           const { data, meta } = await tar.read(itemName) as TTarDataWithMeta
           const { width, height } = upng.decode(data.buffer)
@@ -107,6 +113,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                 // switch
                 switch (action.type) {
                   case 'OK': {
+                    okCount++
+
                     break
                   }
                   case 'DIFF': {
@@ -125,6 +133,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
 
                     hasBeenChanged = true
 
+                    diffCount++
+
                     break
                   }
                   case 'NEW': {
@@ -136,6 +146,8 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
                     targetResultData.new[id] = action.data
 
                     hasBeenChanged = true
+
+                    newCount++
 
                     break
                   }
@@ -170,6 +182,12 @@ export const runScreenshotsServer = (options: TOptions) => new Promise<() => Pro
             if (!isUndefined(currentTar)) {
               await currentTar.close()
             }
+
+            console.log(`ok: ${okCount}`)
+            console.log(`new: ${newCount}`)
+            console.log(`deleted: ${deletedCount}`)
+            console.log(`diff: ${diffCount}`)
+            console.log(`done in ${Date.now() - startTime}ms`)
 
             server.close(() => screenshotsResolve({
               result,
