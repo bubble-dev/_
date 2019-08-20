@@ -74,7 +74,8 @@ export const Popup = component(
         popupTop: top + POPUP_OFFSET,
         popupWidth: width - POPUP_OFFSET * 2,
         popupHeight: height - POPUP_OFFSET * 2,
-        alpha: 1,
+        popupAlpha: 1,
+        backdropAlpha: 0.5,
         shouldNotAnimate,
       }
     }
@@ -84,7 +85,8 @@ export const Popup = component(
       popupTop: item.top,
       popupWidth: item.gridWidth,
       popupHeight: item.gridHeight,
-      alpha: 0,
+      popupAlpha: 0,
+      backdropAlpha: 0,
       shouldNotAnimate,
     }
   }),
@@ -110,10 +112,11 @@ export const Popup = component(
   top,
   width,
   height,
-  alpha,
   state,
   item,
   type,
+  backdropAlpha,
+  popupAlpha,
   popupLeft,
   popupTop,
   popupWidth,
@@ -134,12 +137,12 @@ export const Popup = component(
   <Block left={left} top={top} width={width} height={height}>
     <Animation
       time={500}
-      values={[popupLeft, popupTop, popupWidth, popupHeight, alpha]}
+      values={[popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]}
       easing={easeInOutCubic}
       onAnimationEnd={onAnimationEnd}
       shouldNotAnimate={shouldNotAnimate}
     >
-      {([popupLeft, popupTop, popupWidth, popupHeight, alpha]) => (
+      {([popupLeft, popupTop, popupWidth, popupHeight, popupAlpha, backdropAlpha]) => (
         <Fragment>
           <Block
             left={left}
@@ -151,7 +154,7 @@ export const Popup = component(
             }}
             onPress={onBackdropPress}
           >
-            <Background color={[0, 0, 0, Math.min(alpha, 0.5)]}/>
+            <Background color={[0, 0, 0, backdropAlpha]}/>
           </Block>
           <Block
             left={popupLeft}
@@ -159,7 +162,7 @@ export const Popup = component(
             width={popupWidth}
             height={popupHeight}
           >
-            <Background color={[255, 255, 255, alpha]}/>
+            <Background color={[255, 255, 255, popupAlpha]}/>
             {state === STATE_OPEN && item !== null && (
               <Fragment>
                 <Block width={popupWidth} height={BUTTON_HEIGHT} style={{ display: 'flex' }}>
