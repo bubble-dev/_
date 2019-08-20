@@ -8,7 +8,7 @@ import { actionSelectSnapshot } from '../../actions'
 import { TSize, TSnapshotGridItem, TSnapshotItems } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
-import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_WIDTH, COLOR_BLACK } from '../../config'
+import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_WIDTH, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
@@ -37,7 +37,7 @@ export const SnapshotGrid = component(
         }
       }
 
-      const gridHeight = item.height * SNAPSHOT_GRID_LINE_HEIGHT
+      const gridHeight = Math.min(item.height, SNAPSHOT_GRID_MAX_LINES) * SNAPSHOT_GRID_LINE_HEIGHT
 
       const result: TSnapshotGridItem = {
         ...item,

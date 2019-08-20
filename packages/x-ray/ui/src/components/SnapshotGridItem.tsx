@@ -3,11 +3,12 @@ import { startWithType, mapState, onMount, mapWithPropsMemo, pureComponent } fro
 import { TFileResultLine } from '@x-ray/snapshots'
 import { elegir } from 'elegir'
 import { TColor } from 'colorido'
+import { isDefined } from 'tsfn'
 import { apiLoadSnapshot, TApiLoadSnapshotOpts } from '../api'
 import { mapStoreDispatch } from '../store'
 import { actionError } from '../actions'
 import { TRect } from '../types'
-import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED, DISCARD_ALPHA, BORDER_WIDTH } from '../config'
+import { SNAPSHOT_GRID_FONT_SIZE, SNAPSHOT_GRID_LINE_HEIGHT, COLOR_BORDER_NEW, COLOR_BORDER_DIFF, COLOR_BORDER_DELETED, COLOR_LINE_BG_ADDED, COLOR_LINE_BG_REMOVED, DISCARD_ALPHA, BORDER_WIDTH, SNAPSHOT_GRID_MAX_LINES } from '../config'
 import { Text } from './Text'
 import { Block } from './Block'
 import { Border } from './Border'
@@ -50,8 +51,35 @@ export const SnapshotGridItem = pureComponent(
       true,
       COLOR_BORDER_DELETED as TColor
     ),
-  }), ['type'])
-)(({ state, top, left, width, height, borderColor, isDiscarded }) => (
+  }), ['type']),
+  mapWithPropsMemo(({ state, type }) => {
+    if (state === null) {
+      return {
+        lines: [],
+      }
+    }
+
+    if (state.length <= SNAPSHOT_GRID_MAX_LINES) {
+      return {
+        lines: state,
+      }
+    }
+
+    if (type !== 'diff') {
+      return {
+        lines: state.slice(0, SNAPSHOT_GRID_MAX_LINES),
+      }
+    }
+
+    const firstChangedLineIndex = state.findIndex((line) => isDefined(line.type))
+    const removeTotalLinesCount = state.length - SNAPSHOT_GRID_MAX_LINES
+    const removeTopLinesCount = Math.min(removeTotalLinesCount, firstChangedLineIndex)
+
+    return {
+      lines: state.slice(removeTopLinesCount, removeTopLinesCount + SNAPSHOT_GRID_MAX_LINES),
+    }
+  }, ['state'])
+)(({ lines, top, left, width, height, borderColor, isDiscarded }) => (
   <Block
     top={top}
     left={left}
@@ -62,7 +90,7 @@ export const SnapshotGridItem = pureComponent(
       cursor: 'pointer',
     }}
   >
-    {state !== null && state.map((line, i) => (
+    {lines.map((line, i) => (
       <Block
         key={i}
         top={i * SNAPSHOT_GRID_LINE_HEIGHT}

@@ -21,8 +21,8 @@ export const Button = component(
       minWidth: 0,
       margin: 0,
       outline: 0,
-      padding: 5,
-      tapHighlightColor: 'rgba(250, 255, 255, 0)',
+      padding: 0,
+      tapHighlightColor: 'rgba(255, 255, 255, 0)',
       userSelect: 'none',
     }),
   }), ['isDisabled'])
