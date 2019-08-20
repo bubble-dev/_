@@ -64,10 +64,11 @@ export const SnapshotGridItem = pureComponent(
   >
     {state !== null && state.map((line, i) => (
       <Block
+        key={i}
         top={i * SNAPSHOT_GRID_LINE_HEIGHT}
         height={SNAPSHOT_GRID_LINE_HEIGHT}
         width={width}
-        key={i}
+        shouldHideOverflow
       >
         {line.type === 'added' && (
           <Background color={COLOR_LINE_BG_ADDED}/>
