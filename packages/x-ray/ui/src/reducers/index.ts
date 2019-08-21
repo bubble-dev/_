@@ -10,6 +10,8 @@ import {
   isActionSelectScreenshot,
   isActionDeselect,
   isActionDiscardItem,
+  isActionAddFilter,
+  isActionRemoveFilter,
 } from '../actions'
 import { TAction, TState } from '../types'
 import { initialState } from '../store/initial-state'
@@ -53,6 +55,7 @@ export const reducer: Reducer<TState> = (state, action) => {
         selectedItem: null,
         discardedItems: [],
         type: 'image',
+        files: action.payload.files,
         items: action.payload.items,
       }
     }
@@ -63,6 +66,7 @@ export const reducer: Reducer<TState> = (state, action) => {
         selectedItem: null,
         discardedItems: [],
         type: 'text',
+        files: action.payload.files,
         items: action.payload.items,
       }
     }
@@ -108,6 +112,28 @@ export const reducer: Reducer<TState> = (state, action) => {
     return {
       ...state,
       discardedItems: state.discardedItems.filter((item) => item !== action.payload),
+    }
+  }
+
+  if (isActionAddFilter(action)) {
+    if (state.filteredFiles.includes(action.payload)) {
+      return state
+    }
+
+    return {
+      ...state,
+      filteredFiles: state.filteredFiles.concat(action.payload),
+    }
+  }
+
+  if (isActionRemoveFilter(action)) {
+    if (!state.filteredFiles.includes(action.payload)) {
+      return state
+    }
+
+    return {
+      ...state,
+      filteredFiles: state.filteredFiles.filter((item) => item !== action.payload),
     }
   }
 

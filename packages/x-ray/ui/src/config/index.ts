@@ -13,6 +13,8 @@ export const BORDER_WIDTH = 2
 
 export const COLOR_BLACK: TColor = [0, 0, 0, 1]
 export const COLOR_WHITE: TColor = [255, 255, 255, 1]
+export const COLOR_GRAY: TColor = [200, 200, 200, 1]
+export const COLOR_LIGHT_GRAY: TColor = [240, 240, 240, 1]
 export const COLOR_RED: TColor = [255, 127, 127, 1]
 export const COLOR_GREEN: TColor = [127, 200, 127, 1]
 export const COLOR_BLUE: TColor = [127, 127, 200, 1]

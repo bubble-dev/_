@@ -5,30 +5,39 @@ import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectSnapshot } from '../../actions'
-import { TSize, TSnapshotGridItem, TSnapshotItems } from '../../types'
+import { TSnapshotGridItem, TSnapshotItems, TRect } from '../../types'
 import { Block } from '../Block'
 import { SnapshotGridItem } from '../SnapshotGridItem'
 import { COL_SPACE, COL_WIDTH, SNAPSHOT_GRID_LINE_HEIGHT, BORDER_WIDTH, COLOR_BLACK, SNAPSHOT_GRID_MAX_LINES } from '../../config'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
-export type TSnapshotGrid = TSize & {
+export type TSnapshotGrid = TRect & {
   items: TSnapshotItems,
   discardedItems: string[],
+  filteredFiles: string[],
 }
 
 export const SnapshotGrid = component(
   startWithType<TSnapshotGrid>(),
   mapStoreDispatch,
-  mapWithPropsMemo(({ width, items }) => {
+  mapWithPropsMemo(({ width, items, filteredFiles }) => {
     const colCount = Math.max(1, Math.floor((width - COL_SPACE) / (COL_WIDTH + COL_SPACE)))
     const gridWidth = (width - (COL_SPACE * (colCount + 1))) / colCount
-    const top = new Array(colCount).fill(COL_SPACE)
+    const top = new Array(colCount).fill(2)
     const cols: TSnapshotGridItem[][] = new Array(colCount)
       .fill(0)
       .map(() => [])
 
     Object.entries(items).forEach(([id, item]) => {
+      if (filteredFiles.length > 0) {
+        const hasFiltered = filteredFiles.every((file) => !id.startsWith(`${file}:`))
+
+        if (hasFiltered) {
+          return
+        }
+      }
+
       let minIndex = 0
 
       for (let i = 1; i < top.length; ++i) {
@@ -65,7 +74,7 @@ export const SnapshotGrid = component(
       cols,
       maxHeight: top[maxIndex],
     }
-  }, ['width', 'items']),
+  }, ['width', 'items', 'filteredFiles']),
   mapScrollState(),
   mapHandlers({
     onPress: ({ dispatch, scrollTop, cols }) => (x: number, y: number) => {
@@ -103,6 +112,8 @@ export const SnapshotGrid = component(
   cols,
   discardedItems,
   maxHeight,
+  top,
+  left,
   width,
   height,
   scrollTop,
@@ -111,9 +122,11 @@ export const SnapshotGrid = component(
   onPress,
 }) => (
   <Block
+    top={top}
+    left={left}
     width={width}
     height={height}
-    shouldScroll
+    shouldScrollY
     onScroll={onScroll}
     onPress={onPress}
   >

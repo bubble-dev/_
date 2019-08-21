@@ -51,6 +51,8 @@ export type TState = {
   isSaved: boolean,
   isLoading: boolean,
   discardedItems: string[],
+  filteredFiles: string[],
+  files: string[],
 } & ({
   type: 'text' | null,
   items: TSnapshotItems,

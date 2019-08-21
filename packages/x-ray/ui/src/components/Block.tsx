@@ -17,7 +17,8 @@ export type TBlock = {
   floatingIndex?: number,
   shouldIgnorePointerEvents?: boolean,
   shouldFlow?: boolean,
-  shouldScroll?: boolean,
+  shouldScrollX?: boolean,
+  shouldScrollY?: boolean,
   shouldHideOverflow?: boolean,
   shouldForceAcceleration?: boolean,
   blendMode?: CSSProperties['mixBlendMode'],
@@ -54,7 +55,8 @@ export const Block = component(
       children,
       blendMode,
       style,
-      shouldScroll,
+      shouldScrollX,
+      shouldScrollY,
       shouldHideOverflow,
       shouldFlow,
       shouldIgnorePointerEvents,
@@ -130,8 +132,12 @@ export const Block = component(
         styles.flexBasis = 'auto'
       }
 
-      if (shouldScroll) {
-        styles.overflow = 'scroll'
+      if (shouldScrollX) {
+        styles.overflowX = 'scroll'
+      }
+
+      if (shouldScrollY) {
+        styles.overflowY = 'scroll'
       }
 
       if (shouldForceAcceleration) {

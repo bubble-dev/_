@@ -47,7 +47,14 @@ export const SnapshotPreview = component(
   }
 
   return (
-    <Block top={top} left={left} width={width} height={height} shouldScroll>
+    <Block
+      top={top}
+      left={left}
+      width={width}
+      height={height}
+      shouldScrollX
+      shouldScrollY
+    >
       <Block height={state.length * LINE_HEIGHT}/>
       {state.map((line, i) => (
         <Block

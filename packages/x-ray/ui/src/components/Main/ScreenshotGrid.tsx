@@ -6,7 +6,7 @@ import { Border } from '@primitives/border'
 import { isUndefined } from 'tsfn'
 import { mapStoreDispatch } from '../../store'
 import { actionSelectScreenshot } from '../../actions'
-import { TSize, TScreenshotGridItem, TScreenshotItems } from '../../types'
+import { TScreenshotGridItem, TScreenshotItems, TRect } from '../../types'
 import { Block } from '../Block'
 import { ScreenshotNew } from '../ScreenshotNew'
 import { ScreenshotDeleted } from '../ScreenshotDeleted'
@@ -16,7 +16,7 @@ import { mapDiffState } from './map-diff-state'
 import { mapScrollState } from './map-scroll-state'
 import { isVisibleItem } from './is-visible-item'
 
-export type TScreenshotGrid = TSize & {
+export type TScreenshotGrid = TRect & {
   items: TScreenshotItems,
   discardedItems: string[],
   shouldAnimate: boolean,
@@ -118,6 +118,8 @@ export const ScreenshotGrid = component(
   cols,
   discardedItems,
   maxHeight,
+  top,
+  left,
   width,
   height,
   scrollTop,
@@ -127,11 +129,11 @@ export const ScreenshotGrid = component(
   onPress,
 }) => (
   <Block
-    left={0}
-    top={0}
+    left={left}
+    top={top}
     width={width}
     height={height}
-    shouldScroll
+    shouldScrollY
     onScroll={onScroll}
     onPress={onPress}
   >

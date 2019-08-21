@@ -17,7 +17,9 @@ export const SourceCode = component(
     left={left}
     width={width}
     height={height}
-    shouldScroll
+    shouldScrollX
+    shouldScrollY
+
   >
     <Block height={item.serializedElement.length * LINE_HEIGHT} shouldFlow/>
     {item.serializedElement.map((line, i) => (

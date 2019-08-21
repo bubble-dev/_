@@ -15,6 +15,8 @@ export const onKeyDown = <P extends {}>(map: TMapKeyPress<P>) => (props: P) => {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (objectHas(map, e.key)) {
+        e.preventDefault()
+
         map[e.key](propsRef.current)
       }
     }

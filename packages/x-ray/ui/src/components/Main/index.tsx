@@ -7,7 +7,8 @@ import { TSize, TType, TScreenshotItems, TSnapshotItems } from '../../types'
 import { Popup } from '../Popup'
 import { Block } from '../Block'
 import { Background } from '../Background'
-import { COLOR_GREEN } from '../../config'
+import { COLOR_GREEN, COL_SPACE, BORDER_WIDTH } from '../../config'
+import { Toolbar, TOOLBAR_HEIGHT } from '../Toolbar'
 import { ScreenshotGrid } from './ScreenshotGrid'
 import { SnapshotGrid } from './SnapshotGrid'
 
@@ -20,12 +21,14 @@ export type TMain = TSize
 
 export const Main = component(
   startWithType<TMain>(),
-  mapStoreState(({ type, selectedItem, items, discardedItems }) => ({
+  mapStoreState(({ type, selectedItem, files, items, discardedItems, filteredFiles }) => ({
     type,
     selectedItem,
+    files,
     items,
     discardedItems,
-  }), ['selectedItem', 'items', 'type', 'discardedItems']),
+    filteredFiles,
+  }), ['selectedItem', 'files', 'items', 'type', 'discardedItems', 'filteredFiles']),
   mapStoreDispatch,
   onMount(({ dispatch }) => {
     dispatch(actionLoadList())
@@ -45,14 +48,25 @@ export const Main = component(
   selectedItem,
   items,
   discardedItems,
+  filteredFiles,
+  files,
   type,
   onSave,
 }) => (
   <Fragment>
+    <Toolbar
+      top={0}
+      left={0}
+      width={width}
+      files={files}
+      filteredFiles={filteredFiles}
+    />
     {isScreenshots(items, type) && (
       <ScreenshotGrid
+        top={TOOLBAR_HEIGHT + BORDER_WIDTH + Number(COL_SPACE)}
+        left={0}
         width={width}
-        height={height}
+        height={height - TOOLBAR_HEIGHT - BORDER_WIDTH - COL_SPACE}
         items={items}
         discardedItems={discardedItems}
         shouldAnimate={selectedItem === null}
@@ -60,10 +74,13 @@ export const Main = component(
     )}
     {isSnapshots(items, type) && (
       <SnapshotGrid
+        top={TOOLBAR_HEIGHT + BORDER_WIDTH + COL_SPACE}
+        left={0}
         width={width}
-        height={height}
+        height={height - TOOLBAR_HEIGHT - BORDER_WIDTH - COL_SPACE}
         items={items}
         discardedItems={discardedItems}
+        filteredFiles={filteredFiles}
       />
     )}
     <Block
