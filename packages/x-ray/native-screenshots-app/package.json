@@ -16,10 +16,10 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "react": "^16.8.0",
-    "react-native": "^0.59.0"
+    "react-native": "^0.60.0"
   },
   "peerDependencies": {
     "react": "^16.8.0",
-    "react-native": "^0.59.0"
+    "react-native": "^0.60.0"
   }
 }
