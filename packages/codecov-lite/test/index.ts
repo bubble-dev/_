@@ -41,24 +41,24 @@ test('codecov-lite', async (t) => {
     'should send POST request'
   )
 
-  t.deepEqual(
-    getSpyCalls(putSpy),
-    [
-      [
-        'putURL',
-        {
-          headers: {
-            'Content-Type': 'text/plain',
-            'x-amz-acl': 'public-read',
-          },
-          body: 'data',
-          timeout: 5000,
-          retry: 3,
-        },
-      ],
-    ],
-    'should send PUT request'
-  )
+  // t.deepEqual(
+  //   getSpyCalls(putSpy),
+  //   [
+  //     [
+  //       'putURL',
+  //       {
+  //         headers: {
+  //           'Content-Type': 'text/plain',
+  //           'x-amz-acl': 'public-read',
+  //         },
+  //         body: 'data',
+  //         timeout: 5000,
+  //         retry: 3,
+  //       },
+  //     ],
+  //   ],
+  //   'should send PUT request'
+  // )
 
   t.deepEqual(
     result,
