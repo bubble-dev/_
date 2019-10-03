@@ -2,7 +2,7 @@ import querystring from 'querystring'
 import got from 'got'
 import getConfig from './getConfig'
 
-const ENDPOINT = 'https://codecov.io/upload/v4'
+const ENDPOINT = 'https://codecov.io/upload/v2'
 const TIMEOUT = 5000
 const RETRIES = 3
 
@@ -18,25 +18,26 @@ export default async (data: string) => {
     },
     timeout: TIMEOUT,
     retry: RETRIES,
-    body: '',
+    body: data,
   })
-  const [reportURL, putURL] = body.split('\n')
-  console.log('REPORT', reportURL)
-  console.log('PUT', putURL)
+  console.log(body)
+  // const [reportURL, putURL] = body.split('\n')
+  // console.log('REPORT', reportURL)
+  // console.log('PUT', putURL)
 
-  try {
-    await got.put(putURL, {
-      headers: {
-        'Content-Type': 'text/plain',
-        'x-amz-acl': 'public-read',
-      },
-      timeout: TIMEOUT,
-      retry: RETRIES,
-      body: `# path=lcov.info\n${data}\n<<<<<< EOF\n`,
-    })
-  } catch (e) {
-    console.error(e)
-  }
+  // try {
+  //   await got.put(putURL, {
+  //     headers: {
+  //       'Content-Type': 'text/plain',
+  //       'x-amz-acl': 'public-read',
+  //     },
+  //     timeout: TIMEOUT,
+  //     retry: RETRIES,
+  //     body: `# path=lcov.info\n${data}\n<<<<<< EOF\n`,
+  //   })
+  // } catch (e) {
+  //   console.error(e)
+  // }
 
   return {
     reportURL,

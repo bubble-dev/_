@@ -21,4 +21,4 @@ matrix:
   fast_finish: true
 script:
   - yarn start ci
-  - ./node_modules/.bin/codecov
+  # - ./node_modules/.bin/codecov
