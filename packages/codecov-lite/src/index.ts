@@ -32,7 +32,7 @@ export default async (data: string) => {
       },
       timeout: TIMEOUT,
       retry: RETRIES,
-      body: data,
+      body: `# path=lcov.info\n${data}\n<<<<<< EOF\n`,
     })
   } catch (e) {
     console.error(e)
