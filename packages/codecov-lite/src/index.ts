@@ -24,15 +24,19 @@ export default async (data: string) => {
   console.log('REPORT', reportURL)
   console.log('PUT', putURL)
 
-  await got.put(putURL, {
-    headers: {
-      'Content-Type': 'text/plain',
-      'x-amz-acl': 'public-read',
-    },
-    timeout: TIMEOUT,
-    retry: RETRIES,
-    body: data,
-  })
+  try {
+    await got.put(putURL, {
+      headers: {
+        'Content-Type': 'text/plain',
+        'x-amz-acl': 'public-read',
+      },
+      timeout: TIMEOUT,
+      retry: RETRIES,
+      body: data,
+    })
+  } catch (e) {
+    console.error(e)
+  }
 
   return {
     reportURL,
