@@ -10,7 +10,7 @@ export default async (data: string) => {
   const config = getConfig()
   const queryString = querystring.stringify(config)
   const postURL = `${ENDPOINT}?${queryString}`
-  const { body: reportURL } = await got.post(postURL, {
+  const { body } = await got.post(postURL, {
     headers: {
       'Content-Type': 'text/plain',
       Accept: 'text/plain',
@@ -20,10 +20,8 @@ export default async (data: string) => {
     body: data,
   })
 
-  console.log('---', reportURL, '---')
-
   return {
-    reportURL,
+    reportURL: body.split('\n')[1],
     config,
   }
 }

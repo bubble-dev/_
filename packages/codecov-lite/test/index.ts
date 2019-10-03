@@ -3,7 +3,7 @@ import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 
 test('codecov-lite', async (t) => {
-  const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL' }))
+  const postSpy = createSpy(() => Promise.resolve({ body: 'HTTP 200\nreportURL' }))
   const putSpy = createSpy(() => {})
 
   const unmock = mock('../src/index', {
