@@ -20,6 +20,8 @@ export default async (data: string) => {
     body: data,
   })
 
+  console.log('---', reportURL, '---')
+
   return {
     reportURL,
     config,
