@@ -10,6 +10,7 @@ export default async (data: string) => {
   const config = getConfig()
   const queryString = querystring.stringify(config)
   const postURL = `${ENDPOINT}?${queryString}`
+  console.log('POST', postURL)
   const { body } = await got.post(postURL, {
     headers: {
       'Content-Type': 'text/plain',
@@ -20,6 +21,8 @@ export default async (data: string) => {
     body: '',
   })
   const [reportURL, putURL] = body.split('\n')
+  console.log('REPORT', reportURL)
+  console.log('PUT', putURL)
 
   await got.put(putURL, {
     headers: {
