@@ -2,7 +2,7 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 
-test('codecov-lite', async (t) => {
+test.skip('codecov-lite', async (t) => {
   const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL\nputURL' }))
   const putSpy = createSpy(() => {})
 
