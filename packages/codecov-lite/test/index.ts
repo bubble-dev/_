@@ -2,8 +2,8 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 
-test.skip('codecov-lite', async (t) => {
-  const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL\nputURL' }))
+test('codecov-lite', async (t) => {
+  const postSpy = createSpy(() => Promise.resolve({ body: 'reportURL' }))
   const putSpy = createSpy(() => {})
 
   const unmock = mock('../src/index', {
@@ -26,13 +26,13 @@ test.skip('codecov-lite', async (t) => {
     getSpyCalls(postSpy),
     [
       [
-        'https://codecov.io/upload/v4?foo=1&bar=2',
+        'https://codecov.io/upload/v2?foo=1&bar=2',
         {
           headers: {
             'Content-Type': 'text/plain',
             Accept: 'text/plain',
           },
-          body: '',
+          body: 'data',
           timeout: 5000,
           retry: 3,
         },
@@ -40,25 +40,6 @@ test.skip('codecov-lite', async (t) => {
     ],
     'should send POST request'
   )
-
-  // t.deepEqual(
-  //   getSpyCalls(putSpy),
-  //   [
-  //     [
-  //       'putURL',
-  //       {
-  //         headers: {
-  //           'Content-Type': 'text/plain',
-  //           'x-amz-acl': 'public-read',
-  //         },
-  //         body: 'data',
-  //         timeout: 5000,
-  //         retry: 3,
-  //       },
-  //     ],
-  //   ],
-  //   'should send PUT request'
-  // )
 
   t.deepEqual(
     result,

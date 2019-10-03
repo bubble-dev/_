@@ -10,8 +10,7 @@ export default async (data: string) => {
   const config = getConfig()
   const queryString = querystring.stringify(config)
   const postURL = `${ENDPOINT}?${queryString}`
-  console.log('POST', postURL)
-  const { body } = await got.post(postURL, {
+  const { body: reportURL } = await got.post(postURL, {
     headers: {
       'Content-Type': 'text/plain',
       Accept: 'text/plain',
@@ -20,24 +19,6 @@ export default async (data: string) => {
     retry: RETRIES,
     body: data,
   })
-  console.log(body)
-  // const [reportURL, putURL] = body.split('\n')
-  // console.log('REPORT', reportURL)
-  // console.log('PUT', putURL)
-
-  // try {
-  //   await got.put(putURL, {
-  //     headers: {
-  //       'Content-Type': 'text/plain',
-  //       'x-amz-acl': 'public-read',
-  //     },
-  //     timeout: TIMEOUT,
-  //     retry: RETRIES,
-  //     body: `# path=lcov.info\n${data}\n<<<<<< EOF\n`,
-  //   })
-  // } catch (e) {
-  //   console.error(e)
-  // }
 
   return {
     reportURL,

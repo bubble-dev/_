@@ -155,7 +155,7 @@ export const test = (packageDir: string = '**') =>
 
 export const ci = () =>
   sequence(
-    // lint(),
+    lint(),
     test(),
     find('coverage/lcov.info'),
     read,

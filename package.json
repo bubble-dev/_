@@ -46,7 +46,6 @@
     "@bubble-dev/typescript-config": "*",
     "@sandbox/ui": "*",
     "@types/node": "^11.13.10",
-    "codecov": "^3.6.1",
     "colorido": "^0.1.0",
     "eslint": "^6.1.0",
     "react": "^16.8.6",
