@@ -89,7 +89,7 @@ export const buildRelease = (options: TBuildJsBundleOptions) => {
           },
         },
         {
-          test: /\.(gif|jpg|jpeg|tiff|png|svg)$/,
+          test: /\.(gif|jpg|jpeg|tiff|png)$/,
           // exclude: nodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {

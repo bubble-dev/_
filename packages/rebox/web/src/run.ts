@@ -85,7 +85,7 @@ export const run = (options: TServeJsBundleOptions) => {
           },
         },
         {
-          test: /\.(gif|jpg|jpeg|tiff|png|svg)$/,
+          test: /\.(gif|jpg|jpeg|tiff|png)$/,
           // exclude: excludeNodeModulesRegExp,
           loader: require.resolve('file-loader'),
           options: {
