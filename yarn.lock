@@ -1348,10 +1348,10 @@
   resolved "https://registry.yarnpkg.com/@haul-bundler/inspector-events/-/inspector-events-0.13.0.tgz#be9937ea608f738f14e3aee50510e02769f3e700"
   integrity sha512-lvH4VJXwFdXRK2DP+9t4IsMRdehRcwXxTGdmdzWJYSgvLLROG/6MD1y3F7bPd6Jo8nElQffUPMprsm6ZWv028g==
 
-"@haul-bundler/preset-0.60@^0.13.0":
-  version "0.13.0"
-  resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.13.0.tgz#18c0518711b09dea6686c37e1a7555a0852049b1"
-  integrity sha512-KtkpIdkqezV5hxU2lG3PVQv+tKrcPzBYDaS7xiPpeKPJ25MzqP2hhnBpz/E7m+MN9gC9OIoyvkl+tNbzHaTZhw==
+"@haul-bundler/preset-0.60@^0.14.0":
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/@haul-bundler/preset-0.60/-/preset-0.60-0.14.0.tgz#1cf1a317da6cbc15c8bc6ce700235fbe1ff7d142"
+  integrity sha512-47i0I6QPySpwxNyTCA6MUN/kjCEA6mX4zo1nGPDY2EjcXV/RJjZFbfY+ckUVsEBXbydUwSoLhcErBrGU28wu/Q==
   dependencies:
     babel-loader "^8.0.6"
     case-sensitive-paths-webpack-plugin "^2.2.0"

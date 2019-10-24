@@ -14,7 +14,7 @@
     "@babel/runtime": "^7.4.3",
     "@haul-bundler/cli": "^0.13.0",
     "@haul-bundler/core": "^0.13.0",
-    "@haul-bundler/preset-0.60": "^0.13.0",
+    "@haul-bundler/preset-0.60": "^0.14.0",
     "@psxcode/wait": "^0.1.1",
     "babel-loader": "^8.0.5",
     "copie": "^0.3.0",
