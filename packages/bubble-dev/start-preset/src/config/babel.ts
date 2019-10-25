@@ -62,6 +62,8 @@ export const babelConfigNode: BabelConfig = {
     [
       require.resolve('@babel/preset-env'),
       {
+        useBuiltIns: 'usage',
+        corejs: 3,
         targets: { node },
         exclude: [
           'transform-regenerator',
