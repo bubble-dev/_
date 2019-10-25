@@ -40,6 +40,9 @@ test('fixdeps: all', async (t) => {
       import execa from 'execa'
       import tape from 'tape'
     `,
+    [`${rootDir}/fixtures/index.ts`]: `
+      import no from 'should-not-include-this'
+    `,
   })
   const fs = createFsFromVolume(vol)
 
@@ -62,7 +65,7 @@ test('fixdeps: all', async (t) => {
   const result = await fixdeps({
     packagePath: rootDir,
     dependenciesGlobs: ['src/**/*.ts'],
-    devDependenciesGlobs: ['test/**/*.ts'],
+    devDependenciesGlobs: ['test/**/*.ts', '!fixtures/**/*.ts'],
     ignoredPackages: [
       '@babel/runtime',
     ],

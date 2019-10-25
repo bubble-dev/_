@@ -1,72 +1,16 @@
 import path from 'path'
-import { readFile, writeFile } from 'pifs'
-import fastGlob from 'fast-glob'
+import { writeFile } from 'pifs'
 import { TOptions, TDepsEntries, TResult } from './types'
-import { uniqueArray } from './unique-array'
-import { globalIgnoreList } from './global-ignore-list'
-import { getDependenciesInContent } from './get-dependencies-in-content'
-import { getDepsToRemove } from './get-deps-to-remove'
-import { getDepsToAdd } from './get-deps-to-add'
-import { getPeerDevDepsToAdd } from './get-peer-dev-deps-to-add'
 import { getDepsVersions } from './get-deps-versions'
 import { composeDependencies } from './compose-dependencies'
 import { getPackage } from './get-package-json'
 import { objectFromEntries } from './object-from-entries'
+import { getDeps } from './get-deps'
 
-export const fixdeps = async ({
-  packagePath,
-  ignoredPackages,
-  dependenciesGlobs,
-  devDependenciesGlobs,
-}: TOptions): Promise<TResult> => {
-  const fastGlobOptions = {
-    ignore: ['node_modules/**'],
-    deep: Infinity,
-    onlyFiles: false,
-    expandDirectories: false,
-    absolute: true,
-  }
-
-  const packageJsonPath = path.join(packagePath, 'package.json')
-  const packageJson = await getPackage(packagePath)
-  const dependencyFiles = await fastGlob(
-    dependenciesGlobs.map((glob) => `${packagePath}/${glob}`),
-    fastGlobOptions
-  )
-  const devDependencyFiles = await fastGlob(
-    devDependenciesGlobs.map((glob) => {
-      if (glob.startsWith('!')) {
-        return `!${packagePath}/${glob.substr(1)}`
-      }
-
-      return `${packagePath}/${glob}`
-    }),
-    fastGlobOptions
-  )
-  const allFiles = uniqueArray([...dependencyFiles, ...devDependencyFiles])
-  const allIgnoredPackages = Array.isArray(ignoredPackages)
-    ? globalIgnoreList.concat(ignoredPackages)
-    : globalIgnoreList
-
-  const dependencyList: string[] = []
-  const devDependencyList: string[] = []
-
-  for (const filename of allFiles) {
-    const fileContent = await readFile(filename, 'utf8')
-
-    getDependenciesInContent(fileContent).forEach((dep) => {
-      if (dependencyFiles.includes(filename)) {
-        dependencyList.push(dep)
-      } else /* if (devDependencyFiles.includes(filename)) */ {
-        devDependencyList.push(dep)
-      }
-    })
-  }
-
-  const depsToRemove = getDepsToRemove(packageJson, [...dependencyList, ...devDependencyList], allIgnoredPackages)
-  const depsToAdd = getDepsToAdd(packageJson, dependencyList, allIgnoredPackages)
-  const devDepsToAdd = getDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
-  const peerDevDepsToAdd = getPeerDevDepsToAdd(packageJson, devDependencyList, allIgnoredPackages)
+export const fixdeps = async (options: TOptions): Promise<TResult> => {
+  const packageJsonPath = path.join(options.packagePath, 'package.json')
+  const packageJson = await getPackage(options.packagePath)
+  const { depsToAdd, depsToRemove, devDepsToAdd, peerDevDepsToAdd } = await getDeps(options)
 
   const depsToAddWithVersions = await getDepsVersions(depsToAdd)
   const devDepsToAddWithVersions = await getDepsVersions(devDepsToAdd)
