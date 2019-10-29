@@ -28,9 +28,12 @@ export const LayoutInFlow = component(
     let wrappedChildren = children
 
     if (direction === 'horizontal') {
-      if (width === 'stretch') {
+      if (width === 'stretch' || width === 'equal') {
         style.flexGrow = 1
         style.flexShrink = 1
+        if (width === 'equal') {
+          style.flexBasis = 0
+        }
       } else if (isNumber(width)) {
         style.width = width
       } else {
