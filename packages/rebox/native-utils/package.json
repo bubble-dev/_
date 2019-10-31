@@ -22,7 +22,7 @@
     "fast-glob": "^3.0.0",
     "is-port-reachable": "^2.0.1",
     "make-dir": "^3.0.0",
-    "metro-react-native-babel-preset": "0.56.0",
+    "metro-react-native-babel-preset": "0.57.0",
     "react-dom": "^16.8.6",
     "request-promise-native": "^1.0.5",
     "request": "^2.87.0",
