@@ -26,6 +26,6 @@
     "@x-ray/snapshots": "^0.2.0",
     "autoprops": "^0.7.0",
     "react": "^16.8.6",
-    "react-native": "^0.60.5"
+    "react-native": "^0.61.0"
   }
 }
