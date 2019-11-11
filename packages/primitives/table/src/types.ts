@@ -6,3 +6,7 @@ export type TTableBorderStyle = {
   borderRightWidth?: number,
   borderStyle?: 'solid' | 'dotted' | 'dashed' | 'none',
 }
+
+export type TTableCellPosition = {
+  position?: 'fixed' | '-moz-initial' | 'inherit' | 'initial' | 'revert' | 'unset' | '-webkit-sticky' | 'absolute' | 'relative' | 'static' | 'sticky',
+}
