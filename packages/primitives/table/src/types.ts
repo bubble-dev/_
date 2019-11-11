@@ -10,3 +10,4 @@ export type TTableBorderStyle = {
 export type TTableCellPosition = {
   position?: 'fixed' | '-moz-initial' | 'inherit' | 'initial' | 'revert' | 'unset' | '-webkit-sticky' | 'absolute' | 'relative' | 'static' | 'sticky',
 }
+

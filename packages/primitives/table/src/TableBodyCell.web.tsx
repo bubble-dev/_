@@ -48,7 +48,7 @@ export const TableBodyCell = component(
     'borderStyle',
     'borderColor',
     'backgroundColor',
-    'position'
+    'position',
   ])
 )(({ id, style, children }) => (
   <td id={id} style={style}>

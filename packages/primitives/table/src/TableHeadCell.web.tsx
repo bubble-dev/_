@@ -52,7 +52,7 @@ export const TableHeadCell = component(
     'borderColor',
     'backgroundColor',
     'width',
-    'position'
+    'position',
   ])
 )(({ id, style, children }) => (
   <th id={id} style={style}>
