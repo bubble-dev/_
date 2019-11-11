@@ -4,15 +4,6 @@ export type TTableBorderStyle = {
   borderBottomWidth?: number,
   borderLeftWidth?: number,
   borderRightWidth?: number,
-  borderStyle?: 'solid' | 'dotted' | 'dashed' | 'none',
-}
-
-export type TTableBorderStyleNative = {
-  borderColor?: string,
-  borderTopWidth?: number,
-  borderBottomWidth?: number,
-  borderLeftWidth?: number,
-  borderRightWidth?: number,
   borderStyle?: 'solid' | 'dotted' | 'dashed',
 }
 
