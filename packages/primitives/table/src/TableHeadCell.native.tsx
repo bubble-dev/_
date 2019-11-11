@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react'
 import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { View } from 'react-native'
-import { TTableBorderStyle } from './types'
+import { TTableBorderStyleNative } from './types'
 
 export type TTableHeadCell = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
   width?: number,
-} & TTableBorderStyle
+} & TTableBorderStyleNative
 
 export const TableHeadCell = component(
   startWithType<TTableHeadCell>(),

@@ -1,13 +1,13 @@
 import React, { ReactNode } from 'react'
 import { View } from 'react-native'
 import { startWithType, component, mapWithPropsMemo, mapDefaultProps } from 'refun'
-import { TTableBorderStyle } from './types'
+import { TTableBorderStyleNative } from './types'
 
 export type TTable = {
   id?: string,
   children?: ReactNode,
   backgroundColor?: string,
-} & TTableBorderStyle
+} & TTableBorderStyleNative
 
 export const Table = component(
   startWithType<TTable>(),
