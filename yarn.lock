@@ -1558,44 +1558,6 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@primitives/background@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@primitives/background/-/background-0.5.0.tgz#8fc30e1086f6ce9c304a629840cc08e46955d52d"
-  integrity sha512-PvUuptKHkxEd/KBowWEEsYhGL/o77BasxQoc/65dRDE78c9IfI4i2yE331f7NFDvfAX8ds/0Nc+L83vlAWbm/A==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    colorido "^0.1.0"
-
-"@primitives/block@^0.5.0":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@primitives/block/-/block-0.5.1.tgz#9b74cd514545e85208019b7e337e9f371099cfff"
-  integrity sha512-UDPeGd8ktpbWs9rFc1Mqi+0iRTqs2nNeXRCQScqzDl0I+BVJ5AEFr18GLdkyF62qdAdNuBH8znvVyhO+UWJQuQ==
-  dependencies:
-    refun "^0.4.0"
-    stili "^0.2.0"
-    tsfn "^0.2.0"
-
-"@primitives/border@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@primitives/border/-/border-0.6.0.tgz#f758adf1cb85dcbfd27932d87fc3e05f9e4a4208"
-  integrity sha512-CmP7unTjkouBouQscRasUT8n5+IAxw0uLkosNkCtqj6jMrCPO3qM4b6Q9O3/m9JTfK6Pjw/uZnKHqiuHSV2LIg==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    colorido "^0.1.0"
-    refun "^0.4.0"
-
-"@primitives/checkbox@^0.5.0":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@primitives/checkbox/-/checkbox-0.5.1.tgz#bb0087fbdfff375920fcfbb27420e7506a382e66"
-  integrity sha512-aa+kyX0LwbKqqWBMdxh//jWSZJ5c5lWMq35j7dQ+NKzkgbZU336CBmilzzx4UEYPeXl3GCNJ9SLyuMqrxQRVhw==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/block" "^0.5.0"
-    refun "^0.4.0"
-    stili "^0.2.0"
-
 "@psxcode/compose@^0.1.2", "@psxcode/compose@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@psxcode/compose/-/compose-0.1.3.tgz#187070a648724ab715824fd598d7c80deae5c136"
@@ -2202,13 +2164,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/terser-webpack-plugin@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@types/terser-webpack-plugin/-/terser-webpack-plugin-1.2.1.tgz#02c2cacd7769c533cbdac28dd7610c24e46b5c95"
-  integrity sha512-5mzQulZabFsqiLh0PhJdccIKqpd5535UYpZ+Skugz8kPzZdajMMYBRKQSzM1KOkZ42NwLxbZSzQp6xKtaq46Gg==
+"@types/terser-webpack-plugin@^2.0.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/terser-webpack-plugin/-/terser-webpack-plugin-2.2.0.tgz#b1561e3118b9319d80ff65798c345877669b3e12"
+  integrity sha512-ywqEfTm7KdKoX9aYx0zYtiFU1z6IHrIYW9FJqeay2Ea58rTPML1J0hvoztGal2Jow3bkgGKcAmEZNL+8LqUVrA==
   dependencies:
     "@types/webpack" "*"
-    terser "^3.16.1"
+    terser "^4.3.9"
 
 "@types/through@^0.0.29":
   version "0.0.29"
@@ -2577,60 +2539,6 @@
     strip-ansi "^4.0.0"
     text-table "^0.2.0"
     webpack-log "^1.1.2"
-
-"@x-ray/snapshots@^0.1.0":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@x-ray/snapshots/-/snapshots-0.1.4.tgz#f4dd17f7ca0acf7957976cef73eefe797d4e9324"
-  integrity sha512-lJeBwgcHahR31W/ZjQ7+w6kHGVV3fstFegUvgaaPXUfxcU05vTet0tA8i3nBjr+Psdjqevyzz+ePFs9f2CCDyA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@rebox/web" "^0.4.0"
-    "@x-ray/common-utils" "^0.2.0"
-    "@x-ray/serialize-react-tree" "^0.3.0"
-    "@x-ray/tar-fs" "^0.1.0"
-    "@x-ray/ui" "^0.1.0"
-    "@x-ray/worker-utils" "^0.1.0"
-    bro-resolve "^0.1.0"
-    diff "^4.0.1"
-    iterama "^0.1.1"
-    make-dir "^3.0.0"
-    p-all "^2.0.0"
-    pkg-dir "^4.2.0"
-    pretty-ms "^5.0.0"
-    syntx "^0.4.0"
-    tsfn "^0.2.0"
-
-"@x-ray/ui@^0.1.0":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@x-ray/ui/-/ui-0.1.5.tgz#2c26368d665af7ee6e83ada4aa62c7c1eb2b10f0"
-  integrity sha512-ZP+92gjShGiguMq1pZsW8JV2tz4kTOLuvl/UoKKBAl9q8rVEJN5sZXcdY+wefLFQs9ptAsSEd+DnqYm8CtXDLA==
-  dependencies:
-    "@babel/runtime" "^7.1.2"
-    "@primitives/animation" "^0.2.0"
-    "@primitives/background" "^0.5.0"
-    "@primitives/border" "^0.6.0"
-    "@primitives/button" "^0.5.0"
-    "@primitives/checkbox" "^0.5.0"
-    "@primitives/image" "^0.2.0"
-    "@primitives/root" "^0.4.0"
-    "@primitives/size" "^0.5.0"
-    "@primitives/svg" "^0.1.5"
-    "@primitives/text" "^0.8.0"
-    "@psxcode/compose" "^0.1.3"
-    "@x-ray/common-utils" "^0.2.0"
-    "@x-ray/screenshot-utils" "^0.2.0"
-    "@x-ray/snapshots" "^0.1.0"
-    bsc "^0.2.1"
-    colorido "^0.1.0"
-    elegir "^0.3.3"
-    react "^16.8.6"
-    redux "^4.0.1"
-    redux-thunk "^2.3.0"
-    refun "^0.4.0"
-    stili "^0.2.0"
-    syntx "^0.4.0"
-    tsfn "^0.2.0"
-    typeon "^0.3.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -12348,7 +12256,7 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.16, source-map-support@^0.5.6, source-map-support@~0.5.10, source-map-support@~0.5.12:
+source-map-support@^0.5.16, source-map-support@^0.5.6, source-map-support@~0.5.12:
   version "0.5.16"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
   integrity sha512-efyLRJDr68D9hBBNIPWFjhpFzURh+KJykQwvMyW5UiZzYwoF6l4YMMDIJJEyFWxWCqfyxLzz6tSfUFR+kXXsVQ==
@@ -12922,15 +12830,6 @@ terser-webpack-plugin@^2.0.0:
     source-map "^0.6.1"
     terser "^4.3.9"
     webpack-sources "^1.4.3"
-
-terser@^3.16.1:
-  version "3.17.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-3.17.0.tgz#f88ffbeda0deb5637f9d24b0da66f4e15ab10cb2"
-  integrity sha512-/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==
-  dependencies:
-    commander "^2.19.0"
-    source-map "~0.6.1"
-    source-map-support "~0.5.10"
 
 terser@^4.1.2, terser@^4.1.3, terser@^4.3.9:
   version "4.4.0"
