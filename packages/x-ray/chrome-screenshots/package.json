@@ -20,7 +20,7 @@
     "bro-resolve": "^0.1.0",
     "iterama": "^0.1.1",
     "p-all": "^2.0.0",
-    "puppeteer-core": "^1.16.0",
+    "puppeteer-core": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.6.0",
     "request": "^2.87.0",
