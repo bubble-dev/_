@@ -11,7 +11,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@react-native-community/cli-platform-android": "^2.1.1",
+    "@react-native-community/cli-platform-android": "^3.0.0",
     "@react-native-community/cli-platform-ios": "^2.2.0"
   }
 }
