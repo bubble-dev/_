@@ -1,6 +1,6 @@
-import { createContext, useContext, createElement } from 'react'
+import { createContext, useContext, createElement, FC } from 'react'
 import { component, startWithType } from 'refun'
-import { Image, TImage } from '@primitives/image'
+import { TImage } from '@primitives/image'
 
 export type TThemeableImage = Pick<
 TImage,
@@ -16,42 +16,17 @@ export type TThemeableImages<ComponentProps> = {
 export const setupImageTheme = <ComponentMappings>(defaultTheme: TThemeableImages<ComponentMappings>) => {
   const ImageTheme = createContext(defaultTheme)
 
-  const createThemeableImage = <K extends keyof ComponentMappings>(name: K) => {
+  type K = keyof ComponentMappings
+
+  const createThemeableImage = <P extends TThemeableImage>(name: K, Target: FC<any>) => {
     const ThemeableImage = component(
-      startWithType<TImage & ComponentMappings[K]>(),
+      startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => ({
         ...useContext(ImageTheme)[name](props),
         ...props,
       })
-    )(({
-      alt,
-      bottomLeftRadius,
-      bottomRightRadius,
-      height,
-      id,
-      onError,
-      onLoad,
-      resizeMode,
-      source,
-      topLeftRadius,
-      topRightRadius,
-      width,
-    }) => (
-      createElement(Image,
-        {
-          alt,
-          bottomLeftRadius,
-          bottomRightRadius,
-          height,
-          id,
-          onError,
-          onLoad,
-          resizeMode,
-          source,
-          topLeftRadius,
-          topRightRadius,
-          width,
-        })
+    )((props) => (
+      createElement(Target, props)
     ))
 
     ThemeableImage.displayName = `${name}`

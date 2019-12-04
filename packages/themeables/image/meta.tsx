@@ -1,5 +1,6 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
+import { TImage, Image } from '@primitives/image'
 import { setupImageTheme, TThemeableImages } from './src'
 
 type TDemo = {}
@@ -16,7 +17,7 @@ const defaultTheme: TThemeableImages<Mappings> = {
 
 const { ImageTheme, createThemeableImage } = setupImageTheme<Mappings>(defaultTheme)
 
-const DemoThemeableImage = createThemeableImage('demo')
+const DemoThemeableImage = createThemeableImage<TImage>('demo', Image)
 
 const newTheme: TThemeableImages<Mappings> = {
   demo: () => ({

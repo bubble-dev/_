@@ -1,6 +1,6 @@
-import { createContext, useContext, createElement } from 'react'
+import { createContext, useContext, createElement, FC } from 'react'
 import { component, startWithType } from 'refun'
-import { Background, TBackground } from '@primitives/background'
+import { TBackground } from '@primitives/background'
 
 export type TThemeableBackground = Pick<
 TBackground,
@@ -20,29 +20,16 @@ export type TThemeableBackgrounds<ComponentProps> = {
 export const setupBackgroundTheme = <ComponentMappings>(defaultTheme: TThemeableBackgrounds<ComponentMappings>) => {
   const BackgroundTheme = createContext(defaultTheme)
 
-  const createThemeableBackground = <K extends keyof ComponentMappings>(name: K) => {
+  type K = keyof ComponentMappings
+
+  const createThemeableBackground = <P extends TThemeableBackground>(name: K, Target: FC<any>) => {
     const ThemeableBackground = component(
-      startWithType<ComponentMappings[K]>(),
+      startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => ({
         ...useContext(BackgroundTheme)[name](props),
         ...props,
       })
-    )(({
-      color,
-      topLeftRadius,
-      topRightRadius,
-      bottomLeftRadius,
-      bottomRightRadius,
-    }) => (
-      createElement(Background,
-        {
-          color,
-          topLeftRadius,
-          topRightRadius,
-          bottomLeftRadius,
-          bottomRightRadius,
-        })
-    ))
+    )((props) => createElement(Target, props))
 
     ThemeableBackground.displayName = `${name}`
 

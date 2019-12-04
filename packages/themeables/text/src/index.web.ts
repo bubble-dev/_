@@ -1,6 +1,6 @@
-import { createContext, useContext, createElement } from 'react'
+import { createContext, useContext, createElement, FC } from 'react'
 import { component, startWithType } from 'refun'
-import { Text, TText } from '@primitives/text'
+import { TText } from '@primitives/text'
 
 export type TThemeableText = Pick<
 TText,
@@ -22,44 +22,17 @@ export type TThemeableTexts<ComponentProps> = {
 export const setupTextTheme = <ComponentMappings>(defaultTheme: TThemeableTexts<ComponentMappings>) => {
   const TextTheme = createContext(defaultTheme)
 
-  const createThemeableText = <K extends keyof ComponentMappings>(name: K) => {
+  type K = keyof ComponentMappings
+
+  const createThemeableText = <P extends TThemeableText>(name: K, Target: FC<any>) => {
     const ThemeableText = component(
-      startWithType<TText & ComponentMappings[K]>(),
+      startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => ({
         ...useContext(TextTheme)[name](props),
         ...props,
       })
-    )(({
-      id,
-      color,
-      fontFamily,
-      fontWeight,
-      fontSize,
-      lineHeight,
-      letterSpacing,
-      isUnderlined,
-      shouldPreserveWhitespace,
-      shouldPreventWrap,
-      shouldPreventSelection,
-      shouldHideOverflow,
-      children,
-    }) => (
-      createElement(Text,
-        {
-          id,
-          color,
-          fontFamily,
-          fontWeight,
-          fontSize,
-          lineHeight,
-          letterSpacing,
-          isUnderlined,
-          shouldPreserveWhitespace,
-          shouldPreventWrap,
-          shouldPreventSelection,
-          shouldHideOverflow,
-          children,
-        })
+    )((props) => (
+      createElement(Target, props)
     ))
 
     ThemeableText.displayName = `${name}`

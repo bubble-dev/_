@@ -17,7 +17,6 @@ This is where `@themeable` fits in. The set of components in the `@themeable` li
 - [`@themeables/image`](image)
 - [`@themeables/text`](text)
 - [`@themeables/vector-shape`](vector-shape)
-- [`@themeables/vector-shape-color`](vector-shape-color)
 
 > Please refer to each particular component readme for more details on APIs and behaviors
 
@@ -39,6 +38,7 @@ Pretty much this:
 import React from 'react'
 import { Block } from '@primitives/block'
 import { setupBackgroundTheme, TThemeableBackgrounds } from '@themeables/background'
+import { TBackground, Background } from '@primitives/background'
 
 type TDemo = { status: 'default' | 'error' }
 
@@ -58,7 +58,7 @@ const defaultTheme: TThemeableBackgrounds<Mappings> = {
 
 const { BackgroundTheme, createThemeableBackground } = setupBackgroundTheme<Mappings>(defaultTheme)
 
-export const DemoThemeableBackground = createThemeableBackground('demo')
+export const DemoThemeableBackground = createThemeableBackground<TBackground>('demo', Background)
 
 const newTheme: TThemeableBackgrounds<Mappings> = {
   demo: ({ status }) => ({
@@ -98,10 +98,9 @@ Notice how:
 - `setupBackgroundTheme` receives a default theme, and if you are using TypeScript, it also requires a type that maps the `name` of the component to the type of the `props` that component will receive. This way, type checking of the input props for this component can be done.
 - `setupBackgroundTheme` returns two results:
   - `BackgroundTheme` is a `React.context`, which you can use to set an overriding theme such as in `<BackgroundTheme.Provider value={newTheme}>
-  - `createThemeableBackground` is a function that returns a new _React Component_. To create this component, it receives a `name` property, and this component will receive the `props` specified under the key with that name in the mapping type, and run the function provided under its name in the `theme`.
+  - `createThemeableBackground` is a function that returns a new _React Component_. To create this component, it receives a `name` property and a `Target` component which input props must satisfy the `TThemeableBackground` props, and the resulting comomponent will receive the `props` specified under the key with that name in the mapping type, run the function provided under its name in the `theme`, and pass the resulting theme properties down into the `Target` component.
 
 ## Documentation TODO
 
-- [ ] Document use case for `@themeables/vector-shape-color`
 - [ ] Document difference between `@themeables/vector-shape` and plain SVG
-- [ ] Document behavior of Background and Border regarding fitting the container.
+- ~[ ] Document behavior of Background and Border regarding fitting the container.~ No need! That is delegated 100% to the primitives

@@ -1,6 +1,7 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
+import { Background, TBackground } from '@primitives/background'
 import { setupBackgroundTheme, TThemeableBackgrounds } from './src'
 
 type TDemo = { status: 'default' | 'error' }
@@ -21,7 +22,7 @@ const defaultTheme: TThemeableBackgrounds<Mappings> = {
 
 const { BackgroundTheme, createThemeableBackground } = setupBackgroundTheme<Mappings>(defaultTheme)
 
-export const DemoThemeableBackground = createThemeableBackground('demo')
+export const DemoThemeableBackground = createThemeableBackground<TBackground>('demo', Background)
 
 const newTheme: TThemeableBackgrounds<Mappings> = {
   demo: ({ status }) => ({

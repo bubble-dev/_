@@ -1,6 +1,6 @@
-import { createContext, useContext, createElement } from 'react'
+import { createContext, useContext, createElement, FC } from 'react'
 import { component, startWithType } from 'refun'
-import { Border, TBorder } from '@primitives/border'
+import { TBorder } from '@primitives/border'
 
 export type TThemeableBorder = Pick<
 TBorder,
@@ -28,44 +28,17 @@ export type TThemeableBorders<ComponentProps> = {
 export const setupBorderTheme = <ComponentMappings>(defaultTheme: TThemeableBorders<ComponentMappings>) => {
   const BorderTheme = createContext(defaultTheme)
 
-  const createThemeableBorder = <K extends keyof ComponentMappings>(name: K) => {
+  type K = keyof ComponentMappings
+
+  const createThemeableBorder = <P extends TThemeableBorder>(name: K, Target: FC<any>) => {
     const ThemeableBorder = component(
-      startWithType<ComponentMappings[K]>(),
+      startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => ({
         ...useContext(BorderTheme)[name](props),
         ...props,
       })
-    )(({
-      color,
-      topLeftRadius,
-      topRightRadius,
-      bottomLeftRadius,
-      bottomRightRadius,
-      topWidth,
-      bottomWidth,
-      leftWidth,
-      rightWidth,
-      overflowBottom,
-      overflowLeft,
-      overflowRight,
-      overflowTop,
-    }) => (
-      createElement(Border,
-        {
-          color,
-          topLeftRadius,
-          topRightRadius,
-          bottomLeftRadius,
-          bottomRightRadius,
-          topWidth,
-          bottomWidth,
-          leftWidth,
-          rightWidth,
-          overflowBottom,
-          overflowLeft,
-          overflowRight,
-          overflowTop,
-        })
+    )((props) => (
+      createElement(Target, props)
     ))
 
     ThemeableBorder.displayName = `${name}`

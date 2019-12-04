@@ -1,6 +1,7 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
+import { TBorder, Border } from '@primitives/border'
 import { setupBorderTheme, TThemeableBorders } from './src'
 
 type TDemo = { status: 'default' | 'error' }
@@ -29,7 +30,7 @@ const defaultTheme: TThemeableBorders<Mappings> = {
 
 const { BorderTheme, createThemeableBorder } = setupBorderTheme<Mappings>(defaultTheme)
 
-const DemoThemeableBorder = createThemeableBorder('demo')
+const DemoThemeableBorder = createThemeableBorder<TBorder>('demo', Border)
 
 const newTheme: TThemeableBorders<Mappings> = {
   demo: ({ status }) => ({

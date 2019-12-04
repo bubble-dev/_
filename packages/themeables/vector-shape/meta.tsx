@@ -1,5 +1,6 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
+import { TVectorShape, VectorShape } from '@primitives/vector-shape'
 import { setupVectorShapeTheme, TThemeableVectorShapes } from './src'
 
 type Mappings = {
@@ -17,7 +18,7 @@ const defaultTheme: TThemeableVectorShapes<Mappings> = {
 
 const { VectorShapeTheme, createThemeableVectorShape } = setupVectorShapeTheme<Mappings>(defaultTheme)
 
-const DemoThemeableVectorShape = createThemeableVectorShape('demo')
+const DemoThemeableVectorShape = createThemeableVectorShape<TVectorShape>('demo', VectorShape)
 
 type TDemo = { status: 'default' | 'error' }
 

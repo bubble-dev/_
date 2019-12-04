@@ -1,10 +1,11 @@
 import { TStyle } from 'stili'
+import { TColor } from 'colorido'
 
 export type TInput = {
   id?: string,
   accessibilityLabel?: string,
   isDisabled?: boolean,
-  color?: string,
+  color?: TColor,
   fontFamily?: string,
   fontWeight?: TStyle['fontWeight'],
   fontSize?: number,

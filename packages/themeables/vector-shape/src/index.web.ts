@@ -1,7 +1,6 @@
-import { createContext, useContext, createElement } from 'react'
-import { component, startWithType, mapContext } from 'refun'
-import { VectorShape, TVectorShape } from '@primitives/vector-shape'
-import { VectorShapeColorContext } from '@themeables/vector-shape-color'
+import { createContext, useContext, createElement, FC } from 'react'
+import { component, startWithType } from 'refun'
+import { TVectorShape } from '@primitives/vector-shape'
 
 export type TThemeableVectorShape = Pick<
 TVectorShape,
@@ -20,23 +19,17 @@ export type TThemeableVectorShapes<ComponentProps> = {
 export const setupVectorShapeTheme = <ComponentMappings>(defaultTheme: TThemeableVectorShapes<ComponentMappings>) => {
   const VectorShapeTheme = createContext(defaultTheme)
 
-  const createThemeableVectorShape = <K extends keyof ComponentMappings>(name: K) => {
+  type K = keyof ComponentMappings
+
+  const createThemeableVectorShape = <P extends TThemeableVectorShape>(name: K, Target: FC<any>) => {
     const ThemeableVectorShape = component(
-      startWithType<Partial<TVectorShape> & ComponentMappings[K]>(),
+      startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => ({
         ...useContext(VectorShapeTheme)[name](props),
         ...props,
-      }),
-      mapContext(VectorShapeColorContext)
-    )(({
-      id,
-      height,
-      path,
-      width,
-      color,
-    }) => (
-      createElement(VectorShape,
-        { id, height, path, width, color })
+      })
+    )((props) => (
+      createElement(Target, props)
     ))
 
     ThemeableVectorShape.displayName = `${name}`
