@@ -72,7 +72,7 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => {
     ) : (
       <>
         <DemoThemeableText status={status}>
-        Label
+          Label
         </DemoThemeableText>
         <DemoThemeableInput status={status} value='Label'/>
       </>

@@ -14,11 +14,13 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/background": "^0.6.1",
+    "@themeables/core": "^0.0.0",
+    "colorido": "^0.1.0",
     "refun": "^0.4.0"
   },
   "devDependencies": {
     "autoprops": "^0.7.0",
+    "@primitives/background": "^0.6.1",
     "@primitives/block": "^0.6.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^0.2.0",

@@ -15,7 +15,10 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@primitives/text": "^0.9.0",
-    "refun": "^0.4.0"
+    "@themeables/core": "^0.0.0",
+    "colorido": "^0.1.0",
+    "refun": "^0.4.0",
+    "stili": "^0.2.0"
   },
   "devDependencies": {
     "autoprops": "^0.7.0",
