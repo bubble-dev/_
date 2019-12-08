@@ -17,7 +17,9 @@ export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeabl
       })
     )((props) => createElement(Target, props))
 
-    Themeable.displayName = `${name}`
+    const matched = name.toString().match(/^Symbol\((.+)\)$/)
+
+    Themeable.displayName = matched?.[1] ?? `${name}`
 
     return Themeable
   }
