@@ -1,3 +1,15 @@
+## v0.19.0
+
+* ♻️ update dependencies: `@x-ray/native-screenshots-app`, `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`
+
+## v0.18.0
+
+* ♻️ update dependencies: `@x-ray/chrome-screenshots`, `@x-ray/firefox-screenshots`, `@x-ray/snapshots`
+
+## v0.17.1
+
+* 🐞 make all `should` Start Auto options explicitly `false` by default
+
 ## v0.17.0
 
 * 🌱 support Optional Chaining and Nullish Coalescing ES features

@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/native-screenshots-app",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "",
   "keywords": [],
   "react-native": "src/index.js",
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@primitives/image": "^0.2.1",
+    "@primitives/image": "^0.3.0",
     "@primitives/size": "^0.5.1",
     "react-native-view-shot": "^3.0.2"
   },
