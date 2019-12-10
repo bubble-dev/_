@@ -1,6 +1,6 @@
 {
   "name": "@sandbox/ui",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
   "keywords": [],
   "main": "src/index.web.ts",
@@ -22,7 +22,7 @@
     "@primitives/select": "^0.5.1",
     "@primitives/size": "^0.5.4",
     "@primitives/svg": "^0.1.6",
-    "@primitives/text": "^0.8.1",
+    "@primitives/text": "^0.9.0",
     "@primitives/transform": "^0.5.1",
     "@psxcode/compose": "^0.1.3",
     "colorido": "^0.1.0",
@@ -34,11 +34,10 @@
     "tsfn": "^0.2.2"
   },
   "devDependencies": {
-    "autoprops": "^0.6.6",
+    "autoprops": "^0.7.0",
     "react": "^16.8.6",
     "react-native": "^0.60.5",
-    "typeon": "^0.3.0",
-    "utility-types": "^3.4.1"
+    "typeon": "^0.3.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",

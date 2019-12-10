@@ -1,3 +1,16 @@
+## v0.5.0
+
+* 🌱 pass colorido colors into Text
+* ♻️ update dependencies: `@primitives/text`
+
+## v0.4.2
+
+* 🐞 fix shadow color property
+
+## v0.4.1
+
+* 🐞 use updated meta files format
+
 ## v0.4.0
 
 * 🌱 update colors sent to Block

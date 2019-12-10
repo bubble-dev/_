@@ -1,6 +1,6 @@
 {
   "name": "syntx",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -14,6 +14,10 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/react": "^16.8.6",
+    "blue-tape": "^1.0.0",
     "react": "^16.8.6"
+  },
+  "dependencies": {
+    "tsfn": "^0.2.3"
   }
 }

@@ -1,3 +1,11 @@
+## v0.3.0
+
+* ♻️ update dependencies: `@x-ray/screenshot-utils`, `@x-ray/worker-utils`
+
+## v0.2.3
+
+* 🐞 use updated syntx lines
+
 ## v0.2.2
 
 * 🐞 fix custom fonts loading by inlining it as base64

@@ -1,3 +1,11 @@
+## v0.7.1
+
+* 🐞 fix serialize symbol
+
+## v0.7.0
+
+* 💥 change meta shape
+
 ## v0.6.8
 
 * 🐞 enhance meta types

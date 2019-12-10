@@ -1,6 +1,6 @@
 {
   "name": "@rebox/ios",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "description": "",
   "keywords": [],
   "repository": "bubble-dev/_",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.3",
-    "@rebox/native-utils": "^0.2.0",
+    "@rebox/native-utils": "^0.3.0",
     "copie": "^0.3.0",
     "cpy": "^7.2.0",
     "dleet": "^0.3.0",

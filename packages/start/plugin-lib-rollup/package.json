@@ -1,6 +1,6 @@
 {
   "name": "@start/plugin-lib-rollup",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "🏭 Bundle files using Rollup",
   "keywords": "tasks, runner, start, start-plugin, rollup",
   "repository": "deepsweet/start",
@@ -19,7 +19,8 @@
   "dependencies": {
     "@babel/runtime": "^7.4.2",
     "@start/plugin": "^0.3.1",
-    "rollup": "^1.21.0"
+    "rollup": "^1.21.0",
+    "tsfn": "^0.2.4"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",

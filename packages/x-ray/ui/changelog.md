@@ -1,3 +1,16 @@
+## v0.5.0
+
+* ♻️ update dependencies: `@primitives/image`, `@x-ray/snapshots`
+
+## v0.4.0
+
+* 🌱 pass a colorido color into Text
+* ♻️ update dependencies: `@x-ray/snapshots`, `@primitives/text`
+
+## v0.3.0
+
+* ♻️ update dependencies: `@x-ray/snapshots`, `@x-ray/screenshot-utils`
+
 ## v0.2.0
 
 * ♻️ update dependencies: `@primitives/border`, `@x-ray/snapshots`, `@primitives/background`, `@primitives/checkbox`

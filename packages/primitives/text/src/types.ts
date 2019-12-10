@@ -1,8 +1,10 @@
+import { ReactNode } from 'react'
 import { TStyle } from 'stili'
+import { TColor } from 'colorido'
 
-export type TTextProps = {
+export type TText = {
   id?: string,
-  color?: string,
+  color?: TColor,
   fontFamily?: string,
   fontWeight?: TStyle['fontWeight'],
   fontSize?: number,
@@ -13,4 +15,5 @@ export type TTextProps = {
   shouldPreventWrap?: boolean,
   shouldPreventSelection?: boolean,
   shouldHideOverflow?: boolean,
+  children: ReactNode,
 }

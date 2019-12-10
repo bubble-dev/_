@@ -6,11 +6,12 @@ import {
   mapWithProps,
   startWithType,
 } from 'refun'
-import { isNumber } from 'tsfn'
-import { TTextProps } from './types'
+import { isNumber, isDefined } from 'tsfn'
+import { colorToString } from 'colorido'
+import { TText } from './types'
 
 export const Text = component(
-  startWithType<TTextProps>(),
+  startWithType<TText>(),
   mapDefaultProps({
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
@@ -32,7 +33,6 @@ export const Text = component(
     shouldHideOverflow,
   }) => {
     const style: TStyle = {
-      color,
       fontFamily,
       fontWeight,
       fontSize,
@@ -41,6 +41,10 @@ export const Text = component(
       textSizeAdjust: 'none',
       minWidth: 0,
       maxWidth: '100%',
+    }
+
+    if (isDefined(color)) {
+      style.color = colorToString(color)
     }
 
     if (shouldPreserveWhitespace) {
