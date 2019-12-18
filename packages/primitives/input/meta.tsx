@@ -1,5 +1,7 @@
 import { TComponentConfig } from 'autoprops'
+import { elegir } from 'elegir'
 import { TInput } from './src/types'
+import packageJson from './package.json'
 
 export const config: TComponentConfig<TInput> = {
   props: {
@@ -21,6 +23,23 @@ export const config: TComponentConfig<TInput> = {
   mutin: [
     ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'],
   ],
+}
+
+export const packageInfo = {
+  version: packageJson.version,
+  stability: 'stable' as const,
+  platform: elegir(
+    Reflect.has(packageJson, 'browser') && Reflect.has(packageJson, 'react-native'),
+    'Web & Native',
+    Reflect.has(packageJson, 'browser'),
+    'Web',
+    Reflect.has(packageJson, 'react-native'),
+    'Native',
+    true,
+    'Node'
+  ),
+  designDocsUrl: 'https://google.com',
+  sourceCodeUrl: 'https://google.com',
 }
 
 export { Input as Component } from './src'
