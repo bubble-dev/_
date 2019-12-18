@@ -1,7 +1,9 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Border as PrimitiveBorder } from '@primitives/border'
 import { TColor } from 'colorido'
+import { component, startWithType } from 'refun'
 import { AnimationColor } from '../animation-color'
+import { SizeParentBlock } from '../size-parent-block'
 
 export type TBorder = {
   color: TColor,
@@ -16,7 +18,9 @@ export type TBorder = {
   overflow?: number,
 }
 
-export const Border: FC<TBorder> = ({
+export const Border = component(
+  startWithType<TBorder>()
+)(({
   color,
   topLeftRadius,
   topRightRadius,
@@ -28,25 +32,28 @@ export const Border: FC<TBorder> = ({
   leftWidth,
   overflow,
 }) => (
-  <AnimationColor values={color}>
-    {(color) => (
-      <PrimitiveBorder
-        color={color}
-        topLeftRadius={topLeftRadius}
-        topRightRadius={topRightRadius}
-        bottomLeftRadius={bottomLeftRadius}
-        bottomRightRadius={bottomRightRadius}
-        topWidth={topWidth}
-        rightWidth={rightWidth}
-        bottomWidth={bottomWidth}
-        leftWidth={leftWidth}
-        overflowTop={overflow}
-        overflowBottom={overflow}
-        overflowLeft={overflow}
-        overflowRight={overflow}
-      />
-    )}
-  </AnimationColor>
-)
+  <SizeParentBlock>
+    <AnimationColor values={color}>
+      {(color) => (
+        <PrimitiveBorder
+          color={color}
+          topLeftRadius={topLeftRadius}
+          topRightRadius={topRightRadius}
+          bottomLeftRadius={bottomLeftRadius}
+          bottomRightRadius={bottomRightRadius}
+          topWidth={topWidth}
+          rightWidth={rightWidth}
+          bottomWidth={bottomWidth}
+          leftWidth={leftWidth}
+          overflowTop={overflow}
+          overflowBottom={overflow}
+          overflowLeft={overflow}
+          overflowRight={overflow}
+        />
+      )}
+    </AnimationColor>
+  </SizeParentBlock>
+))
 
 Border.displayName = 'Border'
+Border.componentSymbol = Symbol('BORDER')

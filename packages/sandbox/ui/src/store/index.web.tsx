@@ -1,5 +1,6 @@
-import { createStore, applyMiddleware, Store, compose } from 'redux'
-import { StoreContextFactory } from 'refun'
+import { createStore, applyMiddleware, Store, compose, Reducer, AnyAction, Dispatch } from 'redux'
+import { StoreContextFactory, ReduxDispatchFactory, ReduxStateFactory } from 'refun'
+import { isUndefined } from 'tsfn'
 import { reducer } from '../reducers'
 import { locationHash, syncState } from '../middlewares'
 import { TState } from '../types'
@@ -18,19 +19,6 @@ if (process.env.NODE_ENV === 'development') {
       applyMiddleware(locationHash, syncState)
     )
   )
-
-  // if (module.hot) {
-  //   module.hot.accept('../reducers', () => {
-  //     store.replaceReducer(reducer)
-  //   })
-
-  //   module.hot.accept('./initial-state.ts', () => {
-  //     store.dispatch({
-  //       type: 'NAVIGATE',
-  //       payload: null,
-  //     })
-  //   })
-  // }
 } else {
   store = createStore(reducer, getInitialState(), applyMiddleware(locationHash))
 }
@@ -40,3 +28,27 @@ const StoreContext = StoreContextFactory(store)
 export const StoreProvider = StoreContext.StoreProvider
 export const mapStoreState = StoreContext.mapStoreState
 export const mapStoreDispatch = StoreContext.mapStoreDispatch
+
+export const injectReducer = <S, A extends AnyAction>(injectedReducer: Reducer<S, A>) => {
+  store.replaceReducer(
+    (state: any, action: any) => {
+      if (isUndefined(state)) {
+        return {
+          ...reducer(state, action),
+          ...injectedReducer(state, action),
+        }
+      }
+
+      const newState: any = reducer(state, action)
+
+      return injectedReducer(newState, action) as any
+    }
+  )
+
+  // return StoreContextFactory(store as Store<TState & S>)
+  return {
+    StoreProvider,
+    mapStoreState: ReduxStateFactory<TState & S, Dispatch<A>>(StoreContext.Context as any),
+    mapStoreDispatch: ReduxDispatchFactory<TState & S, Dispatch<A>>(StoreContext.Context as any),
+  }
+}

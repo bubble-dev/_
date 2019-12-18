@@ -1,7 +1,9 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Background as PrimitiveBackground } from '@primitives/background'
+import { startWithType, component } from 'refun'
 import { TColor } from 'colorido'
 import { AnimationColor } from '../animation-color'
+import { SizeParentBlock } from '../size-parent-block'
 
 export type TBackground = {
   color: TColor,
@@ -11,18 +13,29 @@ export type TBackground = {
   bottomLeftRadius?: number,
 }
 
-export const Background: FC<TBackground> = ({ topLeftRadius, topRightRadius, bottomLeftRadius, bottomRightRadius, color }) => (
-  <AnimationColor values={color}>
-    {(color) => (
-      <PrimitiveBackground
-        color={color}
-        topLeftRadius={topLeftRadius}
-        topRightRadius={topRightRadius}
-        bottomLeftRadius={bottomLeftRadius}
-        bottomRightRadius={bottomRightRadius}
-      />
-    )}
-  </AnimationColor>
-)
+export const Background = component(
+  startWithType<TBackground>()
+)(({
+  topLeftRadius,
+  topRightRadius,
+  bottomLeftRadius,
+  bottomRightRadius,
+  color,
+}) => (
+  <SizeParentBlock>
+    <AnimationColor values={color}>
+      {(color) => (
+        <PrimitiveBackground
+          color={color}
+          topLeftRadius={topLeftRadius}
+          topRightRadius={topRightRadius}
+          bottomLeftRadius={bottomLeftRadius}
+          bottomRightRadius={bottomRightRadius}
+        />
+      )}
+    </AnimationColor>
+  </SizeParentBlock>
+))
 
 Background.displayName = 'Background'
+Background.componentSymbol = Symbol('BACKGROUND')

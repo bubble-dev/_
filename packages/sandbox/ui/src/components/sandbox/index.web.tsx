@@ -1,186 +1,113 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps, mapHandlers } from 'refun'
+import { component, startWithType, mapWithProps, mapContext } from 'refun'
 import { Background } from '../background'
-import { Block } from '../block'
 import { mapStoreState, mapStoreDispatch } from '../../store'
-import { TRect, TComponents } from '../../types'
+import { TComponents, TPlugin } from '../../types'
 import { DemoArea } from '../demo-area'
-import { SourceCode } from '../source-code'
-import { ComponentControls } from '../component-controls'
-import { toggleControls } from '../../actions'
-import { buttonIconSize, buttonIconSizeOverflow, ButtonIcon } from '../button-icon'
-import { IconChevronRight, IconChevronLeft } from '../icons'
-import { ComponentSelect } from '../component-select'
-import { mapTheme } from '../themes'
-import { getComponentName } from '../../utils'
+import { ThemeContext, RootThemeProvider } from '../theme-provider'
+import { NavigationSidebar } from '../navigation-sidebar'
+import { Toolbar, TOOLBAR_HEIGHT } from '../toolbar'
+import { Layout, Layout_Item } from '../layout'
+import { ControlsSidebar } from '../controls-sidebar'
+import { RootContext } from '../root'
 import { mapImportedComponent } from './map-imported-component'
+import { mapConsoleLines } from './map-console-lines'
 
-const CONTROLS_WIDTH = 500
-const TOP_BAR_HEIGHT = 60
+const BORDER_SIZE = 1
+const CONTROLS_SIDEBAR_MIN_WIDTH = 300
+const CONTROLS_SIDEBAR_MAX_WIDTH = 500
+const NAVIGATION_SIDEBAR_MIN_WIDTH = 150
+const NAVIGATION_SIDEBAR_MAX_WIDTH = 300
 
 export type TSandbox = {
   components: TComponents,
   copyImportPackageName?: string,
-} & TRect
+  plugin?: TPlugin,
+}
 
 export const Sandbox = component(
   startWithType<TSandbox>(),
-  mapTheme(),
-  mapStoreState(({ isVisibleControls, componentKey, selectedSetIndex }) => ({
-    isVisibleControls,
+  mapContext(ThemeContext),
+  mapContext(RootContext),
+  mapStoreState(({ componentKey, selectedSetIndex, isNavigationSidebarVisible, isControlsSidebarVisible }) => ({
     componentKey,
     selectedSetIndex,
-  }), ['isVisibleControls', 'componentKey', 'selectedSetIndex']),
+    isNavigationSidebarVisible,
+    isControlsSidebarVisible,
+  }), ['componentKey', 'selectedSetIndex', 'isNavigationSidebarVisible', 'isControlsSidebarVisible']),
   mapStoreDispatch,
-  mapHandlers({
-    onToggleControls: ({ dispatch }) => () => dispatch(toggleControls()),
-  }),
-  mapWithProps(({ theme }) => ({
-    backgroundColor: theme.background,
-    borderColor: theme.border,
-    textColor: theme.text,
-  })),
   mapImportedComponent(),
-  mapWithProps(({ left, top, width, height, isVisibleControls }) => ({
-    sidebarTop: top,
-    sidebarLeft: width - CONTROLS_WIDTH,
-    sidebarWidth: CONTROLS_WIDTH,
-    sidebarHeight: height,
-    demoAreaTop: top,
-    demoAreaLeft: left,
-    demoAreaWidth: isVisibleControls ? width - CONTROLS_WIDTH : width,
-    demoAreaHeight: height,
-    componentSelectTop: top,
-    componentSelectHeight: TOP_BAR_HEIGHT,
-  })),
-  mapWithProps(({ componentSelectTop, componentSelectHeight, height }) => ({
-    sourceCodeTop: componentSelectTop + componentSelectHeight,
-    sourceCodeHeight: (height - componentSelectHeight) / 2,
-  })),
-  mapWithProps(({ sourceCodeTop, sourceCodeHeight }) => ({
-    controlsTop: sourceCodeTop + sourceCodeHeight,
-    controlsHeight: sourceCodeHeight,
-  })),
-  mapWithProps(({ isVisibleControls, demoAreaWidth, controlsTop }) => ({
-    controlsToggleLeft: isVisibleControls ? demoAreaWidth - buttonIconSize / 2 : demoAreaWidth - buttonIconSizeOverflow,
-    controlsToggleTop: controlsTop - buttonIconSize / 2,
+  mapConsoleLines(),
+  mapWithProps(({ _rootWidth }) => ({
+    navigationSidebarWidth: Math.min(Math.max(_rootWidth * 0.2, NAVIGATION_SIDEBAR_MIN_WIDTH), NAVIGATION_SIDEBAR_MAX_WIDTH),
+    controlsSidebarWidth: Math.min(Math.max(_rootWidth * 0.3, CONTROLS_SIDEBAR_MIN_WIDTH), CONTROLS_SIDEBAR_MAX_WIDTH),
   }))
 )(({
-  width,
-  height,
-  demoAreaWidth,
-  demoAreaHeight,
-  demoAreaLeft,
-  demoAreaTop,
-  sourceCodeHeight,
-  sourceCodeTop,
-  sidebarWidth,
-  controlsHeight,
-  controlsTop,
-  sidebarLeft,
-  sidebarHeight,
-  sidebarTop,
-  controlsToggleTop,
-  controlsToggleLeft,
-  componentSelectTop,
-  componentSelectHeight,
+  plugin,
+  theme,
   copyImportPackageName,
-  isVisibleControls,
-  textColor,
-  borderColor,
-  backgroundColor,
+  navigationSidebarWidth,
+  controlsSidebarWidth,
+  isNavigationSidebarVisible,
+  isControlsSidebarVisible,
   components,
   Component,
   componentConfig,
   componentProps,
   componentPropsChildrenMap,
-  onToggleControls,
+  packageInfo,
+  consoleLinesRef,
 }) => (
-  <Block width={width} height={height}>
-    <Block left={0} top={0} width={width} height={height}>
-      <Background color={backgroundColor}/>
-    </Block>
+  <RootThemeProvider>
+    <Layout>
+      {isNavigationSidebarVisible && (
+        <Layout_Item id="navigation" width={navigationSidebarWidth}>
+          <NavigationSidebar components={components}/>
+        </Layout_Item>
+      )}
 
-    <DemoArea
-      width={demoAreaWidth}
-      height={demoAreaHeight}
-      left={demoAreaLeft}
-      top={demoAreaTop}
-      Component={Component}
-      componentProps={componentProps}
-      componentPropsChildrenMap={componentPropsChildrenMap}
-      componentConfig={componentConfig}
-    />
+      <Layout_Item id="demo_area">
+        <Layout direction="vertical">
+          <Layout_Item>
+            <DemoArea
+              Component={Component}
+              componentConfig={componentConfig}
+              componentProps={componentProps}
+              componentPropsChildrenMap={componentPropsChildrenMap}
+              plugin={plugin}
+            />
+          </Layout_Item>
 
-    {isVisibleControls && (
-      <Fragment>
-        <ComponentSelect
-          components={components}
-          top={componentSelectTop}
-          left={sidebarLeft}
-          width={sidebarWidth}
-          height={componentSelectHeight}
-        />
+          <Layout_Item height={BORDER_SIZE}>
+            <Background color={theme.sandboxBorderColor}/>
+          </Layout_Item>
 
-        {Component && componentConfig && componentProps && componentPropsChildrenMap && (
-          <Fragment>
-            <SourceCode
-              width={sidebarWidth}
-              height={sourceCodeHeight}
-              left={sidebarLeft}
-              top={sourceCodeTop}
+          <Layout_Item height={TOOLBAR_HEIGHT}>
+            <Toolbar plugin={plugin}/>
+          </Layout_Item>
+        </Layout>
+      </Layout_Item>
+
+      {isControlsSidebarVisible && (
+        <Fragment>
+          <Layout_Item id="controls_border" width={BORDER_SIZE}>
+            <Background color={theme.sandboxBorderColor}/>
+          </Layout_Item>
+          <Layout_Item id="controls" width={controlsSidebarWidth}>
+            <ControlsSidebar
               Component={Component}
               componentConfig={componentConfig}
               componentProps={componentProps}
               componentPropsChildrenMap={componentPropsChildrenMap}
               copyImportPackageName={copyImportPackageName}
+              packageInfo={packageInfo}
+              consoleLines={consoleLinesRef.current}
             />
-
-            <ComponentControls
-              width={sidebarWidth}
-              height={controlsHeight}
-              left={sidebarLeft}
-              top={controlsTop}
-              componentPropsChildrenMap={componentPropsChildrenMap}
-              componentName={getComponentName(Component)}
-              componentConfig={componentConfig}
-            />
-          </Fragment>
-        )}
-
-        <Block
-          width={sidebarWidth}
-          height={1}
-          left={sidebarLeft}
-          top={sourceCodeTop - 1}
-        >
-          <Background color={borderColor}/>
-        </Block>
-
-        <Block
-          width={sidebarWidth}
-          height={1}
-          left={sidebarLeft}
-          top={controlsTop}
-        >
-          <Background color={borderColor}/>
-        </Block>
-
-        <Block
-          width={1}
-          height={sidebarHeight}
-          left={sidebarLeft}
-          top={sidebarTop}
-        >
-          <Background color={borderColor}/>
-        </Block>
-      </Fragment>
-    )}
-
-    <ButtonIcon onPress={onToggleControls} left={controlsToggleLeft} top={controlsToggleTop}>
-      {isVisibleControls ? <IconChevronRight color={textColor}/> : <IconChevronLeft color={textColor}/>}
-    </ButtonIcon>
-  </Block>
+          </Layout_Item>
+        </Fragment>
+      )}
+    </Layout>
+  </RootThemeProvider>
 ))
 
 Sandbox.displayName = 'Sandbox'

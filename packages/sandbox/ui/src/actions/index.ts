@@ -1,103 +1,119 @@
-import { TActionWithPayload, TActionWithPayloadCreator, TAction, TActionCreator, TState, TAnyAction } from '../types'
+import { TActionWithPayloadCreator, TActionCreator, TState, TTransform, TActionWithPayload, TAction } from '../types'
 
-const SET_WIDTH = 'SET_WIDTH'
-const SET_HEIGHT = 'SET_HEIGHT'
-const SET_COMPONENT = 'SET_COMPONENT'
-const SET_SELECTED_SET_INDEX = 'SET_SELECTED_SET_INDEX'
-const SET_RESOLUTION = 'SET_RESOLUTION'
-const SET_TRANSFORM = 'SET_TRANSFORM'
-const TOGGLE_GRID = 'TOGGLE_GRID'
-const TOGGLE_STRETCH = 'TOGGLE_STRETCH'
-const TOGGLE_INSPECT = 'TOGGLE_INSPECT'
-const TOGGLE_THEME = 'TOGGLE_THEME'
-const TOGGLE_CONTROLS = 'TOGGLE_CONTROLS'
-const NAVIGATE = 'NAVIGATE'
-const SELECT_ELEMENT = 'SELECT_ELEMENT'
+export const TYPE_SET_SEARCH_VALUE = 'SET_SEARCH_VALUE'
+export const TYPE_SET_WIDTH = 'SET_WIDTH'
+export const TYPE_SET_HEIGHT = 'SET_HEIGHT'
+export const TYPE_SET_COMPONENT = 'SET_COMPONENT'
+export const TYPE_SET_SELECTED_SET_INDEX = 'SET_SELECTED_SET_INDEX'
+export const TYPE_SET_RESOLUTION = 'SET_RESOLUTION'
+export const TYPE_SET_TRANSFORM = 'SET_TRANSFORM'
+export const TYPE_RESET_TRANSFORM = 'RESET_TRANSFORM'
+export const TYPE_TOGGLE_GRID = 'TOGGLE_GRID'
+export const TYPE_TOGGLE_STRETCH = 'TOGGLE_STRETCH'
+export const TYPE_TOGGLE_INSPECT = 'TOGGLE_INSPECT'
+export const TYPE_TOGGLE_CANVAS_DARK_MODE = 'TOGGLE_CANVAS_DARK_MODE'
+export const TYPE_TOGGLE_NAVIGATION_SIDEBAR = 'TOGGLE_NAVIGATION_SIDEBAR'
+export const TYPE_TOGGLE_CONTROLS_SIDEBAR = 'TOGGLE_CONTROLS_SIDEBAR'
+export const TYPE_NAVIGATE = 'NAVIGATE'
+export const TYPE_SELECT_ELEMENT = 'SELECT_ELEMENT'
 
-export type TSetWidthAction = TActionWithPayload<typeof SET_WIDTH, TState['width']>
-export type TSetHeightAction = TActionWithPayload<typeof SET_HEIGHT, TState['height']>
-export type TToggleStretchAction = TAction<typeof TOGGLE_STRETCH>
-export type TToggleInspectAction = TAction<typeof TOGGLE_INSPECT>
-export type TToggleGridAction = TAction<typeof TOGGLE_GRID>
-export type TToggleThemeAction = TAction<typeof TOGGLE_THEME>
-export type TToggleControlsAction = TAction<typeof TOGGLE_CONTROLS>
-export type TSetComponentAction = TActionWithPayload<typeof SET_COMPONENT, TState['componentKey']>
-export type TSetSelectedSetIndexAction = TActionWithPayload<typeof SET_SELECTED_SET_INDEX, TState['selectedSetIndex']>
-export type TSetResolutionAction = TActionWithPayload<typeof SET_RESOLUTION, TState['resolutionKey']>
-export type TSetTransformAction = TActionWithPayload<typeof SET_TRANSFORM, TState['transform']>
-export type TNavigateAction = TActionWithPayload<typeof NAVIGATE, TState>
-export type TSelectElementAction = TActionWithPayload<typeof SELECT_ELEMENT, TState['selectedElementPath']>
+export type TSetWidthAction = TActionWithPayload<typeof TYPE_SET_WIDTH, TState['width']>
+export type TSetHeightAction = TActionWithPayload<typeof TYPE_SET_HEIGHT, TState['height']>
+export type TToggleStretchAction = TAction<typeof TYPE_TOGGLE_STRETCH>
+export type TToggleInspectAction = TAction<typeof TYPE_TOGGLE_INSPECT>
+export type TToggleGridAction = TAction<typeof TYPE_TOGGLE_GRID>
+export type TToggleCanvasDarkModeAction = TAction<typeof TYPE_TOGGLE_CANVAS_DARK_MODE>
+export type TToggleNavigationSidebarAction = TAction<typeof TYPE_TOGGLE_NAVIGATION_SIDEBAR>
+export type TToggleControlsSidebarAction = TAction<typeof TYPE_TOGGLE_CONTROLS_SIDEBAR>
+export type TSetComponentAction = TActionWithPayload<typeof TYPE_SET_COMPONENT, TState['componentKey']>
+export type TSetSelectedSetIndexAction = TActionWithPayload<typeof TYPE_SET_SELECTED_SET_INDEX, TState['selectedSetIndex']>
+export type TSetResolutionAction = TActionWithPayload<typeof TYPE_SET_RESOLUTION, TState['resolutionKey']>
+export type TSetTransformAction = TActionWithPayload<typeof TYPE_SET_TRANSFORM, TTransform>
+export type TResetTransformAction = TAction<typeof TYPE_RESET_TRANSFORM>
+export type TNavigateAction = TActionWithPayload<typeof TYPE_NAVIGATE, TState>
+export type TSelectElementAction = TActionWithPayload<typeof TYPE_SELECT_ELEMENT, TState['selectedElementPath']>
 
-export const setWidth: TActionWithPayloadCreator<TSetWidthAction> = (width) => ({
-  type: SET_WIDTH,
-  payload: width,
+export type TAllActions =
+  TSetWidthAction |
+  TSetHeightAction |
+  TToggleStretchAction |
+  TToggleInspectAction |
+  TToggleGridAction |
+  TToggleCanvasDarkModeAction |
+  TToggleNavigationSidebarAction |
+  TToggleControlsSidebarAction |
+  TSetComponentAction |
+  TSetSelectedSetIndexAction |
+  TSetResolutionAction |
+  TSetTransformAction |
+  TResetTransformAction |
+  TNavigateAction |
+  TSelectElementAction
+
+export const setWidth: TActionWithPayloadCreator<TSetWidthAction> = (payload) => ({
+  type: TYPE_SET_WIDTH,
+  payload,
 })
 
-export const setHeight: TActionWithPayloadCreator<TSetHeightAction> = (height) => ({
-  type: SET_HEIGHT,
-  payload: height,
+export const setHeight: TActionWithPayloadCreator<TSetHeightAction> = (payload) => ({
+  type: TYPE_SET_HEIGHT,
+  payload,
 })
 
-export const toggleControls: TActionCreator<TToggleControlsAction> = () => ({
-  type: TOGGLE_CONTROLS,
+export const toggleNavigationSidebar: TActionCreator<TToggleNavigationSidebarAction> = () => ({
+  type: TYPE_TOGGLE_NAVIGATION_SIDEBAR,
 })
 
-export const toggleGrid: TActionCreator<TToggleGridAction> = () => ({
-  type: TOGGLE_GRID,
+export const toggleControlsSidebar: TActionCreator<TToggleControlsSidebarAction> = () => ({
+  type: TYPE_TOGGLE_CONTROLS_SIDEBAR,
 })
 
-export const toggleStretch: TActionCreator<TToggleStretchAction> = () => ({
-  type: TOGGLE_STRETCH,
+export const toggleGrid = (): TToggleGridAction => ({
+  type: TYPE_TOGGLE_GRID,
 })
 
-export const toggleInspect: TActionCreator<TToggleInspectAction> = () => ({
-  type: TOGGLE_INSPECT,
+export const toggleStretch = (): TToggleStretchAction => ({
+  type: TYPE_TOGGLE_STRETCH,
 })
 
-export const toggleTheme: TActionCreator<TToggleThemeAction> = () => ({
-  type: TOGGLE_THEME,
+export const toggleInspect = (): TToggleInspectAction => ({
+  type: TYPE_TOGGLE_INSPECT,
 })
 
-export const setComponent: TActionWithPayloadCreator<TSetComponentAction> = (component) => ({
-  type: SET_COMPONENT,
-  payload: component,
+export const toggleCanvasDarkMode = (): TToggleCanvasDarkModeAction => ({
+  type: TYPE_TOGGLE_CANVAS_DARK_MODE,
 })
 
-export const setSelectedSetIndex: TActionWithPayloadCreator<TSetSelectedSetIndexAction> = (setIndex) => ({
-  type: SET_SELECTED_SET_INDEX,
-  payload: setIndex,
+export const setComponent: TActionWithPayloadCreator<TSetComponentAction> = (payload) => ({
+  type: TYPE_SET_COMPONENT,
+  payload,
 })
 
-export const setResolution: TActionWithPayloadCreator<TSetResolutionAction> = (key) => ({
-  type: SET_RESOLUTION,
-  payload: key,
+export const setSelectedSetIndex: TActionWithPayloadCreator<TSetSelectedSetIndexAction> = (payload) => ({
+  type: TYPE_SET_SELECTED_SET_INDEX,
+  payload,
 })
 
-export const setTransform: TActionWithPayloadCreator<TSetTransformAction> = (value) => ({
-  type: SET_TRANSFORM,
-  payload: value,
+export const setResolution: TActionWithPayloadCreator<TSetResolutionAction> = (payload) => ({
+  type: TYPE_SET_RESOLUTION,
+  payload,
 })
 
-export const navigate: TActionWithPayloadCreator<TNavigateAction> = (state) => ({
-  type: NAVIGATE,
-  payload: state,
+export const setTransform: TActionWithPayloadCreator<TSetTransformAction> = (payload) => ({
+  type: TYPE_SET_TRANSFORM,
+  payload,
 })
 
-export const selectElement: TActionWithPayloadCreator<TSelectElementAction> = (state) => ({
-  type: SELECT_ELEMENT,
-  payload: state,
+export const resetTransform: TActionCreator<TResetTransformAction> = () => ({
+  type: TYPE_RESET_TRANSFORM,
 })
 
-export const isSetWidthAction = (obj: TAnyAction): obj is TSetWidthAction => obj.type === SET_WIDTH
-export const isSetHeightAction = (obj: TAnyAction): obj is TSetHeightAction => obj.type === SET_HEIGHT
-export const isSetComponentAction = (obj: TAnyAction): obj is TSetComponentAction => obj.type === SET_COMPONENT
-export const isSetSelectedSetIndexAction = (obj: TAnyAction): obj is TSetSelectedSetIndexAction => obj.type === SET_SELECTED_SET_INDEX
-export const isSetResolutionAction = (obj: TAnyAction): obj is TSetResolutionAction => obj.type === SET_RESOLUTION
-export const isSetTransformAction = (obj: TAnyAction): obj is TSetTransformAction => obj.type === SET_TRANSFORM
-export const isToggleControlsAction = (obj: TAnyAction): obj is TToggleControlsAction => obj.type === TOGGLE_CONTROLS
-export const isToggleGridAction = (obj: TAnyAction): obj is TToggleGridAction => obj.type === TOGGLE_GRID
-export const isToggleStretchAction = (obj: TAnyAction): obj is TToggleStretchAction => obj.type === TOGGLE_STRETCH
-export const isToggleInspectAction = (obj: TAnyAction): obj is TToggleInspectAction => obj.type === TOGGLE_INSPECT
-export const isToggleThemeAction = (obj: TAnyAction): obj is TToggleThemeAction => obj.type === TOGGLE_THEME
-export const isNavigateAction = (obj: TAnyAction): obj is TNavigateAction => obj.type === NAVIGATE
-export const isSelectElementAction = (obj: TAnyAction): obj is TSelectElementAction => obj.type === SELECT_ELEMENT
+export const navigate: TActionWithPayloadCreator<TNavigateAction> = (payload) => ({
+  type: TYPE_NAVIGATE,
+  payload,
+})
+
+export const selectElement: TActionWithPayloadCreator<TSelectElementAction> = (payload) => ({
+  type: TYPE_SELECT_ELEMENT,
+  payload,
+})

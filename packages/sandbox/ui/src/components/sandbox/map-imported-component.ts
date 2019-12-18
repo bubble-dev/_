@@ -3,7 +3,7 @@ import { shallowEqualByKeys, mapWithPropsMemo, startWithType } from 'refun'
 import { EMPTY_OBJECT, isUndefined, TAnyObject } from 'tsfn'
 import { createChildren, isChildrenMap, getProps, TComponentConfig } from 'autoprops'
 import { pipe } from '@psxcode/compose'
-import { TMetaFile, TComponents } from '../../types'
+import { TMetaFile, TComponents, TPackageInfo } from '../../types'
 
 const cache = new Map<string, Promise<TMetaFile>>()
 
@@ -48,6 +48,7 @@ export type TMapImportedComponentResult = {
   componentConfig?: TComponentConfig,
   componentProps?: Readonly<TAnyObject>,
   componentPropsChildrenMap?: Readonly<TAnyObject>,
+  packageInfo?: TPackageInfo,
 }
 
 export const mapImportedComponent = <P extends TMapImportedComponent>() =>
@@ -69,7 +70,7 @@ export const mapImportedComponent = <P extends TMapImportedComponent>() =>
         return {}
       }
 
-      const { Component, config } = componentMetaFile
+      const { Component, config, packageInfo } = componentMetaFile
       const props = getProps(config, selectedSetIndex)
 
       if (isChildrenMap(props.children)) {
@@ -81,6 +82,7 @@ export const mapImportedComponent = <P extends TMapImportedComponent>() =>
             ...props,
             children: createChildren(config, props.children),
           },
+          packageInfo,
         }
       }
 
@@ -89,6 +91,7 @@ export const mapImportedComponent = <P extends TMapImportedComponent>() =>
         componentConfig: config,
         componentPropsChildrenMap: props,
         componentProps: props,
+        packageInfo,
       }
     }, ['componentMetaFile', 'selectedSetIndex'])
   )

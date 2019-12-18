@@ -3,7 +3,6 @@ import { isUndefined } from 'tsfn'
 import { TPointer } from '@primitives/pointer'
 import { TTransform } from '../../types'
 
-const EMPTY_TRANSFORM: TTransform = { x: 0, y: 0, z: 1 }
 const ZOOM_SCROLL_MULT = 0.02
 const ZOOM_PINCH_MULT = 2.5
 const TRANSFORM_THRESHOLD = 0.01
@@ -17,11 +16,13 @@ export type TMapTransform = {
   canvasHeight: number,
   componentLeft: number,
   componentTop: number,
+  _x: number,
+  _y: number,
   dispatchTransform: (arg: TTransform) => void,
   transform: TTransform,
 }
 
-export const mapTransform = (left: number, top: number) => <P extends TMapTransform>(props: P) => {
+export const mapTransform = <P extends TMapTransform>(props: P) => {
   const [transform, setTransform] = useState(props.transform)
   const propsRef = useRef(props)
   const transformRef = useRef(transform)
@@ -29,7 +30,6 @@ export const mapTransform = (left: number, top: number) => <P extends TMapTransf
   const cursorY = useRef(0)
   const onMove = useRef<TPointer['onMove']>()
   const onWheel = useRef<TPointer['onWheel']>()
-  const onReset = useRef<() => void>()
   const isTransformingRef = useRef(false)
 
   const isTransforming = isTransformingRef.current
@@ -45,8 +45,8 @@ export const mapTransform = (left: number, top: number) => <P extends TMapTransf
       const canvasWidthHalf = props.canvasWidth / 2
       const canvasHeightHalf = props.canvasHeight / 2
 
-      cursorX.current = (x - left - props.canvasLeft - prevTransform.x - canvasWidthHalf) / prevTransform.z
-      cursorY.current = (y - top - props.canvasTop - prevTransform.y - canvasHeightHalf) / prevTransform.z
+      cursorX.current = (x - props._x - props.canvasLeft - prevTransform.x - canvasWidthHalf) / prevTransform.z
+      cursorY.current = (y - props._y - props.canvasTop - prevTransform.y - canvasHeightHalf) / prevTransform.z
     }
   }
 
@@ -85,15 +85,6 @@ export const mapTransform = (left: number, top: number) => <P extends TMapTransf
     }
   }
 
-  if (isUndefined(onReset.current)) {
-    onReset.current = () => {
-      transformRef.current = EMPTY_TRANSFORM
-
-      props.dispatchTransform(EMPTY_TRANSFORM)
-      setTransform(EMPTY_TRANSFORM)
-    }
-  }
-
   if (!isTransforming && (
     Math.abs(props.transform.x - transform.x) > TRANSFORM_THRESHOLD ||
     Math.abs(props.transform.y - transform.y) > TRANSFORM_THRESHOLD ||
@@ -108,6 +99,5 @@ export const mapTransform = (left: number, top: number) => <P extends TMapTransf
     isTransforming,
     onMove: onMove.current,
     onWheel: onWheel.current,
-    onReset: onReset.current,
   }
 }

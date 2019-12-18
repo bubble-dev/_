@@ -1,6 +1,6 @@
 import { Middleware } from 'redux'
 import { platformId } from '../utils/platform-id'
-import { navigate, isNavigateAction } from '../actions'
+import { navigate, TYPE_NAVIGATE } from '../actions'
 import { getInitialState } from '../store/get-initial-state'
 
 const HOST = 'localhost'
@@ -44,7 +44,7 @@ export const syncState: Middleware = (store) => {
   return (next) => (action) => {
     const result = next(action)
 
-    if (ws.readyState !== 0 && !isNavigateAction(action)) {
+    if (ws.readyState !== 0 && action.type !== TYPE_NAVIGATE) {
       ws.send(
         JSON.stringify({
           type: ACTION_TYPE_SYNC,

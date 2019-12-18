@@ -1,5 +1,1 @@
-import { TColor } from 'colorido'
-
-export type TIcon = {
-  color: TColor,
-}
+export type TIcon = {}

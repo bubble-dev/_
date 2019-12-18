@@ -7,19 +7,21 @@ import {
   mapState,
   mapHandlers,
   mapWithPropsMemo,
+  mapContext,
 } from 'refun'
 import { Transform } from '@primitives/transform'
 import { Size } from '@primitives/size'
+import { Background } from '@primitives/background'
 import { TAnyObject } from 'tsfn'
-import { Border } from '../border'
-import { Shadow } from '../shadow'
-import { Background } from '../background'
 import { Block } from '../block'
 import { mapStoreState, mapStoreDispatch } from '../../store'
-import { Grid } from '../grid'
-import { TRect, TTransform } from '../../types'
+import { CanvasGrid } from '../canvas-grid'
+import { TTransform } from '../../types'
 import { setTransform } from '../../actions'
-import { mapTheme } from '../themes'
+import { LayoutContext } from '../layout-context'
+import { ThemeContext } from '../theme-provider'
+import { SizeBlock } from '../size-block'
+import { BLACK, WHITE } from '../theme-provider/colors'
 import { mapTransform } from './map-transform'
 import { PureComponent } from './pure-component'
 
@@ -29,31 +31,32 @@ const round10 = (num: number) => Math.round(num / 10) * 10
 export type TDemoArea = {
   Component?: FC<any>,
   componentProps?: Readonly<TAnyObject>,
-} & TRect
+}
 
 export const DemoArea = pureComponent(
   startWithType<TDemoArea>(),
-  mapTheme(),
-  mapStoreState(({ width, height, hasGrid, shouldStretch, transform }) => ({
+  mapContext(ThemeContext),
+  mapContext(LayoutContext),
+  mapStoreState(({ width, height, hasGrid, shouldStretch, isCanvasDarkMode, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
     hasGrid,
-    transform,
-  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'transform']),
+    isCanvasDarkMode,
+    transform: {
+      x: transformX,
+      y: transformY,
+      z: transformZ,
+    },
+  }), ['width', 'height', 'hasGrid', 'shouldStretch', 'isCanvasDarkMode', 'transformX', 'transformY', 'transformZ']),
   mapStoreDispatch,
   mapHandlers({
     dispatchTransform: ({ dispatch }) => (transform: TTransform) => dispatch(setTransform(transform)),
   }),
   mapDebouncedHandlerTimeout('dispatchTransform', 150),
-  mapWithProps(({ theme }) => ({
-    backgroundColor: theme.background,
-    borderColor: theme.border,
-    shadowColor: theme.border,
-  })),
-  mapWithProps(({ canvasWidth, canvasHeight, width, height }) => ({
-    canvasLeft: Math.max((width - canvasWidth) / 2, 0),
-    canvasTop: Math.max((height - canvasHeight) / 2, 0),
+  mapWithProps(({ canvasWidth, canvasHeight, _width, _height }) => ({
+    canvasLeft: Math.max((_width - canvasWidth) / 2, 0),
+    canvasTop: Math.max((_height - canvasHeight) / 2, 0),
   })),
   mapState('componentHeight', 'setComponentHeight', () => 0, []),
   mapWithPropsMemo(({ componentHeight, canvasWidth, canvasHeight, shouldStretch }) => {
@@ -75,10 +78,6 @@ export const DemoArea = pureComponent(
   }, ['componentHeight', 'shouldStretch', 'canvasWidth', 'canvasHeight']),
   mapTransform(0, 0)
 )(({
-  left,
-  top,
-  width,
-  height,
   canvasWidth,
   canvasHeight,
   canvasLeft,
@@ -93,11 +92,11 @@ export const DemoArea = pureComponent(
   componentTop,
   componentHeight,
   setComponentHeight,
-  backgroundColor,
-  shadowColor,
-  isDarkTheme,
+  theme,
+  isCanvasDarkMode,
 }) => (
-  <Block width={width} height={height} left={left} top={top} shouldHideOverflow>
+  <SizeBlock shouldHideOverflow>
+    <Background color={theme.demoAreaBackgroundColor}/>
     <Transform
       shouldUse3d
       x={canvasLeft + transform.x}
@@ -109,11 +108,7 @@ export const DemoArea = pureComponent(
         width={canvasWidth}
         height={canvasHeight}
       >
-        <Block top={0} left={0} width={canvasWidth} height={canvasHeight}>
-          <Background color={backgroundColor}/>
-          {!isTransforming && <Shadow color={shadowColor} blurRadius={10} spreadRadius={1}/>}
-          {isTransforming && <Border color={shadowColor} topWidth={1} bottomWidth={1} leftWidth={1} rightWidth={1}/>}
-        </Block>
+        <Background color={isCanvasDarkMode ? BLACK : WHITE}/>
 
         {Component && (
           <Block width={componentWidth}>
@@ -129,16 +124,16 @@ export const DemoArea = pureComponent(
         )}
 
         {hasGrid && (
-          <Grid
+          <CanvasGrid
             width={canvasWidth}
             height={canvasHeight}
             shouldDegrade={isTransforming}
-            isDarkTheme={isDarkTheme}
+            isCanvasDarkMode={isCanvasDarkMode}
           />
         )}
       </Block>
     </Transform>
-  </Block>
+  </SizeBlock>
 ))
 
 DemoArea.displayName = 'DemoArea'
