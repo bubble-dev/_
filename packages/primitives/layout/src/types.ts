@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type TLayoutDirection = 'horizontal' | 'vertical'
+export type TLayoutDirection = 'horizontal' | 'vertical' | 'horizontal-reverse' | 'vertical-reverse'
 
 export type TContextData = {
   direction: TLayoutDirection,

@@ -37,8 +37,8 @@ export const Layout = component(
       minHeight,
     }
 
-    if (direction === 'horizontal') {
-      style.flexDirection = 'row'
+    if (direction === 'horizontal' || direction === 'horizontal-reverse') {
+      style.flexDirection = direction === 'horizontal' ? 'row' : 'row-reverse'
 
       switch (hAlign) {
         case 'left': {
@@ -75,8 +75,8 @@ export const Layout = component(
           break
         }
       }
-    } else if (direction === 'vertical') {
-      style.flexDirection = 'column'
+    } else if (direction === 'vertical' || direction === 'vertical-reverse') {
+      style.flexDirection = direction === 'vertical' ? 'column' : 'column-reverse'
 
       switch (hAlign) {
         case 'left': {
