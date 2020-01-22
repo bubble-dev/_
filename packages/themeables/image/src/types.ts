@@ -1,7 +1,7 @@
 export type TThemeableImage = {
   resizeMode?: 'contain' | 'cover',
-  height: number,
-  width: number,
+  height?: number,
+  width?: number,
   topLeftRadius?: number,
   topRightRadius?: number,
   bottomRightRadius?: number,
