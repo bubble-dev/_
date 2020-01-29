@@ -1,3 +1,4 @@
+import plugin from '@start/plugin'
 import {
   CheckChromeScreenshots,
   CheckFirefoxScreenshots,
@@ -24,3 +25,13 @@ export const sandbox = Sandbox({
   entryPointPath: './tasks/sandbox/index.tsx',
   htmlTemplatePath: './tasks/sandbox/templates/dev.html',
 })
+
+export const graph = () => {
+  return plugin('graph', () => async () => {
+    const { run } = await import('@rebox/web')
+    const entryPointPath = './tasks/graph/index.tsx'
+    const htmlTemplatePath = './tasks/graph/index.html'
+
+    await run({ entryPointPath, htmlTemplatePath })
+  })
+}
