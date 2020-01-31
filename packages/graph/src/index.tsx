@@ -19,8 +19,8 @@ export const App: FC<TApp> = ({ entries }) => (
   // </Root>
   <GraphApp
     entries={entries}
-    height={400}
-    width={700}
+    height={340}
+    width={640}
   />
 )
 

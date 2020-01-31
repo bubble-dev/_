@@ -14,13 +14,15 @@ export type TGraphPath = {
   maxValue: number,
 }
 
+const OFFSET = 0.3
+
 export const GraphPath = component(
   startWithType<TGraphPath>(),
-  mapWithPropsMemo(({ entries, maxValue, rect }) => {
+  mapWithPropsMemo(({ entries, rect, maxValue }) => {
     const points = entries.map(({ value }, index) => {
       return {
-        x: rect.x + (rect.width / (entries.length - 1)) * index,
-        y: (1 - (value * 100) / maxValue / 100) * rect.height,
+        x: rect.x + (rect.width / entries.length) * index + (rect.width / entries.length * OFFSET),
+        y: (1 - (value * 100) / maxValue / 100) * rect.height + rect.y,
         value,
       }
     })
@@ -29,21 +31,23 @@ export const GraphPath = component(
       points,
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
-  }, ['entries', 'maxValue', 'rect'])
+  }, ['entries', 'rect', 'maxValue'])
 )(({ pointsString, points }) => {
   return (
     <Fragment>
-      <path d={`M ${pointsString}`} stroke="red" fill="none" strokeWidth="3"/>
-      {points.map((point, index) => (
-        <Fragment key={index + 1}>
-          <line key={`${point.x}-line`} x1={point.x} y1={0} x2={point.x} y2={380} stroke="green"/>
-          <GraphPoint
-            key={`${point.x}-circle`}
-            x={point.x}
-            y={point.y}
-            value={point.value}
-          />
-        </Fragment>
+      <path
+        d={`M ${pointsString}`}
+        stroke="red"
+        fill="none"
+        strokeWidth="3"
+      />
+      {points.map((point) => (
+        <GraphPoint
+          key={`${point.x}-line`}
+          x={point.x}
+          y={point.y}
+          value={point.value}
+        />
       ))}
     </Fragment>
   )

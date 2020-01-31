@@ -15,15 +15,22 @@ export const GraphPoint = component(
   mapWithProps(({ isHovered }) => ({
     color: isHovered ? 'red' : 'black',
   }))
-)(({ x, y, value, onPointerEnter, onPointerLeave, color }) => (
+)(({
+  color,
+  onPointerEnter,
+  onPointerLeave,
+  value,
+  x,
+  y,
+}) => (
   <Fragment>
     <circle
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
       cx={x}
       cy={y}
-      r={POINT_SIZE}
       fill={color}
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+      r={POINT_SIZE}
     />
     <text
       x={x + 2}

@@ -9,44 +9,75 @@ export type TGraphTicks = {
     height: number,
   },
   maxValue: number,
-  minValue: number,
 }
 
-const VERTICAL_TICK_STEP = 1
+const VERTICAL_TICK_STEP_SIZE = 40
 const TICK_SIZE = 10
+const TEXT_OFFSET_X = 20
+const TEXT_OFFSET_Y = 2
+// TODO move to file
 
 export const GraphVerticalAxis = component(
   startWithType<TGraphTicks>(),
-  mapWithPropsMemo(({ rect, maxValue, minValue }) => {
-    const numTicks = (maxValue - minValue) * VERTICAL_TICK_STEP
-    const verticalTickCoords = Array(numTicks + 1)
+  mapWithPropsMemo(({ rect, maxValue }) => {
+    const maxTicksCount = Math.floor(rect.height / VERTICAL_TICK_STEP_SIZE)
+    const ticks = Array(maxTicksCount + 1)
       .fill(null)
-      .map((_, index) => rect.height - (index * rect.height / numTicks))
+      .map((_, index) => {
+        const y = rect.height + rect.y - (index * rect.height / maxTicksCount)
+        const value = (maxValue * index / maxTicksCount).toFixed(1)
 
-    const verticalTicks = verticalTickCoords.map((y) => ({
-      x1: rect.x,
-      x2: rect.x - TICK_SIZE,
-      y1: y,
-      y2: y,
-    }))
+        return {
+          x1: rect.x,
+          x2: rect.x - TICK_SIZE,
+          y1: y,
+          y2: y,
+          value,
+        }
+      })
 
     const axis = {
       x1: rect.x,
       x2: rect.x,
       y1: rect.y,
-      y2: rect.height,
+      y2: rect.height + rect.y,
     }
 
     return {
       axis,
-      verticalTicks,
+      ticks,
     }
-  }, ['rect', 'maxValue', 'minValue'])
-)(({ axis, verticalTicks }) => (
+  }, ['rect', 'maxValue'])
+)(({ axis, ticks, rect }) => (
   <Fragment>
-    <line x1={axis.x1} y1={axis.y1} x2={axis.x2} y2={axis.y2} stroke="blue"/>
-    {verticalTicks.map(({ x1, x2, y1, y2 }, index) =>
-      <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} stroke="green"/>)}
+    <line
+      x1={axis.x1}
+      y1={axis.y1}
+      x2={axis.x2}
+      y2={axis.y2}
+      stroke="blue"
+    />
+    {ticks.map(({ x1, x2, y1, y2, value }, index) => (
+      (
+        <Fragment key={`${x1}${index}`}>
+          <line
+            x1={x1}
+            y1={y1}
+            x2={x2 + rect.width}
+            y2={y2}
+            // TODO ad doption
+            // x2={x2}
+            // y2={y2}
+            stroke="green"
+          />
+          <text
+            x={x1 - TEXT_OFFSET_X}
+            y={y1 + TEXT_OFFSET_Y}
+          > {value}
+          </text>
+        </Fragment>
+      )
+    ))}
   </Fragment>
 ))
 
