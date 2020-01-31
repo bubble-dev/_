@@ -1,27 +1,22 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TEntry } from './types'
+import { TEntry, TRect } from './types'
+import { OFFSET } from './constants'
 import { GraphPoint } from './GraphPoint'
 
 export type TGraphPath = {
-  rect: {
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  },
+  rect: TRect,
   entries: TEntry[],
   maxValue: number,
 }
 
-const OFFSET = 0.3
-
 export const GraphPath = component(
   startWithType<TGraphPath>(),
   mapWithPropsMemo(({ entries, rect, maxValue }) => {
+    const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
       return {
-        x: rect.x + (rect.width / entries.length) * index + (rect.width / entries.length * OFFSET),
+        x: rect.x + step * index + (step * OFFSET),
         y: (1 - (value * 100) / maxValue / 100) * rect.height + rect.y,
         value,
       }

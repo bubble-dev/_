@@ -1,19 +1,13 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHovered, TMapHovered, mapWithProps } from 'refun'
-
-const POINT_SIZE = 6
+import { TRect } from './types'
+import { POINT_SIZE } from './constants'
 
 export type TGraphPoint = {
   x: number,
   y: number,
   value: number,
-  // TODO move rect to types
-  rect: {
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  },
+  rect: TRect,
 } & TMapHovered
 
 export const GraphPoint = component(

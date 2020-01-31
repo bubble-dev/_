@@ -1,20 +1,12 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TEntry } from './types'
+import { TEntry, TRect } from './types'
+import { OFFSET, TICK_SHIFT, TICK_SIZE } from './constants'
 
 export type TGraphTicks = {
-  rect: {
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  },
+  rect: TRect,
   entries: TEntry[],
 }
-
-const TICK_SIZE = 10
-const TICK_SHIFT = 5
-const OFFSET = 0.3
 
 export const GraphHorizontalAxis = component(
   startWithType<TGraphTicks>(),

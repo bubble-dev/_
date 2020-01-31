@@ -1,21 +1,17 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { TRect } from './types'
+import {
+  TEXT_OFFSET_X,
+  TEXT_OFFSET_Y,
+  TICK_SIZE,
+  VERTICAL_TICK_STEP_SIZE,
+} from './constants'
 
 export type TGraphTicks = {
-  rect: {
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  },
+  rect: TRect,
   maxValue: number,
 }
-
-const VERTICAL_TICK_STEP_SIZE = 40
-const TICK_SIZE = 10
-const TEXT_OFFSET_X = 12
-const TEXT_OFFSET_Y = 5
-// TODO move to file
 
 export const GraphVerticalAxis = component(
   startWithType<TGraphTicks>(),
