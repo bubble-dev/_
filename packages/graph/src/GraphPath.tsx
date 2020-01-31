@@ -32,7 +32,7 @@ export const GraphPath = component(
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
   }, ['entries', 'rect', 'maxValue'])
-)(({ pointsString, points }) => {
+)(({ pointsString, points, rect }) => {
   return (
     <Fragment>
       <path
@@ -47,6 +47,7 @@ export const GraphPath = component(
           x={point.x}
           y={point.y}
           value={point.value}
+          rect={rect}
         />
       ))}
     </Fragment>
