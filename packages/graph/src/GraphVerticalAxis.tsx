@@ -13,18 +13,40 @@ export type TGraphTicks = {
   maxValue: number,
 }
 
+const round = (value: number): number => {
+  let mult = 0.0001
+
+  while (Math.floor(value * mult / 25) === 0) {
+    mult = mult * 10
+  }
+
+  const v1 = value * mult
+  const mod = v1 % 25
+
+  return (v1 - mod) / mult
+}
+
+const printValue = (value: number): string => {
+  if (value > 1000) {
+    return `${value / 1000}k`
+  }
+
+  return value.toString()
+}
+
 export const GraphVerticalAxis = component(
   startWithType<TGraphTicks>(),
   mapWithPropsMemo(({ rect, maxValue }) => {
     const maxTicksCount = Math.floor(rect.height / VERTICAL_TICK_STEP_SIZE)
-    const valueStep = maxValue / maxTicksCount - maxValue / maxTicksCount * 10 % 5 / 10
+    const valueStep = round(maxValue / maxTicksCount)
     const scale = maxValue / rect.height
     const pxStep = valueStep / scale
-    const ticks = Array(maxTicksCount + 1)
+    const tickCount = Math.floor(maxValue / valueStep)
+    const ticks = Array(tickCount + 1)
       .fill(null)
       .map((_, index) => {
         const y = rect.height + rect.y - (index * pxStep)
-        const value = (index * valueStep)
+        const value = printValue(index * valueStep)
 
         return {
           x1: rect.x,
