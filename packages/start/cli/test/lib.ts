@@ -31,8 +31,8 @@ test('cli: throw without reporter', async (t) => {
 test('cli: throw without task name', async (t) => {
   const unmock = mock('../src/lib', {
     preset: {
-      a: 1,
-      b: 2,
+      a: () => {},
+      b: () => {},
     },
   })
 
@@ -58,8 +58,8 @@ test('cli: throw without task name', async (t) => {
 test('cli: throw with unknown task name', async (t) => {
   const unmock = mock('../src/lib', {
     preset: {
-      a: 1,
-      b: 2,
+      a: () => {},
+      b: () => {},
     },
   })
 
@@ -75,6 +75,35 @@ test('cli: throw with unknown task name', async (t) => {
     t.equals(
       error,
       'One of the following task names is required:\n* a\n* b',
+      'should throw'
+    )
+
+    unmock()
+  })
+})
+
+test('cli: throw with unknown namespaced task name', async (t) => {
+  const unmock = mock('../src/lib', {
+    preset: {
+      a: () => {},
+      b: {
+        c: () => {},
+      },
+    },
+  })
+
+  const { default: cliLib } = await import('../src/lib')
+
+  const argv = ['foo', 'bar', 'b.d']
+  const options = {
+    preset: 'preset',
+    reporter: 'reporter',
+  }
+
+  return cliLib(argv, options).catch((error) => {
+    t.equals(
+      error,
+      'One of the following task names is required:\n* a\n* b.c',
       'should throw'
     )
 
@@ -210,6 +239,52 @@ test('cli: preset', async (t) => {
   t.deepEquals(
     getSpyCalls(reporterSpy),
     [['task']],
+    'should call reporter with task name'
+  )
+
+  unmock()
+})
+
+test('cli: namespaced task', async (t) => {
+  const taskRunnerSpy = createSpy(() => () => {})
+  const taskSpy = createSpy(() => taskRunnerSpy)
+  const reporterSpy = createSpy(() => 'reporter')
+
+  const unmock = mock('../src/lib', {
+    [resolve('./tasks')]: {
+      namespace: {
+        task: taskSpy,
+      },
+    },
+    reporter: {
+      default: reporterSpy,
+    },
+  })
+
+  const { default: cliLib } = await import('../src/lib')
+
+  const argv = ['foo', 'bar', 'namespace.task', 'arg1', 'arg2']
+  const options = {
+    reporter: 'reporter',
+  }
+
+  await cliLib(argv, options)
+
+  t.deepEquals(
+    getSpyCalls(taskSpy),
+    [['arg1', 'arg2']],
+    'should call task with args'
+  )
+
+  t.deepEquals(
+    getSpyCalls(taskRunnerSpy),
+    [['reporter']],
+    'should call taskRunner with props'
+  )
+
+  t.deepEquals(
+    getSpyCalls(reporterSpy),
+    [['namespace.task']],
     'should call reporter with task name'
   )
 
