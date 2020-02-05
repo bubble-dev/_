@@ -3,6 +3,10 @@ export type TEntry = {
   value: number,
 }
 
+export type TGraphs = {
+  // [string]: {},
+}
+
 export type TPoint = {
   x: number,
   y: number,
