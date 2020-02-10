@@ -36,26 +36,15 @@ export const GraphHorizontalAxis = component(
       ticks,
     }
   }, ['rect', 'entries'])
-)(({ axis, ticks }) => (
-  <Fragment>
-    <line
-      x1={axis.x1}
-      y1={axis.y1}
-      x2={axis.x2}
-      y2={axis.y2}
-      stroke="blue"
-    />
-    {ticks.map(({ x1, x2, y1, y2 }, index) => (
-      <line
-        key={`${x1}${index}`}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-        stroke="green"
-      />
-    ))}
-  </Fragment>
-))
+)(({ axis, ticks }) => ticks.map(({ x1, x2, y1, y2 }, index) => (
+  <line
+    key={`${x1}${index}`}
+    x1={x1}
+    y1={y1}
+    x2={x2}
+    y2={y2}
+    stroke="green"
+  />
+)))
 
 GraphHorizontalAxis.displayName = 'GraphHorizontalAxis'

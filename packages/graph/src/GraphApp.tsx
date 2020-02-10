@@ -1,6 +1,6 @@
-import React from 'react'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TEntry } from './types'
+import React, { Fragment } from 'react'
+import { component, startWithType, mapWithPropsMemo, mapHovered, mapWithProps, TMapHovered, mapState, mapHandlers } from 'refun'
+import { TEntry, TRect } from './types'
 import { GraphPath } from './GraphPath'
 import { GraphVerticalAxis } from './GraphVerticalAxis'
 import { GraphHorizontalAxis } from './GraphHorizontalAxis'
@@ -10,11 +10,13 @@ export type TApp = {
   entries: TEntry[],
   height: number,
   width: number,
+  color: string,
+  rect: TRect,
 }
 
 export const GraphApp = component(
   startWithType<TApp>(),
-  mapWithPropsMemo(({ width, height, entries: tempEntries }) => {
+  mapWithPropsMemo(({ height, entries: tempEntries }) => {
     const MAX_ENTRIES = Math.round(height / MAX_ENTRIES_STEP)
     const entries = tempEntries.length > MAX_ENTRIES ? tempEntries.slice(-MAX_ENTRIES) : tempEntries
     const values = entries.map((item) => item.value)
@@ -25,47 +27,49 @@ export const GraphApp = component(
     return {
       entries,
       maxValue,
-      rect: {
-        x: CANVAS_PADDING,
-        y: CANVAS_PADDING,
-        width: width - CANVAS_PADDING * 2,
-        height: height - CANVAS_PADDING * 2,
-      },
     }
-  }, ['width', 'height', 'entries'])
+  }, ['height', 'entries'])
 )(({
-  maxValue,
+  color,
   entries,
-  width,
   height,
+  maxValue,
   rect,
+  width,
+  onPathEnter,
+  onPathLeave,
+  hoverColor,
+  onActivePath,
+  index,
+  showXY,
+  isActiveGraph,
 }) => (
-  <svg width={width} height={height} stroke="none">
-    <rect
-      x={rect.x}
-      y={rect.y}
-      width={rect.width}
-      height={rect.height}
-      fill="#ffe0e0"
-    />
+  <Fragment>
+    {showXY && (
+      <Fragment>
+        <GraphHorizontalAxis
+          rect={rect}
+          entries={entries}
+        />
 
-    <GraphHorizontalAxis
-      rect={rect}
-      entries={entries}
-    />
-
-    <GraphVerticalAxis
-      rect={rect}
-      maxValue={maxValue}
-    />
+        <GraphVerticalAxis
+          rect={rect}
+          maxValue={maxValue}
+        />
+      </Fragment>
+    )}
 
     <GraphPath
-      rect={rect}
+      isActiveGraph={isActiveGraph}
+      index={index}
+      color={color}
       entries={entries}
+      hoverColor={hoverColor}
       maxValue={maxValue}
+      rect={rect}
+      onActivePath={onActivePath}
     />
-
-  </svg>
+  </Fragment>
 ))
 
 GraphApp.displayName = 'GraphApp'

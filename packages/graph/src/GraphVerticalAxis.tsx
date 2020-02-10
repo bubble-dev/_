@@ -71,13 +71,6 @@ export const GraphVerticalAxis = component(
   }, ['rect', 'maxValue'])
 )(({ axis, ticks }) => (
   <Fragment>
-    <line
-      x1={axis.x1}
-      y1={axis.y1}
-      x2={axis.x2}
-      y2={axis.y2}
-      stroke="blue"
-    />
     {ticks.map(({ x1, x2, y1, y2, value }, index) => (
       (
         <Fragment key={`${x1}${index}`}>

@@ -1,17 +1,20 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapWithPropsMemo, TMapHovered, mapHovered } from 'refun'
 import { TEntry, TRect } from './types'
 import { OFFSET } from './constants'
 import { GraphPoint } from './GraphPoint'
 
 export type TGraphPath = {
-  rect: TRect,
+  color: string,
   entries: TEntry[],
+  hoverColor: string | null,
   maxValue: number,
-}
+  rect: TRect,
+} & TMapHovered
 
 export const GraphPath = component(
   startWithType<TGraphPath>(),
+  mapHovered,
   mapWithPropsMemo(({ entries, rect, maxValue }) => {
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
@@ -27,16 +30,34 @@ export const GraphPath = component(
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
   }, ['entries', 'rect', 'maxValue'])
-)(({ pointsString, points, rect }) => {
+)(({
+  color,
+  points,
+  pointsString,
+  rect,
+  onPathEnter,
+  onPathLeave,
+  hoverColor,
+  onActivePath,
+  index,
+  isActiveGraph,
+}) => {
   return (
     <Fragment>
       <path
         d={`M ${pointsString}`}
-        stroke="red"
+        stroke={hoverColor ? hoverColor : color}
         fill="none"
         strokeWidth="3"
+        onPointerEnter={() => {
+          // TODO rename index to name
+          onActivePath(index)
+        }}
+        onPointerLeave={() => {
+          onActivePath()
+        }}
       />
-      {points.map((point) => (
+      {/* {isActiveGraph && points.map((point) => (
         <GraphPoint
           key={`${point.x}-line`}
           x={point.x}
@@ -44,7 +65,7 @@ export const GraphPath = component(
           value={point.value}
           rect={rect}
         />
-      ))}
+      ))} */}
     </Fragment>
   )
 })

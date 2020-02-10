@@ -1,55 +1,115 @@
-import React, { Fragment } from 'react'
-import { component, startWithType, mapState, mapWithPropsMemo } from 'refun'
+import React from 'react'
+import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers } from 'refun'
 import { Root } from '@primitives/root'
-import { AccessibilityInfo } from 'react-native'
-import { TGraphs } from './types'
-import { GraphApp } from './GraphApp'
+import { GraphCanvas } from './GraphCanvas'
 
 export type TApp = {
   // graphs: TGraphs{},
 }
 
+const NOOP = () => null
+
 export const App = component(
   startWithType<TApp>(),
-  mapState('tabIndex', 'setTab', ({ graphs }) => Object.keys(graphs)[0], ['graphs']),
-  mapWithPropsMemo(({ graphs, tabIndex }) => {
+  //TOD renamerename to Graph
+  mapState('activeGraphButton', 'setActiveGraphButton', () => '', []),
+  mapState('isHoverBlocked', 'setBlockHover', () => false, []),
+  mapState('activePath', 'setActivePath', () => null, []),
+  mapHandlers(({
+    onActivePath: ({ setActivePath, setActiveGraphButton }) => (name) => {
+      setActiveGraphButton(name)
+      setActivePath(name)
+    },
+    onActiveGraphButton: ({ setActiveGraphButton, setActivePath, setBlockHover }) => (name) => {
+      if (name) {
+        setActiveGraphButton(name)
+        setActivePath(name)
+        setBlockHover(true)
+      } else {
+        setActiveGraphButton(name)
+        setActivePath(name)
+        setBlockHover(false)
+      }
+    },
+  })),
+  mapWithPropsMemo(({ activePath, graphs: tempGraphs }) => {
+    const valuesKeys = Object.keys(tempGraphs)
+    const activeGraph = activePath ? {
+      ...tempGraphs[activePath],
+      name: activePath,
+    } : null
+    const graphs = valuesKeys.map((graph) => {
+      return {
+        ...tempGraphs[graph],
+        name: graph,
+      }
+    })
+
     return {
-      buttons: Object.keys(graphs),
-      graph: graphs[tabIndex],
+      activeGraph,
+      buttons: valuesKeys,
+      graphs,
     }
-  }, ['graphs', 'tabIndex'])
-)(({ setTab, graph, buttons }) => (
+  }, ['activePath', 'graphs'])
+)(({
+  activeGraph,
+  buttons,
+  graphs,
+  onActivePath,
+  setActiveButton,
+  setActivePath,
+  setTab,
+  onActiveGraphButton,
+  isHoverBlocked,
+  activeGraphButton,
+}) => (
   <Root>
     {({ width, height }) => (
       <div style={{ display: 'block' }}>
-        <div>
-          {buttons.map((name) => (
+        <div style={{ position: 'absolute' }}>
+          {buttons.map((name: string) => (
             <button
+              style={{
+                fontSize: '14px',
+                margin: '2px',
+                border: `3px solid ${activeGraphButton === name ? 'red' : 'pink'}`,
+              }}
               key={name}
               onClick={() => {
-                setTab(name)
+                onActiveGraphButton(name)
               }}
+              // onMouseOver={() => {
+              //   onActiveGraphButton(name)
+              // }}
+              // onMouseOut={() => {
+              //   onActiveGraphButton()
+              // }}
             >
               {name}
             </button>
           ))}
+          <br/>
+          <br/>
+          <button
+            style={{ fontSize: '14px' }}
+            key={name}
+            onClick={() => {
+              onActiveGraphButton()
+            }}
+          >
+            Show All
+          </button>
         </div>
-        <div>
-          <GraphApp
-            entries={graph}
-            height={500}
-            width={700}
-
-          />
-        </div>
+        <GraphCanvas
+          activeGraph={activeGraph}
+          graphs={graphs}
+          height={height}
+          onActivePath={isHoverBlocked ? NOOP : onActivePath}
+          width={width}
+        />
       </div>
     )}
   </Root>
-  // <GraphApp
-  //   entries={entries}
-  //   height={340}
-  //   width={640}
-  // />
 ))
 
 App.displayName = 'App'
