@@ -5,20 +5,23 @@ import { TGraph } from 'graph/src/types'
 import data from './data-prod.json'
 
 const theme = {
-  firstContentfulPaint: '46, 134, 193',
-  firstMeaningfulPaint: '142, 68, 173',
-  largestContentfulPaint: '155, 89, 182',
-  domContentLoaded: '231, 76, 60',
-  threadTime: '23, 165, 137 ',
-  scriptDuration: '241, 196, 15',
-  layoutDuration: '230, 126, 34',
-  recalcStyleDuration: '93, 109, 126',
-  usedJsHeapSize: '240, 178, 122',
+  firstContentfulPaint: [46, 134, 193, 1],
+  firstMeaningfulPaint: [142, 68, 173, 1],
+  largestContentfulPaint: [155, 89, 182, 1],
+  domContentLoaded: [231, 76, 60, 1],
+  threadTime: [23, 165, 137, 1],
+  scriptDuration: [241, 196, 15, 1],
+  layoutDuration: [230, 126, 34, 1],
+  recalcStyleDuration: [93, 109, 126, 1],
+  usedJsHeapSize: [240, 178, 122, 1],
 }
 const graphs = data.reduce((acc, cur) => {
   for (const [key, value] of getObjectEntries(cur.values)) {
     const graph = acc.find((el) => el.key === key)
 
+    if (key !== 'firstContentfulPaint') {
+      return acc
+    }
     if (isDefined(graph)) {
       graph.values.push({
         version: key,
@@ -27,7 +30,7 @@ const graphs = data.reduce((acc, cur) => {
     } else {
       acc.push({
         key,
-        color: `rgb(${theme[key]})`,
+        color: theme[key],
         values: [],
       })
     }

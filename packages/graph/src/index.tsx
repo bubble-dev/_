@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout } from 'refun'
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
 import { TGraph } from './types'
@@ -12,7 +12,6 @@ export const App = component(
   startWithType<TApp>(),
   mapState('selectedGraph', 'setSelectedGraph', () => null, []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
-
   mapHandlers(({
     onSelectGraph: ({ selectedGraph, setSelectedGraph }) => (name) => {
       if (selectedGraph !== name) {
@@ -20,12 +19,12 @@ export const App = component(
       }
     },
     onHoverGraph: ({ selectedGraph, setHoveredGraph }) => (id) => {
-      console.log('TCL', id, selectedGraph)
       if (selectedGraph !== id || (selectedGraph === null && id === null)) {
         setHoveredGraph(id)
       }
     },
   })),
+  mapDebouncedHandlerTimeout('onHoverGraph', 100),
   mapWithPropsMemo(({ graphs }) => ({
     graphKeys: graphs.map((graph) => graph.key),
   }), ['graphs'])
@@ -59,7 +58,7 @@ export const App = component(
           <br/>
           <br/>
           <button
-            style={{ fontSize: '14px' }}
+            style={{ fontSize: '14px', position: 'absolute', right: 0 }}
             key={name}
             onClick={() => {
               onSelectGraph(null)

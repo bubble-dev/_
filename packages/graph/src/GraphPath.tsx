@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo, TMapHovered, mapHovered } from 'refun'
+import React, { Fragment, RefObject } from 'react'
+import { component, startWithType, mapWithPropsMemo, onMount, mapState, mapRefLayout, mapSafeRequestAnimationFrame, mapRef } from 'refun'
+import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TEntry, TRect } from './types'
 import { OFFSET } from './constants'
 import { GraphPoint } from './GraphPoint'
@@ -7,7 +8,7 @@ import { GraphPoint } from './GraphPoint'
 export type TGraphPath = {
   color: string,
   entries: TEntry[],
-  // hoverColor: string | null,
+  shouldShowTicks: boolean,
   maxValue: number,
   id: string,
   rect: TRect,
@@ -17,6 +18,20 @@ export type TGraphPath = {
 }
 export const GraphPath = component(
   startWithType<TGraphPath>(),
+  mapRefLayout('pathRef', (ref) => {
+    console.log('TCL: ref', ref)
+    if (ref !== null) {
+      return { pathLength: ref.getTotalLength() }
+    }
+
+    return { pathLength: 0 }
+  }, []),
+  mapState('pathOffset', 'setPathOffset', () => 100, []),
+  onMount(({ setPathOffset }) => {
+    setTimeout(() => {
+      setPathOffset(0)
+    }, 5000)
+  }),
   mapWithPropsMemo(({ entries, rect, maxValue }) => {
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
@@ -33,12 +48,8 @@ export const GraphPath = component(
     }
   }, ['entries', 'rect', 'maxValue'])
 )(({
+  pathRef,
   color,
-  // hoverColor,
-  // index,
-  // isSelectedGraph,
-  // onHoverGraph,
-  // onClickGraph,
   points,
   pointsString,
   rect,
@@ -47,31 +58,50 @@ export const GraphPath = component(
   shouldShowTicks,
   onSelect,
   onHover,
+  pathLength,
+  pathOffset,
 }) => {
+  console.log('render', pathOffset, pathLength)
+
   return (
     <Fragment>
-      <path
-        opacity={isSelected ? 1 : 0.3}
-        d={`M ${pointsString}`}
-        stroke={color}
-        fill="none"
-        strokeWidth="3"
-        onClick={() => {
-          onSelect(id)
-        }}
-        onPointerEnter={() => {
-          onHover(id)
-        }}
-        onPointerLeave={() => {
-          onHover(null)
-        }}
-      />
+      <Animation
+        shouldNotAnimate={pathLength === null}
+        easing={easeInOutCubic}
+        time={1000}
+        values={[
+          isSelected ? 1 : 0.1,
+          pathOffset,
+        ]}
+      >
+        {([opacity, pathOffset]) => (
+          <path
+            ref={pathRef}
+            opacity={opacity}
+            d={`M ${pointsString}`}
+            stroke={`rgba(${color.join(',')})`}
+            fill="none"
+            strokeWidth={4}
+            strokeDasharray={pathLength}
+            strokeDashoffset={`${pathOffset}%`}
+            onClick={() => {
+              onSelect(id)
+            }}
+            onPointerEnter={() => {
+              onHover(id)
+            }}
+            onPointerLeave={() => {
+              onHover(null)
+            }}
+          />
+        )}
+      </Animation>
       {shouldShowTicks && points.map((point) => (
         <GraphPoint
           key={`${point.x}-line`}
           x={point.x}
           y={point.y}
-          value={point.value}
+          value={Math.round(point.value * 1000) / 1000}
           rect={rect}
         />
       ))}

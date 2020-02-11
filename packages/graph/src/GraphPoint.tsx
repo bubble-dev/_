@@ -34,14 +34,16 @@ export const GraphPoint = component(
           y1={y}
           x2={x}
           y2={y}
-          stroke="green"
+          strokeWidth={2}
+          stroke="grey"
         />
         <line
           x1={x}
           y1={y}
           x2={x}
           y2={rect.height + rect.y}
-          stroke="green"
+          strokeWidth={2}
+          stroke="grey"
         />
         <text
           x={x + 2}

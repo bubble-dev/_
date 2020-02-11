@@ -3,8 +3,8 @@
     "title": 1580733892518,
     "values": {
       "firstContentfulPaint": 3187.882499973057,
-      "firstMeaningfulPaint": 3187.8790000081062,
-      "largestContentfulPaint": 3187.882499973057,
+      "firstMeaningfulPaint": 3587.8790000081062,
+      "largestContentfulPaint": 4287.882499973057,
       "domContentLoaded": 538.5505000054836,
       "threadTime": 3086.13,
       "scriptDuration": 510.35450000000003,
@@ -16,9 +16,9 @@
   {
     "title": 1580734037821,
     "values": {
-      "firstContentfulPaint": 3115.720000001602,
-      "firstMeaningfulPaint": 3115.721499979496,
-      "largestContentfulPaint": 3115.720000001602,
+      "firstContentfulPaint": 3915.720000001602,
+      "firstMeaningfulPaint": 3615.721499979496,
+      "largestContentfulPaint": 3215.720000001602,
       "domContentLoaded": 549.6180000007153,
       "threadTime": 3015.4165000000003,
       "scriptDuration": 521.726,

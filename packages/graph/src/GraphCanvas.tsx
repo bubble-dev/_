@@ -65,14 +65,16 @@ export const GraphCanvas = component(
       y1={axisX.y1}
       x2={axisX.x2}
       y2={axisX.y2}
-      stroke="blue"
+      stroke="black"
+      strokeWidth={2}
     />
     <line
       x1={axisY.x1}
       y1={axisY.y1}
       x2={axisY.x2}
       y2={axisY.y2}
-      stroke="blue"
+      stroke="black"
+      strokeWidth={2}
     />
     {graphs.map((graph) => (
       <Graph

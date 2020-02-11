@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo, mapHovered, mapWithProps, TMapHovered, mapState, mapHandlers, mapDefaultProps } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapDefaultProps } from 'refun'
 import { TEntry, TRect } from './types'
 import { GraphPath } from './GraphPath'
 import { GraphVerticalAxis } from './GraphVerticalAxis'
@@ -52,18 +52,16 @@ export const Graph = component(
 }) => (
   <Fragment>
     {shouldShowTicks && (
-      <Fragment>
-        <GraphHorizontalAxis
-          rect={rect}
-          entries={entries}
-        />
-
-        <GraphVerticalAxis
-          rect={rect}
-          maxValue={maxValue}
-        />
-      </Fragment>
+      <GraphVerticalAxis
+        rect={rect}
+        maxValue={maxValue}
+      />
     )}
+
+    <GraphHorizontalAxis
+      rect={rect}
+      entries={entries}
+    />
 
     <GraphPath
       isSelected={isSelected}
