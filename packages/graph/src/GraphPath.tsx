@@ -7,14 +7,16 @@ import { GraphPoint } from './GraphPoint'
 export type TGraphPath = {
   color: string,
   entries: TEntry[],
-  hoverColor: string | null,
+  // hoverColor: string | null,
   maxValue: number,
+  id: string,
   rect: TRect,
-} & TMapHovered
-
+  isSelected: boolean,
+  onSelect: (key: string) => void,
+  onHover: (key: string | null) => void,
+}
 export const GraphPath = component(
   startWithType<TGraphPath>(),
-  mapHovered,
   mapWithPropsMemo(({ entries, rect, maxValue }) => {
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
@@ -32,32 +34,39 @@ export const GraphPath = component(
   }, ['entries', 'rect', 'maxValue'])
 )(({
   color,
+  // hoverColor,
+  // index,
+  // isSelectedGraph,
+  // onHoverGraph,
+  // onClickGraph,
   points,
   pointsString,
   rect,
-  onPathEnter,
-  onPathLeave,
-  hoverColor,
-  onActivePath,
-  index,
-  isActiveGraph,
+  isSelected,
+  id,
+  shouldShowTicks,
+  onSelect,
+  onHover,
 }) => {
   return (
     <Fragment>
       <path
+        opacity={isSelected ? 1 : 0.3}
         d={`M ${pointsString}`}
-        stroke={hoverColor ? hoverColor : color}
+        stroke={color}
         fill="none"
         strokeWidth="3"
+        onClick={() => {
+          onSelect(id)
+        }}
         onPointerEnter={() => {
-          // TODO rename index to name
-          onActivePath(index)
+          onHover(id)
         }}
         onPointerLeave={() => {
-          onActivePath()
+          onHover(null)
         }}
       />
-      {/* {isActiveGraph && points.map((point) => (
+      {shouldShowTicks && points.map((point) => (
         <GraphPoint
           key={`${point.x}-line`}
           x={point.x}
@@ -65,7 +74,7 @@ export const GraphPath = component(
           value={point.value}
           rect={rect}
         />
-      ))} */}
+      ))}
     </Fragment>
   )
 })

@@ -1,21 +1,31 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo, mapHovered, mapWithProps, TMapHovered, mapState, mapHandlers } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapHovered, mapWithProps, TMapHovered, mapState, mapHandlers, mapDefaultProps } from 'refun'
 import { TEntry, TRect } from './types'
 import { GraphPath } from './GraphPath'
 import { GraphVerticalAxis } from './GraphVerticalAxis'
 import { GraphHorizontalAxis } from './GraphHorizontalAxis'
-import { CANVAS_PADDING, MAX_MIN_DIFFERENCE, MAX_ENTRIES_STEP } from './constants'
+import { MAX_MIN_DIFFERENCE, MAX_ENTRIES_STEP } from './constants'
 
-export type TApp = {
+export type TGraph = {
   entries: TEntry[],
   height: number,
+  id: string,
   width: number,
   color: string,
+  shouldShowTicks: boolean,
   rect: TRect,
+  isSelected: boolean,
+  onSelect: (key: string) => void,
+  onHover: (key: string | null) => void,
 }
 
-export const GraphApp = component(
-  startWithType<TApp>(),
+export const Graph = component(
+  startWithType<TGraph>(),
+  // TODO add mapDefaultProps
+  mapDefaultProps({
+    shouldShowTicks: false,
+    isSelected: false,
+  }),
   mapWithPropsMemo(({ height, entries: tempEntries }) => {
     const MAX_ENTRIES = Math.round(height / MAX_ENTRIES_STEP)
     const entries = tempEntries.length > MAX_ENTRIES ? tempEntries.slice(-MAX_ENTRIES) : tempEntries
@@ -32,20 +42,16 @@ export const GraphApp = component(
 )(({
   color,
   entries,
-  height,
   maxValue,
   rect,
-  width,
-  onPathEnter,
-  onPathLeave,
-  hoverColor,
-  onActivePath,
-  index,
-  showXY,
-  isActiveGraph,
+  isSelected,
+  id,
+  shouldShowTicks,
+  onSelect,
+  onHover,
 }) => (
   <Fragment>
-    {showXY && (
+    {shouldShowTicks && (
       <Fragment>
         <GraphHorizontalAxis
           rect={rect}
@@ -60,16 +66,17 @@ export const GraphApp = component(
     )}
 
     <GraphPath
-      isActiveGraph={isActiveGraph}
-      index={index}
+      isSelected={isSelected}
+      id={id}
       color={color}
+      shouldShowTicks={shouldShowTicks}
       entries={entries}
-      hoverColor={hoverColor}
       maxValue={maxValue}
       rect={rect}
-      onActivePath={onActivePath}
+      onSelect={onSelect}
+      onHover={onHover}
     />
   </Fragment>
 ))
 
-GraphApp.displayName = 'GraphApp'
+Graph.displayName = 'Graph'

@@ -2,88 +2,56 @@ import React from 'react'
 import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers } from 'refun'
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
+import { TGraph } from './types'
 
 export type TApp = {
-  // graphs: TGraphs{},
+  graphs: TGraph[],
 }
-
-const NOOP = () => null
 
 export const App = component(
   startWithType<TApp>(),
-  //TOD renamerename to Graph
-  mapState('activeGraphButton', 'setActiveGraphButton', () => '', []),
-  mapState('isHoverBlocked', 'setBlockHover', () => false, []),
-  mapState('activePath', 'setActivePath', () => null, []),
+  mapState('selectedGraph', 'setSelectedGraph', () => null, []),
+  mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
+
   mapHandlers(({
-    onActivePath: ({ setActivePath, setActiveGraphButton }) => (name) => {
-      setActiveGraphButton(name)
-      setActivePath(name)
+    onSelectGraph: ({ selectedGraph, setSelectedGraph }) => (name) => {
+      if (selectedGraph !== name) {
+        setSelectedGraph(name)
+      }
     },
-    onActiveGraphButton: ({ setActiveGraphButton, setActivePath, setBlockHover }) => (name) => {
-      if (name) {
-        setActiveGraphButton(name)
-        setActivePath(name)
-        setBlockHover(true)
-      } else {
-        setActiveGraphButton(name)
-        setActivePath(name)
-        setBlockHover(false)
+    onHoverGraph: ({ selectedGraph, setHoveredGraph }) => (id) => {
+      console.log('TCL', id, selectedGraph)
+      if (selectedGraph !== id || (selectedGraph === null && id === null)) {
+        setHoveredGraph(id)
       }
     },
   })),
-  mapWithPropsMemo(({ activePath, graphs: tempGraphs }) => {
-    const valuesKeys = Object.keys(tempGraphs)
-    const activeGraph = activePath ? {
-      ...tempGraphs[activePath],
-      name: activePath,
-    } : null
-    const graphs = valuesKeys.map((graph) => {
-      return {
-        ...tempGraphs[graph],
-        name: graph,
-      }
-    })
-
-    return {
-      activeGraph,
-      buttons: valuesKeys,
-      graphs,
-    }
-  }, ['activePath', 'graphs'])
+  mapWithPropsMemo(({ graphs }) => ({
+    graphKeys: graphs.map((graph) => graph.key),
+  }), ['graphs'])
 )(({
-  activeGraph,
-  buttons,
   graphs,
-  onActivePath,
-  setActiveButton,
-  setActivePath,
-  setTab,
-  onActiveGraphButton,
-  isHoverBlocked,
-  activeGraphButton,
+  graphKeys,
+  selectedGraph,
+  hoveredGraph,
+  onSelectGraph,
+  onHoverGraph,
 }) => (
   <Root>
     {({ width, height }) => (
       <div style={{ display: 'block' }}>
         <div style={{ position: 'absolute' }}>
-          {buttons.map((name: string) => (
+          {graphKeys.map((name: string) => (
             <button
               style={{
                 fontSize: '14px',
                 margin: '2px',
-                border: `3px solid ${activeGraphButton === name ? 'red' : 'pink'}`,
+                border: `3px solid ${(selectedGraph === name || hoveredGraph === name) ? 'red' : 'pink'}`,
               }}
               key={name}
               onClick={() => {
-                onActiveGraphButton(name)
+                onSelectGraph(name)
               }}
-              // onMouseOver={() => {
-              //   onActiveGraphButton(name)
-              // }}
-              // onMouseOut={() => {
-              //   onActiveGraphButton()
-              // }}
             >
               {name}
             </button>
@@ -94,18 +62,19 @@ export const App = component(
             style={{ fontSize: '14px' }}
             key={name}
             onClick={() => {
-              onActiveGraphButton()
+              onSelectGraph(null)
             }}
           >
             Show All
           </button>
         </div>
         <GraphCanvas
-          activeGraph={activeGraph}
           graphs={graphs}
           height={height}
-          onActivePath={isHoverBlocked ? NOOP : onActivePath}
           width={width}
+          selectedGraph={selectedGraph || hoveredGraph}
+          onSelectGraph={onSelectGraph}
+          onHoverGraph={onHoverGraph}
         />
       </div>
     )}

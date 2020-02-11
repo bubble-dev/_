@@ -1,18 +1,21 @@
 import React from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TEntry } from './types'
-import { GraphApp as Graph } from './GraphApp'
+import { TEntry, TGraph } from './types'
+import { Graph } from './Graph'
 import { CANVAS_PADDING } from './constants'
 
 export type TGraphCanvas = {
-  activeGraph: {
-    color: string,
-    name: string,
-    values: TEntry[],
-  },
-  graphs: TEntry[],
+  // activeGraph: {
+  //   color: string,
+  //   name: string,
+  //   values: TEntry[],
+  // },
+  graphs: TGraph[],
   height: number,
   width: number,
+  selectedGraph: string | null,
+  onSelectGraph: (key: string) => void,
+  onHoverGraph: (key: string | null) => void,
 }
 
 export const GraphCanvas = component(
@@ -45,14 +48,16 @@ export const GraphCanvas = component(
     }
   }, ['width', 'height'])
 )(({
-  activeGraph,
+  // activeGraph,
   axisX,
   axisY,
   graphs,
   height,
-  onActivePath,
   rect,
   width,
+  selectedGraph,
+  onSelectGraph,
+  onHoverGraph,
 }) => (
   <svg width={width} height={height} stroke="none">
     <line
@@ -69,28 +74,19 @@ export const GraphCanvas = component(
       y2={axisY.y2}
       stroke="blue"
     />
-    {activeGraph ? (
+    {graphs.map((graph) => (
       <Graph
-        isActiveGraph
-        color={activeGraph.color ? activeGraph.color : 'red'}
-        entries={activeGraph.values}
-        height={height}
-        index={activeGraph.name}
-        onActivePath={onActivePath}
-        rect={rect}
-        showXY
-        width={width}
-      />
-    ) : graphs.map((graph, index) => (
-      <Graph
-        index={graph.name}
         color={graph.color}
         entries={graph.values}
         height={height}
-        key={index}
-        onActivePath={onActivePath}
+        id={graph.key}
+        shouldShowTicks={selectedGraph !== null && selectedGraph === graph.key}
+        isSelected={selectedGraph === graph.key || selectedGraph === null}
+        key={graph.key}
         rect={rect}
         width={width}
+        onSelect={onSelectGraph}
+        onHover={onHoverGraph}
       />
     ))}
   </svg>

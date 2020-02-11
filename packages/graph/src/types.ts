@@ -3,8 +3,15 @@ export type TEntry = {
   value: number,
 }
 
-export type TGraphs = {
-  // [string]: {},
+export type TGraphValue = {
+  version: string,
+  value: number,
+}
+
+export type TGraph = {
+  key: string,
+  color: string,
+  values: TGraphValue[],
 }
 
 export type TPoint = {
