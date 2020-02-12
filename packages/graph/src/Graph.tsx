@@ -44,7 +44,7 @@ export const Graph = component(
   mapWithProps(({ rect, scale, maxValue, minValue, values }) => {
     return {
       stepX: rect.width / (values.length - 1),
-      stepY: (rect.height - rect.y) * scale / 100 / Math.abs(maxValue - minValue),
+      stepY: rect.height * scale / 100 / Math.abs(maxValue - minValue),
     }
   }),
   mapWithProps(({ stepY, rect, maxValue, minValue }) => ({

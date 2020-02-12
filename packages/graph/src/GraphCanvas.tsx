@@ -61,6 +61,7 @@ export const GraphCanvas = component(
   onHoverGraph,
 }) => (
   <svg width={width} height={height} stroke="none">
+    <rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} fill="#ccc"/>
     <line
       x1={axisX.x1}
       y1={axisX.y1}
