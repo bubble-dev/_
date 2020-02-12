@@ -31,19 +31,20 @@ export const Graph = component(
     const MAX_ENTRIES = Math.round(height / MAX_ENTRIES_STEP)
     const entries = tempEntries.length > MAX_ENTRIES ? tempEntries.slice(-MAX_ENTRIES) : tempEntries
     const values = entries.map((item) => item.value)
-    const minValue = Math.min(...values)
-    const maxTemp = Math.max(...values)
-    const maxValue = (maxTemp * 100 / minValue - 100) < MAX_MIN_DIFFERENCE ? maxTemp * 2 : maxTemp * 1.2
+    const minValue = Math.min(...values) // - Math.min(...values) * 0.5
+    const maxValue = Math.max(...values) //* 1.5
 
     return {
       entries,
       maxValue,
+      minValue,
     }
   }, ['height', 'entries'])
 )(({
   color,
   entries,
   maxValue,
+  minValue,
   rect,
   isSelected,
   id,
@@ -56,6 +57,7 @@ export const Graph = component(
       <GraphVerticalAxis
         rect={rect}
         maxValue={maxValue}
+        minValue={minValue}
       />
     )}
 
@@ -71,6 +73,7 @@ export const Graph = component(
       shouldShowTicks={shouldShowTicks}
       entries={entries}
       maxValue={maxValue}
+      minValue={minValue}
       rect={rect}
       onSelect={onSelect}
       onHover={onHover}

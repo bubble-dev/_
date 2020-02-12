@@ -36,7 +36,8 @@ const printValue = (value: number): string => {
 
 export const GraphVerticalAxis = component(
   startWithType<TGraphTicks>(),
-  mapWithPropsMemo(({ rect, maxValue }) => {
+  mapWithPropsMemo(({ rect, maxValue: temp, minValue }) => {
+    const maxValue = temp - minValue
     const maxTicksCount = Math.floor(rect.height / VERTICAL_TICK_STEP_SIZE)
     const valueStep = round(maxValue / maxTicksCount)
     const scale = maxValue / rect.height
@@ -46,7 +47,7 @@ export const GraphVerticalAxis = component(
       .fill(null)
       .map((_, index) => {
         const y = rect.height + rect.y - (index * pxStep)
-        const value = printValue(index * valueStep)
+        const value = index * valueStep
 
         return {
           x1: rect.x,
@@ -69,6 +70,7 @@ export const GraphVerticalAxis = component(
       ticks,
     }
   }, ['rect', 'maxValue'])
+  // TODO check
 )(({ axis, ticks }) => (
   <Fragment>
     {ticks.map(({ x1, x2, y1, y2, value }, index) => (

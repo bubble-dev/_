@@ -39,7 +39,7 @@ export const App = component(
   <Root>
     {({ width, height }) => (
       <div style={{ display: 'block' }}>
-        <div style={{ position: 'absolute' }}>
+        <div style={{ position: 'absolute', display: 'none' }}>
           {graphKeys.map((name: string) => (
             <button
               style={{

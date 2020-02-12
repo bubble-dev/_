@@ -48,7 +48,6 @@ export const GraphCanvas = component(
     }
   }, ['width', 'height'])
 )(({
-  // activeGraph,
   axisX,
   axisY,
   graphs,

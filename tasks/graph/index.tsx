@@ -20,6 +20,9 @@ const graphs = data.reduce((acc, cur) => {
   for (const [key, value] of getObjectEntries(cur.values)) {
     const graph = acc.find((el) => el.key === key)
 
+    // if (key !== 'firstContentfulPaint') {
+    //   return acc
+    // }
     if (isDefined(graph)) {
       graph.values.push({
         version: key,

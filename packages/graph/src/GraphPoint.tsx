@@ -27,7 +27,8 @@ export const GraphPoint = component(
   rect,
 }) => (
   <Fragment>
-    {isHovered && (
+    {/* {isHovered && ( */}
+    {(
       <Fragment>
         <line
           x1={rect.x}

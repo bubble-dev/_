@@ -19,12 +19,15 @@ export type TGraphPath = {
 }
 export const GraphPath = component(
   startWithType<TGraphPath>(),
-  mapWithPropsMemo(({ entries, rect, maxValue }) => {
+  mapWithPropsMemo(({ entries, rect, maxValue, minValue }) => {
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
+      const x = rect.x + step * index + (step * OFFSET)
+      const y = (1 - ((value - minValue) * 100) / (maxValue - minValue) / 100) * rect.height + rect.y
+
       return {
-        x: rect.x + step * index + (step * OFFSET),
-        y: (1 - (value * 100) / maxValue / 100) * rect.height + rect.y,
+        x,
+        y,
         value,
       }
     })
