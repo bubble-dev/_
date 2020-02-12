@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps } from 'refun'
-import { TColor } from 'colorido'
+import { TColor, colorToString } from 'colorido'
+import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TEntry, TRect } from './types'
-import { GraphPath } from './GraphPath'
-import { GraphVerticalAxis } from './GraphVerticalAxis'
-import { GraphHorizontalAxis } from './GraphHorizontalAxis'
-import { MAX_MIN_DIFFERENCE, MAX_ENTRIES_STEP } from './constants'
+import { GraphPoint } from './GraphPoint'
+import { MAX_ENTRIES_STEP, OFFSET } from './constants'
 
 export type TGraph = {
   color: TColor,
@@ -50,37 +49,72 @@ export const Graph = component(
   mapWithProps(({ stepY, rect, maxValue, minValue }) => ({
     halfHeight: rect.height / 2,
     halfPathHeight: (maxValue - minValue) * stepY / 2,
-  }))
+  })),
+  mapWithPropsMemo(({ entries, rect, minValue, halfHeight, halfPathHeight, stepY }) => {
+    const step = rect.width / entries.length
+    const points = entries.map(({ value }, index) => {
+      const x = rect.x + step * index + (step * OFFSET)
+      // const y = (1 - ((value - minValue) * 100) / (maxValue - minValue) / 100) * rect.height + rect.y
+      // const y = rect.height + rect.y - (value * stepY + halfHeight - halfPathHeight - minValue * stepY)
+      const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y
+
+      return {
+        x,
+        y,
+        value,
+      }
+    })
+
+    return {
+      points,
+      pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
+    }
+  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepY'])
 )(({
   color,
-  entries,
-  maxValue,
-  minValue,
-  rect,
-  isSelected,
   id,
-  shouldShowTicks,
-  halfHeight, halfPathHeight, stepX, stepY,
+  isSelected,
   onSelect,
+  points,
+  pointsString,
+  rect,
+  shouldShowTicks,
   onHover,
 }) => (
   <Fragment>
-    <GraphPath
-      isSelected={isSelected}
-      id={id}
-      color={color}
-      shouldShowTicks={shouldShowTicks}
-      entries={entries}
-      maxValue={maxValue}
-      minValue={minValue}
-      rect={rect}
-      onSelect={onSelect}
-      onHover={onHover}
-      halfHeight={halfHeight}
-      halfPathHeight={halfPathHeight}
-      stepX={stepX}
-      stepY={stepY}
-    />
+    <Animation
+      easing={easeInOutCubic}
+      time={200}
+      values={[isSelected ? 1 : 0.1]}
+    >
+      {([opacity]) => (
+        <path
+          opacity={opacity}
+          d={`M ${pointsString}`}
+          stroke={colorToString(color)}
+          fill="none"
+          strokeWidth={4}
+          onClick={() => {
+            onSelect(id)
+          }}
+          onPointerEnter={() => {
+            onHover(id)
+          }}
+          onPointerLeave={() => {
+            onHover(null)
+          }}
+        />
+      )}
+    </Animation>
+    {shouldShowTicks && points.map((point) => (
+      <GraphPoint
+        key={`${point.x}-line`}
+        x={point.x}
+        y={point.y}
+        value={Math.round(point.value * 1000) / 1000}
+        rect={rect}
+      />
+    ))}
   </Fragment>
 ))
 

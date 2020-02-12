@@ -10,7 +10,7 @@ export type TApp = {
 
 export const App = component(
   startWithType<TApp>(),
-  mapState('scale', 'setScale', () => 100, []),
+  mapState('scale', 'setScale', () => 50, []),
   mapHandlers({
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)

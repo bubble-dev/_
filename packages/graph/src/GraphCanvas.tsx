@@ -10,11 +10,11 @@ export type TGraphCanvas = {
   //   name: string,
   //   values: TEntry[],
   // },
-  scale: number,
   graphs: TGraph[],
   height: number,
-  width: number,
+  scale: number,
   selectedGraph: string | null,
+  width: number,
   onSelectGraph: (key: string) => void,
   onHoverGraph: (key: string | null) => void,
 }
@@ -88,8 +88,8 @@ export const GraphCanvas = component(
         rect={rect}
         scale={scale}
         shouldShowTicks={selectedGraph !== null && selectedGraph === graph.key}
-        onSelect={onSelectGraph}
         onHover={onHoverGraph}
+        onSelect={onSelectGraph}
       />
     ))}
   </svg>
