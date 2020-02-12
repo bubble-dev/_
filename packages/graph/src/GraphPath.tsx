@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
+import { TColor, colorToString } from 'colorido'
 import { TEntry, TRect } from './types'
 import { OFFSET } from './constants'
 import { GraphPoint } from './GraphPoint'
 
 export type TGraphPath = {
-  color: string,
+  color: TColor,
   entries: TEntry[],
   shouldShowTicks: boolean,
   maxValue: number,
@@ -55,7 +56,7 @@ export const GraphPath = component(
           <path
             opacity={opacity}
             d={`M ${pointsString}`}
-            stroke={`rgba(${color.join(',')})`}
+            stroke={colorToString(color)}
             fill="none"
             strokeWidth={4}
             onClick={() => {

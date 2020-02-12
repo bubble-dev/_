@@ -1,3 +1,5 @@
+import { TColor } from 'colorido'
+
 export type TEntry = {
   version: string,
   value: number,
@@ -10,7 +12,7 @@ export type TGraphValue = {
 
 export type TGraph = {
   key: string,
-  color: string,
+  color: TColor,
   values: TGraphValue[],
 }
 

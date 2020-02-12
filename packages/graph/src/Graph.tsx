@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapDefaultProps } from 'refun'
+import { TColor } from 'colorido'
 import { TEntry, TRect } from './types'
 import { GraphPath } from './GraphPath'
 import { GraphVerticalAxis } from './GraphVerticalAxis'
@@ -11,7 +12,7 @@ export type TGraph = {
   height: number,
   id: string,
   width: number,
-  color: string,
+  color: TColor,
   shouldShowTicks: boolean,
   rect: TRect,
   isSelected: boolean,
