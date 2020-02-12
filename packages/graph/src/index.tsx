@@ -10,6 +10,12 @@ export type TApp = {
 
 export const App = component(
   startWithType<TApp>(),
+  mapState('scale', 'setScale', () => 70, []),
+  mapHandlers({
+    onSliderChange: ({ setScale }) => (e) => {
+      setScale(e.target.value)
+    },
+  }),
   mapState('selectedGraph', 'setSelectedGraph', () => null, []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
   mapHandlers(({
@@ -30,15 +36,26 @@ export const App = component(
   }), ['graphs'])
 )(({
   graphs,
+  scale,
   graphKeys,
   selectedGraph,
   hoveredGraph,
   onSelectGraph,
   onHoverGraph,
+  onSliderChange,
 }) => (
   <Root>
     {({ width, height }) => (
       <div style={{ display: 'block' }}>
+        <input
+          style={{ position: 'absolute' }}
+          type="range"
+          min="0"
+          max="100"
+          value={scale}
+          onChange={onSliderChange}
+        />
+        {/* // TODO controls view */}
         <div style={{ position: 'absolute', display: 'none' }}>
           {graphKeys.map((name: string) => (
             <button
@@ -70,8 +87,9 @@ export const App = component(
         <GraphCanvas
           graphs={graphs}
           height={height}
-          width={width}
+          scale={scale}
           selectedGraph={selectedGraph || hoveredGraph}
+          width={width}
           onSelectGraph={onSelectGraph}
           onHoverGraph={onHoverGraph}
         />

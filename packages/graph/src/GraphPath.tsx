@@ -19,11 +19,14 @@ export type TGraphPath = {
 }
 export const GraphPath = component(
   startWithType<TGraphPath>(),
-  mapWithPropsMemo(({ entries, rect, maxValue, minValue }) => {
+  mapWithPropsMemo(({ entries, rect, maxValue, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
+    console.log('TCL: ', stepY)
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
       const x = rect.x + step * index + (step * OFFSET)
-      const y = (1 - ((value - minValue) * 100) / (maxValue - minValue) / 100) * rect.height + rect.y
+      // const y = (1 - ((value - minValue) * 100) / (maxValue - minValue) / 100) * rect.height + rect.y
+      // const y = rect.height + rect.y - (value * stepY + halfHeight - halfPathHeight - minValue * stepY)
+      const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY)
 
       return {
         x,
@@ -36,7 +39,7 @@ export const GraphPath = component(
       points,
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
-  }, ['entries', 'rect', 'maxValue'])
+  }, ['entries', 'rect', 'maxValue', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY'])
 )(({
   color,
   points,

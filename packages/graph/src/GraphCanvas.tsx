@@ -10,6 +10,7 @@ export type TGraphCanvas = {
   //   name: string,
   //   values: TEntry[],
   // },
+  scale: number,
   graphs: TGraph[],
   height: number,
   width: number,
@@ -53,6 +54,7 @@ export const GraphCanvas = component(
   graphs,
   height,
   rect,
+  scale,
   width,
   selectedGraph,
   onSelectGraph,
@@ -79,13 +81,12 @@ export const GraphCanvas = component(
       <Graph
         color={graph.color}
         entries={graph.values}
-        height={height}
         id={graph.key}
-        shouldShowTicks={selectedGraph !== null && selectedGraph === graph.key}
         isSelected={selectedGraph === graph.key || selectedGraph === null}
         key={graph.key}
         rect={rect}
-        width={width}
+        scale={scale}
+        shouldShowTicks={selectedGraph !== null && selectedGraph === graph.key}
         onSelect={onSelectGraph}
         onHover={onHoverGraph}
       />

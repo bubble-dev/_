@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo, mapDefaultProps } from 'refun'
+import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps } from 'refun'
 import { TColor } from 'colorido'
 import { TEntry, TRect } from './types'
 import { GraphPath } from './GraphPath'
@@ -8,16 +8,15 @@ import { GraphHorizontalAxis } from './GraphHorizontalAxis'
 import { MAX_MIN_DIFFERENCE, MAX_ENTRIES_STEP } from './constants'
 
 export type TGraph = {
-  entries: TEntry[],
-  height: number,
-  id: string,
-  width: number,
   color: TColor,
-  shouldShowTicks: boolean,
-  rect: TRect,
+  entries: TEntry[],
+  id: string,
   isSelected: boolean,
-  onSelect: (key: string) => void,
+  rect: TRect,
+  scale: number,
+  shouldShowTicks: boolean,
   onHover: (key: string | null) => void,
+  onSelect: (key: string) => void,
 }
 
 export const Graph = component(
@@ -27,8 +26,9 @@ export const Graph = component(
     shouldShowTicks: false,
     isSelected: false,
   }),
-  mapWithPropsMemo(({ height, entries: tempEntries }) => {
-    const MAX_ENTRIES = Math.round(height / MAX_ENTRIES_STEP)
+  // TODO values?
+  mapWithPropsMemo(({ rect, entries: tempEntries }) => {
+    const MAX_ENTRIES = Math.round(rect.height / MAX_ENTRIES_STEP)
     const entries = tempEntries.length > MAX_ENTRIES ? tempEntries.slice(-MAX_ENTRIES) : tempEntries
     const values = entries.map((item) => item.value)
     const minValue = Math.min(...values) // - Math.min(...values) * 0.5
@@ -38,8 +38,19 @@ export const Graph = component(
       entries,
       maxValue,
       minValue,
+      values,
     }
-  }, ['height', 'entries'])
+  }, ['height', 'entries']),
+  mapWithProps(({ rect, scale, maxValue, minValue, values }) => {
+    return {
+      stepX: rect.width / (values.length - 1),
+      stepY: (rect.height - rect.y) * scale / 100 / Math.abs(maxValue - minValue),
+    }
+  }),
+  mapWithProps(({ stepY, rect, maxValue, minValue }) => ({
+    halfHeight: rect.height / 2,
+    halfPathHeight: (maxValue - minValue) * stepY / 2,
+  }))
 )(({
   color,
   entries,
@@ -49,23 +60,11 @@ export const Graph = component(
   isSelected,
   id,
   shouldShowTicks,
+  halfHeight, halfPathHeight, stepX, stepY,
   onSelect,
   onHover,
 }) => (
   <Fragment>
-    {shouldShowTicks && (
-      <GraphVerticalAxis
-        rect={rect}
-        maxValue={maxValue}
-        minValue={minValue}
-      />
-    )}
-
-    <GraphHorizontalAxis
-      rect={rect}
-      entries={entries}
-    />
-
     <GraphPath
       isSelected={isSelected}
       id={id}
@@ -77,6 +76,10 @@ export const Graph = component(
       rect={rect}
       onSelect={onSelect}
       onHover={onHover}
+      halfHeight={halfHeight}
+      halfPathHeight={halfPathHeight}
+      stepX={stepX}
+      stepY={stepY}
     />
   </Fragment>
 ))
