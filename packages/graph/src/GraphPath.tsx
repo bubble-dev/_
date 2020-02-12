@@ -1,5 +1,5 @@
-import React, { Fragment, RefObject } from 'react'
-import { component, startWithType, mapWithPropsMemo, onMount, mapState, mapRefLayout, mapSafeRequestAnimationFrame, mapRef } from 'refun'
+import React, { Fragment } from 'react'
+import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TEntry, TRect } from './types'
 import { OFFSET } from './constants'
@@ -18,20 +18,6 @@ export type TGraphPath = {
 }
 export const GraphPath = component(
   startWithType<TGraphPath>(),
-  mapRefLayout('pathRef', (ref) => {
-    console.log('TCL: ref', ref)
-    if (ref !== null) {
-      return { pathLength: ref.getTotalLength() }
-    }
-
-    return { pathLength: 0 }
-  }, []),
-  mapState('pathOffset', 'setPathOffset', () => 100, []),
-  onMount(({ setPathOffset }) => {
-    setTimeout(() => {
-      setPathOffset(0)
-    }, 5000)
-  }),
   mapWithPropsMemo(({ entries, rect, maxValue }) => {
     const step = rect.width / entries.length
     const points = entries.map(({ value }, index) => {
@@ -48,7 +34,6 @@ export const GraphPath = component(
     }
   }, ['entries', 'rect', 'maxValue'])
 )(({
-  pathRef,
   color,
   points,
   pointsString,
@@ -58,32 +43,21 @@ export const GraphPath = component(
   shouldShowTicks,
   onSelect,
   onHover,
-  pathLength,
-  pathOffset,
 }) => {
-  console.log('render', pathOffset, pathLength)
-
   return (
     <Fragment>
       <Animation
-        shouldNotAnimate={pathLength === null}
         easing={easeInOutCubic}
-        time={1000}
-        values={[
-          isSelected ? 1 : 0.1,
-          pathOffset,
-        ]}
+        time={200}
+        values={[isSelected ? 1 : 0.1]}
       >
-        {([opacity, pathOffset]) => (
+        {([opacity]) => (
           <path
-            ref={pathRef}
             opacity={opacity}
             d={`M ${pointsString}`}
             stroke={`rgba(${color.join(',')})`}
             fill="none"
             strokeWidth={4}
-            strokeDasharray={pathLength}
-            strokeDashoffset={`${pathOffset}%`}
             onClick={() => {
               onSelect(id)
             }}
