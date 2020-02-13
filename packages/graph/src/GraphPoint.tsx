@@ -10,6 +10,7 @@ export type TGraphPoint = {
   y: number,
   fill: TColor,
   value: number,
+  shouldShowDots: boolean,
 } & TMapHovered
 
 export const GraphPoint = component(
@@ -18,6 +19,7 @@ export const GraphPoint = component(
 )(({
   fill,
   isHovered,
+  shouldShowDots,
   onPointerEnter,
   onPointerLeave,
   value,
@@ -32,27 +34,49 @@ export const GraphPoint = component(
           y={y - 5}
         > {value}
         </text>
+        {/* <rect
+          x="50"
+          y="20"
+          rx="20"
+          ry="20"
+          width="150"
+          height="150"
+          style="fill:red;stroke:black;stroke-width:5;opacity:0.5"
+        /> */}
       </Fragment>
     )}
-    {/* // TODO z-indx for circles */}
     <Animation
       easing={easeInOutCubic}
-      time={200}
-      values={isHovered ? [255, 255, 255, 1] : fill}
+      time={300}
+      values={[shouldShowDots ? POINT_SIZE : 0]}
     >
-      {(color) => (
-        <circle
-          cursor="pointer"
-          cx={x}
-          cy={y}
-          fill={colorToString(color as TColor)}
-          stroke="white"
-          strokeWidth={4}
-          onPointerEnter={onPointerEnter}
-          onPointerLeave={onPointerLeave}
-          r={POINT_SIZE}
-        />
+      {(radius) => (
+        <Animation
+          easing={easeInOutCubic}
+          time={200}
+          values={isHovered ? [255, 255, 255, 1] : fill}
+        >
+          {(color) => (
+            <circle
+              opacity={shouldShowDots ? 1 : 0}
+              cursor="pointer"
+              cx={x}
+              cy={y}
+              fill={colorToString(color as TColor)}
+              stroke="white"
+              strokeWidth={6}
+              onPointerEnter={() => {
+                onPointerEnter()
+              }}
+              onPointerLeave={() => {
+                onPointerLeave()
+              }}
+              r={radius}
+            />
+          )}
+        </Animation>
       )}
+
     </Animation>
   </Fragment>
 ))

@@ -24,13 +24,14 @@ export const App = component(
   mapState('selectedGraph', 'setSelectedGraph', () => null, []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
   mapHandlers(({
-    onSelectGraph: ({ selectedGraph, setSelectedGraph }) => (name) => {
+    onSelectGraph: ({ selectedGraph, setSelectedGraph, setHoveredGraph }) => (name) => {
       if (selectedGraph !== name) {
         setSelectedGraph(name)
+        setHoveredGraph(name)
       }
     },
     onHoverGraph: ({ selectedGraph, setHoveredGraph }) => (id) => {
-      if (selectedGraph !== id || (selectedGraph === null && id === null)) {
+      if (selectedGraph === null) {
         setHoveredGraph(id)
       }
     },
@@ -93,7 +94,8 @@ export const App = component(
           graphs={graphs}
           height={height}
           scale={scale}
-          selectedGraph={selectedGraph || hoveredGraph}
+          selectedGraph={selectedGraph}
+          hoveredGraph={hoveredGraph}
           width={width}
           onSelectGraph={onSelectGraph}
           onHoverGraph={onHoverGraph}

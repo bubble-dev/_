@@ -10,7 +10,7 @@ export type TGraph = {
   color: TColor,
   entries: TEntry[],
   id: string,
-  isSelected: boolean,
+  isActive: boolean,
   rect: TRect,
   scale: number,
   shouldShowDots: boolean,
@@ -71,7 +71,7 @@ export const Graph = component(
 )(({
   color,
   id,
-  isSelected,
+  isActive,
   onSelect,
   points,
   pointsString,
@@ -82,7 +82,7 @@ export const Graph = component(
     <Animation
       easing={easeInOutCubic}
       time={200}
-      values={[isSelected ? 1 : 0.1]}
+      values={[isActive ? 1 : 0.1]}
     >
       {([opacity]) => (
         <path
@@ -90,7 +90,7 @@ export const Graph = component(
           d={`M ${pointsString}`}
           stroke={colorToString(color)}
           fill="none"
-          strokeWidth={4}
+          strokeWidth={8}
           onClick={() => {
             onSelect(id)
           }}
@@ -103,8 +103,9 @@ export const Graph = component(
         />
       )}
     </Animation>
-    {shouldShowDots && points.map((point) => (
+    {points.map((point) => (
       <GraphPoint
+        shouldShowDots={shouldShowDots}
         key={`${point.x}-line`}
         fill={color}
         x={point.x}
