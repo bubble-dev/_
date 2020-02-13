@@ -3,3 +3,7 @@ export const MAX_ENTRIES_STEP = 30
 export const PATH_WIDTH = 8
 export const POINT_BORDER = 6
 export const POINT_RADIUS = 6
+export const TOOLTIP_FONT_SIZE = 16
+export const TOOLTIP_X_OFFSET = 12
+export const TOOLTIP_Y_OFFSET = 12
+export const TOOLTIP_PADDING = 4

@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHovered, TMapHovered } from 'refun'
+import { component, startWithType, mapHovered, TMapHovered, mapRefLayout } from 'refun'
 import { TColor, colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { POINT_BORDER, POINT_RADIUS } from './constants'
+import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from './constants'
 
 export type TGraphPoint = {
   x: number,
@@ -14,36 +14,67 @@ export type TGraphPoint = {
 
 export const GraphPoint = component(
   startWithType<TGraphPoint>(),
-  mapHovered
+  mapHovered,
+  mapRefLayout('textRef', (ref) => {
+    console.log('TCL: ref', ref)
+
+    if (ref !== null) {
+      const bBox = ref.getBBox()
+
+      console.log('TCL: bBox', bBox)
+
+      return {
+        textWidth: bBox.width,
+        textHeight: bBox.height,
+      }
+    }
+
+    return {
+      textWidth: 0,
+      textHeight: 0,
+    }
+  }, ['shouldShowDots'])
 )(({
   fill,
   isHovered,
   shouldShowDots,
-  onPointerEnter,
-  onPointerLeave,
+  textRef,
   value,
+  textWidth,
+  textHeight,
   x,
   y,
+  onPointerEnter,
+  onPointerLeave,
 }) => (
   <Fragment>
-    {isHovered && (
-      <Fragment>
-        <text
-          x={x + 2}
-          y={y - 5}
-        > {value}
-        </text>
-        {/* <rect
-          x="50"
-          y="20"
-          rx="20"
-          ry="20"
-          width="150"
-          height="150"
-          style="fill:red;stroke:black;stroke-width:5;opacity:0.5"
-        /> */}
-      </Fragment>
-    )}
+    <Animation
+      easing={easeInOutCubic}
+      time={300}
+      values={[shouldShowDots ? 1 : 0]}
+    >
+      {([opacity]) => (
+        <g opacity={opacity}>
+          <rect
+            x={x + TOOLTIP_X_OFFSET}
+            y={y - textHeight + 4 - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING * 2}
+            rx="4"
+            ry="4"
+            width={textWidth + TOOLTIP_PADDING * 2}
+            height={textHeight + TOOLTIP_PADDING * 2}
+            fill="rgba(255,255,255,0.8)"
+          />
+          <text
+            fontSize={TOOLTIP_FONT_SIZE}
+            fontFamily="monospace"
+            ref={textRef}
+            x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING}
+            y={y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING}
+          > {value}
+          </text>
+        </g>
+      )}
+    </Animation>
     <Animation
       easing={easeInOutCubic}
       time={300}

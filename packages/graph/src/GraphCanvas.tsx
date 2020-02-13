@@ -79,7 +79,7 @@ export const GraphCanvas = component(
 
     <Animation
       easing={easeInOutCubic}
-      time={500}
+      time={350}
       values={[scale]}
     >
       {([scale]) => (
