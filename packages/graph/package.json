@@ -13,7 +13,9 @@
     "react": "^16.8.3"
   },
   "dependencies": {
+    "@primitives/animation": "^1.0.0",
     "@primitives/root": "^1.0.0",
+    "colorido": "^1.0.0",
     "refun": "^1.0.0"
   }
 }

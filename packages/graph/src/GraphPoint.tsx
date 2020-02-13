@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHovered, TMapHovered, mapWithProps } from 'refun'
+import { component, startWithType, mapHovered, TMapHovered } from 'refun'
 import { TColor, colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TRect } from './types'
-import { POINT_SIZE } from './constants'
+import { POINT_BORDER, POINT_RADIUS } from './constants'
 
 export type TGraphPoint = {
   x: number,
@@ -48,9 +47,9 @@ export const GraphPoint = component(
     <Animation
       easing={easeInOutCubic}
       time={300}
-      values={[shouldShowDots ? POINT_SIZE : 0]}
+      values={[shouldShowDots ? POINT_RADIUS : 0]}
     >
-      {(radius) => (
+      {([radius]) => (
         <Animation
           easing={easeInOutCubic}
           time={200}
@@ -64,7 +63,7 @@ export const GraphPoint = component(
               cy={y}
               fill={colorToString(color as TColor)}
               stroke="white"
-              strokeWidth={6}
+              strokeWidth={POINT_BORDER}
               onPointerEnter={() => {
                 onPointerEnter()
               }}
@@ -76,7 +75,6 @@ export const GraphPoint = component(
           )}
         </Animation>
       )}
-
     </Animation>
   </Fragment>
 ))

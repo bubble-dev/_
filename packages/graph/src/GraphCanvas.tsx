@@ -1,16 +1,11 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TEntry, TGraph } from './types'
+import { TGraph } from './types'
 import { Graph } from './Graph'
 import { CANVAS_PADDING } from './constants'
 
 export type TGraphCanvas = {
-  // activeGraph: {
-  //   color: string,
-  //   name: string,
-  //   values: TEntry[],
-  // },
   graphs: TGraph[],
   height: number,
   hoveredGraph: string | null,
@@ -81,6 +76,7 @@ export const GraphCanvas = component(
         }
       }
     />
+
     <Animation
       easing={easeInOutCubic}
       time={500}
