@@ -1,51 +1,32 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHovered, TMapHovered, mapWithProps } from 'refun'
+import { TColor, colorToString } from 'colorido'
+import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TRect } from './types'
 import { POINT_SIZE } from './constants'
 
 export type TGraphPoint = {
   x: number,
   y: number,
+  fill: TColor,
   value: number,
-  rect: TRect,
 } & TMapHovered
 
 export const GraphPoint = component(
   startWithType<TGraphPoint>(),
-  mapHovered,
-  mapWithProps(({ isHovered }) => ({
-    color: isHovered ? 'red' : 'black',
-  }))
+  mapHovered
 )(({
-  color,
+  fill,
   isHovered,
   onPointerEnter,
   onPointerLeave,
   value,
   x,
   y,
-  rect,
 }) => (
   <Fragment>
-    {/* {isHovered && ( */}
-    {(
+    {isHovered && (
       <Fragment>
-        <line
-          x1={rect.x}
-          y1={y}
-          x2={x}
-          y2={y}
-          strokeWidth={2}
-          stroke="grey"
-        />
-        <line
-          x1={x}
-          y1={y}
-          x2={x}
-          y2={rect.height + rect.y}
-          strokeWidth={2}
-          stroke="grey"
-        />
         <text
           x={x + 2}
           y={y - 5}
@@ -53,14 +34,26 @@ export const GraphPoint = component(
         </text>
       </Fragment>
     )}
-    <circle
-      cx={x}
-      cy={y}
-      fill={color}
-      onPointerEnter={onPointerEnter}
-      onPointerLeave={onPointerLeave}
-      r={isHovered ? POINT_SIZE + 1 : POINT_SIZE}
-    />
+    {/* // TODO z-indx for circles */}
+    <Animation
+      easing={easeInOutCubic}
+      time={200}
+      values={isHovered ? [255, 255, 255, 1] : fill}
+    >
+      {(color) => (
+        <circle
+          cursor="pointer"
+          cx={x}
+          cy={y}
+          fill={colorToString(color as TColor)}
+          stroke="white"
+          strokeWidth={4}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+          r={POINT_SIZE}
+        />
+      )}
+    </Animation>
   </Fragment>
 ))
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout, onMount } from 'refun'
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
 import { TGraph } from './types'
@@ -10,11 +10,16 @@ export type TApp = {
 
 export const App = component(
   startWithType<TApp>(),
-  mapState('scale', 'setScale', () => 50, []),
+  mapState('scale', 'setScale', () => 0, []),
   mapHandlers({
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)
     },
+  }),
+  onMount(({ setScale }) => {
+    setTimeout(() => {
+      setScale(50)
+    }, 0)
   }),
   mapState('selectedGraph', 'setSelectedGraph', () => null, []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
@@ -46,7 +51,7 @@ export const App = component(
 }) => (
   <Root>
     {({ width, height }) => (
-      <div style={{ display: 'block' }}>
+      <div style={{ display: 'block', background: '#24303a' }}>
         <input
           style={{ position: 'absolute' }}
           type="range"
