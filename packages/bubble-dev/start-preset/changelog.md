@@ -1,3 +1,35 @@
+## v1.2.3
+
+* 🐞 remove unnecessary peer deps
+
+* 🐞 fix missing deps
+
+## v1.2.2
+
+* 🐞 fix building packages with CLI
+
+## v1.2.1
+
+* 🐞 format `fixDeps` task report
+
+## v1.2.0
+
+* 🌱 add `checkDeps` task
+
+* 🐞 bump dockerized Chromium to v79
+
+## v1.1.1
+
+* 🐞 enhance `fixDeps` task reports
+
+* 🐞 fix deps
+
+## v1.1.0
+
+* 🐞 refactor using shared Babel config
+
+* ♻️ update dependencies: `@bubble-dev/babel-config`
+
 ## v1.0.2
 
 * 🐞 add ability to fix deps of a single package

@@ -16,12 +16,15 @@
     "packages/fantasy-color/*",
     "packages/fixdeps",
     "packages/graph",
+    "packages/import-wasm",
     "packages/lada/*",
     "packages/makethen",
     "packages/math-playground",
+    "packages/mnth",
     "packages/mocku",
     "packages/move-path",
     "packages/msked",
+    "packages/perfa",
     "packages/pifs",
     "packages/primitives/*",
     "packages/rebox/*",
@@ -29,6 +32,7 @@
     "packages/rn-fonts",
     "packages/rn-link",
     "packages/rn-resolve",
+    "packages/rplace",
     "packages/sandbox/*",
     "packages/spyfn",
     "packages/spyt",
@@ -58,10 +62,13 @@
     "react-native-webview": "^7.2.7",
     "react-native": "0.61.5",
     "react": "^16.8.6",
+    "ndb": "^1.1.5",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
   "scripts": {
-    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js",
+    "start-debug": "node --inspect-brk packages/bubble-dev/start-preset/src/cli/index.js",
+    "start-prof": "ndb --prof node packages/bubble-dev/start-preset/src/cli/index.js"
   },
   "start": {
     "file": "tasks/",

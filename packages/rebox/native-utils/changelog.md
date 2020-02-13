@@ -1,3 +1,11 @@
+## v1.0.3
+
+* 🐞 rethink peer deps and fix missing deps
+
+## v1.0.2
+
+* 🐞 bump Haul stuff
+
 ## v1.0.1
 
 * 🐞 bump compatible deps
