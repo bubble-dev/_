@@ -69,7 +69,7 @@ export const GraphCanvas = component(
       y={rect.y}
       width={rect.width}
       height={rect.height}
-      fill="#1e2730"
+      fill="rgb(36, 48, 58)"
       onClick={
         () => {
           onSelectGraph(null)

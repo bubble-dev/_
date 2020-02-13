@@ -75,26 +75,42 @@ export const Graph = component(
   points,
   pointsString,
   shouldShowDots,
+  rect,
   onHover,
 }) => (
   <Fragment>
     <Animation
       easing={easeInOutCubic}
       time={200}
-      values={[isActive ? 1 : 0.1]}
+      values={[
+        isActive ? 1 : 0.1,
+        shouldShowDots ? 0.1 : 0,
+      ]}
     >
-      {([opacity]) => (
+      {([pathOpacity, polygonOpacity]) => (
         <Fragment>
           <defs>
-            <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+            {/* <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor={colorToString(color)}/>
               <stop offset="100%" stopColor={colorToString(color)}/>
+            </linearGradient> */}
+            <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={colorToString(color)}/>
+              <stop offset="100%" stopColor="#1e2730"/>
             </linearGradient>
           </defs>
+          <polygon
+            style={{ pointerEvents: 'none' }}
+            opacity={polygonOpacity}
+            points={`${rect.x + OFFSET / 2}, ${rect.height + rect.y - OFFSET / 2} ${pointsString} ${rect.width + rect.x - OFFSET / 2}, ${rect.height + rect.y - OFFSET / 2}`}
+            stroke="none"
+            fill={`url(#gradient-${id})`}
+          />
           <path
-            opacity={opacity}
+            cursor="pointer"
+            opacity={pathOpacity}
             d={`M ${pointsString}`}
-            stroke={`url(#gradient-${id})`}
+            stroke={colorToString(color)}
             strokeLinecap="round"
             strokeLinejoin="round"
             fill="none"

@@ -54,7 +54,10 @@ export const GraphPoint = component(
       values={[shouldShowDots ? 1 : 0]}
     >
       {([opacity]) => (
-        <g opacity={opacity}>
+        <g
+          opacity={opacity}
+          style={{ pointerEvents: shouldShowDots ? 'auto' : 'none' }}
+        >
           <rect
             x={x + TOOLTIP_X_OFFSET}
             y={y - textHeight + 4 - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING * 2}
@@ -81,30 +84,22 @@ export const GraphPoint = component(
       values={[shouldShowDots ? POINT_RADIUS : 0]}
     >
       {([radius]) => (
-        <Animation
-          easing={easeInOutCubic}
-          time={200}
-          values={isHovered ? [255, 255, 255, 1] : fill}
-        >
-          {(color) => (
-            <circle
-              opacity={shouldShowDots ? 1 : 0}
-              cursor="pointer"
-              cx={x}
-              cy={y}
-              fill={colorToString(color as TColor)}
-              stroke="white"
-              strokeWidth={POINT_BORDER}
-              onPointerEnter={() => {
-                onPointerEnter()
-              }}
-              onPointerLeave={() => {
-                onPointerLeave()
-              }}
-              r={radius}
-            />
-          )}
-        </Animation>
+        <circle
+          opacity={shouldShowDots ? 1 : 0}
+          cursor="pointer"
+          cx={x}
+          cy={y}
+          fill={colorToString(fill)}
+          stroke="white"
+          strokeWidth={POINT_BORDER}
+          onPointerEnter={() => {
+            onPointerEnter()
+          }}
+          onPointerLeave={() => {
+            onPointerLeave()
+          }}
+          r={radius}
+        />
       )}
     </Animation>
   </Fragment>
