@@ -1,16 +1,19 @@
-import { getCrossDependents, getDependentsCount, getDependentsOf } from '@auto/workspaces'
+import { getCrossDependents, getDependentsOf, getDependentsCount } from '@auto/workspaces'
 import {
   compareReleaseTypes,
-  TBumpType,
   TPackages,
   TGitBump,
   TPackageBump,
+  TBumpType,
+  getCommonBumpType,
+  TBumpConfig,
 } from '@auto/utils'
 import { bumpRange } from './bump-range'
 import { bumpVersion } from './bump-version'
-import { TBumpOptions } from './types'
+import { compileBumpConfig } from './compile-bump-config'
+import { resolveBumpType } from './resolve-bump-type'
 
-export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOptions: TBumpOptions): TPackageBump[] => {
+export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], rootConfig?: TBumpConfig): TPackageBump[] => {
   for (const bump of bumps) {
     if (!Reflect.has(packages, bump.name)) {
       throw new Error(`Unable to find package ${bump.name} in packages`)
@@ -20,37 +23,35 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
   const crossDependents = getCrossDependents(packages)
   const bumpStack: { [name: string]: TPackageBump } = {}
 
-  const bumpDependents = (name: string, version: string, prevType: TBumpType | null, type: TBumpType): void => {
+  const bumpDependents = (name: string, version: string, type: TBumpType, pkgConfig: Required<TBumpConfig>): void => {
+    const resolvedType = resolveBumpType(type, pkgConfig)
     const dependents = getDependentsOf(crossDependents, packages, name)
 
     if (dependents === null) {
       return
     }
 
-    if (compareReleaseTypes(prevType, type) >= 0) {
-      return
-    }
-
     for (const dependent of dependents) {
       const dependentPackage = packages[dependent.name]
+      const dependentConfig = compileBumpConfig(rootConfig, dependentPackage.json.auto?.bump)
       let bumpedRange = null
       let bumpedDevRange = null
       let bumpedVersion = null
 
       if (dependent.range !== null) {
         // if bumped range is different from the range from stack (existing or not) then bump
-        bumpedRange = bumpRange(dependent.range, version, type, bumpOptions)
+        bumpedRange = bumpRange(dependent.range, version, type, pkgConfig)
 
         // skip dependent if we shouldn't always bump a version and it satisfies the bump
         if (bumpedRange === dependent.range) {
           continue
         }
 
-        bumpedVersion = bumpVersion(dependentPackage.json.version, type, bumpOptions)
+        bumpedVersion = bumpVersion(dependentPackage.json.version, resolvedType, dependentConfig)
       }
 
       if (dependent.devRange !== null) {
-        bumpedDevRange = bumpRange(dependent.devRange, version, type, bumpOptions)
+        bumpedDevRange = bumpRange(dependent.devRange, version, type, pkgConfig)
 
         // skip dependent if we shouldn't always bump a version and it satisfies the bump
         if (bumpedDevRange === dependent.devRange && bumpedVersion === null) {
@@ -65,9 +66,9 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
 
         dependentPrevType = bumpStackItem.type
 
-        if (bumpedVersion !== null && compareReleaseTypes(bumpStackItem.type, type) < 0) {
+        if (bumpedVersion !== null && compareReleaseTypes(dependentPrevType, resolvedType) < 0) {
           bumpStackItem.version = bumpedVersion
-          bumpStackItem.type = type
+          bumpStackItem.type = resolvedType
         }
 
         if (bumpedRange !== null) {
@@ -95,7 +96,7 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
 
         if (bumpedVersion !== null) {
           bumpStack[dependent.name].version = bumpedVersion
-          bumpStack[dependent.name].type = type
+          bumpStack[dependent.name].type = resolvedType
         }
 
         if (bumpedRange !== null) {
@@ -113,44 +114,52 @@ export const getPackagesBumps = (packages: TPackages, bumps: TGitBump[], bumpOpt
         }
       }
 
-      if (bumpedVersion !== null) {
-        bumpDependents(dependent.name, dependentPackage.json.version, dependentPrevType, type)
+      if (bumpedVersion !== null && compareReleaseTypes(dependentPrevType, resolvedType) < 0) {
+        bumpDependents(dependent.name, dependentPackage.json.version, resolvedType, dependentConfig)
       }
     }
   }
 
   for (const bump of bumps) {
     const packageItem = packages[bump.name]
-    let prevType: TBumpType | null = null
+    const packageConfig = compileBumpConfig(rootConfig, packageItem.json.auto?.bump)
+    const releaseType = getCommonBumpType(bump)
 
     if (Reflect.has(bumpStack, bump.name)) {
       const bumpStackItem = bumpStack[bump.name]
 
       // if there was already a bump greater or equal than the current
       // then do nothing
-      if (compareReleaseTypes(bumpStackItem.type, bump.type) >= 0) {
+      if (compareReleaseTypes(bumpStackItem.type, releaseType) >= 0) {
         continue
       }
 
-      prevType = bumpStackItem.type
-
       bumpStack[bump.name] = {
         ...bumpStackItem,
-        version: bumpVersion(packageItem.json.version, bump.type, bumpOptions),
-        type: bump.type,
+        version: bumpVersion(packageItem.json.version, releaseType, packageConfig),
+        type: releaseType,
       }
     } else {
       bumpStack[bump.name] = {
         name: bump.name,
         dir: packageItem.dir,
-        version: bumpVersion(packageItem.json.version, bump.type, bumpOptions),
-        type: bump.type,
+        version: bumpVersion(packageItem.json.version, releaseType, packageConfig),
+        type: releaseType,
         deps: null,
         devDeps: null,
       }
     }
+  }
 
-    bumpDependents(bump.name, packageItem.json.version, prevType, bump.type)
+  const stackKeys = Object.keys(bumpStack)
+    .sort((a, b) => compareReleaseTypes(bumpStack[a].type, bumpStack[b].type))
+
+  for (const stackName of stackKeys) {
+    const packageItem = packages[stackName]
+    const stackItem = bumpStack[stackName]
+    const packageConfig = compileBumpConfig(rootConfig, packageItem.json.auto?.bump)
+
+    bumpDependents(stackName, packageItem.json.version, stackItem.type!, packageConfig)
   }
 
   return Object.values(bumpStack)

@@ -1,10 +1,6 @@
 import { TJsonMap } from 'typeon'
 
-export type TWorkspacesOptions = {
-  autoNamePrefix: string,
-}
-
-export type TBumpType = 'major' | 'minor' | 'patch'
+export type TResolvedBumpType = 'major' | 'minor' | 'patch'
 
 export type TPrefix = {
   title: string,
@@ -21,6 +17,23 @@ export type TPrefixes = {
     initial: TPrefix,
   },
   custom: TPrefix[],
+}
+
+export type TBumpConfig = {
+  initialType?: TResolvedBumpType,
+  zeroBreakingChangeType?: TResolvedBumpType,
+  shouldAlwaysBumpDependents?: boolean,
+}
+
+export type TNpmConfig = {
+  registry?: string,
+  publishSubDirectory?: string,
+  access?: 'restricted' | 'public',
+}
+
+export type TAutoConfig = {
+  bump?: TBumpConfig,
+  npm?: TNpmConfig,
 }
 
 export type TPackageJson = {
@@ -41,6 +54,7 @@ export type TPackageJson = {
   publishConfig?: {
     registry?: string,
   },
+  auto?: TAutoConfig,
 } & TJsonMap
 
 export type TPackages = {
@@ -50,17 +64,16 @@ export type TPackages = {
   },
 }
 
-export type TGitMessageType = TBumpType | 'initial'
+export type TBumpType = TResolvedBumpType | 'initial'
 
 export type TGitMessage = {
-  type: TGitMessageType,
+  type: TBumpType,
   value: string,
   description?: string,
 }
 
 export type TGitBump = {
   name: string,
-  type: TBumpType,
   messages: TGitMessage[],
 }
 

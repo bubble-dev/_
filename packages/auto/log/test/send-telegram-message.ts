@@ -2,15 +2,11 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
-import { TWorkspacesOptions } from '@auto/utils'
 import { TTelegramOptions } from '../src/types'
 
 const telegramOptions: TTelegramOptions = {
   token: 'token',
   chatId: 'chatId',
-}
-const workspacesOptions: TWorkspacesOptions = {
-  autoNamePrefix: '@ns/',
 }
 
 test('sendTelegramMessage', async (t) => {
@@ -64,7 +60,6 @@ test('sendTelegramMessage', async (t) => {
       },
     ],
     prefixes,
-    workspacesOptions,
     telegramOptions
   )
 
@@ -79,7 +74,7 @@ test('sendTelegramMessage', async (t) => {
           body: JSON.stringify({
             chat_id: 'chatId',
             parse_mode: 'markdown',
-            text: '*a v0.1.2*\n\n🌱 minor\n🐞 patch\n\n*b v1.2.3*\n\n🌱 minor\n🐞 patch\n♻️ update dependencies: `c`',
+            text: '*ns/a v0.1.2*\n\n🌱 minor\n🐞 patch\n\n*b v1.2.3*\n\n🌱 minor\n🐞 patch\n♻️ update dependencies: `c`',
           }),
         },
       ],
@@ -145,7 +140,6 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
       },
     ],
     prefixes,
-    workspacesOptions,
     telegramOptions
   )
 
@@ -160,7 +154,7 @@ test('sendTelegramMessage: truncate too long message', async (t) => {
           body: JSON.stringify({
             chat_id: 'chatId',
             parse_mode: 'markdown',
-            text: '*a v0.1.2*\n\n🌱 mino…',
+            text: '*ns/a v0.1.2*\n\n🌱 m…',
           }),
         },
       ],
@@ -223,7 +217,6 @@ test('sendTelegramMessage: throws if there is no token', async (t) => {
         },
       ],
       prefixes,
-      workspacesOptions,
       {
         ...telegramOptions,
         // @ts-ignore
@@ -261,7 +254,6 @@ test('sendTelegramMessage: throws if there was an API request error', async (t) 
     await sendTelegramMessage(
       [],
       prefixes,
-      workspacesOptions,
       telegramOptions
     )
 

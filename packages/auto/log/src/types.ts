@@ -6,6 +6,7 @@ export type TSlackOptions = {
   username: string,
   iconEmoji: string,
   colors: {
+    initial: string,
     major: string,
     minor: string,
     patch: string,
@@ -24,7 +25,7 @@ export type TGithubOptions = {
 }
 
 export type TLogMessage = {
-  type: TBumpType | 'dependencies' | 'initial',
+  type: TBumpType | 'dependencies',
   value: string,
   description?: string,
 }

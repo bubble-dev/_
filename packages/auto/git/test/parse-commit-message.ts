@@ -7,8 +7,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       '🚨 foo: breaking change',
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     null,
     'return `null` if nothing has been matched'
@@ -18,8 +17,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.dependencies.value} foo: dependencies change\nnew line`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     null,
     'return `null` if nothing has been matched'
@@ -29,8 +27,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.publish.value} foo: publish\n\ndescription\nline1\nline2`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -45,8 +42,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.major.value} foo: breaking change`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -60,8 +56,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.major.value} ns/foo: breaking change`,
       ['@ns/foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['@ns/foo'],
@@ -75,8 +70,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.minor.value} foo: minor change`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -90,8 +84,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.patch.value} foo: patch change`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -105,8 +98,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo: initial change`,
       ['foo'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -120,8 +112,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} *: message`,
       ['foo', '@ns/bar'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo', '@ns/bar'],
@@ -135,8 +126,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo*: message`,
       ['foo', 'foo1', 'foo2', 'bar'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo', 'foo1', 'foo2'],
@@ -148,10 +138,9 @@ test('git:parseCommitMessage', (t) => {
 
   t.deepEquals(
     parseCommitMessage(
-      `${prefixes.required.initial.value} foo,bar: message`,
+      `${prefixes.required.initial.value} foo,ns/bar: message`,
       ['foo', '@ns/bar', 'baz'],
-      prefixes,
-      { autoNamePrefix: '@ns/' }
+      prefixes
     ),
     {
       names: ['foo', '@ns/bar'],
@@ -165,8 +154,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo*,bar: message`,
       ['foo1', '@ns/foo2', 'bar', 'baz'],
-      prefixes,
-      { autoNamePrefix: '@ns/' }
+      prefixes
     ),
     {
       names: ['foo1', '@ns/foo2', 'bar'],
@@ -180,8 +168,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo*,ba*: message`,
       ['foo1', 'foo2', 'bar', '@ns/baz'],
-      prefixes,
-      { autoNamePrefix: '@ns/' }
+      prefixes
     ),
     {
       names: ['foo1', 'foo2', 'bar', '@ns/baz'],
@@ -195,8 +182,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo, , bar: message`,
       ['foo', 'bar', 'baz'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo', 'bar'],
@@ -210,8 +196,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo, *: message`,
       ['foo', 'foo1', 'bar', '@ns/baz'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo', 'foo1', 'bar', '@ns/baz'],
@@ -225,8 +210,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo, baz: message`,
       ['foo', 'bar'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     {
       names: ['foo'],
@@ -240,8 +224,7 @@ test('git:parseCommitMessage', (t) => {
     parseCommitMessage(
       `${prefixes.required.initial.value} foo, baz:`,
       ['foo', 'bar'],
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     ),
     null,
     'empty message'

@@ -21,8 +21,7 @@ test('getLog', (t) => {
       [
         {
           name: 'b',
-          type: 'patch',
-          messages: [],
+          messages: [{ type: 'patch', value: '' }],
         },
       ]
     ),
@@ -48,8 +47,7 @@ test('getLog', (t) => {
       [
         {
           name: 'b',
-          type: 'patch',
-          messages: [],
+          messages: [{ type: 'patch', value: '' }],
         },
       ]
     ),
@@ -106,7 +104,6 @@ test('getLog', (t) => {
       [
         {
           name: 'a',
-          type: 'patch',
           messages: [
             {
               type: 'minor',
@@ -174,7 +171,6 @@ test('getLog', (t) => {
       [
         {
           name: 'a',
-          type: 'major',
           messages: [
             {
               type: 'minor',
@@ -240,7 +236,6 @@ test('getLog', (t) => {
       [
         {
           name: 'a',
-          type: 'minor',
           messages: [
             {
               type: 'patch',

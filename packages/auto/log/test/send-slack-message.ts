@@ -2,7 +2,6 @@ import test from 'blue-tape'
 import { createSpy, getSpyCalls } from 'spyfn'
 import { mock } from 'mocku'
 import { prefixes } from '@auto/utils/test/prefixes'
-import { TWorkspacesOptions } from '@auto/utils'
 import { TSlackOptions } from '../src/types'
 
 const slackOptions: TSlackOptions = {
@@ -11,13 +10,11 @@ const slackOptions: TSlackOptions = {
   channel: 'channel',
   iconEmoji: 'emoji',
   colors: {
+    initial: 'initial',
     major: 'major',
     minor: 'minor',
     patch: 'patch',
   },
-}
-const workspacesOptions: TWorkspacesOptions = {
-  autoNamePrefix: '@ns/',
 }
 
 test('sendSlackMessage', async (t) => {
@@ -71,7 +68,6 @@ test('sendSlackMessage', async (t) => {
       },
     ],
     prefixes,
-    workspacesOptions,
     slackOptions
   )
 
@@ -95,7 +91,7 @@ test('sendSlackMessage', async (t) => {
               {
                 color: 'minor',
                 fields: [{
-                  title: 'a v0.1.2',
+                  title: 'ns/a v0.1.2',
                   value: `${prefixes.required.minor.value} minor\n${prefixes.required.patch.value} patch`,
                 }],
               },
@@ -165,7 +161,6 @@ test('sendSlackMessage: throws if there is no token', async (t) => {
         },
       ],
       prefixes,
-      workspacesOptions,
       // @ts-ignore
       { ...slackOptions, token: undefined }
     )
@@ -261,7 +256,6 @@ test('sendSlackMessage: multiple messages', async (t) => {
       },
     ],
     prefixes,
-    workspacesOptions,
     slackOptions
   )
 
@@ -269,7 +263,6 @@ test('sendSlackMessage: multiple messages', async (t) => {
     getSpyCalls(spy),
     [
       [
-
         'https://hooks.slack.com/services/token',
         {
           method: 'POST',
@@ -286,7 +279,7 @@ test('sendSlackMessage: multiple messages', async (t) => {
               {
                 color: 'minor',
                 fields: [{
-                  title: 'a v0.1.2',
+                  title: 'ns/a v0.1.2',
                   value: `${prefixes.required.minor.value} minor`,
                 }],
               },
@@ -300,7 +293,7 @@ test('sendSlackMessage: multiple messages', async (t) => {
               {
                 color: 'minor',
                 fields: [{
-                  title: 'c v1.2.3',
+                  title: 'ns/c v1.2.3',
                   value: `${prefixes.required.minor.value} minor`,
                 }],
               },
@@ -332,7 +325,7 @@ test('sendSlackMessage: multiple messages', async (t) => {
               {
                 color: 'minor',
                 fields: [{
-                  title: 'e v1.2.3',
+                  title: 'ns/e v1.2.3',
                   value: `${prefixes.required.minor.value} minor`,
                 }],
               },

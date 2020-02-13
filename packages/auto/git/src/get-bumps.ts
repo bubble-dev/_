@@ -1,20 +1,19 @@
-import { compareReleaseTypes, TGitBump, TPackages, TPrefixes, TWorkspacesOptions } from '@auto/utils'
+import { TGitBump, TPackages, TPrefixes } from '@auto/utils'
 import { getCommitMessages } from './get-commit-messages'
 import { parseCommitMessage } from './parse-commit-message'
-import { TGitOptions } from './types'
 
 type TGitBumps = {
   [key: string]: TGitBump,
 }
 
-export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOptions: TGitOptions, workspacesOptions: TWorkspacesOptions): Promise<TGitBump[]> => {
+export const getBumps = async (packages: TPackages, prefixes: TPrefixes): Promise<TGitBump[]> => {
   const messages = await getCommitMessages()
   const bumps: TGitBumps = {}
   const completedPackages: string[] = []
   const packageNames = Object.keys(packages)
 
   for (const message of messages) {
-    const parsed = parseCommitMessage(message, packageNames, prefixes, workspacesOptions)
+    const parsed = parseCommitMessage(message, packageNames, prefixes)
 
     if (parsed === null) {
       continue
@@ -33,7 +32,6 @@ export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOpti
       if (parsed.type === 'initial') {
         bumps[name] = {
           name,
-          type: gitOptions.initialType,
           messages: [{
             type: parsed.type,
             value: parsed.message,
@@ -53,14 +51,9 @@ export const getBumps = async (packages: TPackages, prefixes: TPrefixes, gitOpti
           value: parsed.message,
           description: parsed.description,
         })
-
-        if (compareReleaseTypes(parsed.type, bump.type) > 0) {
-          bump.type = parsed.type
-        }
       } else {
         bumps[name] = {
           name,
-          type: parsed.type,
           messages: [{
             type: parsed.type,
             value: parsed.message,

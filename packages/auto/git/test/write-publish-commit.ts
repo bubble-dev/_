@@ -21,8 +21,7 @@ test('git:writePublishCommit: single package', async (t) => {
       deps: null,
       devDeps: null,
     }],
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -31,17 +30,11 @@ test('git:writePublishCommit: single package', async (t) => {
       [
         'git',
         [
-          'add',
-          'fakes/a/package.json',
-          'fakes/a/changelog.md',
-        ],
-      ],
-      [
-        'git',
-        [
           'commit',
           '-m',
           `${prefixes.required.publish.value} a: release`,
+          'fakes/a/package.json',
+          'fakes/a/changelog.md',
         ],
       ],
     ],
@@ -76,8 +69,7 @@ test('git:writePublishCommit: multiple packages', async (t) => {
       deps: null,
       devDeps: null,
     }],
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -86,19 +78,13 @@ test('git:writePublishCommit: multiple packages', async (t) => {
       [
         'git',
         [
-          'add',
+          'commit',
+          '-m',
+          `${prefixes.required.publish.value} ns/a, b: release`,
           'fakes/a/package.json',
           'fakes/b/package.json',
           'fakes/a/changelog.md',
           'fakes/b/changelog.md',
-        ],
-      ],
-      [
-        'git',
-        [
-          'commit',
-          '-m',
-          `${prefixes.required.publish.value} ns/a, b: release`,
         ],
       ],
     ],
@@ -128,8 +114,7 @@ test('git:writePublishCommit: no packages to publish', async (t) => {
       },
       devDeps: null,
     }],
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(

@@ -1,16 +1,16 @@
 import fetch from 'node-fetch'
-import { TPrefixes, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
+import { TPrefixes, removeAutoNamePrefix } from '@auto/utils'
 import { TELEGRAM_API_URL, TELEGRAM_MESSAGE_MAX_LENGTH } from './utils'
 import { TTelegramOptions, TLog } from './types'
 
-export const sendTelegramMessage = async (logs: TLog[], prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions, telegramOptions: TTelegramOptions) => {
+export const sendTelegramMessage = async (logs: TLog[], prefixes: TPrefixes, telegramOptions: TTelegramOptions) => {
   if (typeof telegramOptions.token !== 'string') {
     throw new Error('Telegram token is required')
   }
 
   let data = logs
     .reduce((result, log) => {
-      const name = removeAutoNamePrefix(log.name, workspacesOptions.autoNamePrefix)
+      const name = removeAutoNamePrefix(log.name)
       let text = ''
 
       if (result.length > 0) {

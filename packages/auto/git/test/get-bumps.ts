@@ -2,11 +2,6 @@ import test from 'blue-tape'
 import { mock } from 'mocku'
 import { TGitBump, TPackages } from '@auto/utils/src/types'
 import { prefixes } from '@auto/utils/test/prefixes'
-import { TGitOptions } from '../src/types'
-
-const gitOptions: TGitOptions = {
-  initialType: 'minor',
-}
 
 const packages: TPackages = {
   foo: {
@@ -46,21 +41,22 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
       type: 'patch',
-      messages: [{
-        type: 'patch',
-        value: 'patch 2',
-        description: 'description',
-      }, {
-        type: 'patch',
-        value: 'patch 1',
-        description: 'description',
-      }],
-    }] as TGitBump[],
+      value: 'patch 2',
+      description: 'description',
+    }, {
+      type: 'patch',
+      value: 'patch 1',
+      description: 'description',
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch + patch'
   )
 
@@ -81,21 +77,22 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
       type: 'minor',
-      messages: [{
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
-      }, {
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'minor',
+      description: undefined,
+    }, {
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch + minor'
   )
 
@@ -116,21 +113,22 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }, {
       type: 'minor',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }, {
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'minor',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as minor + patch'
   )
 
@@ -152,25 +150,26 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
       type: 'major',
-      messages: [{
-        type: 'major',
-        value: 'major',
-        description: undefined,
-      }, {
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
-      }, {
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'major',
+      description: undefined,
+    }, {
+      type: 'minor',
+      value: 'minor',
+      description: undefined,
+    }, {
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch + minor + major'
   )
 
@@ -192,26 +191,27 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
-      type: 'major',
-      messages: [{
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
+      type: 'minor',
+      value: 'minor',
+      description: undefined,
 
-      }, {
-        type: 'major',
-        value: 'major',
-        description: undefined,
-      }, {
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+    }, {
+      type: 'major',
+      value: 'major',
+      description: undefined,
+    }, {
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch + major + minor'
   )
 
@@ -233,25 +233,26 @@ test('git:getBumps single package', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
+      type: 'minor',
+      value: 'minor',
+      description: undefined,
+    }, {
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }, {
       type: 'major',
-      messages: [{
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
-      }, {
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }, {
-        type: 'major',
-        value: 'major',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'major',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as major + patch + minor'
   )
 
@@ -276,25 +277,25 @@ test('git:getBumps multiple packages', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }, {
+    name: 'bar',
+    messages: [{
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
   t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
-      type: 'patch',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }, {
-      name: 'bar',
-      type: 'patch',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch && patch'
   )
 
@@ -318,29 +319,29 @@ test('git:getBumps multiple packages in one commit', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
-      type: 'major',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }, {
-        type: 'major',
-        value: 'breaking',
-        description: undefined,
-      }],
-    }, {
-      name: 'bar',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
       type: 'patch',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'patch',
+      description: undefined,
+    }, {
+      type: 'major',
+      value: 'breaking',
+      description: undefined,
+    }],
+  }, {
+    name: 'bar',
+    messages: [{
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as major && patch'
   )
 
@@ -360,49 +361,48 @@ test('git:getBumps star symbol', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [
+      {
+        type: 'minor',
+        value: 'minor',
+        description: undefined,
+      },
+      {
+        type: 'patch',
+        value: 'patch',
+        description: undefined,
+      },
+    ],
+  }, {
+    name: 'bar',
+    messages: [
+      {
+        type: 'minor',
+        value: 'minor',
+        description: undefined,
+      },
+      {
+        type: 'patch',
+        value: 'patch',
+        description: undefined,
+      },
+    ],
+  }, {
+    name: 'baz',
+    messages: [
+      {
+        type: 'minor',
+        value: 'minor',
+        description: undefined,
+      },
+    ],
+  }]
+
   t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
-      type: 'minor',
-      messages: [
-        {
-          type: 'minor',
-          value: 'minor',
-          description: undefined,
-        },
-        {
-          type: 'patch',
-          value: 'patch',
-          description: undefined,
-        },
-      ],
-    }, {
-      name: 'bar',
-      type: 'minor',
-      messages: [
-        {
-          type: 'minor',
-          value: 'minor',
-          description: undefined,
-        },
-        {
-          type: 'patch',
-          value: 'patch',
-          description: undefined,
-        },
-      ],
-    }, {
-      name: 'baz',
-      type: 'minor',
-      messages: [
-        {
-          type: 'minor',
-          value: 'minor',
-          description: undefined,
-        },
-      ],
-    }] as TGitBump[],
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as minor && minor'
   )
 
@@ -421,39 +421,38 @@ test('git:getBumps string + star symbol', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
+  const expectedResult: TGitBump[] = [{
+    name: 'bar',
+    messages: [
+      {
+        type: 'minor',
+        value: 'minor',
+        description: undefined,
+      },
+    ],
+  }, {
+    name: 'baz',
+    messages: [
+      {
+        type: 'minor',
+        value: 'minor',
+        description: undefined,
+      },
+    ],
+  }, {
+    name: 'foo',
+    messages: [
+      {
+        type: 'patch',
+        value: 'patch',
+        description: 'description',
+      },
+    ],
+  }]
+
   t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'bar',
-      type: 'minor',
-      messages: [
-        {
-          type: 'minor',
-          value: 'minor',
-          description: undefined,
-        },
-      ],
-    }, {
-      name: 'baz',
-      type: 'minor',
-      messages: [
-        {
-          type: 'minor',
-          value: 'minor',
-          description: undefined,
-        },
-      ],
-    }, {
-      name: 'foo',
-      type: 'patch',
-      messages: [
-        {
-          type: 'patch',
-          value: 'patch',
-          description: 'description',
-        },
-      ],
-    }] as TGitBump[],
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as minor && minor'
   )
 
@@ -478,21 +477,22 @@ test('git:getBumps skipped commits', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
       type: 'minor',
-      messages: [{
-        type: 'minor',
-        value: 'minor',
-        description: undefined,
-      }, {
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'minor',
+      description: undefined,
+    }, {
+      type: 'patch',
+      value: 'patch',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'skip invalid commit messages'
   )
 
@@ -518,33 +518,32 @@ test('git:getBumps multiple packages initial', async (t) => {
 
   const { getBumps } = await import('../src/get-bumps')
 
-  t.deepEquals(
-    await getBumps(packages, prefixes, gitOptions, { autoNamePrefix: '@' }),
-    [{
-      name: 'foo',
-      type: 'minor',
-      messages: [{
-        type: 'initial',
-        value: 'initial',
-        description: undefined,
-      }],
-    }, {
-      name: 'bar',
+  const expectedResult: TGitBump[] = [{
+    name: 'foo',
+    messages: [{
+      type: 'initial',
+      value: 'initial',
+      description: undefined,
+    }],
+  }, {
+    name: 'bar',
+    messages: [{
       type: 'patch',
-      messages: [{
-        type: 'patch',
-        value: 'patch',
-        description: undefined,
-      }],
-    }, {
-      name: 'baz',
-      type: 'minor',
-      messages: [{
-        type: 'initial',
-        value: 'initial',
-        description: undefined,
-      }],
-    }] as TGitBump[],
+      value: 'patch',
+      description: undefined,
+    }],
+  }, {
+    name: 'baz',
+    messages: [{
+      type: 'initial',
+      value: 'initial',
+      description: undefined,
+    }],
+  }]
+
+  t.deepEquals(
+    await getBumps(packages, prefixes),
+    expectedResult,
     'bump as patch && patch'
   )
 

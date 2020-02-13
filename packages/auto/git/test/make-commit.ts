@@ -38,8 +38,7 @@ test('git:makeCommit single package', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -92,8 +91,7 @@ test('git:makeCommit multiple packages', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -142,8 +140,7 @@ test('git:makeCommit: no auto name prefix in prefixes', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -188,8 +185,7 @@ test('git:makeCommit: no package name', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -234,8 +230,7 @@ test('git:makeCommit: all packages `*`', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(
@@ -271,8 +266,7 @@ test('git:makeCommit: should throw on prefix undefined', async (t) => {
           },
         },
       },
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     )
 
     t.fail('should not get here')
@@ -311,8 +305,7 @@ test('git:makeCommit: should throw on packageName undefined', async (t) => {
           },
         },
       },
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     )
 
     t.fail('should not get here')
@@ -359,8 +352,7 @@ test('git:makeCommit: should throw on message undefined', async (t) => {
           },
         },
       },
-      prefixes,
-      { autoNamePrefix: '@' }
+      prefixes
     )
 
     t.fail('should not get here')
@@ -406,8 +398,7 @@ test('git:makeCommit lowercase first message letter', async (t) => {
         },
       },
     },
-    prefixes,
-    { autoNamePrefix: '@' }
+    prefixes
   )
 
   t.deepEquals(

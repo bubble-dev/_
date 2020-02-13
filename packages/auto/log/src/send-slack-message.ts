@@ -1,15 +1,15 @@
 import fetch from 'node-fetch'
-import { TPrefixes, TWorkspacesOptions, removeAutoNamePrefix } from '@auto/utils'
+import { TPrefixes, removeAutoNamePrefix } from '@auto/utils'
 import { SLACK_HOOKS_URL, SLACK_MAX_ATTACHMENTS } from './utils'
 import { TSlackOptions, TLog } from './types'
 
-export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions, slackOptions: TSlackOptions) => {
+export const sendSlackMessage = async (logs: TLog[], prefixes: TPrefixes, slackOptions: TSlackOptions) => {
   if (typeof slackOptions.token !== 'string') {
     throw new Error('Slack token is required')
   }
 
   const allAttachments = logs.map((log) => {
-    const name = removeAutoNamePrefix(log.name, workspacesOptions.autoNamePrefix)
+    const name = removeAutoNamePrefix(log.name)
 
     return {
       color: slackOptions.colors[log.type],

@@ -1,9 +1,6 @@
 /* eslint-disable no-throw-literal */
 import plugin, { StartPlugin } from '@start/plugin'
-import { TGitBump, TPackageBump, TPrefixes, TWorkspacesOptions } from '@auto/utils'
-import { TGitOptions } from '@auto/git'
-import { TBumpOptions } from '@auto/bump'
-import { TNpmOptions } from '@auto/npm'
+import { TGitBump, TPackageBump, TPrefixes, TBumpConfig, TNpmConfig } from '@auto/utils'
 import { TSlackOptions, TTelegramOptions, TGithubOptions, TLog } from '@auto/log'
 
 export const pushCommitsAndTags = plugin<any, any>('pushCommitsAndTags', () => async () => {
@@ -17,30 +14,30 @@ export type TPluginData = {
   gitBumps: TGitBump[],
 }
 
-export const makeCommit = (prefixes: TPrefixes, Options: TWorkspacesOptions) =>
+export const makeCommit = (prefixes: TPrefixes) =>
   plugin('makeCommit', () => async () => {
     const { getPackages } = await import('@auto/fs')
     const { makeCommit } = await import('@auto/git')
 
     const packages = await getPackages()
 
-    await makeCommit(packages, prefixes, Options)
+    await makeCommit(packages, prefixes)
   })
 
-export const getPackagesBumps = (prefixes: TPrefixes, gitOptions: TGitOptions, bumpOptions: TBumpOptions, Options: TWorkspacesOptions) =>
+export const getPackagesBumps = (prefixes: TPrefixes, bumpConfig?: TBumpConfig) =>
   plugin<{}, TPluginData>('getPackagesBumps', () => async () => {
     const { getPackages } = await import('@auto/fs')
     const { getBumps } = await import('@auto/git')
     const { getPackagesBumps } = await import('@auto/bump')
 
     const packages = await getPackages()
-    const gitBumps = await getBumps(packages, prefixes, gitOptions, Options)
+    const gitBumps = await getBumps(packages, prefixes)
 
     if (gitBumps.length === 0) {
       throw new Error('No bumps')
     }
 
-    const packagesBumps = await getPackagesBumps(packages, gitBumps, bumpOptions)
+    const packagesBumps = getPackagesBumps(packages, gitBumps, bumpConfig)
 
     return {
       packagesBumps,
@@ -119,35 +116,35 @@ export const writePackageVersions = plugin<TPluginData, any>('writePackageVersio
   logMessage('write packages versions')
 })
 
-export const writePublishCommit = (prefixes: TPrefixes, Options: TWorkspacesOptions) =>
+export const writePublishCommit = (prefixes: TPrefixes) =>
   plugin<TPluginData, any>('writePublishCommit', ({ logMessage }) => async ({ packagesBumps }) => {
     const { writePublishCommit } = await import('@auto/git')
 
-    await writePublishCommit(packagesBumps, prefixes, Options)
+    await writePublishCommit(packagesBumps, prefixes)
     logMessage('write publish commit')
   })
 
-export const writePublishTags = (Options: TWorkspacesOptions) =>
+export const writePublishTags = () =>
   plugin<TPluginData, any>('writePublishTag', ({ logMessage }) => async ({ packagesBumps }) => {
     const { writePublishTags } = await import('@auto/git')
 
-    await writePublishTags(packagesBumps, Options)
+    await writePublishTags(packagesBumps)
     logMessage('write publish tag')
   })
 
-export const publishPackagesBumps = (npmOptions?: TNpmOptions) =>
+export const publishPackagesBumps = (npmConfig?: TNpmConfig) =>
   plugin<TPluginData, any>('publishPackagesBumps', () => async ({ packagesBumps }) => {
     const { publishPackage } = await import('@auto/npm')
     const { default: pAll } = await import('p-all')
 
     const bumps = packagesBumps
       .filter((bump) => bump.type !== null)
-      .map((bump) => () => publishPackage(bump, npmOptions))
+      .map((bump) => () => publishPackage(bump, npmConfig))
 
     await pAll(bumps, { concurrency: 4 })
   })
 
-export const sendSlackMessage = (prefixes: TPrefixes, Options: TWorkspacesOptions, slackOptions: TSlackOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
+export const sendSlackMessage = (prefixes: TPrefixes, slackOptions: TSlackOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
   plugin<TPluginData, any>('sendSlackMessage', () => async ({ packagesBumps, gitBumps }) => {
     const { getLog, sendSlackMessage: send } = await import('@auto/log')
 
@@ -157,10 +154,10 @@ export const sendSlackMessage = (prefixes: TPrefixes, Options: TWorkspacesOption
       logs = transformFn(logs)
     }
 
-    await send(logs, prefixes, Options, slackOptions)
+    await send(logs, prefixes, slackOptions)
   })
 
-export const sendTelegramMessage = (prefixes: TPrefixes, Options: TWorkspacesOptions, telegramOptions: TTelegramOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
+export const sendTelegramMessage = (prefixes: TPrefixes, telegramOptions: TTelegramOptions, transformFn?: (logs: TLog[]) => TLog[]) =>
   plugin<TPluginData, any>('sendTelegramMessage', () => async ({ packagesBumps, gitBumps }) => {
     const { getLog, sendTelegramMessage: send } = await import('@auto/log')
 
@@ -170,16 +167,16 @@ export const sendTelegramMessage = (prefixes: TPrefixes, Options: TWorkspacesOpt
       logs = transformFn(logs)
     }
 
-    await send(logs, prefixes, Options, telegramOptions)
+    await send(logs, prefixes, telegramOptions)
   })
 
-export const makeGithubReleases = (prefixes: TPrefixes, Options: TWorkspacesOptions, githubOptions: TGithubOptions) =>
+export const makeGithubReleases = (prefixes: TPrefixes, githubOptions: TGithubOptions) =>
   plugin<TPluginData, any>('makeGithubReleases', () => async ({ packagesBumps, gitBumps }) => {
     const { getLog, makeGithubReleases: make } = await import('@auto/log')
 
     const logs = getLog(packagesBumps, gitBumps)
 
-    await make(logs, prefixes, Options, githubOptions)
+    await make(logs, prefixes, githubOptions)
   })
 
 export const writeChangelogFiles = (prefixes: TPrefixes) =>

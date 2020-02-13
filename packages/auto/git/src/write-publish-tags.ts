@@ -1,13 +1,13 @@
 import execa from 'execa'
-import { TPackageBump, removeAutoNamePrefix, TWorkspacesOptions } from '@auto/utils'
+import { TPackageBump, removeAutoNamePrefix } from '@auto/utils'
 
-export const writePublishTags = async (packageBumps: TPackageBump[], workspacesOptions: TWorkspacesOptions) => {
+export const writePublishTags = async (packageBumps: TPackageBump[]) => {
   for (const bump of packageBumps) {
     if (bump.version === null || bump.type === null) {
       continue
     }
 
-    const name = removeAutoNamePrefix(bump.name, workspacesOptions.autoNamePrefix)
+    const name = removeAutoNamePrefix(bump.name)
 
     await execa(
       'git',

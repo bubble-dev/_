@@ -28,7 +28,7 @@ test('git:writePublishTag: multiple tags', async (t) => {
       deps: null,
       devDeps: null,
     },
-  ], { autoNamePrefix: '@' })
+  ])
 
   t.deepEquals(
     getSpyCalls(execaSpy).map((call) => call.slice(0, 2)),
@@ -68,7 +68,7 @@ test('git:writePublishTag: no tags', async (t) => {
       deps: null,
       devDeps: null,
     },
-  ], { autoNamePrefix: '@' })
+  ])
 
   t.deepEquals(
     getSpyCalls(execaSpy),

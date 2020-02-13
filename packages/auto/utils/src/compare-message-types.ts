@@ -1,7 +1,7 @@
-import { TGitMessageType } from './types'
+import { TBumpType } from './types'
 import { compareReleaseTypes } from './compare-release-types'
 
-export const compareMessageTypes = (a: TGitMessageType | null, b: TGitMessageType | null) => {
+export const compareMessageTypes = (a: TBumpType | null, b: TBumpType | null) => {
   if (a === b) {
     return 0
   }

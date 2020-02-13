@@ -1,15 +1,15 @@
-import { TPrefixes, removeAutoNamePrefix, TWorkspacesOptions } from '@auto/utils'
 import fetch from 'node-fetch'
+import { TPrefixes, removeAutoNamePrefix } from '@auto/utils'
 import { GITHUB_API_REPOS_URL } from './utils'
 import { TGithubOptions, TLog } from './types'
 
-export const makeGithubReleases = async (logs: TLog[], prefixes: TPrefixes, workspacesOptions: TWorkspacesOptions, githubOptions: TGithubOptions) => {
+export const makeGithubReleases = async (logs: TLog[], prefixes: TPrefixes, githubOptions: TGithubOptions) => {
   if (typeof githubOptions.token !== 'string') {
     throw new Error('GitHub token is required')
   }
 
   for (const log of logs) {
-    const name = removeAutoNamePrefix(log.name, workspacesOptions.autoNamePrefix)
+    const name = removeAutoNamePrefix(log.name)
 
     await fetch(
       `${GITHUB_API_REPOS_URL}${githubOptions.username}/${githubOptions.repo}/releases`,

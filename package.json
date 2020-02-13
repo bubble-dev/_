@@ -68,17 +68,18 @@
   },
   "start": {
     "file": "tasks/",
-    "auto": {
+    "shouldMakeGitTags": true,
+    "shouldSendTelegramMessage": true,
+    "shouldWriteChangelogFiles": true
+  },
+  "auto": {
+    "bump": {
       "initialType": "minor",
-      "autoNamePrefix": "@",
-      "zeroBreakingChangeType": "major",
-      "npm": {
-        "publishSubDirectory": "build",
-        "access": "public"
-      },
-      "shouldMakeGitTags": true,
-      "shouldSendTelegramMessage": true,
-      "shouldWriteChangelogFiles": true
+      "zeroBreakingChangeType": "minor"
+    },
+    "npm": {
+      "publishSubDirectory": "build",
+      "access": "public"
     }
   },
   "eslintConfig": {

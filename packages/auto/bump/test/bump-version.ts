@@ -1,10 +1,10 @@
 import test from 'blue-tape'
-import { TBumpType } from '@auto/utils'
+import { TBumpType, TBumpConfig } from '@auto/utils'
 import { bumpVersion } from '../src/bump-version'
-import { TBumpOptions } from '../src/types'
 
 test('bump:bumpVersion', (t) => {
-  const options: TBumpOptions = {
+  const options: Required<TBumpConfig> = {
+    initialType: 'minor',
     zeroBreakingChangeType: 'minor',
     shouldAlwaysBumpDependents: true,
   }
@@ -29,7 +29,8 @@ test('bump:bumpVersion', (t) => {
   t.strictEquals(bumpVersion('0.2', 'major', options), '0.3.0', '\'0.2\' bumped to \'0.3.0\' as major')
   t.strictEquals(bumpVersion('0', 'major', options), '0.1.0', '\'0\' bumped to \'0.1.0\' as major')
 
-  const majorOptions: TBumpOptions = {
+  const majorOptions: Required<TBumpConfig> = {
+    initialType: 'major',
     zeroBreakingChangeType: 'major',
     shouldAlwaysBumpDependents: true,
   }
@@ -45,7 +46,12 @@ test('bump:bumpVersion', (t) => {
   t.strictEquals(bumpVersion('0.0', 'major', majorOptions), '1.0.0', 'patch + major + major')
   t.strictEquals(bumpVersion('0', 'major', majorOptions), '1.0.0', 'patch + major + major')
 
-  const minorOptions: TBumpOptions = {
+  t.strictEquals(bumpVersion('0.0.0', 'initial', majorOptions), '1.0.0', 'zero + initial + major')
+  t.strictEquals(bumpVersion('0.0', 'initial', majorOptions), '1.0.0', 'zero + initial + major')
+  t.strictEquals(bumpVersion('0', 'initial', majorOptions), '1.0.0', 'zero + initial + major')
+
+  const minorOptions: Required<TBumpConfig> = {
+    initialType: 'minor',
     zeroBreakingChangeType: 'minor',
     shouldAlwaysBumpDependents: true,
   }
@@ -61,7 +67,12 @@ test('bump:bumpVersion', (t) => {
   t.strictEquals(bumpVersion('0.0', 'major', minorOptions), '0.1.0', 'patch + major + minor')
   t.strictEquals(bumpVersion('0', 'major', minorOptions), '0.1.0', 'patch + major + minor')
 
-  const patchOptions: TBumpOptions = {
+  t.strictEquals(bumpVersion('0.0.0', 'initial', minorOptions), '0.1.0', 'zero + initial + minor')
+  t.strictEquals(bumpVersion('0.0', 'initial', minorOptions), '0.1.0', 'zero + initial + minor')
+  t.strictEquals(bumpVersion('0', 'initial', minorOptions), '0.1.0', 'zero + initial + minor')
+
+  const patchOptions: Required<TBumpConfig> = {
+    initialType: 'patch',
     zeroBreakingChangeType: 'patch',
     shouldAlwaysBumpDependents: true,
   }
@@ -70,12 +81,16 @@ test('bump:bumpVersion', (t) => {
   t.strictEquals(bumpVersion('1.2', 'major', patchOptions), '2.0.0', 'major + major + patch')
   t.strictEquals(bumpVersion('1', 'major', patchOptions), '2.0.0', 'major + major + patch')
 
-  t.strictEquals(bumpVersion('0.2.3', 'major', patchOptions), '1.0.0', 'minor + major + patch')
-  t.strictEquals(bumpVersion('0.2', 'major', patchOptions), '1.0.0', 'minor + major + patch')
+  t.strictEquals(bumpVersion('0.2.3', 'major', patchOptions), '0.2.4', 'minor + major + patch')
+  t.strictEquals(bumpVersion('0.2', 'major', patchOptions), '0.2.1', 'minor + major + patch')
 
   t.strictEquals(bumpVersion('0.0.3', 'major', patchOptions), '0.0.4', 'patch + major + patch')
   t.strictEquals(bumpVersion('0.0', 'major', patchOptions), '0.0.1', 'patch + major + patch')
   t.strictEquals(bumpVersion('0', 'major', patchOptions), '0.0.1', 'patch + major + patch')
+
+  t.strictEquals(bumpVersion('0.0.0', 'initial', patchOptions), '0.0.1', 'zero + initial + patch')
+  t.strictEquals(bumpVersion('0.0', 'initial', patchOptions), '0.0.1', 'zero + initial + patch')
+  t.strictEquals(bumpVersion('0', 'initial', patchOptions), '0.0.1', 'zero + initial + patch')
 
   t.throws(() => bumpVersion('blabla', 'patch', options), /invalid version/, 'should throw on range \'blabla\'')
   t.throws(() => bumpVersion('1.2.3', 'blabla' as TBumpType, options), /invalid increment argument/, 'should throw on release type \'blabla\'')

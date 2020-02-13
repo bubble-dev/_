@@ -1,22 +1,19 @@
 import semver from 'semver'
-import { TBumpType } from '@auto/utils'
-import { TBumpOptions } from './types'
+import { TBumpType, TBumpConfig } from '@auto/utils'
 
-export const bumpVersion = (version: string, type: TBumpType, options: TBumpOptions): string => {
+export const bumpVersion = (version: string, type: TBumpType, config: Required<TBumpConfig>): string => {
   const coercedVersion = semver.coerce(version)
 
   if (coercedVersion === null) {
     throw new Error(`invalid version ${version}`)
   }
 
-  if (coercedVersion.major === 0) {
-    if (coercedVersion.minor === 0 && options.zeroBreakingChangeType === 'patch') {
-      return coercedVersion.inc('patch').version
-    }
+  if (type === 'initial') {
+    return coercedVersion.inc(config.initialType).version
+  }
 
-    if (options.zeroBreakingChangeType === 'minor' && type !== 'patch') {
-      return coercedVersion.inc('minor').version
-    }
+  if (type === 'major' && coercedVersion.major === 0) {
+    return coercedVersion.inc(config.zeroBreakingChangeType).version
   }
 
   return coercedVersion.inc(type).version
