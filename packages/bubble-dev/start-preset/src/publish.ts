@@ -20,15 +20,12 @@ import {
   writeChangelogFiles,
 } from '@auto/start-plugin'
 import { TGithubOptions, TSlackOptions, TTelegramOptions } from '@auto/log'
-import { TGitOptions } from '@auto/git'
-import { TWorkspacesOptions } from '@auto/utils'
-import { TBumpOptions } from '@auto/bump'
-import { TNpmOptions } from '@auto/npm'
+import { TPackageJson, TNpmConfig } from '@auto/utils'
 import runVerdaccio from './plugins/run-verdaccio'
-import { getStartOptions } from './utils'
 import { removeYarnCache } from './plugins/remove-yarn-cache'
 import buildPackageJson from './plugins/build-package-json'
 import { buildPackage } from './build'
+import { getStartOptions } from './utils'
 
 export const preparePackage = (packageDir: string) => {
   const dir = path.join('packages', packageDir)
@@ -41,44 +38,24 @@ export const preparePackage = (packageDir: string) => {
 }
 
 export const commit = async () => {
-  const { auto: { autoNamePrefix } } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
 
-  const workspacesOptions: TWorkspacesOptions = {
-    autoNamePrefix,
-  }
-
-  return makeCommit(prefixes, workspacesOptions)
+  return makeCommit(prefixes)
 }
 
 export const publish = async () => {
-  const {
-    auto: {
-      initialType,
-      autoNamePrefix,
-      zeroBreakingChangeType,
-      npm,
-      shouldAlwaysBumpDependents = false,
-      shouldMakeGitTags = false,
-      shouldMakeGitHubReleases = false,
-      shouldSendSlackMessage = false,
-      shouldSendTelegramMessage = false,
-      shouldWriteChangelogFiles = false,
-    },
-  } = await getStartOptions()
   const { prefixes } = await import('./config/auto')
+  const { auto: rootAutoConfig = {} }: TPackageJson = await import(path.resolve('package.json'))
 
-  const npmOptions: TNpmOptions = npm || {}
-  const workspacesOptions: TWorkspacesOptions = {
-    autoNamePrefix,
-  }
-  const bumpOptions: TBumpOptions = {
-    zeroBreakingChangeType,
-    shouldAlwaysBumpDependents,
-  }
-  const gitOptions: TGitOptions = {
-    initialType,
-  }
+  const {
+    shouldMakeGitTags = false,
+    shouldMakeGitHubReleases = false,
+    shouldSendSlackMessage = false,
+    shouldSendTelegramMessage = false,
+    shouldWriteChangelogFiles = false,
+  } = await getStartOptions()
+
+  // @ts-ignore
   const githubOptions: TGithubOptions = {
     token: process.env.AUTO_GITHUB_TOKEN as string,
     username: process.env.AUTO_GITHUB_USERNAME as string,
@@ -90,6 +67,7 @@ export const publish = async () => {
     username: process.env.AUTO_SLACK_USERNAME as string,
     iconEmoji: process.env.AUTO_SLACK_ICON_EMOJI as string,
     colors: {
+      initial: process.env.AUTO_SLACK_COLOR_INITIAL as string,
       major: process.env.AUTO_SLACK_COLOR_MAJOR as string,
       minor: process.env.AUTO_SLACK_COLOR_MINOR as string,
       patch: process.env.AUTO_SLACK_COLOR_PATCH as string,
@@ -101,62 +79,43 @@ export const publish = async () => {
   }
 
   return sequence(
-    getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
+    getPackagesBumps(prefixes, rootAutoConfig.bump),
     publishPrompt(prefixes),
     buildBumpedPackages(buildPackage),
     writePackagesDependencies,
     writeDependenciesCommit(prefixes),
     writePackageVersions,
     shouldWriteChangelogFiles && writeChangelogFiles(prefixes),
-    writePublishCommit(prefixes, workspacesOptions),
-    shouldMakeGitTags && writePublishTags(workspacesOptions),
+    writePublishCommit(prefixes),
+    shouldMakeGitTags && writePublishTags(),
     buildBumpedPackages(preparePackage),
-    publishPackagesBumps(npmOptions),
+    publishPackagesBumps(rootAutoConfig.npm),
     pushCommitsAndTags,
-    shouldMakeGitHubReleases && makeGithubReleases(prefixes, workspacesOptions, githubOptions),
-    shouldSendSlackMessage && sendSlackMessage(prefixes, workspacesOptions, slackOptions),
-    shouldSendTelegramMessage && sendTelegramMessage(prefixes, workspacesOptions, telegramOptions)
+    shouldMakeGitHubReleases && makeGithubReleases(prefixes, githubOptions),
+    shouldSendSlackMessage && sendSlackMessage(prefixes, slackOptions),
+    shouldSendTelegramMessage && sendTelegramMessage(prefixes, telegramOptions)
   )
 }
 
 export const testPublish = async () => {
-  const {
-    auto: {
-      initialType,
-      autoNamePrefix,
-      zeroBreakingChangeType,
-      npm,
-      shouldAlwaysBumpDependents = false,
-    },
-  } = await getStartOptions()
+  const { auto: rootAutoConfig = {} }: TPackageJson = await import(path.resolve('package.json'))
   const { prefixes } = await import('./config/auto')
-
-  const npmOptions: TNpmOptions = {
-    ...npm,
+  const npmConfig: TNpmConfig = {
+    ...rootAutoConfig.npm,
     registry: 'http://localhost:4873',
-  }
-  const workspacesOptions: TWorkspacesOptions = {
-    autoNamePrefix,
-  }
-  const bumpOptions: TBumpOptions = {
-    zeroBreakingChangeType,
-    shouldAlwaysBumpDependents,
-  }
-  const gitOptions: TGitOptions = {
-    initialType,
   }
 
   const verdaccioConfigPath = require.resolve('./config/verdaccio.yml')
 
   return sequence(
-    getPackagesBumps(prefixes, gitOptions, bumpOptions, workspacesOptions),
+    getPackagesBumps(prefixes, rootAutoConfig.bump),
     publishPrompt(prefixes),
     buildBumpedPackages(buildPackage),
     writePackagesDependencies,
     writePackageVersions,
     buildBumpedPackages(preparePackage),
     runVerdaccio(verdaccioConfigPath),
-    publishPackagesBumps(npmOptions),
+    publishPackagesBumps(npmConfig),
     removeYarnCache
   )
 }
