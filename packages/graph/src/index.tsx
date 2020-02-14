@@ -3,6 +3,7 @@ import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapD
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
 import { TGraph } from './types'
+import { PAGE_BACKGROUND } from './constants'
 
 export type TApp = {
   graphs: TGraph[],
@@ -10,7 +11,7 @@ export type TApp = {
 
 export const App = component(
   startWithType<TApp>(),
-  mapState('scale', 'setScale', () => 0, []),
+  mapState('scale', 'setScale', () => 1, []),
   mapHandlers({
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)
@@ -19,7 +20,7 @@ export const App = component(
   onMount(({ setScale }) => {
     setTimeout(() => {
       setScale(50)
-    }, 0)
+    }, 200)
   }),
   mapState('selectedGraph', 'setSelectedGraph', () => null, []),
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
@@ -52,7 +53,7 @@ export const App = component(
 }) => (
   <Root>
     {({ width, height }) => (
-      <div style={{ display: 'block', background: '#24303a' }}>
+      <div style={{ display: 'block', background: PAGE_BACKGROUND }}>
         <input
           style={{ position: 'absolute' }}
           type="range"

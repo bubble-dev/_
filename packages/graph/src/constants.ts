@@ -7,3 +7,5 @@ export const TOOLTIP_FONT_SIZE = 16
 export const TOOLTIP_X_OFFSET = 12
 export const TOOLTIP_Y_OFFSET = 12
 export const TOOLTIP_PADDING = 4
+export const PAGE_BACKGROUND = '#1e2730'
+export const GRAPH_BACKGROUND = '#24303a'

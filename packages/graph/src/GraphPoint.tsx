@@ -16,8 +16,6 @@ export const GraphPoint = component(
   startWithType<TGraphPoint>(),
   mapHovered,
   mapRefLayout('textRef', (ref) => {
-    console.log('TCL: ref', ref)
-
     if (ref !== null) {
       const bBox = ref.getBBox()
 
@@ -36,7 +34,6 @@ export const GraphPoint = component(
   }, ['shouldShowDots'])
 )(({
   fill,
-  isHovered,
   shouldShowDots,
   textRef,
   value,

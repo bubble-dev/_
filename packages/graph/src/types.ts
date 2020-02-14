@@ -12,7 +12,7 @@ export type TGraphValue = {
 
 export type TGraph = {
   key: string,
-  color: TColor,
+  colors: TColor[],
   values: TGraphValue[],
 }
 

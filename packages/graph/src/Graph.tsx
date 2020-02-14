@@ -9,7 +9,7 @@ import { MAX_ENTRIES_STEP, POINT_RADIUS, POINT_BORDER, PATH_WIDTH } from './cons
 const OFFSET = POINT_RADIUS + POINT_BORDER + PATH_WIDTH + 10
 
 export type TGraph = {
-  color: TColor,
+  colors: TColor[],
   entries: TEntry[],
   id: string,
   isActive: boolean,
@@ -66,9 +66,9 @@ export const Graph = component(
       points,
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
-  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepY'])
+  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY'])
 )(({
-  color,
+  colors,
   id,
   isActive,
   onSelect,
@@ -84,18 +84,18 @@ export const Graph = component(
       time={200}
       values={[
         isActive ? 1 : 0.1,
-        shouldShowDots ? 0.1 : 0,
+        shouldShowDots ? 0.15 : 0,
       ]}
     >
       {([pathOpacity, polygonOpacity]) => (
         <Fragment>
           <defs>
-            {/* <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={colorToString(color)}/>
-              <stop offset="100%" stopColor={colorToString(color)}/>
-            </linearGradient> */}
+            <linearGradient id={`line-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={colorToString(colors[0])}/>
+              <stop offset="100%" stopColor={colorToString(colors[1])}/>
+            </linearGradient>
             <linearGradient id={`gradient-${id}`} x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor={colorToString(color)}/>
+              <stop offset="0%" stopColor={colorToString(colors[1])}/>
               <stop offset="100%" stopColor="#1e2730"/>
             </linearGradient>
           </defs>
@@ -108,12 +108,12 @@ export const Graph = component(
           />
           <path
             cursor="pointer"
-            opacity={pathOpacity}
             d={`M ${pointsString}`}
-            stroke={colorToString(color)}
+            fill="none"
+            opacity={pathOpacity}
+            stroke={`url(#line-${id})`}
             strokeLinecap="round"
             strokeLinejoin="round"
-            fill="none"
             strokeWidth={PATH_WIDTH}
             onClick={() => {
               onSelect(id)
@@ -132,7 +132,7 @@ export const Graph = component(
       <GraphPoint
         shouldShowDots={shouldShowDots}
         key={`${point.x}-line`}
-        fill={color}
+        fill={colors[0]}
         x={point.x}
         y={point.y}
         value={Math.round(point.value * 1000) / 1000}

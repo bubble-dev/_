@@ -3,7 +3,7 @@ import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraph } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING } from './constants'
+import { CANVAS_PADDING, GRAPH_BACKGROUND } from './constants'
 
 export type TGraphCanvas = {
   graphs: TGraph[],
@@ -69,7 +69,7 @@ export const GraphCanvas = component(
       y={rect.y}
       width={rect.width}
       height={rect.height}
-      fill="rgb(36, 48, 58)"
+      fill={GRAPH_BACKGROUND}
       onClick={
         () => {
           onSelectGraph(null)
@@ -87,7 +87,7 @@ export const GraphCanvas = component(
           {graphs.map((graph) => (
             <Graph
               key={graph.key}
-              color={graph.color}
+              colors={graph.colors}
               entries={graph.values}
               id={graph.key}
               isActive={graph.isActive}
