@@ -1,6 +1,6 @@
 [
   {
-    "title": 1580733892518,
+    "title": "v1.0.0",
     "values": {
       "firstContentfulPaint": 3187.882499973057,
       "firstMeaningfulPaint": 3587.8790000081062,
@@ -14,7 +14,7 @@
     }
   },
   {
-    "title": 1580734037821,
+    "title": "v1.0.1",
     "values": {
       "firstContentfulPaint": 3915.720000001602,
       "firstMeaningfulPaint": 3615.721499979496,
@@ -28,7 +28,7 @@
     }
   },
   {
-    "title": 1580735535459,
+    "title": "v1.0.2",
     "values": {
       "firstContentfulPaint": 3498.2249999593478,
       "firstMeaningfulPaint": 3498.223499983549,
@@ -42,7 +42,7 @@
     }
   },
   {
-    "title": 1580736014828,
+    "title": "v1.1.0",
     "values": {
       "firstContentfulPaint": 3313.8850000395905,
       "firstMeaningfulPaint": 3313.8839999735355,
@@ -56,7 +56,7 @@
     }
   },
   {
-    "title": 1580736328150,
+    "title": "v1.1.1",
     "values": {
       "firstContentfulPaint": 3435.200000007171,
       "firstMeaningfulPaint": 3435.1995000243187,
@@ -70,7 +70,7 @@
     }
   },
   {
-    "title": 1580736494606,
+    "title": "v1.1.2",
     "values": {
       "firstContentfulPaint": 3253.7000000302214,
       "firstMeaningfulPaint": 3253.697000026703,
@@ -84,7 +84,7 @@
     }
   },
   {
-    "title": 1580741399253,
+    "title": "v1.2.0",
     "values": {
       "firstContentfulPaint": 3174.379999982193,
       "firstMeaningfulPaint": 3174.3825000226498,

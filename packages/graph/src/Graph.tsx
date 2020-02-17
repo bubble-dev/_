@@ -29,9 +29,10 @@ export const Graph = component(
   }),
   // TODO values?
   mapWithPropsMemo(({ rect, entries }) => {
-    const MAX_ENTRIES = Math.round(rect.height / MAX_ENTRIES_STEP)
+    const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
     const slicedEntries = entries.length > MAX_ENTRIES ? entries.slice(-MAX_ENTRIES) : entries
-    const values = entries.map((item) => item.value)
+
+    const values = slicedEntries.map((item) => item.value)
     const minValue = Math.min(...values)
     const maxValue = Math.max(...values)
 
@@ -63,7 +64,7 @@ export const Graph = component(
     })
 
     return {
-      points,
+      points: points.slice(0).reverse(),
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
   }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY'])

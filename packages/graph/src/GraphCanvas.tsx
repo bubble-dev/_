@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, ChangeEvent } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraph } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, GRAPH_BACKGROUND } from './constants'
+import { CANVAS_PADDING, GRAPH_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
 export type TGraphCanvas = {
   graphs: TGraph[],
@@ -12,8 +12,9 @@ export type TGraphCanvas = {
   scale: number,
   selectedGraph: string | null,
   width: number,
-  onSelectGraph: (key: string | null) => void,
   onHoverGraph: (key: string | null) => void,
+  onSelectGraph: (key: string | null) => void,
+  onSliderChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
 export const GraphCanvas = component(
@@ -21,9 +22,9 @@ export const GraphCanvas = component(
   mapWithPropsMemo(({ width, height }) => {
     const rect = {
       x: CANVAS_PADDING,
-      y: CANVAS_PADDING,
+      y: 0,
       width: width - CANVAS_PADDING * 2,
-      height: height - CANVAS_PADDING * 2,
+      height: height - CANVAS_PADDING,
     }
 
     return {
@@ -60,49 +61,69 @@ export const GraphCanvas = component(
   scale,
   width,
   selectedGraph,
-  onSelectGraph,
   onHoverGraph,
+  onSelectGraph,
+  onSliderChange,
 }) => (
-  <svg width={width} height={height}>
-    <rect
-      x={rect.x}
-      y={rect.y}
-      width={rect.width}
-      height={rect.height}
-      fill={GRAPH_BACKGROUND}
-      onClick={
+  <div style={{ position: 'absolute', top: CONTROLS_HEIGHT }}>
+    <svg
+      width={width}
+      height={height}
+    >
+      <rect
+        x={rect.x}
+        y={rect.y}
+        width={rect.width}
+        height={rect.height}
+        fill={GRAPH_BACKGROUND}
+        onClick={
         () => {
           onSelectGraph(null)
         }
       }
+      />
+      <Animation
+        easing={easeInOutCubic}
+        time={350}
+        values={[scale]}
+      >
+        {([scale]) => (
+          <Fragment>
+            {graphs.map((graph) => (
+              <Graph
+                key={graph.key}
+                colors={graph.colors}
+                entries={graph.values}
+                id={graph.key}
+                isActive={graph.isActive}
+                rect={rect}
+                scale={scale}
+                shouldShowDots={selectedGraph !== null && selectedGraph === graph.key}
+                onHover={onHoverGraph}
+                onSelect={onSelectGraph}
+              />
+            ))}
+
+          </Fragment>
+        )}
+      </Animation>
+    </svg>
+    <input
+      style={{
+        position: 'absolute',
+        height: 15,
+        width: 130,
+        top: 100,
+        left: width - 110,
+        transform: 'rotate(270deg)',
+      }}
+      type="range"
+      min="10"
+      max="100"
+      value={scale}
+      onChange={onSliderChange}
     />
-
-    <Animation
-      easing={easeInOutCubic}
-      time={350}
-      values={[scale]}
-    >
-      {([scale]) => (
-        <Fragment>
-          {graphs.map((graph) => (
-            <Graph
-              key={graph.key}
-              colors={graph.colors}
-              entries={graph.values}
-              id={graph.key}
-              isActive={graph.isActive}
-              rect={rect}
-              scale={scale}
-              shouldShowDots={selectedGraph !== null && selectedGraph === graph.key}
-              onHover={onHoverGraph}
-              onSelect={onSelectGraph}
-            />
-          ))}
-
-        </Fragment>
-      )}
-    </Animation>
-  </svg>
+  </div>
 ))
 
 GraphCanvas.displayName = 'GraphCanvas'

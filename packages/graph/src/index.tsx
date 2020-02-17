@@ -1,9 +1,10 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout, onMount } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout, onMount, mapRefLayout } from 'refun'
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
+import { GraphControls } from './GraphControls'
 import { TGraph } from './types'
-import { PAGE_BACKGROUND } from './constants'
+import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
 export type TApp = {
   graphs: TGraph[],
@@ -39,12 +40,15 @@ export const App = component(
   })),
   mapDebouncedHandlerTimeout('onHoverGraph', 100),
   mapWithPropsMemo(({ graphs }) => ({
-    graphKeys: graphs.map((graph) => graph.key),
+    graphControls: graphs.map((graph) => ({
+      key: graph.key,
+      colors: graph.colors,
+    })),
   }), ['graphs'])
 )(({
   graphs,
+  graphControls,
   scale,
-  graphKeys,
   selectedGraph,
   hoveredGraph,
   onSelectGraph,
@@ -53,53 +57,23 @@ export const App = component(
 }) => (
   <Root>
     {({ width, height }) => (
-      <div style={{ display: 'block', background: PAGE_BACKGROUND }}>
-        <input
-          style={{ position: 'absolute' }}
-          type="range"
-          min="0"
-          max="100"
-          value={scale}
-          onChange={onSliderChange}
+      <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
+        <GraphControls
+          graphControls={graphControls}
+          onSelectGraph={onSelectGraph}
+          selectedGraph={selectedGraph}
+          width={width}
         />
-        {/* // TODO controls view */}
-        <div style={{ position: 'absolute', display: 'none' }}>
-          {graphKeys.map((name: string) => (
-            <button
-              style={{
-                fontSize: '14px',
-                margin: '2px',
-                border: `3px solid ${(selectedGraph === name || hoveredGraph === name) ? 'red' : 'pink'}`,
-              }}
-              key={name}
-              onClick={() => {
-                onSelectGraph(name)
-              }}
-            >
-              {name}
-            </button>
-          ))}
-          <br/>
-          <br/>
-          <button
-            style={{ fontSize: '14px', position: 'absolute', right: 0 }}
-            key={name}
-            onClick={() => {
-              onSelectGraph(null)
-            }}
-          >
-            Show All
-          </button>
-        </div>
         <GraphCanvas
           graphs={graphs}
-          height={height}
+          height={height - CONTROLS_HEIGHT}
           scale={scale}
           selectedGraph={selectedGraph}
           hoveredGraph={hoveredGraph}
           width={width}
-          onSelectGraph={onSelectGraph}
           onHoverGraph={onHoverGraph}
+          onSelectGraph={onSelectGraph}
+          onSliderChange={onSliderChange}
         />
       </div>
     )}

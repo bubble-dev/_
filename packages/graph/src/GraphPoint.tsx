@@ -19,8 +19,6 @@ export const GraphPoint = component(
     if (ref !== null) {
       const bBox = ref.getBBox()
 
-      console.log('TCL: bBox', bBox)
-
       return {
         textWidth: bBox.width,
         textHeight: bBox.height,
@@ -69,8 +67,13 @@ export const GraphPoint = component(
             fontFamily="monospace"
             ref={textRef}
             x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING}
-            y={y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING}
-          > {value}
+            y={y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING - TOOLTIP_FONT_SIZE - 4}
+          >
+            <tspan x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING} dy={0}>v1.1.1</tspan>
+            <tspan x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING} dy={TOOLTIP_FONT_SIZE + 4}>
+              {value}
+              (<tspan fontWeight="bold" fill="green">+5%</tspan>)
+            </tspan>
           </text>
         </g>
       )}

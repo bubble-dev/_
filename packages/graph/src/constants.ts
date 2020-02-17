@@ -1,11 +1,12 @@
-export const CANVAS_PADDING = 40
-export const MAX_ENTRIES_STEP = 30
+export const CANVAS_PADDING = 80
+export const CONTROLS_HEIGHT = 94
+export const GRAPH_BACKGROUND = '#24303a'
+export const MAX_ENTRIES_STEP = 100
+export const PAGE_BACKGROUND = '#1e2730'
 export const PATH_WIDTH = 8
 export const POINT_BORDER = 6
 export const POINT_RADIUS = 6
 export const TOOLTIP_FONT_SIZE = 16
+export const TOOLTIP_PADDING = 4
 export const TOOLTIP_X_OFFSET = 12
 export const TOOLTIP_Y_OFFSET = 12
-export const TOOLTIP_PADDING = 4
-export const PAGE_BACKGROUND = '#1e2730'
-export const GRAPH_BACKGROUND = '#24303a'
