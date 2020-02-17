@@ -7,6 +7,7 @@ import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTI
 export type TGraphPoint = {
   x: number,
   y: number,
+  valueDifference: number,
   fill: TColor,
   value: number,
   shouldShowDots: boolean,
@@ -31,12 +32,13 @@ export const GraphPoint = component(
     }
   }, ['shouldShowDots'])
 )(({
+  valueDifference,
   fill,
   shouldShowDots,
-  textRef,
-  value,
-  textWidth,
   textHeight,
+  textRef,
+  textWidth,
+  value,
   x,
   y,
   onPointerEnter,
@@ -72,7 +74,13 @@ export const GraphPoint = component(
             <tspan x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING} dy={0}>v1.1.1</tspan>
             <tspan x={x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING} dy={TOOLTIP_FONT_SIZE + 4}>
               {value}
-              (<tspan fontWeight="bold" fill="green">+5%</tspan>)
+              {valueDifference ? (
+                <tspan
+                  fontWeight="bold"
+                  fill={valueDifference > 0 ? 'red' : 'green'}
+                >({valueDifference > 0 ? `+${valueDifference}` : valueDifference})
+                </tspan>
+              ) : null}
             </tspan>
           </text>
         </g>

@@ -6,8 +6,10 @@ import { CONTROLS_HEIGHT } from './constants'
 
 export type TGraphControls = {
   graphControls: {
-    key: string,
     colors: TColor[],
+    key: string,
+    lastDifference: number,
+    name: string,
   }[],
   width: number,
   selectedGraph: string | null,
@@ -34,7 +36,7 @@ export const GraphControls = component(
         width,
       }}
     >
-      {graphControls.map(({ key: name, colors }) => (
+      {graphControls.map(({ key, name, colors, lastDifference }) => (
         <button
           style={{
             background: 'white',
@@ -46,23 +48,26 @@ export const GraphControls = component(
             borderLeft: 0,
             borderImageSource: `linear-gradient(45deg, ${colorToString(colors[0])}, ${colorToString(colors[1])})`,
             borderImageSlice: 1,
-            borderRadius: '0 0 10px 10px',
-            boxShadow: `0 0 ${selectedGraph === name ? 12 : 1}px ${colorToString(colors[0])}`,
+            boxShadow: `0 0 ${selectedGraph === key ? 12 : 1}px ${colorToString(colors[0])}`,
             cursor: 'pointer',
             fontSize: 14,
             margin: 10,
-            opacity: !selectedGraph || selectedGraph === name ? 1 : 0.5,
-            padding: '10px 15px',
+            opacity: !selectedGraph || selectedGraph === key ? 1 : 0.5,
+            padding: '0px 15px',
             position: 'relative',
-            height: 50,
+            height: 40,
             flexShrink: 0,
+            textTransform: 'capitalize',
           }}
-          key={name}
+          key={key}
           onClick={() => {
-            onSelectGraph(name)
+            onSelectGraph(key)
           }}
         >
-          {name}
+          {name}{' '}
+          <span style={{ fontWeight: 'bold', color: `${lastDifference > 0 ? 'red' : 'green'}` }}>
+            ({lastDifference > 0 ? `+${lastDifference}` : lastDifference}%)
+          </span>
         </button>
       ))}
       <button
@@ -78,7 +83,6 @@ export const GraphControls = component(
           position: 'relative',
           flexShrink: 0,
         }}
-        key={name}
         onClick={() => {
           onSelectGraph(null)
         }}

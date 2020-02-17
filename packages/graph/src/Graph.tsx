@@ -129,16 +129,22 @@ export const Graph = component(
         </Fragment>
       )}
     </Animation>
-    {points.map((point) => (
-      <GraphPoint
-        shouldShowDots={shouldShowDots}
-        key={`${point.x}-line`}
-        fill={colors[0]}
-        x={point.x}
-        y={point.y}
-        value={Math.round(point.value * 1000) / 1000}
-      />
-    ))}
+    {points.map((point, index) => {
+      const nextValue = index + 1 < points.length ? points[index + 1].value : 0
+      const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
+
+      return (
+        <GraphPoint
+          fill={colors[0]}
+          key={`${point.x}-line`}
+          shouldShowDots={shouldShowDots}
+          value={Math.round(point.value * 1000) / 1000}
+          valueDifference={differenceWithPrePoint}
+          x={point.x}
+          y={point.y}
+        />
+      )
+    })}
   </Fragment>
 ))
 

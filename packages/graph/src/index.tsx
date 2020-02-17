@@ -40,10 +40,30 @@ export const App = component(
   })),
   mapDebouncedHandlerTimeout('onHoverGraph', 100),
   mapWithPropsMemo(({ graphs }) => ({
-    graphControls: graphs.map((graph) => ({
-      key: graph.key,
-      colors: graph.colors,
-    })),
+    graphControls: graphs.map((graph) => {
+      const lastValue = graph.values[graph.values.length - 1].value
+      const preLastValue = graph.values[graph.values.length - 2].value
+      const lastDifference = Number((lastValue - preLastValue) / preLastValue * 100.0).toFixed(0)
+
+      console.log('TCL: lastDifference', lastDifference)
+
+      return {
+        colors: graph.colors,
+        key: graph.key,
+        lastDifference,
+        name: graph.key.replace(/[A-Z]/g, ' $&'),
+      }
+    }).sort((a, b) => {
+      if (a.lastDifference > b.lastDifference) {
+        return -1
+      }
+
+      if (a.lastDifference < b.lastDifference) {
+        return 1
+      }
+
+      return 0
+    }),
   }), ['graphs'])
 )(({
   graphs,
@@ -60,9 +80,9 @@ export const App = component(
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
         <GraphControls
           graphControls={graphControls}
-          onSelectGraph={onSelectGraph}
           selectedGraph={selectedGraph}
           width={width}
+          onSelectGraph={onSelectGraph}
         />
         <GraphCanvas
           graphs={graphs}
