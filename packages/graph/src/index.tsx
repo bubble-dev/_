@@ -43,9 +43,7 @@ export const App = component(
     graphControls: graphs.map((graph) => {
       const lastValue = graph.values[graph.values.length - 1].value
       const preLastValue = graph.values[graph.values.length - 2].value
-      const lastDifference = Number((lastValue - preLastValue) / preLastValue * 100.0).toFixed(0)
-
-      console.log('TCL: lastDifference', lastDifference)
+      const lastDifference = Math.round((lastValue - preLastValue) / preLastValue * 100.0)
 
       return {
         colors: graph.colors,
@@ -53,16 +51,6 @@ export const App = component(
         lastDifference,
         name: graph.key.replace(/[A-Z]/g, ' $&'),
       }
-    }).sort((a, b) => {
-      if (a.lastDifference > b.lastDifference) {
-        return -1
-      }
-
-      if (a.lastDifference < b.lastDifference) {
-        return 1
-      }
-
-      return 0
     }),
   }), ['graphs'])
 )(({

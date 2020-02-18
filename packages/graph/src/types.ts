@@ -27,3 +27,10 @@ export type TRect = {
   width: number,
   height: number,
 }
+
+export type TGraphControl = {
+  colors: [TColor, TColor],
+  key: string,
+  lastDifference: number,
+  name: string,
+}
