@@ -40,7 +40,7 @@ export const Button = component(
       boxShadow: `0 0 ${selectedGraph === idKey ? 12 : 1}px ${colorToString(colors[0])}`,
       cursor: 'pointer',
       fontSize: 14,
-      margin: 10,
+      marginLeft: 20,
       opacity: !selectedGraph || selectedGraph === idKey ? 1 : 0.5,
       padding: '0px 15px',
       position: 'relative',

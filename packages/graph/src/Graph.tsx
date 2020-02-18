@@ -4,9 +4,7 @@ import { TColor, colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TEntry, TRect } from './types'
 import { GraphPoint } from './GraphPoint'
-import { MAX_ENTRIES_STEP, POINT_RADIUS, POINT_BORDER, PATH_WIDTH } from './constants'
-
-const OFFSET = POINT_RADIUS + POINT_BORDER + PATH_WIDTH + 10
+import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
 
 export type TGraph = {
   colors: TColor[],
@@ -44,17 +42,17 @@ export const Graph = component(
     }
   }, ['rect', 'entries']),
   mapWithProps(({ rect, scale, maxValue, minValue, values }) => ({
-    stepX: (rect.width - OFFSET) / (values.length - 1),
-    stepY: (rect.height - OFFSET) * scale / 100 / Math.abs(maxValue - minValue),
+    stepX: (rect.width - GRAPH_OFFSET) / (values.length - 1),
+    stepY: (rect.height - GRAPH_OFFSET) * scale / 100 / Math.abs(maxValue - minValue),
   })),
   mapWithProps(({ stepY, rect, maxValue, minValue }) => ({
-    halfHeight: (rect.height - OFFSET) / 2,
+    halfHeight: (rect.height - GRAPH_OFFSET) / 2,
     halfPathHeight: (maxValue - minValue) * stepY / 2,
   })),
   mapWithPropsMemo(({ entries, rect, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
     const points = entries.map(({ value }, index) => {
-      const x = rect.x + stepX * index + OFFSET / 2
-      const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y - OFFSET / 2
+      const x = rect.x + stepX * index + GRAPH_OFFSET / 2
+      const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y - GRAPH_OFFSET / 2
 
       return {
         x,
@@ -103,7 +101,7 @@ export const Graph = component(
           <polygon
             style={{ pointerEvents: 'none' }}
             opacity={polygonOpacity}
-            points={`${rect.x + OFFSET / 2}, ${rect.height + rect.y - OFFSET / 2} ${pointsString} ${rect.width + rect.x - OFFSET / 2}, ${rect.height + rect.y - OFFSET / 2}`}
+            points={`${rect.x + GRAPH_OFFSET / 2}, ${rect.height + rect.y - GRAPH_OFFSET / 2} ${pointsString} ${rect.width + rect.x - GRAPH_OFFSET / 2}, ${rect.height + rect.y - GRAPH_OFFSET / 2}`}
             stroke="none"
             fill={`url(#gradient-${id})`}
           />
@@ -136,6 +134,7 @@ export const Graph = component(
       return (
         <GraphPoint
           fill={colors[0]}
+          isLast={index === 0}
           key={`${point.x}-line`}
           shouldShowDots={shouldShowDots}
           value={Math.round(point.value * 1000) / 1000}

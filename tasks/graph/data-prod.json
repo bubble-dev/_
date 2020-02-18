@@ -10,7 +10,11 @@
       "scriptDuration": 510.35450000000003,
       "layoutDuration": 1152.0145,
       "recalcStyleDuration": 1199.389,
-      "usedJsHeapSize": 26.44464874267578
+      "usedJsHeapSize": 26.44464874267578,
+      "vendorSize": 138429,
+      "vendorSizeGzip": 43658,
+      "mainSize": 350,
+      "mainSizeGzip": 257
     }
   },
   {
@@ -24,7 +28,11 @@
       "scriptDuration": 521.726,
       "layoutDuration": 1170.1580000000001,
       "recalcStyleDuration": 1102.4385,
-      "usedJsHeapSize": 26.444644927978516
+      "usedJsHeapSize": 28.444644927978516,
+      "vendorSize": 158429,
+      "vendorSizeGzip": 53658,
+      "mainSize": 150,
+      "mainSizeGzip": 157
     }
   },
   {
@@ -38,7 +46,11 @@
       "scriptDuration": 530.183,
       "layoutDuration": 1366.185,
       "recalcStyleDuration": 1240.262,
-      "usedJsHeapSize": 26.44464111328125
+      "usedJsHeapSize": 26.44464111328125,
+      "vendorSize": 188429,
+      "vendorSizeGzip": 83658,
+      "mainSize": 750,
+      "mainSizeGzip": 857
     }
   },
   {
@@ -52,7 +64,11 @@
       "scriptDuration": 505.805,
       "layoutDuration": 1241.8535,
       "recalcStyleDuration": 1243.8195,
-      "usedJsHeapSize": 26.44464874267578
+      "usedJsHeapSize": 26.44464874267578,
+      "vendorSize": 138429,
+      "vendorSizeGzip": 43658,
+      "mainSize": 350,
+      "mainSizeGzip": 257
     }
   },
   {
@@ -66,7 +82,11 @@
       "scriptDuration": 515.5899999999999,
       "layoutDuration": 1330.922,
       "recalcStyleDuration": 1169.299,
-      "usedJsHeapSize": 26.44464874267578
+      "usedJsHeapSize": 26.44464874267578,
+      "vendorSize": 98429,
+      "vendorSizeGzip": 13658,
+      "mainSize": 150,
+      "mainSizeGzip": 157
     }
   },
   {
@@ -80,7 +100,11 @@
       "scriptDuration": 509.0475,
       "layoutDuration": 1176.3709999999999,
       "recalcStyleDuration": 1191.4375,
-      "usedJsHeapSize": 26.44464111328125
+      "usedJsHeapSize": 26.44464111328125,
+      "vendorSize": 138429,
+      "vendorSizeGzip": 43658,
+      "mainSize": 350,
+      "mainSizeGzip": 257
     }
   },
   {
@@ -94,7 +118,11 @@
       "scriptDuration": 504.7244999999999,
       "layoutDuration": 1228.791,
       "recalcStyleDuration": 1128.4895,
-      "usedJsHeapSize": 32.44464874267578
+      "usedJsHeapSize": 32.44464874267578,
+      "vendorSize": 188429,
+      "vendorSizeGzip": 73658,
+      "mainSize": 550,
+      "mainSizeGzip": 357
     }
   }
 ]

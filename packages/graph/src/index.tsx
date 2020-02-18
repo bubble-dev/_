@@ -69,7 +69,6 @@ export const App = component(
         <GraphControls
           graphControls={graphControls}
           selectedGraph={selectedGraph}
-          width={width}
           onSelectGraph={onSelectGraph}
         />
         <GraphCanvas
