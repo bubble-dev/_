@@ -50,7 +50,7 @@ export const Graph = component(
     halfPathHeight: (maxValue - minValue) * stepY / 2,
   })),
   mapWithPropsMemo(({ entries, rect, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
-    const points = entries.map(({ value }, index) => {
+    const points = entries.map(({ value, release }, index) => {
       const x = rect.x + stepX * index + GRAPH_OFFSET / 2
       const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y - GRAPH_OFFSET / 2
 
@@ -58,6 +58,7 @@ export const Graph = component(
         x,
         y,
         value,
+        release,
       }
     })
 
@@ -136,6 +137,7 @@ export const Graph = component(
           fill={colors[0]}
           isLast={index === 0}
           key={`${point.x}-line`}
+          release={point.release}
           shouldShowDots={shouldShowDots}
           value={Math.round(point.value * 1000) / 1000}
           valueDifference={differenceWithPrePoint}

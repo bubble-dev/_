@@ -1,13 +1,16 @@
 import { TColor } from 'colorido'
 
+//TODO check all types
 export type TEntry = {
   version: string,
   value: number,
+  release: string,
 }
 
 export type TGraphValue = {
   version: string,
   value: number,
+  release: string,
 }
 
 export type TGraph = {

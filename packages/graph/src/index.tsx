@@ -1,5 +1,13 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo, mapState, mapHandlers, mapDebouncedHandlerTimeout, onMount, mapRefLayout } from 'refun'
+import {
+  component,
+  mapDebouncedHandlerTimeout,
+  mapHandlers,
+  mapState,
+  mapWithPropsMemo,
+  onMount,
+  startWithType,
+} from 'refun'
 import { Root } from '@primitives/root'
 import { GraphCanvas } from './GraphCanvas'
 import { GraphControls } from './GraphControls'

@@ -7,6 +7,7 @@ import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTI
 export type TGraphPoint = {
   fill: TColor,
   isLast: boolean,
+  release: string,
   shouldShowDots: boolean,
   value: number,
   valueDifference: number,
@@ -79,6 +80,7 @@ export const GraphPoint = component(
   })
 )(({
   fill,
+  release,
   shouldShowDots,
   textRef,
   tooltip,
@@ -116,7 +118,7 @@ export const GraphPoint = component(
             y={tooltip.textY}
           >
             <tspan x={tooltip.spanX} dy={0}>
-              v1.1.1
+              {release}
             </tspan>
             <tspan
               x={tooltip.spanX}
@@ -141,20 +143,20 @@ export const GraphPoint = component(
     >
       {([radius]) => (
         <circle
-          opacity={shouldShowDots ? 1 : 0}
           cursor="pointer"
           cx={x}
           cy={y}
           fill={colorToString(fill)}
+          opacity={shouldShowDots ? 1 : 0}
           stroke="white"
           strokeWidth={POINT_BORDER}
+          r={radius}
           onPointerEnter={() => {
             onPointerEnter()
           }}
           onPointerLeave={() => {
             onPointerLeave()
           }}
-          r={radius}
         />
       )}
     </Animation>
