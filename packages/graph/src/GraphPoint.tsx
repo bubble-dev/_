@@ -38,15 +38,50 @@ export const GraphPoint = component(
     return {
       isTop,
     }
+  }),
+  mapWithProps(({
+    isLast,
+    isTop,
+    textHeight,
+    textWidth,
+    x,
+    y,
+  }) => {
+    const box = {
+      x: (isLast
+        ? x - textWidth - TOOLTIP_X_OFFSET - TOOLTIP_PADDING * 2
+        : x + TOOLTIP_X_OFFSET),
+      y: (isTop
+        ? y + TOOLTIP_Y_OFFSET - 4
+        : y - textHeight + 4 - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING * 2),
+      width: textWidth + TOOLTIP_PADDING * 2,
+      height: textHeight + TOOLTIP_PADDING * 2,
+    }
+
+    const textY = isTop
+      ? y + TOOLTIP_Y_OFFSET + TOOLTIP_PADDING + TOOLTIP_FONT_SIZE - 6
+      : y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING - TOOLTIP_FONT_SIZE - 4
+
+    const spanX = isLast
+      ? x - textWidth - TOOLTIP_X_OFFSET - TOOLTIP_PADDING
+      : x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING
+
+    const spanY = TOOLTIP_FONT_SIZE + 4
+
+    return {
+      tooltip: {
+        box,
+        textY,
+        spanX,
+        spanY,
+      },
+    }
   })
 )(({
   fill,
-  isLast,
-  isTop,
   shouldShowDots,
-  textHeight,
   textRef,
-  textWidth,
+  tooltip,
   value,
   valueDifference,
   x,
@@ -66,48 +101,26 @@ export const GraphPoint = component(
           style={{ pointerEvents: shouldShowDots ? 'auto' : 'none' }}
         >
           <rect
-            x={isLast
-              ? x - textWidth - TOOLTIP_X_OFFSET - TOOLTIP_PADDING * 2
-              : x + TOOLTIP_X_OFFSET
-            }
-            y={
-              isTop
-                ? y + TOOLTIP_Y_OFFSET - 4
-                : y - textHeight + 4 - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING * 2
-              }
+            x={tooltip.box.x}
+            y={tooltip.box.y}
             rx="4"
             ry="4"
-            width={textWidth + TOOLTIP_PADDING * 2}
-            height={textHeight + TOOLTIP_PADDING * 2}
+            width={tooltip.box.width}
+            height={tooltip.box.height}
             fill="rgba(255,255,255,0.8)"
           />
           <text
             fontSize={TOOLTIP_FONT_SIZE}
             fontFamily="monospace"
             ref={textRef}
-            x={isLast
-              ? x - 50
-              : x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING
-              }
-            y={isTop
-              ? y + TOOLTIP_Y_OFFSET + TOOLTIP_PADDING + TOOLTIP_FONT_SIZE - 6
-              : y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING - TOOLTIP_FONT_SIZE - 4
-              }
+            y={tooltip.textY}
           >
-            <tspan
-              x={isLast
-                ? x - textWidth - TOOLTIP_X_OFFSET - TOOLTIP_PADDING
-                : x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING
-              }
-              dy={0}
-            >v1.1.1
+            <tspan x={tooltip.spanX} dy={0}>
+              v1.1.1
             </tspan>
             <tspan
-              x={isLast
-                ? x - textWidth - TOOLTIP_X_OFFSET - TOOLTIP_PADDING
-                : x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING
-                }
-              dy={TOOLTIP_FONT_SIZE + 4}
+              x={tooltip.spanX}
+              dy={tooltip.spanY}
             >
               {value}
               {valueDifference ? (
@@ -132,7 +145,7 @@ export const GraphPoint = component(
           cursor="pointer"
           cx={x}
           cy={y}
-          fill={isTop ? 'red' : colorToString(fill)}
+          fill={colorToString(fill)}
           stroke="white"
           strokeWidth={POINT_BORDER}
           onPointerEnter={() => {
