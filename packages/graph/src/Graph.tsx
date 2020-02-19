@@ -3,7 +3,7 @@ import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultPro
 import { TColor, colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TEntry, TRect } from './types'
-import { GraphPoint } from './GraphPoint'
+import { Point } from './Point'
 import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
 
 export type TGraph = {
@@ -133,7 +133,7 @@ export const Graph = component(
       const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
 
       return (
-        <GraphPoint
+        <Point
           fill={colors[0]}
           isLast={index === 0}
           key={`${point.x}-line`}

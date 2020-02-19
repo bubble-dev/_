@@ -9,8 +9,8 @@ import {
   startWithType,
 } from 'refun'
 import { Root } from '@primitives/root'
-import { GraphCanvas } from './GraphCanvas'
-import { GraphControls } from './GraphControls'
+import { Canvas } from './Canvas'
+import { Controls } from './Controls'
 import { TGraph } from './types'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
@@ -74,12 +74,12 @@ export const App = component(
   <Root>
     {({ width, height }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
-        <GraphControls
+        <Controls
           graphControls={graphControls}
           selectedGraph={selectedGraph}
           onSelectGraph={onSelectGraph}
         />
-        <GraphCanvas
+        <Canvas
           graphs={graphs}
           height={height - CONTROLS_HEIGHT}
           scale={scale}

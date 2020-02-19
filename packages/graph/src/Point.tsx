@@ -4,7 +4,7 @@ import { TColor, colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING, GRAPH_OFFSET } from './constants'
 
-export type TGraphPoint = {
+export type TPoint = {
   fill: TColor,
   isLast: boolean,
   release: string,
@@ -15,8 +15,8 @@ export type TGraphPoint = {
   y: number,
 } & TMapHovered
 
-export const GraphPoint = component(
-  startWithType<TGraphPoint>(),
+export const Point = component(
+  startWithType<TPoint>(),
   mapHovered,
   mapRefLayout('textRef', (ref) => {
     if (ref !== null) {
@@ -163,4 +163,4 @@ export const GraphPoint = component(
   </Fragment>
 ))
 
-GraphPoint.displayName = 'GraphPoint'
+Point.displayName = 'Point'

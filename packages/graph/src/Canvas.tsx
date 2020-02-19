@@ -5,7 +5,7 @@ import { TGraph } from './types'
 import { Graph } from './Graph'
 import { CANVAS_PADDING, GRAPH_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
-export type TGraphCanvas = {
+export type TCanvas = {
   graphs: TGraph[],
   height: number,
   hoveredGraph: string | null,
@@ -17,8 +17,8 @@ export type TGraphCanvas = {
   onSliderChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
-export const GraphCanvas = component(
-  startWithType<TGraphCanvas>(),
+export const Canvas = component(
+  startWithType<TCanvas>(),
   mapWithPropsMemo(({ width, height }) => {
     const rect = {
       x: CANVAS_PADDING,
@@ -125,4 +125,4 @@ export const GraphCanvas = component(
   </div>
 ))
 
-GraphCanvas.displayName = 'GraphCanvas'
+Canvas.displayName = 'Canvas'
