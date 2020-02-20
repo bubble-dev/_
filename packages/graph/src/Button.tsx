@@ -1,13 +1,7 @@
 import React from 'react'
 import { component, startWithType, mapRef, onUpdate } from 'refun'
 import { colorToString } from 'colorido'
-import { TGraphControl } from './types'
-
-export type TButton = {
-  idKey: string,
-  selectedGraph: string | null,
-  onSelectGraph: (key: string | null) => void,
-} & TGraphControl
+import { TButton } from './types'
 
 export const Button = component(
   startWithType<TButton>(),
@@ -55,7 +49,7 @@ export const Button = component(
   >
     {name}{' '}
     <span style={{ fontWeight: 'bold', color: `${lastDifference > 0 ? 'red' : 'green'}` }}>
-    ({lastDifference > 0 ? `+${lastDifference}` : lastDifference}%)
+      ({lastDifference > 0 ? `+${lastDifference}` : lastDifference}%)
     </span>
   </button>
 ))

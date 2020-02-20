@@ -1,21 +1,9 @@
-import React, { Fragment, ChangeEvent } from 'react'
+import React, { Fragment } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TGraph } from './types'
+import { TCanvas } from './types'
 import { Graph } from './Graph'
 import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
-
-export type TCanvas = {
-  graphs: TGraph[],
-  height: number,
-  hoveredGraph: string | null,
-  scale: number,
-  selectedGraph: string | null,
-  width: number,
-  onHoverGraph: (key: string | null) => void,
-  onSelectGraph: (key: string | null) => void,
-  onSliderChange: (event: ChangeEvent<HTMLInputElement>) => void,
-}
 
 export const Canvas = component(
   startWithType<TCanvas>(),

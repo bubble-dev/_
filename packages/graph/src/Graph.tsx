@@ -1,25 +1,13 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps } from 'refun'
-import { TColor, colorToString } from 'colorido'
+import { colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
-import { TEntry, TRect } from './types'
+import { TGraphItem } from './types'
 import { Point } from './Point'
 import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
 
-export type TGraph = {
-  colors: TColor[],
-  entries: TEntry[],
-  id: string,
-  isActive: boolean,
-  rect: TRect,
-  scale: number,
-  shouldShowDots: boolean,
-  onHover: (key: string | null) => void,
-  onSelect: (key: string) => void,
-}
-
 export const Graph = component(
-  startWithType<TGraph>(),
+  startWithType<TGraphItem>(),
   // TODO add mapDefaultProps
   mapDefaultProps({
     shouldShowDots: false,

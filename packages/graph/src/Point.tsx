@@ -1,22 +1,12 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHovered, TMapHovered, mapRefLayout, mapWithProps } from 'refun'
-import { TColor, colorToString } from 'colorido'
+import { component, startWithType, mapHovered, mapRefLayout, mapWithProps } from 'refun'
+import { colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING, GRAPH_OFFSET } from './constants'
-
-export type TPoint = {
-  fill: TColor,
-  isLast: boolean,
-  release: string,
-  shouldShowDots: boolean,
-  value: number,
-  valueDifference: number,
-  x: number,
-  y: number,
-} & TMapHovered
+import { TGraphPoint } from './types'
 
 export const Point = component(
-  startWithType<TPoint>(),
+  startWithType<TGraphPoint>(),
   mapHovered,
   mapRefLayout('textRef', (ref) => {
     if (ref !== null) {

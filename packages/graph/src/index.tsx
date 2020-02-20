@@ -11,12 +11,8 @@ import {
 import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
 import { Controls } from './Controls'
-import { TGraph } from './types'
+import { TApp } from './types'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
-
-export type TApp = {
-  graphs: TGraph[],
-}
 
 export const App = component(
   startWithType<TApp>(),

@@ -2,13 +2,7 @@ import React from 'react'
 import { component, startWithType } from 'refun'
 import { Button } from './Button'
 import { CONTROLS_HEIGHT } from './constants'
-import { TGraphControl } from './types'
-
-export type TControls = {
-  graphControls: TGraphControl[],
-  selectedGraph: string | null,
-  onSelectGraph: (key: string | null) => void,
-}
+import { TControls } from './types'
 
 export const Controls = component(
   startWithType<TControls>()
