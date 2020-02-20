@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "@jest/types": "^24.7.0",
+    "@jest/types": "^25.0.0",
     "@start/plugin": "^1.0.0",
     "jest-cli": "^24.7.1"
   },
