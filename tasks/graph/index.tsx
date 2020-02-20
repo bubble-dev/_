@@ -15,10 +15,10 @@ const theme = {
   layoutDuration: [[230, 126, 34, 1], [230, 224, 34, 1]] as [TColor, TColor],
   recalcStyleDuration: [[88, 131, 250, 1], [88, 211, 250, 1]] as [TColor, TColor],
   usedJsHeapSize: [[22, 160, 133, 1], [83, 228, 200, 1]] as [TColor, TColor],
-  vendorSize: [[90, 68, 173, 1], [153, 100, 175, 1]] as [TColor, TColor],
-  vendorSizeGzip: [[230, 126, 34, 1], [230, 224, 34, 1]] as [TColor, TColor],
-  mainSize: [[88, 131, 250, 1], [88, 211, 250, 1]] as [TColor, TColor],
-  mainSizeGzip: [[22, 160, 133, 1], [83, 228, 200, 1]] as [TColor, TColor],
+  vendorSize: [[232, 67, 147, 1], [253, 121, 168, 1]] as [TColor, TColor],
+  vendorSizeGzip: [[16, 172, 132, 1], [29, 209, 161, 1]] as [TColor, TColor],
+  mainSize: [[128, 142, 155, 1], [210, 218, 226, 1]] as [TColor, TColor],
+  mainSizeGzip: [[234, 181, 66, 1], [250, 211, 144, 1]] as [TColor, TColor],
 }
 const graphs = data.reduce((acc, cur) => {
   for (const [key, value] of getObjectEntries(cur.values)) {
