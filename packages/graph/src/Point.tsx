@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapHovered, mapRefLayout, mapWithProps } from 'refun'
+import { component, startWithType, mapHovered, mapRefLayout, mapWithProps, mapDefaultProps } from 'refun'
 import { colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { POINT_BORDER, POINT_RADIUS, TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING, GRAPH_OFFSET } from './constants'
@@ -8,6 +8,10 @@ import { TGraphPoint } from './types'
 export const Point = component(
   startWithType<TGraphPoint>(),
   mapHovered,
+  mapDefaultProps({
+    shouldShowDots: false,
+    isLast: false,
+  }),
   mapRefLayout('textRef', (ref) => {
     if (ref !== null) {
       const bBox = ref.getBBox()

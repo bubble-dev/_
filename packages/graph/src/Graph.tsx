@@ -8,12 +8,10 @@ import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
 
 export const Graph = component(
   startWithType<TGraphItem>(),
-  // TODO add mapDefaultProps
   mapDefaultProps({
     shouldShowDots: false,
-    isSelected: false,
+    isActive: false,
   }),
-  // TODO values?
   mapWithPropsMemo(({ rect, entries }) => {
     const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
     const slicedEntries = entries.length > MAX_ENTRIES ? entries.slice(-MAX_ENTRIES) : entries
