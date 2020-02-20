@@ -8,16 +8,10 @@ export type TEntry = {
   release: string,
 }
 
-export type TGraphValue = {
-  version: string,
-  value: number,
-  release: string,
-}
-
 export type TGraph = {
   key: string,
   colors: [TColor, TColor],
-  values: TGraphValue[],
+  values: TEntry[],
 }
 
 export type TPoint = {
