@@ -20,7 +20,7 @@
     "@babel/runtime": "^7.4.2",
     "@jest/types": "^24.7.0",
     "@start/plugin": "^1.0.0",
-    "jest-cli": "^24.7.1"
+    "jest-cli": "^25.0.0"
   },
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
