@@ -1,6 +1,5 @@
 export const CANVAS_PADDING = 80
 export const CONTROLS_HEIGHT = 94
-export const GRAPH_BACKGROUND = '#24303a'
 export const MAX_ENTRIES_STEP = 100
 export const PAGE_BACKGROUND = '#1e2730'
 export const PATH_WIDTH = 8

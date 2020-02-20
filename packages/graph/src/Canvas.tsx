@@ -3,7 +3,7 @@ import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraph } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, GRAPH_BACKGROUND, CONTROLS_HEIGHT } from './constants'
+import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
 export type TCanvas = {
   graphs: TGraph[],
@@ -84,18 +84,18 @@ export const Canvas = component(
       width={width}
       height={height}
     >
-      {/* <rect
-        x={rect.x}
+      <rect
+        x={0}
         y={rect.y}
-        width={rect.width}
+        width="100%"
         height={rect.height}
-        fill={GRAPH_BACKGROUND}
+        fill={PAGE_BACKGROUND}
         onClick={
         () => {
           onSelectGraph(null)
         }
       }
-      /> */}
+      />
       <Animation
         easing={easeInOutCubic}
         time={350}
