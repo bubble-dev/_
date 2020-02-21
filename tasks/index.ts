@@ -27,11 +27,17 @@ export const sandbox = Sandbox({
 })
 
 export const graph = () => {
-  return plugin('graph', () => async () => {
+  return plugin('graph', ({ logMessage }) => async () => {
     const { run } = await import('@rebox/web')
     const entryPointPath = './tasks/graph/index.tsx'
     const htmlTemplatePath = './tasks/graph/index.html'
 
-    await run({ entryPointPath, htmlTemplatePath })
+    await run({
+      entryPointPath,
+      htmlTemplatePath,
+      isQuiet: true,
+    })
+
+    logMessage('http://localhost:3000/')
   })
 }
