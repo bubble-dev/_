@@ -5,7 +5,7 @@ import { TMapHovered } from 'refun'
 export type TEntry = {
   version: string,
   value: number,
-  release: string,
+  timestamp: number,
 }
 
 export type TGraph = {
@@ -77,7 +77,7 @@ export type TGraphPoint = {
   fill: TColor,
   isFirst: boolean,
   isLast: boolean,
-  release: string,
+  version: string,
   shouldShowDots: boolean,
   value: number,
   valueDifference: number,

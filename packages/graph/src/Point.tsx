@@ -78,7 +78,7 @@ export const Point = component(
   isFirst,
   isHovered,
   isLast,
-  release,
+  version,
   shouldShowDots,
   textRef,
   tooltip,
@@ -89,73 +89,72 @@ export const Point = component(
   onPointerEnter,
   onPointerLeave,
 }) => (
-  console.log('TCL: isHovered', isHovered, isLast),
-    <Fragment>
-      <Animation
-        easing={easeInOutCubic}
-        time={300}
-        values={[isHovered || (shouldShowDots && isLast) || (shouldShowDots && isFirst) ? 1 : 0]}
-      >
-        {([opacity]) => (
-          <g
-            opacity={opacity}
-            style={{ pointerEvents: shouldShowDots ? 'auto' : 'none' }}
-          >
-            <rect
-              x={tooltip.box.x}
-              y={tooltip.box.y}
-              rx="4"
-              ry="4"
-              width={tooltip.box.width}
-              height={tooltip.box.height}
-              fill="rgba(255,255,255,0.8)"
-            />
-            <text
-              fontSize={TOOLTIP_FONT_SIZE}
-              fontFamily="monospace"
-              ref={textRef}
-              y={tooltip.textY}
-            >
-              <tspan x={tooltip.spanX} dy={0}>
-                {release}
-              </tspan>
-              <tspan
-                x={tooltip.spanX}
-                dy={tooltip.spanY}
-              >
-                {value}
-                {valueDifference ? (
-                  <tspan
-                    fill={valueDifference > 0 ? 'red' : 'green'}
-                  >({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
-                  </tspan>
-                ) : null}
-              </tspan>
-            </text>
-          </g>
-        )}
-      </Animation>
-      <Animation
-        easing={easeInOutCubic}
-        time={300}
-        values={[shouldShowDots ? POINT_RADIUS : 0]}
-      >
-        {([radius]) => (
-          <circle
-            cursor="pointer"
-            cx={x}
-            cy={y}
-            fill={colorToString(fill)}
-            opacity={shouldShowDots ? 1 : 0}
-            stroke="white"
-            strokeWidth={POINT_BORDER}
-            r={radius}
-            onPointerEnter={onPointerEnter}
-            onPointerLeave={onPointerLeave}
+  <Fragment>
+    <Animation
+      easing={easeInOutCubic}
+      time={300}
+      values={[isHovered || (shouldShowDots && isLast) || (shouldShowDots && isFirst) ? 1 : 0]}
+    >
+      {([opacity]) => (
+        <g
+          opacity={opacity}
+          style={{ pointerEvents: shouldShowDots ? 'auto' : 'none' }}
+        >
+          <rect
+            x={tooltip.box.x}
+            y={tooltip.box.y}
+            rx="4"
+            ry="4"
+            width={tooltip.box.width}
+            height={tooltip.box.height}
+            fill="rgba(255, 255, 255, 0.8)"
           />
-        )}
-      </Animation>
-    </Fragment>
+          <text
+            fontSize={TOOLTIP_FONT_SIZE}
+            fontFamily="monospace"
+            ref={textRef}
+            y={tooltip.textY}
+          >
+            <tspan x={tooltip.spanX} dy={0}>
+              {version}
+            </tspan>
+            <tspan
+              x={tooltip.spanX}
+              dy={tooltip.spanY}
+            >
+              {value}
+              {valueDifference ? (
+                <tspan
+                  fill={valueDifference > 0 ? 'red' : 'green'}
+                >({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
+                </tspan>
+              ) : null}
+            </tspan>
+          </text>
+        </g>
+      )}
+    </Animation>
+    <Animation
+      easing={easeInOutCubic}
+      time={300}
+      values={[shouldShowDots ? POINT_RADIUS : 0]}
+    >
+      {([radius]) => (
+        <circle
+          cursor="pointer"
+          cx={x}
+          cy={y}
+          fill={colorToString(fill)}
+          opacity={shouldShowDots ? 1 : 0}
+          stroke="white"
+          strokeWidth={POINT_BORDER}
+          r={radius}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
+        />
+      )}
+    </Animation>
+  </Fragment>
 ))
 
 Point.displayName = 'Point'

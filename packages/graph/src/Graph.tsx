@@ -5,6 +5,7 @@ import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraphItem } from './types'
 import { Point } from './Point'
 import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
+import { getPastMonthsDate } from './utils'
 
 export const Graph = component(
   startWithType<TGraphItem>(),
@@ -13,26 +14,39 @@ export const Graph = component(
     isActive: false,
   }),
   mapWithPropsMemo(({ rect, entries }) => {
-    const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
-    const entriesCount = Math.ceil(entries.length / MAX_ENTRIES)
-    const slicedEntries = entries.filter((_, index) => {
-      if (index === 0) {
-        return true
-      }
+    // const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
+    const threeMonthAgoDate = getPastMonthsDate(6)
 
-      if (entries.length - 1 === index) {
-        return true
-      }
+    let timedEntries = entries.filter((entry) => {
+      const entryDate = new Date(entry.timestamp * 1000)
 
-      return index % entriesCount === 0
+      return entryDate <= threeMonthAgoDate
     })
 
-    const values = slicedEntries.map((item) => item.value)
+    if (timedEntries.length === 0) {
+      timedEntries = entries
+    }
+
+    // const entriesCount = Math.ceil(timedEntries.length / MAX_ENTRIES)
+
+    // const slicedEntries = timedEntries.filter((_, index) => {
+    //   if (index === 0) {
+    //     return true
+    //   }
+
+    //   if (entries.length - 1 === index) {
+    //     return true
+    //   }
+
+    //   return index % entriesCount === 0
+    // })
+
+    const values = timedEntries.map((item) => item.value)
     const minValue = Math.min(...values)
     const maxValue = Math.max(...values)
 
     return {
-      entries: slicedEntries,
+      entries: timedEntries,
       maxValue,
       minValue,
       values,
@@ -47,7 +61,7 @@ export const Graph = component(
     halfPathHeight: (maxValue - minValue) * stepY / 2,
   })),
   mapWithPropsMemo(({ entries, rect, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
-    const points = entries.map(({ value, release }, index) => {
+    const points = entries.map(({ value, version }, index) => {
       const x = rect.x + stepX * index + GRAPH_OFFSET / 2
       const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y - GRAPH_OFFSET / 2
 
@@ -55,7 +69,7 @@ export const Graph = component(
         x,
         y,
         value,
-        release,
+        version,
       }
     })
 
@@ -135,7 +149,7 @@ export const Graph = component(
           isLast={index === 0}
           isFirst={index === points.length - 1}
           key={`${point.x}-line`}
-          release={point.release}
+          version={point.version}
           shouldShowDots={shouldShowDots}
           value={Math.round(point.value * 1000) / 1000}
           valueDifference={differenceWithPrePoint}

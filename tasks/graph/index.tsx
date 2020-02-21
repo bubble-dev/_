@@ -30,9 +30,9 @@ const graphs = data.reduce((acc, cur) => {
 
     if (isDefined(graph)) {
       graph.values.push({
-        version: key,
+        version: cur.title,
         value,
-        release: cur.title,
+        timestamp: cur.timestamp,
       })
     } else {
       acc.push({
@@ -42,7 +42,7 @@ const graphs = data.reduce((acc, cur) => {
           {
             version: cur.title,
             value,
-            release: cur.title,
+            timestamp: cur.timestamp,
           },
         ],
       })
@@ -51,8 +51,6 @@ const graphs = data.reduce((acc, cur) => {
 
   return acc
 }, [] as TGraph[])
-
-console.log('TCL: graphs', graphs)
 
 export const App = () => (
   <Graphs graphs={graphs}/>

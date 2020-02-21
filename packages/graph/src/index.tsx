@@ -16,7 +16,7 @@ import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 
 export const App = component(
   startWithType<TApp>(),
-  mapState('scale', 'setScale', () => 1, []),
+  mapState('scale', 'setScale', () => 0, []),
   mapHandlers({
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)

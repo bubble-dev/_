@@ -53,22 +53,9 @@ export const Canvas = component(
   onSelectGraph,
   onSliderChange,
 }) => (
-  <div style={{ position: 'absolute', height, top: CONTROLS_HEIGHT }}>
-    <input
-      style={{
-        position: 'absolute',
-        width: 130,
-        top: 100,
-        left: rect.width + 50,
-        transform: 'rotate(270deg)',
-      }}
-      type="range"
-      min="10"
-      max="100"
-      value={scale}
-      onChange={onSliderChange}
-    />
+  <Fragment>
     <svg
+      style={{ position: 'absolute', top: CONTROLS_HEIGHT }}
       width={width}
       height={height}
     >
@@ -86,7 +73,7 @@ export const Canvas = component(
       />
       <Animation
         easing={easeInOutCubic}
-        time={350}
+        time={200}
         values={[scale]}
       >
         {([scale]) => (
@@ -110,7 +97,21 @@ export const Canvas = component(
         )}
       </Animation>
     </svg>
-  </div>
+    <input
+      style={{
+        position: 'absolute',
+        width: 130,
+        top: CONTROLS_HEIGHT + 100,
+        left: rect.width + 50,
+        transform: 'rotate(270deg)',
+      }}
+      type="range"
+      min="10"
+      max="100"
+      value={scale}
+      onChange={onSliderChange}
+    />
+  </Fragment>
 ))
 
 Canvas.displayName = 'Canvas'
