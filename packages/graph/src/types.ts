@@ -75,6 +75,7 @@ export type TApp = {
 
 export type TGraphPoint = {
   fill: TColor,
+  isFirst: boolean,
   isLast: boolean,
   release: string,
   shouldShowDots: boolean,

@@ -14,7 +14,18 @@ export const Graph = component(
   }),
   mapWithPropsMemo(({ rect, entries }) => {
     const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
-    const slicedEntries = entries.length > MAX_ENTRIES ? entries.slice(-MAX_ENTRIES) : entries
+    const entriesCount = Math.ceil(entries.length / MAX_ENTRIES)
+    const slicedEntries = entries.filter((_, index) => {
+      if (index === 0) {
+        return true
+      }
+
+      if (entries.length - 1 === index) {
+        return true
+      }
+
+      return index % entriesCount === 0
+    })
 
     const values = slicedEntries.map((item) => item.value)
     const minValue = Math.min(...values)
@@ -122,6 +133,7 @@ export const Graph = component(
         <Point
           fill={colors[0]}
           isLast={index === 0}
+          isFirst={index === points.length - 1}
           key={`${point.x}-line`}
           release={point.release}
           shouldShowDots={shouldShowDots}

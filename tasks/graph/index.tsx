@@ -24,9 +24,9 @@ const graphs = data.reduce((acc, cur) => {
   for (const [key, value] of getObjectEntries(cur.values)) {
     const graph = acc.find((el) => el.key === key)
 
-    // if (key !== 'firstContentfulPaint') {
-    //   return acc
-    // }
+    if (key !== 'firstContentfulPaint') {
+      return acc
+    }
 
     if (isDefined(graph)) {
       graph.values.push({
@@ -38,13 +38,21 @@ const graphs = data.reduce((acc, cur) => {
       acc.push({
         key,
         colors: theme[key],
-        values: [],
+        values: [
+          {
+            version: cur.title,
+            value,
+            release: cur.title,
+          },
+        ],
       })
     }
   }
 
   return acc
 }, [] as TGraph[])
+
+console.log('TCL: graphs', graphs)
 
 export const App = () => (
   <Graphs graphs={graphs}/>
