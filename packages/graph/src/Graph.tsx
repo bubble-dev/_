@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps } from 'refun'
+import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultProps, mapState, mapHandlers } from 'refun'
 import { colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraphItem } from './types'
 import { Point } from './Point'
-import { MAX_ENTRIES_STEP, GRAPH_OFFSET, PATH_WIDTH } from './constants'
+import { Tooltip } from './Tooltip'
+import { GRAPH_OFFSET, PATH_WIDTH } from './constants'
 import { getPastMonthsDate } from './utils'
 
 export const Graph = component(
@@ -62,17 +63,31 @@ export const Graph = component(
       points: points.slice(0).reverse(),
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
-  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY'])
+  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY']),
+  mapState('activePoint', 'setActivePoint', () => null as string | null, []),
+  mapHandlers({
+    onPointerEnter: ({ setActivePoint }) => (id) => {
+      console.log('TCL: id', id)
+      setActivePoint(id)
+    },
+    onPointerLeave: ({ setActivePoint }) => () => {
+      setActivePoint(null)
+    },
+  })
 )(({
+  activePoint,
   colors,
   id,
   isActive,
+  monthsAgo,
   onSelect,
   points,
   pointsString,
-  shouldShowDots,
   rect,
+  shouldShowDots,
   onHover,
+  onPointerEnter,
+  onPointerLeave,
 }) => (
   <Fragment>
     <Animation
@@ -127,21 +142,36 @@ export const Graph = component(
     {points.map((point, index) => {
       const nextValue = index + 1 < points.length ? points[index + 1].value : 0
       const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
+      // const keyID = `${point.x}-${monthsAgo}-graph`
+      const keyID = `${point.x}-graph`
 
       // TODO add key + month
       return (
-        <Point
-          fill={colors[0]}
-          isLast={index === 0}
-          isFirst={index === points.length - 1}
-          key={`${point.x}-line`}
-          version={point.version}
-          shouldShowDots={shouldShowDots}
-          value={Math.round(point.value * 1000) / 1000}
-          valueDifference={differenceWithPrePoint}
-          x={point.x}
-          y={point.y}
-        />
+        <Fragment key={keyID}>
+          <Point
+            fill={colors[0]}
+            id={keyID}
+            shouldShowDots={shouldShowDots}
+            value={Math.round(point.value * 1000) / 1000}
+            valueDifference={differenceWithPrePoint}
+            version={point.version}
+            x={point.x}
+            y={point.y}
+            onPointerEnter={onPointerEnter}
+            onPointerLeave={onPointerLeave}
+          />
+          <Tooltip
+            isActive={activePoint === keyID}
+            isFirst={index === points.length - 1}
+            isLast={index === 0}
+            shouldShow={shouldShowDots}
+            value={Math.round(point.value * 1000) / 1000}
+            valueDifference={differenceWithPrePoint}
+            version={point.version}
+            x={point.x}
+            y={point.y}
+          />
+        </Fragment>
       )
     })}
   </Fragment>

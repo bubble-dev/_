@@ -78,12 +78,25 @@ export type TApp = {
 
 export type TGraphPoint = {
   fill: TColor,
+  id: string,
+  shouldShowDots: boolean,
+  value: number,
+  valueDifference: number,
+  version: string,
+  x: number,
+  y: number,
+  onPointerEnter: (id: string) => void,
+  onPointerLeave: () => void,
+}
+
+export type TTooltip = {
+  isActive: boolean,
   isFirst: boolean,
   isLast: boolean,
   version: string,
-  shouldShowDots: boolean,
+  shouldShow: boolean,
   value: number,
   valueDifference: number,
   x: number,
   y: number,
-} & TMapHovered
+}
