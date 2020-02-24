@@ -113,8 +113,6 @@ export const Tooltip = component(
   valueDifference,
   onAnimationEnd,
 }) => {
-  console.log('TCL: state', state)
-
   if (state === STATE_CLOSED) {
     return null
   }

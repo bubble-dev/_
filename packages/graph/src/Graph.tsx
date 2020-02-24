@@ -67,7 +67,6 @@ export const Graph = component(
   mapState('activePoint', 'setActivePoint', () => null as string | null, []),
   mapHandlers({
     onPointerEnter: ({ setActivePoint }) => (id) => {
-      console.log('TCL: id', id)
       setActivePoint(id)
     },
     onPointerLeave: ({ setActivePoint }) => () => {
@@ -79,7 +78,6 @@ export const Graph = component(
   colors,
   id,
   isActive,
-  monthsAgo,
   onSelect,
   points,
   pointsString,
@@ -142,10 +140,8 @@ export const Graph = component(
     {points.map((point, index) => {
       const nextValue = index + 1 < points.length ? points[index + 1].value : 0
       const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
-      // const keyID = `${point.x}-${monthsAgo}-graph`
-      const keyID = `${point.x}-graph`
+      const keyID = `${point.x}-graph-data`
 
-      // TODO add key + month
       return (
         <Fragment key={keyID}>
           <Point

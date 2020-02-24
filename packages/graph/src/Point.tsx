@@ -10,8 +10,12 @@ const STATE_OPENING = 1
 const STATE_OPENED = 2
 const STATE_CLOSING = 3
 
+type TState = typeof STATE_CLOSED | typeof STATE_OPENING | typeof STATE_OPENED | typeof STATE_CLOSING
+
 export const Point = component(
   startWithType<TGraphPoint>(),
+  // TODO here
+  // mapState('state', 'setState', ({ shouldShowDots }) => (shouldShowDots ? STATE_OPENED : STATE_CLOSED) as TState, ['shouldShowDots']),
   mapState('state', 'setState', () => STATE_CLOSED, []),
   mapHandlers({
     onAnimationEnd: ({ state, setState }) => () => {
@@ -49,6 +53,8 @@ export const Point = component(
   onPointerEnter,
   onPointerLeave,
 }) => {
+  console.log('TCL: state', state)
+
   if (state === STATE_CLOSED) {
     return null
   }
@@ -56,7 +62,7 @@ export const Point = component(
   return (
     <Animation
       easing={easeInOutCubic}
-      time={1000}
+      time={300}
       values={[state === STATE_OPENED ? POINT_RADIUS : 0]}
       onAnimationEnd={onAnimationEnd}
     >
