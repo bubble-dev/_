@@ -3,7 +3,7 @@ import { App as Graphs } from 'graph'
 import { getObjectEntries, isDefined } from 'tsfn'
 import { TGraph } from 'graph/src/types'
 import { TColor } from 'colorido'
-import data from './data-prod.json'
+import { data } from './data-prod-arr'
 
 const theme = {
   firstContentfulPaint: [[46, 134, 193, 1], [46, 193, 178, 1]] as [TColor, TColor],

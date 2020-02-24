@@ -43,6 +43,7 @@ export type TCanvas = {
   graphs: TGraph[],
   height: number,
   hoveredGraph: string | null,
+  monthsAgo: number,
   scale: number,
   selectedGraph: string | null,
   width: number,
@@ -54,6 +55,7 @@ export type TCanvas = {
 export type TControls = {
   graphControls: TGraphControl[],
   selectedGraph: string | null,
+  onMonthsAgo: (key: number) => void,
   onSelectGraph: (key: string | null) => void,
 }
 
@@ -62,6 +64,7 @@ export type TGraphItem = {
   entries: TEntry[],
   id: string,
   isActive: boolean,
+  monthsAgo: number,
   rect: TRect,
   scale: number,
   shouldShowDots: boolean,

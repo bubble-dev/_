@@ -45,6 +45,7 @@ export const Canvas = component(
 )(({
   graphs,
   height,
+  monthsAgo,
   rect,
   scale,
   width,
@@ -80,11 +81,12 @@ export const Canvas = component(
           <Fragment>
             {graphs.map((graph) => (
               <Graph
-                key={graph.key}
                 colors={graph.colors}
                 entries={graph.values}
                 id={graph.key}
                 isActive={graph.isActive}
+                key={graph.key}
+                monthsAgo={monthsAgo}
                 rect={rect}
                 scale={scale}
                 shouldShowDots={selectedGraph !== null && selectedGraph === graph.key}

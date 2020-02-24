@@ -13,33 +13,18 @@ export const Graph = component(
     shouldShowDots: false,
     isActive: false,
   }),
-  mapWithPropsMemo(({ rect, entries }) => {
-    // const MAX_ENTRIES = Math.round(rect.width / MAX_ENTRIES_STEP)
-    const threeMonthAgoDate = getPastMonthsDate(6)
+  mapWithPropsMemo(({ entries, monthsAgo }) => {
+    const monthsAgoDate = getPastMonthsDate(monthsAgo)
 
     let timedEntries = entries.filter((entry) => {
       const entryDate = new Date(entry.timestamp * 1000)
 
-      return entryDate <= threeMonthAgoDate
+      return entryDate >= monthsAgoDate
     })
 
     if (timedEntries.length === 0) {
       timedEntries = entries
     }
-
-    // const entriesCount = Math.ceil(timedEntries.length / MAX_ENTRIES)
-
-    // const slicedEntries = timedEntries.filter((_, index) => {
-    //   if (index === 0) {
-    //     return true
-    //   }
-
-    //   if (entries.length - 1 === index) {
-    //     return true
-    //   }
-
-    //   return index % entriesCount === 0
-    // })
 
     const values = timedEntries.map((item) => item.value)
     const minValue = Math.min(...values)
@@ -51,7 +36,7 @@ export const Graph = component(
       minValue,
       values,
     }
-  }, ['rect', 'entries']),
+  }, ['entries', 'monthsAgo']),
   mapWithProps(({ rect, scale, maxValue, minValue, values }) => ({
     stepX: (rect.width - GRAPH_OFFSET) / (values.length - 1),
     stepY: (rect.height - GRAPH_OFFSET) * scale / 100 / Math.abs(maxValue - minValue),
@@ -143,6 +128,7 @@ export const Graph = component(
       const nextValue = index + 1 < points.length ? points[index + 1].value : 0
       const differenceWithPrePoint = Number(nextValue ? ((point.value - nextValue) / nextValue * 100.0).toFixed(2) : 0)
 
+      // TODO add key + month
       return (
         <Point
           fill={colors[0]}

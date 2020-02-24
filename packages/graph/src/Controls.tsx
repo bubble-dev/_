@@ -10,6 +10,7 @@ export const Controls = component(
   graphControls,
   selectedGraph,
   onSelectGraph,
+  onMonthsAgo,
 }) => (
   <div style={{
     display: 'flex',
@@ -55,6 +56,27 @@ export const Controls = component(
       }}
     >
       Show all
+    </button>
+    <button
+      onClick={() => {
+        onMonthsAgo(1)
+      }}
+    >
+      1
+    </button>
+    <button
+      onClick={() => {
+        onMonthsAgo(3)
+      }}
+    >
+      3
+    </button>
+    <button
+      onClick={() => {
+        onMonthsAgo(6)
+      }}
+    >
+      6
     </button>
   </div>
 ))

@@ -17,7 +17,11 @@ import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
 export const App = component(
   startWithType<TApp>(),
   mapState('scale', 'setScale', () => 0, []),
+  mapState('monthsAgo', 'setMonthsAgo', () => 1, []),
   mapHandlers({
+    onMonthsAgo: ({ setMonthsAgo }) => (months) => {
+      setMonthsAgo(months)
+    },
     onSliderChange: ({ setScale }) => (e) => {
       setScale(e.target.value)
     },
@@ -58,14 +62,16 @@ export const App = component(
     }),
   }), ['graphs'])
 )(({
-  graphs,
   graphControls,
+  graphs,
+  hoveredGraph,
+  monthsAgo,
   scale,
   selectedGraph,
-  hoveredGraph,
-  onSelectGraph,
   onHoverGraph,
+  onSelectGraph,
   onSliderChange,
+  onMonthsAgo,
 }) => (
   <Root>
     {({ width, height }) => (
@@ -73,14 +79,16 @@ export const App = component(
         <Controls
           graphControls={graphControls}
           selectedGraph={selectedGraph}
+          onMonthsAgo={onMonthsAgo}
           onSelectGraph={onSelectGraph}
         />
         <Canvas
           graphs={graphs}
           height={height - CONTROLS_HEIGHT}
+          hoveredGraph={hoveredGraph}
+          monthsAgo={monthsAgo}
           scale={scale}
           selectedGraph={selectedGraph}
-          hoveredGraph={hoveredGraph}
           width={width}
           onHoverGraph={onHoverGraph}
           onSelectGraph={onSelectGraph}
