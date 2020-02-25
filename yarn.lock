@@ -1958,10 +1958,10 @@
   resolved "https://registry.yarnpkg.com/@types/jssha/-/jssha-2.0.0.tgz#15027ef6480c4d2c8c42762e227b23b34276e68f"
   integrity sha512-oBnY3csYnXfqZXDRBJwP1nDDJCW/+VMJ88UHT4DCy0deSXpJIQvMCwYlnmdW4M+u7PiSfQc44LmiFcUbJ8hLEw==
 
-"@types/karma@^3.0.2":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@types/karma/-/karma-3.0.7.tgz#849e455680ddef3bf26d42860f73b9e6ade4da80"
-  integrity sha512-9yEOTTG9ReMkUMs1J8cPjtiI0m+abPzu5dzqarSWn+Mb4qHYiVVt5P9h5vT7yIZgqDe/nwh96cQ/1f+oSPJP0g==
+"@types/karma@^4.0.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@types/karma/-/karma-4.4.0.tgz#84c084cb394d64b9a28d1425fb4824cd10523221"
+  integrity sha512-+b5BsyqXBHRqw7UxzTjQNgj5hjJPAIfWQyLebTOsDrWQVJCghc5j5+U9hbRayc2qfrG07FqDi9m5s3aJ4XNRcA==
   dependencies:
     "@types/bluebird" "*"
     "@types/node" "*"
