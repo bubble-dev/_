@@ -14,9 +14,7 @@ type TState = typeof STATE_CLOSED | typeof STATE_OPENING | typeof STATE_OPENED |
 
 export const Point = component(
   startWithType<TGraphPoint>(),
-  // TODO here
-  // mapState('state', 'setState', ({ shouldShowDots }) => (shouldShowDots ? STATE_OPENED : STATE_CLOSED) as TState, ['shouldShowDots']),
-  mapState('state', 'setState', () => STATE_CLOSED, []),
+  mapState('state', 'setState', ({ shouldShowDots }) => (shouldShowDots ? STATE_OPENED : STATE_CLOSED) as TState, ['shouldShowDots']),
   mapHandlers({
     onAnimationEnd: ({ state, setState }) => () => {
       if (state === STATE_CLOSING) {
@@ -53,8 +51,6 @@ export const Point = component(
   onPointerEnter,
   onPointerLeave,
 }) => {
-  console.log('TCL: state', state)
-
   if (state === STATE_CLOSED) {
     return null
   }

@@ -3,8 +3,8 @@ import { component, startWithType, mapWithProps, mapWithPropsMemo, mapDefaultPro
 import { colorToString } from 'colorido'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TGraphItem } from './types'
-import { Point } from './Point'
 import { Tooltip } from './Tooltip'
+import { Point } from './Point'
 import { GRAPH_OFFSET, PATH_WIDTH } from './constants'
 import { getPastMonthsDate } from './utils'
 
@@ -148,9 +148,6 @@ export const Graph = component(
             fill={colors[0]}
             id={keyID}
             shouldShowDots={shouldShowDots}
-            value={Math.round(point.value * 1000) / 1000}
-            valueDifference={differenceWithPrePoint}
-            version={point.version}
             x={point.x}
             y={point.y}
             onPointerEnter={onPointerEnter}

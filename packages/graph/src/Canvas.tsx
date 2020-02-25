@@ -89,12 +89,11 @@ export const Canvas = component(
                 monthsAgo={monthsAgo}
                 rect={rect}
                 scale={scale}
-                shouldShowDots={selectedGraph !== null && selectedGraph === graph.key}
+                shouldShowDots={selectedGraph === graph.key}
                 onHover={onHoverGraph}
                 onSelect={onSelectGraph}
               />
             ))}
-
           </Fragment>
         )}
       </Animation>

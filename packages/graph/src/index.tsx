@@ -35,8 +35,6 @@ export const App = component(
   mapState('hoveredGraph', 'setHoveredGraph', () => null, []),
   mapHandlers(({
     onSelectGraph: ({ selectedGraph, setSelectedGraph, setHoveredGraph }) => (name) => {
-      console.log('TCL: name', name)
-
       if (selectedGraph !== name) {
         setSelectedGraph(name)
         setHoveredGraph(name)
