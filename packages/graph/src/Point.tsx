@@ -1,66 +1,36 @@
 import React from 'react'
-import { component, startWithType, mapDefaultProps, mapState, mapHandlers, onUpdate } from 'refun'
+import { component, startWithType, mapDefaultProps, mapHandlers } from 'refun'
 import { colorToString } from 'colorido'
-import { Animation, easeInOutCubic } from '@primitives/animation'
+import { easeInOutCubic } from '@primitives/animation'
+import { Animate } from './Animate'
 import { POINT_BORDER, POINT_RADIUS } from './constants'
 import { TGraphPoint } from './types'
 
-const STATE_CLOSED = 0
-const STATE_OPENING = 1
-const STATE_OPENED = 2
-const STATE_CLOSING = 3
-
-type TState = typeof STATE_CLOSED | typeof STATE_OPENING | typeof STATE_OPENED | typeof STATE_CLOSING
-
 export const Point = component(
   startWithType<TGraphPoint>(),
-  mapState('state', 'setState', ({ shouldShow }) => (shouldShow ? STATE_OPENED : STATE_CLOSED) as TState, ['shouldShow']),
+  mapDefaultProps({
+    shouldShow: false,
+  }),
   mapHandlers({
-    onAnimationEnd: ({ state, setState }) => () => {
-      if (state === STATE_CLOSING) {
-        setState(STATE_CLOSED)
-      }
-    },
     onPointerEnter: ({ id, onPointerEnter }) => () => {
       onPointerEnter(id)
     },
-  }),
-  onUpdate(({ state, shouldShow, setState }) => {
-    if (state !== STATE_OPENED && shouldShow) {
-      setState(STATE_OPENING)
-    }
-
-    if (state !== STATE_CLOSED && !shouldShow) {
-      setState(STATE_CLOSING)
-    }
-  }, ['shouldShow']),
-  onUpdate(({ state, setState }) => {
-    if (state === STATE_OPENING) {
-      setState(STATE_OPENED)
-    }
-  }, ['state']),
-  mapDefaultProps({
-    shouldShow: false,
   })
 )(({
   fill,
-  state,
   x,
   y,
-  onAnimationEnd,
+  shouldShow,
   onPointerEnter,
   onPointerLeave,
 }) => {
-  if (state === STATE_CLOSED) {
-    return null
-  }
-
   return (
-    <Animation
+    <Animate
       easing={easeInOutCubic}
-      time={300}
-      values={[state === STATE_OPENED ? POINT_RADIUS : 0]}
-      onAnimationEnd={onAnimationEnd}
+      time={1000}
+      from={0}
+      to={POINT_RADIUS}
+      isActive={shouldShow}
     >
       {([radius]) => (
         <circle
@@ -75,7 +45,7 @@ export const Point = component(
           onPointerLeave={onPointerLeave}
         />
       )}
-    </Animation>
+    </Animate>
   )
 })
 

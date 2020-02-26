@@ -3,22 +3,22 @@ import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TCanvas } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP } from './constants'
+import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, GRAPH_OFFSET } from './constants'
 
 export const Canvas = component(
   startWithType<TCanvas>(),
   mapWithPropsMemo(({ width, height }) => {
     const rect = {
-      x: CANVAS_PADDING,
+      x: 0,
       y: 0,
-      width: width - CANVAS_PADDING * 2,
-      height: height - CANVAS_PADDING,
+      width,
+      height,
     }
 
     return {
       rect,
     }
-  }, ['width', 'height']),
+  }, []),
   mapWithPropsMemo(({ graphs, selectedGraph, hoveredGraph }) => ({
     graphs: graphs.map((graph) => {
       return {
@@ -56,8 +56,8 @@ export const Canvas = component(
 }) => (
   <Fragment>
     <svg
-      style={{ position: 'absolute', top: CONTROLS_HEIGHT_TOP }}
-      width={width}
+      style={{ position: 'absolute', left: CANVAS_PADDING, top: CONTROLS_HEIGHT_TOP }}
+      width={width - CANVAS_PADDING * 2}
       height={height}
     >
       <rect
@@ -65,7 +65,7 @@ export const Canvas = component(
         y={rect.y}
         width="100%"
         height={rect.height}
-        fill={PAGE_BACKGROUND}
+        fill={'black'}
         onClick={
         () => {
           onSelectGraph(null)
@@ -87,7 +87,8 @@ export const Canvas = component(
                 isActive={graph.isActive}
                 key={`${graph.key}-${monthsAgo}`}
                 monthsAgo={monthsAgo}
-                rect={rect}
+                width={}
+                height={}
                 scale={scale}
                 shouldShowDots={selectedGraph === graph.key}
                 onHover={onHoverGraph}

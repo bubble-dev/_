@@ -154,15 +154,13 @@ export const Graph = component(
             onPointerLeave={onPointerLeave}
           />
           <Tooltip
-            isActive={activePoint === keyID}
-            isFirst={index === points.length - 1}
-            isLast={index === 0}
-            shouldShow={shouldShowDots}
+            isActive={index === points.length - 1 || index === 0 || activePoint === keyID}
             value={Math.round(point.value * 1000) / 1000}
             valueDifference={differenceWithPrePoint}
             version={point.version}
             x={point.x}
             y={point.y}
+            viewportRect={rect}
           />
         </Fragment>
       )

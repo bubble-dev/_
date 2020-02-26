@@ -69,7 +69,8 @@ export type TGraphItem = {
   id: string,
   isActive: boolean,
   monthsAgo: number,
-  rect: TRect,
+  width: number,
+  height: number,
   scale: number,
   shouldShowDots: boolean,
   onHover: (key: string | null) => void,
@@ -92,12 +93,10 @@ export type TGraphPoint = {
 
 export type TTooltip = {
   isActive: boolean,
-  isFirst: boolean,
-  isLast: boolean,
   version: string,
-  shouldShow: boolean,
   value: number,
   valueDifference: number,
   x: number,
   y: number,
+  viewportRect: TRect,
 }
