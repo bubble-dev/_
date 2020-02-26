@@ -1,14 +1,11 @@
-import React, { Fragment } from 'react'
-import { component, startWithType } from 'refun'
+import React, { Fragment, FC } from 'react'
 import { colorToString } from 'colorido'
 import { easeInOutCubic } from '@primitives/animation'
 import { Animate } from './Animate'
 import { TGraphPath } from './types'
 import { PATH_WIDTH } from './constants'
 
-export const Path = component(
-  startWithType<TGraphPath>()
-)(({
+export const Path: FC<TGraphPath> = ({
   colors,
   isActive,
   id,
@@ -53,6 +50,6 @@ export const Path = component(
       </Fragment>
     )}
   </Animate>
-))
+)
 
 Path.displayName = 'Path'

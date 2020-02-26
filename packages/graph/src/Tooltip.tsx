@@ -70,45 +70,43 @@ export const Tooltip = component(
   tooltip,
   value,
   valueDifference,
-}) => {
-  return (
-    <Animate
-      easing={easeInOutCubic}
-      time={300}
-      to={1}
-      from={0}
-      isActive={isActive}
-    >
-      {([opacity]) => (
-        <g
-          opacity={opacity}
-          style={{ pointerEvents: (isActive) ? 'auto' : 'none' }}
-        >
-          <rect
-            x={tooltip.x}
-            y={tooltip.y}
-            rx="4"
-            ry="4"
-            width={tooltip.width}
-            height={tooltip.height}
-            fill="rgba(255, 255, 255, 0.8)"
-          />
-          <text fontSize={TOOLTIP_FONT_SIZE} fontFamily="monospace" ref={textRef} y={tooltip.textY}>
-            <tspan x={tooltip.spanX} dy={0}>
-              {version}
-            </tspan>
-            <tspan x={tooltip.spanX} dy={tooltip.spanY}>
-              {value}
-              {valueDifference ? (
-                <tspan fill={valueDifference > 0 ? 'red' : 'green'}>({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
-                </tspan>
-              ) : null}
-            </tspan>
-          </text>
-        </g>
-      )}
-    </Animate>
-  )
-})
+}) => (
+  <Animate
+    easing={easeInOutCubic}
+    time={300}
+    to={1}
+    from={0}
+    isActive={isActive}
+  >
+    {([opacity]) => (
+      <g
+        opacity={opacity}
+        style={{ pointerEvents: (isActive) ? 'auto' : 'none' }}
+      >
+        <rect
+          x={tooltip.x}
+          y={tooltip.y}
+          rx="4"
+          ry="4"
+          width={tooltip.width}
+          height={tooltip.height}
+          fill="rgba(255, 255, 255, 0.8)"
+        />
+        <text fontSize={TOOLTIP_FONT_SIZE} fontFamily="monospace" ref={textRef} y={tooltip.textY}>
+          <tspan x={tooltip.spanX} dy={0}>
+            {version}
+          </tspan>
+          <tspan x={tooltip.spanX} dy={tooltip.spanY}>
+            {value}
+            {valueDifference ? (
+              <tspan fill={valueDifference > 0 ? 'red' : 'green'}>({valueDifference > 0 ? `+${valueDifference}` : valueDifference}%)
+              </tspan>
+            ) : null}
+          </tspan>
+        </text>
+      </g>
+    )}
+  </Animate>
+))
 
 Tooltip.displayName = 'Tooltip'

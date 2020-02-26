@@ -1,5 +1,6 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import { TColor } from 'colorido'
+import { TEasingFn } from '@primitives/animation'
 
 export type TEntry = {
   version: string,
@@ -80,12 +81,17 @@ export type TApp = {
   graphs: TGraph[],
 }
 
-export type TGraphPoint = {
-  fill: TColor,
-  id: string,
-  shouldShow: boolean,
+type TGraphPoint = {
   x: number,
   y: number,
+  value: number,
+  version: string,
+}
+
+export type TGraphPoints = {
+  isActive: boolean,
+  fill: TColor,
+  points: TGraphPoint[],
   onPointerEnter: (id: string) => void,
   onPointerLeave: () => void,
 }
@@ -115,4 +121,20 @@ export type TGraphPath = {
   points: string,
   onHover: (key: string | null) => void,
   onSelect: (key: string) => void,
+}
+
+export type TGraphTooltips = {
+  activePoint: string | null,
+  isActive: boolean,
+  points: TGraphPoint[],
+  width: number,
+}
+
+export type TAnimate = {
+  from: number,
+  to: number,
+  time: number,
+  easing: TEasingFn,
+  isActive: boolean,
+  children: (arg: [number]) => ReactElement,
 }

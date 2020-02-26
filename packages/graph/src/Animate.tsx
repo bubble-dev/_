@@ -1,15 +1,7 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { component, startWithType, mapState, mapHandlers, onUpdate, onChange } from 'refun'
-import { TEasingFn, Animation } from '@primitives/animation'
-
-export type TAnimate = {
-  from: number,
-  to: number,
-  time: number,
-  easing: TEasingFn,
-  isActive: boolean,
-  children: (arg: [number]) => ReactElement,
-}
+import { Animation } from '@primitives/animation'
+import { TAnimate } from './types'
 
 const STATE_CLOSED = 0
 const STATE_OPENING = 1

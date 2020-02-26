@@ -1,12 +1,9 @@
-import React from 'react'
-import { component, startWithType } from 'refun'
+import React, { FC } from 'react'
 import { CONTROLS_HEIGHT_BOTTOM } from '../constants'
 import { TFooterControls } from '../types'
 import { Button } from './Button'
 
-export const Footer = component(
-  startWithType<TFooterControls>()
-)(({
+export const Footer: FC<TFooterControls> = ({
   graphControls,
   selectedGraph,
   onSelectGraph,
@@ -59,6 +56,6 @@ export const Footer = component(
       Show all
     </button>
   </div>
-))
+)
 
 Footer.displayName = 'Footer'
