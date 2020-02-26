@@ -3,7 +3,7 @@ import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TCanvas } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
+import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP } from './constants'
 
 export const Canvas = component(
   startWithType<TCanvas>(),
@@ -56,7 +56,7 @@ export const Canvas = component(
 }) => (
   <Fragment>
     <svg
-      style={{ position: 'absolute', top: CONTROLS_HEIGHT }}
+      style={{ position: 'absolute', top: CONTROLS_HEIGHT_TOP }}
       width={width}
       height={height}
     >
@@ -102,7 +102,7 @@ export const Canvas = component(
       style={{
         position: 'absolute',
         width: 130,
-        top: CONTROLS_HEIGHT + 100,
+        top: CONTROLS_HEIGHT_TOP + 100,
         left: rect.width + 50,
         transform: 'rotate(270deg)',
       }}

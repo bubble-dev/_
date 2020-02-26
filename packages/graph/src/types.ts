@@ -52,10 +52,14 @@ export type TCanvas = {
   onSliderChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
-export type TControls = {
+export type TTopControls = {
+  monthsAgo: number,
+  onMonthsAgo: (key: number) => void,
+}
+
+export type TBottomControls = {
   graphControls: TGraphControl[],
   selectedGraph: string | null,
-  onMonthsAgo: (key: number) => void,
   onSelectGraph: (key: string | null) => void,
 }
 
@@ -79,7 +83,7 @@ export type TApp = {
 export type TGraphPoint = {
   fill: TColor,
   id: string,
-  shouldShowDots: boolean,
+  shouldShow: boolean,
   x: number,
   y: number,
   onPointerEnter: (id: string) => void,

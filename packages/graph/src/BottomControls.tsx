@@ -1,20 +1,21 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
 import { Button } from './Button'
-import { CONTROLS_HEIGHT } from './constants'
-import { TControls } from './types'
+import { CONTROLS_HEIGHT_BOTTOM } from './constants'
+import { TBottomControls } from './types'
 
-export const Controls = component(
-  startWithType<TControls>()
+export const BottomControls = component(
+  startWithType<TBottomControls>()
 )(({
   graphControls,
   selectedGraph,
   onSelectGraph,
-  onMonthsAgo,
 }) => (
   <div style={{
     display: 'flex',
-    height: CONTROLS_HEIGHT,
+    height: CONTROLS_HEIGHT_BOTTOM,
+    position: 'absolute',
+    bottom: 0,
   }}
   >
     <div
@@ -57,28 +58,7 @@ export const Controls = component(
     >
       Show all
     </button>
-    <button
-      onClick={() => {
-        onMonthsAgo(1)
-      }}
-    >
-      1
-    </button>
-    <button
-      onClick={() => {
-        onMonthsAgo(3)
-      }}
-    >
-      3
-    </button>
-    <button
-      onClick={() => {
-        onMonthsAgo(6)
-      }}
-    >
-      6
-    </button>
   </div>
 ))
 
-Controls.displayName = 'Controls'
+BottomControls.displayName = 'BottomControls'

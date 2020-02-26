@@ -147,7 +147,7 @@ export const Graph = component(
           <Point
             fill={colors[0]}
             id={keyID}
-            shouldShowDots={shouldShowDots}
+            shouldShow={shouldShowDots}
             x={point.x}
             y={point.y}
             onPointerEnter={onPointerEnter}

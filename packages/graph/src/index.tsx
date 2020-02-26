@@ -10,9 +10,10 @@ import {
 } from 'refun'
 import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
-import { Controls } from './Controls'
+import { TopControls } from './TopControls'
+import { BottomControls } from './BottomControls'
 import { TApp } from './types'
-import { PAGE_BACKGROUND, CONTROLS_HEIGHT } from './constants'
+import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
 
 export const App = component(
   startWithType<TApp>(),
@@ -76,15 +77,13 @@ export const App = component(
   <Root>
     {({ width, height }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
-        <Controls
-          graphControls={graphControls}
-          selectedGraph={selectedGraph}
+        <TopControls
+          monthsAgo={monthsAgo}
           onMonthsAgo={onMonthsAgo}
-          onSelectGraph={onSelectGraph}
         />
         <Canvas
           graphs={graphs}
-          height={height - CONTROLS_HEIGHT}
+          height={height - CONTROLS_HEIGHT_TOP - CONTROLS_HEIGHT_BOTTOM}
           hoveredGraph={hoveredGraph}
           monthsAgo={monthsAgo}
           scale={scale}
@@ -93,6 +92,11 @@ export const App = component(
           onHoverGraph={onHoverGraph}
           onSelectGraph={onSelectGraph}
           onSliderChange={onSliderChange}
+        />
+        <BottomControls
+          graphControls={graphControls}
+          selectedGraph={selectedGraph}
+          onSelectGraph={onSelectGraph}
         />
       </div>
     )}
