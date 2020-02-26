@@ -3,7 +3,7 @@ import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TCanvas } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP } from './constants'
+import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP, PAGE_BACKGROUND } from './constants'
 
 export const Canvas = component(
   startWithType<TCanvas>(),
@@ -57,7 +57,7 @@ export const Canvas = component(
         y={0}
         width="100%"
         height={height}
-        fill={'black'}
+        fill={PAGE_BACKGROUND}
         onClick={
         () => {
           onSelectGraph(null)
@@ -76,13 +76,13 @@ export const Canvas = component(
                 colors={graph.colors}
                 entries={graph.values}
                 id={graph.key}
-                isActive={graph.isActive}
+                isHovered={graph.isActive}
                 key={`${graph.key}-${monthsAgo}`}
                 monthsAgo={monthsAgo}
                 width={width}
                 height={height}
                 scale={scale}
-                shouldShowDots={selectedGraph === graph.key}
+                isActive={selectedGraph === graph.key}
                 onHover={onHoverGraph}
                 onSelect={onSelectGraph}
               />

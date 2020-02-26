@@ -74,7 +74,7 @@ export const Tooltip = component(
   return (
     <Animate
       easing={easeInOutCubic}
-      time={1000}
+      time={300}
       to={1}
       from={0}
       isActive={isActive}

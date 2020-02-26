@@ -65,13 +65,13 @@ export type TFooterControls = {
 export type TGraphItem = {
   colors: TColor[],
   entries: TEntry[],
+  height: number,
   id: string,
   isActive: boolean,
+  isHovered: boolean,
   monthsAgo: number,
-  width: number,
-  height: number,
   scale: number,
-  shouldShowDots: boolean,
+  width: number,
   onHover: (key: string | null) => void,
   onSelect: (key: string) => void,
 }
@@ -90,6 +90,13 @@ export type TGraphPoint = {
   onPointerLeave: () => void,
 }
 
+export type TGraphPolygon = {
+  colors: TColor[],
+  id: string,
+  isActive: boolean,
+  points: string,
+}
+
 export type TTooltip = {
   isActive: boolean,
   version: string,
@@ -99,4 +106,13 @@ export type TTooltip = {
   y: number,
   viewportRight: number,
   viewportTop: number,
+}
+
+export type TGraphPath = {
+  colors: TColor[],
+  id: string,
+  isActive: boolean,
+  points: string,
+  onHover: (key: string | null) => void,
+  onSelect: (key: string) => void,
 }
