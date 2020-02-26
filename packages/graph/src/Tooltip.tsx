@@ -2,7 +2,7 @@ import React from 'react'
 import { component, startWithType, mapRefLayout, mapWithProps } from 'refun'
 import { easeInOutCubic } from '@primitives/animation'
 import { Animate } from './Animate'
-import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING, GRAPH_OFFSET } from './constants'
+import { TOOLTIP_FONT_SIZE, TOOLTIP_X_OFFSET, TOOLTIP_Y_OFFSET, TOOLTIP_PADDING } from './constants'
 import { TTooltip } from './types'
 
 export const Tooltip = component(
@@ -23,7 +23,8 @@ export const Tooltip = component(
     }
   }, ['isActive']),
   mapWithProps(({
-    viewportRect,
+    viewportRight,
+    viewportTop,
     textHeight,
     textWidth,
     x,
@@ -32,24 +33,22 @@ export const Tooltip = component(
     const width = textWidth + TOOLTIP_PADDING * 2
     const height = textHeight + TOOLTIP_PADDING * 2
     let posX = x + TOOLTIP_X_OFFSET
-    let posY = y - textHeight + 4 - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING * 2
-    let textY = y - TOOLTIP_Y_OFFSET - TOOLTIP_PADDING - TOOLTIP_FONT_SIZE - 4
+    let posY = y - height - TOOLTIP_Y_OFFSET
+    let textY = posY + TOOLTIP_PADDING + TOOLTIP_Y_OFFSET + 2
     let spanX = x + TOOLTIP_X_OFFSET + TOOLTIP_PADDING
     const spanY = TOOLTIP_FONT_SIZE + 4
 
-    const offsetX = posX + width - viewportRect.width
-    const offsetY = posY
-
-    console.log('VW', viewportRect.width, 'pos', posX, 'W', width, 'O', offsetX)
+    const offsetX = posX + width - viewportRight
+    const offsetY = posY - viewportTop
 
     if (offsetX > 0) {
-      posX -= offsetX
-      spanX -= offsetX
+      posX -= offsetX + TOOLTIP_X_OFFSET
+      spanX -= offsetX + TOOLTIP_X_OFFSET
     }
 
     if (offsetY < 0) {
-      posY += height + TOOLTIP_Y_OFFSET
-      textY += height + TOOLTIP_Y_OFFSET
+      posY += height + TOOLTIP_Y_OFFSET * 2
+      textY += height + TOOLTIP_Y_OFFSET * 2
     }
 
     return {

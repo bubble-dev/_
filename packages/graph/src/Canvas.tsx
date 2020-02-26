@@ -1,24 +1,17 @@
 import React, { Fragment } from 'react'
-import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapWithProps } from 'refun'
 import { Animation, easeInOutCubic } from '@primitives/animation'
 import { TCanvas } from './types'
 import { Graph } from './Graph'
-import { CANVAS_PADDING, PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, GRAPH_OFFSET } from './constants'
+import { CANVAS_PADDING, CONTROLS_HEIGHT_TOP } from './constants'
 
 export const Canvas = component(
   startWithType<TCanvas>(),
-  mapWithPropsMemo(({ width, height }) => {
-    const rect = {
-      x: 0,
-      y: 0,
-      width,
-      height,
-    }
+  mapWithProps(({ width, height }) => ({
+    width: width - CANVAS_PADDING * 2,
+    height,
 
-    return {
-      rect,
-    }
-  }, []),
+  })),
   mapWithPropsMemo(({ graphs, selectedGraph, hoveredGraph }) => ({
     graphs: graphs.map((graph) => {
       return {
@@ -46,7 +39,6 @@ export const Canvas = component(
   graphs,
   height,
   monthsAgo,
-  rect,
   scale,
   width,
   selectedGraph,
@@ -57,14 +49,14 @@ export const Canvas = component(
   <Fragment>
     <svg
       style={{ position: 'absolute', left: CANVAS_PADDING, top: CONTROLS_HEIGHT_TOP }}
-      width={width - CANVAS_PADDING * 2}
+      width={width}
       height={height}
     >
       <rect
         x={0}
-        y={rect.y}
+        y={0}
         width="100%"
-        height={rect.height}
+        height={height}
         fill={'black'}
         onClick={
         () => {
@@ -87,8 +79,8 @@ export const Canvas = component(
                 isActive={graph.isActive}
                 key={`${graph.key}-${monthsAgo}`}
                 monthsAgo={monthsAgo}
-                width={}
-                height={}
+                width={width}
+                height={height}
                 scale={scale}
                 shouldShowDots={selectedGraph === graph.key}
                 onHover={onHoverGraph}
@@ -104,7 +96,7 @@ export const Canvas = component(
         position: 'absolute',
         width: 130,
         top: CONTROLS_HEIGHT_TOP + 100,
-        left: rect.width + 50,
+        left: width + 50,
         transform: 'rotate(270deg)',
       }}
       type="range"

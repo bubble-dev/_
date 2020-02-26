@@ -10,4 +10,4 @@ export const BUTTON_FONT_SIZE = 14
 export const TOOLTIP_PADDING = 4
 export const TOOLTIP_X_OFFSET = 12
 export const TOOLTIP_Y_OFFSET = 12
-export const GRAPH_OFFSET = POINT_RADIUS + POINT_BORDER + PATH_WIDTH
+export const GRAPH_OFFSET = POINT_RADIUS + POINT_BORDER / 2

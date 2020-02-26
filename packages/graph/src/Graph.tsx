@@ -38,18 +38,18 @@ export const Graph = component(
       values,
     }
   }, ['entries', 'monthsAgo']),
-  mapWithProps(({ rect, scale, maxValue, minValue, values }) => ({
-    stepX: (rect.width - GRAPH_OFFSET) / (values.length - 1),
-    stepY: (rect.height - GRAPH_OFFSET) * scale / 100 / Math.abs(maxValue - minValue),
+  mapWithProps(({ width, height, scale, maxValue, minValue, values }) => ({
+    stepX: (width - GRAPH_OFFSET * 2) / (values.length - 1),
+    stepY: (height - GRAPH_OFFSET * 2) * scale / 100 / Math.abs(maxValue - minValue),
   })),
-  mapWithProps(({ stepY, rect, maxValue, minValue }) => ({
-    halfHeight: (rect.height - GRAPH_OFFSET) / 2,
+  mapWithProps(({ height, stepY, maxValue, minValue }) => ({
+    halfHeight: (height - GRAPH_OFFSET * 2) / 2,
     halfPathHeight: (maxValue - minValue) * stepY / 2,
   })),
-  mapWithPropsMemo(({ entries, rect, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
+  mapWithPropsMemo(({ height, entries, minValue, halfHeight, halfPathHeight, stepX, stepY }) => {
     const points = entries.map(({ value, version }, index) => {
-      const x = rect.x + stepX * index + GRAPH_OFFSET / 2
-      const y = rect.height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) + rect.y - GRAPH_OFFSET / 2
+      const x = stepX * index + GRAPH_OFFSET
+      const y = height - (value * stepY + halfHeight - halfPathHeight - minValue * stepY) - GRAPH_OFFSET
 
       return {
         x,
@@ -63,7 +63,7 @@ export const Graph = component(
       points: points.slice(0).reverse(),
       pointsString: points.map(({ x, y }) => `${x}, ${y}`).join(' '),
     }
-  }, ['entries', 'rect', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY']),
+  }, ['entries', 'minValue', 'halfHeight', 'halfPathHeight', 'stepX', 'stepY', 'height']),
   mapState('activePoint', 'setActivePoint', () => null as string | null, []),
   mapHandlers({
     onPointerEnter: ({ setActivePoint }) => (id) => {
@@ -81,7 +81,8 @@ export const Graph = component(
   onSelect,
   points,
   pointsString,
-  rect,
+  width,
+  height,
   shouldShowDots,
   onHover,
   onPointerEnter,
@@ -111,7 +112,7 @@ export const Graph = component(
           <polygon
             style={{ pointerEvents: 'none' }}
             opacity={polygonOpacity}
-            points={`${rect.x + GRAPH_OFFSET / 2}, ${rect.height + rect.y - GRAPH_OFFSET / 2} ${pointsString} ${rect.width + rect.x - GRAPH_OFFSET / 2}, ${rect.height + rect.y - GRAPH_OFFSET / 2}`}
+            points={`${GRAPH_OFFSET}, ${height - GRAPH_OFFSET} ${pointsString} ${width - GRAPH_OFFSET}, ${height - GRAPH_OFFSET}`}
             stroke="none"
             fill={`url(#gradient-${id})`}
           />
@@ -160,7 +161,8 @@ export const Graph = component(
             version={point.version}
             x={point.x}
             y={point.y}
-            viewportRect={rect}
+            viewportRight={width - GRAPH_OFFSET}
+            viewportTop={GRAPH_OFFSET}
           />
         </Fragment>
       )

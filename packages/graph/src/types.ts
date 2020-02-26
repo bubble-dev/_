@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'react'
 import { TColor } from 'colorido'
-import { TMapHovered } from 'refun'
 
 export type TEntry = {
   version: string,
@@ -98,5 +97,6 @@ export type TTooltip = {
   valueDifference: number,
   x: number,
   y: number,
-  viewportRect: TRect,
+  viewportRight: number,
+  viewportTop: number,
 }
