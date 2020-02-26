@@ -10,8 +10,7 @@ import {
 } from 'refun'
 import { Root } from '@primitives/root'
 import { Canvas } from './Canvas'
-import { TopControls } from './TopControls'
-import { BottomControls } from './BottomControls'
+import { Header, Footer } from './Controls/index'
 import { TApp } from './types'
 import { PAGE_BACKGROUND, CONTROLS_HEIGHT_TOP, CONTROLS_HEIGHT_BOTTOM } from './constants'
 
@@ -77,7 +76,7 @@ export const App = component(
   <Root>
     {({ width, height }) => (
       <div style={{ background: PAGE_BACKGROUND, width, height, position: 'absolute' }}>
-        <TopControls
+        <Header
           monthsAgo={monthsAgo}
           onMonthsAgo={onMonthsAgo}
         />
@@ -93,7 +92,7 @@ export const App = component(
           onSelectGraph={onSelectGraph}
           onSliderChange={onSliderChange}
         />
-        <BottomControls
+        <Footer
           graphControls={graphControls}
           selectedGraph={selectedGraph}
           onSelectGraph={onSelectGraph}

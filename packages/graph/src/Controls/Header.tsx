@@ -1,7 +1,7 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { CONTROLS_HEIGHT_TOP, BUTTON_FONT_SIZE } from './constants'
-import { TTopControls } from './types'
+import { THeaderControls } from '../types'
+import { CONTROLS_HEIGHT_TOP, BUTTON_FONT_SIZE } from '../constants'
 
 const getButtonStyle = (month: number, currentMonth: number) => ({
   border: 'none',
@@ -15,8 +15,8 @@ const getButtonStyle = (month: number, currentMonth: number) => ({
   padding: '0 14px',
 })
 
-export const TopControls = component(
-  startWithType<TTopControls>()
+export const Header = component(
+  startWithType<THeaderControls>()
 )(({
   monthsAgo,
   onMonthsAgo,
@@ -58,4 +58,4 @@ export const TopControls = component(
   </div>
 ))
 
-TopControls.displayName = 'TopControls'
+Header.displayName = 'Header'

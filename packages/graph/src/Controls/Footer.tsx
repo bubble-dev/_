@@ -1,11 +1,11 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
+import { CONTROLS_HEIGHT_BOTTOM } from '../constants'
+import { TFooterControls } from '../types'
 import { Button } from './Button'
-import { CONTROLS_HEIGHT_BOTTOM } from './constants'
-import { TBottomControls } from './types'
 
-export const BottomControls = component(
-  startWithType<TBottomControls>()
+export const Footer = component(
+  startWithType<TFooterControls>()
 )(({
   graphControls,
   selectedGraph,
@@ -61,4 +61,4 @@ export const BottomControls = component(
   </div>
 ))
 
-BottomControls.displayName = 'BottomControls'
+Footer.displayName = 'Footer'

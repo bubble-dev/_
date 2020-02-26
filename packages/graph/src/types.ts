@@ -52,12 +52,12 @@ export type TCanvas = {
   onSliderChange: (event: ChangeEvent<HTMLInputElement>) => void,
 }
 
-export type TTopControls = {
+export type THeaderControls = {
   monthsAgo: number,
   onMonthsAgo: (key: number) => void,
 }
 
-export type TBottomControls = {
+export type TFooterControls = {
   graphControls: TGraphControl[],
   selectedGraph: string | null,
   onSelectGraph: (key: string | null) => void,
