@@ -60,6 +60,7 @@ export type THeaderControls = {
 export type TFooterControls = {
   graphControls: TGraphControl[],
   selectedGraph: string | null,
+  width: number,
   onSelectGraph: (key: string | null) => void,
 }
 

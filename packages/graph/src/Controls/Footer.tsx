@@ -6,6 +6,7 @@ import { Button } from './Button'
 export const Footer: FC<TFooterControls> = ({
   graphControls,
   selectedGraph,
+  width,
   onSelectGraph,
 }) => (
   <div style={{
@@ -13,6 +14,7 @@ export const Footer: FC<TFooterControls> = ({
     height: CONTROLS_HEIGHT_BOTTOM,
     position: 'absolute',
     bottom: 0,
+    width,
   }}
   >
     <div

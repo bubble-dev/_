@@ -93,6 +93,7 @@ export const App = component(
           onSliderChange={onSliderChange}
         />
         <Footer
+          width={width}
           graphControls={graphControls}
           selectedGraph={selectedGraph}
           onSelectGraph={onSelectGraph}
