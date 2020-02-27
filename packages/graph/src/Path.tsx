@@ -23,9 +23,16 @@ export const Path: FC<TGraphPath> = ({
     {([opacity]) => (
       <Fragment>
         <defs>
-          <linearGradient id={`line-${id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor={colorToString(colors[0])}/>
-            <stop offset="100%" stopColor={colorToString(colors[1])}/>
+          <linearGradient
+            id={`line-${id}`}
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stopColor={colorToString(colors[0])}/>
+            <stop offset="1" stopColor={colorToString(colors[1])}/>
           </linearGradient>
         </defs>
         <path

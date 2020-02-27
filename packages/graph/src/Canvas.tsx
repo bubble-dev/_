@@ -10,7 +10,6 @@ export const Canvas = component(
   mapWithProps(({ width, height }) => ({
     width: width - CANVAS_PADDING * 2,
     height,
-
   })),
   mapWithPropsMemo(({ graphs, selectedGraph, hoveredGraph }) => ({
     graphs: graphs.map((graph) => {
@@ -40,8 +39,8 @@ export const Canvas = component(
   height,
   monthsAgo,
   scale,
-  width,
   selectedGraph,
+  width,
   onHoverGraph,
   onSelectGraph,
   onSliderChange,

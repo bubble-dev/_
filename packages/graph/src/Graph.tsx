@@ -40,7 +40,7 @@ export const Graph = component(
   }, ['entries', 'monthsAgo']),
   mapWithProps(({ width, height, scale, maxValue, minValue, values }) => ({
     stepX: (width - GRAPH_OFFSET * 2) / (values.length - 1),
-    stepY: (height - GRAPH_OFFSET * 2) * scale / 100 / Math.abs(maxValue - minValue),
+    stepY: (height - GRAPH_OFFSET * 2) * scale / 100 / Math.abs(maxValue - minValue === 0 ? 1 : maxValue - minValue),
   })),
   mapWithProps(({ height, stepY, maxValue, minValue }) => ({
     halfHeight: (height - GRAPH_OFFSET * 2) / 2,
