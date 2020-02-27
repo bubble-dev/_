@@ -614,7 +614,7 @@ let graphs = [
   {
     title: 'v5.2.0',
     values: {
-      firstContentfulPaint: 555,
+      firstContentfulPaint: 560,
       firstMeaningfulPaint: 3174.3825000226498,
       largestContentfulPaint: 3174.379999982193,
       domContentLoaded: 533.8839999735355,
