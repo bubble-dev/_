@@ -39,7 +39,7 @@ export const Graph = component(
     }
   }, ['entries', 'monthsAgo']),
   mapWithProps(({ width, height, scale, maxValue, minValue, values }) => ({
-    stepX: (width - GRAPH_OFFSET * 2) / (values.length - 1),
+    stepX: (width - GRAPH_OFFSET * 2) / (values.length === 1 ? 1 : values.length - 1),
     stepY: (height - GRAPH_OFFSET * 2) * scale / 100 / Math.abs(maxValue - minValue === 0 ? 1 : maxValue - minValue),
   })),
   mapWithProps(({ height, stepY, maxValue, minValue }) => ({
@@ -59,7 +59,9 @@ export const Graph = component(
       }
     })
 
-    const pointsString = points.map(({ x, y }) => `${x}, ${y}`).join(' ')
+    const pointsString = points.length === 1
+      ? `${points[0].x}, ${points[0].y} ${points[0].x}, ${points[0].y}`
+      : points.map(({ x, y }) => `${x}, ${y}`).join(' ')
 
     return {
       points: points.slice(0).reverse(),
@@ -92,12 +94,15 @@ export const Graph = component(
   onPointerLeave,
 }) => (
   <Fragment>
-    <Polygon
-      colors={colors}
-      id={id}
-      isActive={isActive}
-      points={polygonPointsString}
-    />
+    {points.length > 1 && (
+      <Polygon
+        colors={colors}
+        id={id}
+        isActive={isActive}
+        points={polygonPointsString}
+      />
+
+    )}
     <Path
       colors={colors}
       id={id}

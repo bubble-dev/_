@@ -21,21 +21,21 @@ export const Points: FC<TGraphPoints> = ({
   >
     {([radius]) => (
       <Fragment>
-        {points.map((point) => {
-          const keyID = `${point.x}-graph-data`
+        {points.map((point, index) => {
+          const tooltipKeyID = `${point.value}-tooltip-${index}`
 
           return (
             <circle
-              key={keyID}
               cursor="pointer"
               cx={point.x}
               cy={point.y}
               fill={colorToString(fill)}
+              key={`${point.value}-${index}`}
+              r={radius}
               stroke="white"
               strokeWidth={POINT_BORDER}
-              r={radius}
               onPointerEnter={() => {
-                onPointerEnter(keyID)
+                onPointerEnter(tooltipKeyID)
               }}
               onPointerLeave={() => {
                 onPointerLeave()

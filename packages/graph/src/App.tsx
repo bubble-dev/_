@@ -49,9 +49,16 @@ export const App = component(
   mapDebouncedHandlerTimeout('onHoverGraph', 100),
   mapWithPropsMemo(({ graphs }) => ({
     graphControls: graphs.map((graph) => {
-      const lastValue = graph.values[graph.values.length - 1].value
-      const preLastValue = graph.values[graph.values.length - 2].value
-      const lastDifference = Math.round((lastValue - preLastValue) / preLastValue * 100.0)
+      let lastDifference
+
+      if (graph.values.length === 1) {
+        lastDifference = 100
+      } else {
+        const lastValue = graph.values[graph.values.length - 1].value
+        const preLastValue = graph.values[graph.values.length - 2].value
+
+        lastDifference = Math.round((lastValue - preLastValue) / preLastValue * 100.0)
+      }
 
       return {
         colors: graph.colors,
