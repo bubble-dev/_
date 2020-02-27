@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.tsx",
+  "browser": "src/index.tsx",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

@@ -1,7 +1,6 @@
 import React from 'react'
-import { App as Graphs } from 'graph'
+import { App as GraphsApp, TGraph } from 'graph'
 import { getObjectEntries, isDefined } from 'tsfn'
-import { TGraph } from 'graph/src/types'
 import { TColor } from 'colorido'
 import { data } from './data-prod-arr'
 
@@ -53,5 +52,5 @@ const graphs = data.reduce((acc, cur) => {
 }, [] as TGraph[])
 
 export const App = () => (
-  <Graphs graphs={graphs}/>
+  <GraphsApp graphs={graphs}/>
 )
