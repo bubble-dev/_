@@ -1,9 +1,10 @@
 {
-  "name": "graph",
+  "name": "graphiq",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
-  "browser": "src/index.tsx",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {

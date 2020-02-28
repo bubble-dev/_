@@ -1,5 +1,5 @@
 import React from 'react'
-import { App as GraphsApp, TGraph } from 'graph'
+import { App as GraphsApp, TGraph } from 'graphiq'
 import { getObjectEntries, isDefined } from 'tsfn'
 import { TColor } from 'colorido'
 import { data } from './data-prod-arr'
