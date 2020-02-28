@@ -26,11 +26,11 @@ export const sandbox = Sandbox({
   htmlTemplatePath: './tasks/sandbox/templates/dev.html',
 })
 
-export const graph = () => {
+export const graphiq = () => {
   return plugin('graph', ({ logMessage }) => async () => {
     const { run } = await import('@rebox/web')
-    const entryPointPath = './tasks/graph/index.tsx'
-    const htmlTemplatePath = './tasks/graph/index.html'
+    const entryPointPath = './tasks/graphiq/index.tsx'
+    const htmlTemplatePath = './tasks/graphiq/index.html'
 
     await run({
       entryPointPath,

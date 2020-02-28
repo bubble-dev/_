@@ -53,6 +53,7 @@
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
     "@sandbox/ui": "*",
+    "@start/plugin": "^1.0.0",
     "@types/node": "^13.5.0",
     "colorido": "^1.0.0",
     "core-js": "^3.2.1",
@@ -62,6 +63,7 @@
     "react-native-webview": "^7.2.7",
     "react-native": "0.61.5",
     "react": "^16.8.6",
+    "tsfn": "^1.0.0",
     "ndb": "^1.1.5",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },

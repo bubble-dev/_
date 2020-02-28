@@ -2,7 +2,7 @@ import React from 'react'
 import { App as GraphsApp, TGraph } from 'graphiq'
 import { getObjectEntries, isDefined } from 'tsfn'
 import { TColor } from 'colorido'
-import { data } from './data-prod-arr'
+import { data } from './data'
 
 const theme = {
   firstContentfulPaint: [[46, 134, 193, 1], [46, 193, 178, 1]] as [TColor, TColor],

@@ -1,6 +1,7 @@
 let graphs = [
   {
     title: 'v1.0.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3587.8790000081062,
@@ -19,6 +20,7 @@ let graphs = [
   },
   {
     title: 'v1.0.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3615.721499979496,
@@ -37,6 +39,7 @@ let graphs = [
   },
   {
     title: 'v1.0.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3498.223499983549,
@@ -55,6 +58,7 @@ let graphs = [
   },
   {
     title: 'v1.1.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3313.8839999735355,
@@ -73,6 +77,7 @@ let graphs = [
   },
   {
     title: 'v1.1.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3435.1995000243187,
@@ -91,6 +96,7 @@ let graphs = [
   },
   {
     title: 'v1.1.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3253.697000026703,
@@ -109,6 +115,7 @@ let graphs = [
   },
   {
     title: 'v1.2.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3174.3825000226498,
@@ -127,6 +134,7 @@ let graphs = [
   },
   {
     title: 'v2.0.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 4587.8790000081062,
@@ -145,6 +153,7 @@ let graphs = [
   },
   {
     title: 'v2.0.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3615.721499979496,
@@ -163,6 +172,7 @@ let graphs = [
   },
   {
     title: 'v2.0.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3498.223499983549,
@@ -181,6 +191,7 @@ let graphs = [
   },
   {
     title: 'v2.1.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3313.8839999735355,
@@ -199,6 +210,7 @@ let graphs = [
   },
   {
     title: 'v2.1.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3435.1995000243187,
@@ -217,6 +229,7 @@ let graphs = [
   },
   {
     title: 'v2.1.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3253.697000026703,
@@ -235,6 +248,7 @@ let graphs = [
   },
   {
     title: 'v2.2.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3174.3825000226498,
@@ -253,6 +267,7 @@ let graphs = [
   },
   {
     title: 'v3.0.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3587.8790000081062,
@@ -271,6 +286,7 @@ let graphs = [
   },
   {
     title: 'v3.0.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3615.721499979496,
@@ -289,6 +305,7 @@ let graphs = [
   },
   {
     title: 'v3.0.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3498.223499983549,
@@ -307,6 +324,7 @@ let graphs = [
   },
   {
     title: 'v4.1.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3313.8839999735355,
@@ -325,6 +343,7 @@ let graphs = [
   },
   {
     title: 'v4.1.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3435.1995000243187,
@@ -343,6 +362,7 @@ let graphs = [
   },
   {
     title: 'v4.1.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3253.697000026703,
@@ -361,6 +381,7 @@ let graphs = [
   },
   {
     title: 'v4.2.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3174.3825000226498,
@@ -379,6 +400,7 @@ let graphs = [
   },
   {
     title: 'v4.4.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3587.8790000081062,
@@ -397,6 +419,7 @@ let graphs = [
   },
   {
     title: 'v4.4.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3615.721499979496,
@@ -415,6 +438,7 @@ let graphs = [
   },
   {
     title: 'v4.4.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3498.223499983549,
@@ -433,6 +457,7 @@ let graphs = [
   },
   {
     title: 'v4.7.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3313.8839999735355,
@@ -451,6 +476,7 @@ let graphs = [
   },
   {
     title: 'v4.7.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3435.1995000243187,
@@ -469,6 +495,7 @@ let graphs = [
   },
   {
     title: 'v4.7.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3253.697000026703,
@@ -487,6 +514,7 @@ let graphs = [
   },
   {
     title: 'v4.7.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3174.3825000226498,
@@ -505,6 +533,7 @@ let graphs = [
   },
   {
     title: 'v5.0.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3587.8790000081062,
@@ -523,6 +552,7 @@ let graphs = [
   },
   {
     title: 'v5.0.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3615.721499979496,
@@ -541,6 +571,7 @@ let graphs = [
   },
   {
     title: 'v5.0.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3498.223499983549,
@@ -559,6 +590,7 @@ let graphs = [
   },
   {
     title: 'v5.1.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3313.8839999735355,
@@ -577,6 +609,7 @@ let graphs = [
   },
   {
     title: 'v5.1.1',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3435.1995000243187,
@@ -595,6 +628,7 @@ let graphs = [
   },
   {
     title: 'v5.1.2',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 555,
       firstMeaningfulPaint: 3253.697000026703,
@@ -613,6 +647,7 @@ let graphs = [
   },
   {
     title: 'v5.2.0',
+    timestamp: 0,
     values: {
       firstContentfulPaint: 560,
       firstMeaningfulPaint: 3174.3825000226498,
@@ -638,7 +673,6 @@ const now = Math.ceil(Date.now() / 1000)
 
 graphs = graphs.map((g, index) => {
   const timestamp = now - secondsInWeek * index
-  // TODO move to graph app
   const date = new Date(timestamp * 1000)
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1).padStart(2, '0')
