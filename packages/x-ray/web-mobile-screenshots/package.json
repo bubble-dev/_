@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/web-mobile-screenshots",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -18,7 +18,7 @@
     "opentype.js": "^1.1.0",
     "p-all": "^2.1.0",
     "pifs": "^1.0.0",
-    "pretty-ms": "^5.0.0",
+    "pretty-ms": "^6.0.0",
     "react-dom": "^16.6.0",
     "tsfn": "^1.0.0",
     "upng-js": "^2.1.0"

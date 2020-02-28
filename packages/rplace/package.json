@@ -1,6 +1,6 @@
 {
   "name": "rplace",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform stream by replacing strings on per-line basis",
   "keywords": [
     "stream",
@@ -21,5 +21,8 @@
   "devDependencies": {
     "@types/blue-tape": "^0.1.32",
     "blue-tape": "^1.0.0"
+  },
+  "dependencies": {
+    "replace-string": "^3.0.0"
   }
 }

@@ -1,3 +1,35 @@
+## v1.3.3
+
+* 🐞 recreate symlinks instead of hard-copying during the `pkg` task
+
+## v1.3.2
+
+* 🐞 propagate <package path> argument to `pkg` task
+
+## v1.3.1
+
+* 🐞 make Sandbox task for web quiet by default
+
+## v1.3.0
+
+* 🌱 add `Pkg` task factory
+
+  ```
+  a task to copy package templates and replace special placeholders, see local ./tasks for live example
+  ```
+
+* 🐞 show and run only tasks with `/^[a-z]/` names
+
+## v1.2.4
+
+* 🐞 switch from deprecated `request` to `node-fetch` dependency
+
+  ```
+  >As of Feb 11th 2020, request is fully deprecated. No new changes are expected to land. In fact, none have landed for some time.
+  
+  https://github.com/request/request/issues/3142
+  ```
+
 ## v1.2.3
 
 * 🐞 remove unnecessary peer deps

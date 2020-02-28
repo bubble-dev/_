@@ -1,6 +1,6 @@
 {
   "name": "@x-ray/snapshots",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -23,7 +23,7 @@
     "make-dir": "^3.0.0",
     "p-all": "^2.0.0",
     "pkg-dir": "^4.2.0",
-    "pretty-ms": "^5.0.0",
+    "pretty-ms": "^6.0.0",
     "tsfn": "^1.0.0"
   },
   "devDependencies": {

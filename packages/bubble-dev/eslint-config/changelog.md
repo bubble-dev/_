@@ -1,3 +1,11 @@
+## v1.0.5
+
+* 🐞 allow empty `catch` block
+
+## v1.0.4
+
+* 🐞 enfore double quotes for JSX
+
 ## v1.0.3
 
 * 🐞 remove unnecessary peer deps

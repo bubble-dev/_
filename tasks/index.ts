@@ -8,6 +8,7 @@ import {
   CheckAndroidWebScreenshots,
   Sandbox,
   CheckChromePerfSnapshots,
+  Pkg,
 } from '@bubble-dev/start-preset'
 
 export * from '@bubble-dev/start-preset'
@@ -26,8 +27,16 @@ export const sandbox = Sandbox({
   htmlTemplatePath: './tasks/sandbox/templates/dev.html',
 })
 
+export const pkg = Pkg({
+  lib: {
+    $description$: null,
+    $exportedName$: null,
+    $year$: String(new Date().getFullYear()),
+  },
+})
+
 export const graphiq = () => {
-  return plugin('graph', ({ logMessage }) => async () => {
+  return plugin('demo', ({ logMessage }) => async () => {
     const { run } = await import('@rebox/web')
     const entryPointPath = './tasks/graphiq/index.tsx'
     const htmlTemplatePath = './tasks/graphiq/index.html'
