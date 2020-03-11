@@ -37,6 +37,7 @@ exports.babelConfigNodeRegister = {
       require.resolve('@babel/preset-env'),
       {
         targets: { node: 'current' },
+        loose: true,
         ignoreBrowserslistConfig: true,
         exclude: [
           '@babel/plugin-transform-regenerator',
