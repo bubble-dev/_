@@ -14,5 +14,4 @@ export type TTextBlock = {
   width?: number,
   snapStart?: number,
   textAlign?: supportedTextAlign,
-
 } & TText

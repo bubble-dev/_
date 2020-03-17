@@ -34,12 +34,10 @@ export const TextBlock = component(
       }
     }
   )
-)(({ blockProps, textProps }) => {
-  return (
-    <Block style={blockProps}>
-      <Text {...textProps}/>
-    </Block>
-  )
-})
+)(({ blockProps, textProps }) => (
+  <Block style={blockProps}>
+    <Text {...textProps}/>
+  </Block>
+))
 
 TextBlock.displayName = 'TextBlock'

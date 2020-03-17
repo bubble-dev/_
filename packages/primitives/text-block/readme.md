@@ -1,6 +1,6 @@
 `Text-Block` is a fusion between `Block` and `Text`.
 
-It does not provide all properties each has to offer, it only provides the simplest API possible to deal with content in a `display: block` manner.
+It does not provide all properties each has to offer, it only provides the simplest API possible to deal with text content as a block type element.
 
 As a bonus feature, it can also provide [Leading Control](https://github.com/w3c/csswg-drafts/issues/3240) to the text.
 
