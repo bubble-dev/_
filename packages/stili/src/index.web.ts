@@ -1,11 +1,40 @@
 import { CSSProperties } from 'react' // eslint-disable-line
 import { getObjectKeys, TExtend } from 'tsfn'
+import {
+  PerpectiveTransform,
+  RotateTransform,
+  RotateXTransform,
+  RotateYTransform,
+  RotateZTransform,
+  ScaleTransform,
+  ScaleXTransform,
+  ScaleYTransform,
+  SkewXTransform,
+  SkewYTransform,
+  TranslateXTransform,
+  TranslateYTransform,
+} from 'react-native'
+
+export type TTransformObject =
+  PerpectiveTransform |
+  RotateTransform |
+  RotateXTransform |
+  RotateYTransform |
+  RotateZTransform |
+  ScaleTransform |
+  ScaleXTransform |
+  ScaleYTransform |
+  TranslateXTransform |
+  TranslateYTransform |
+  SkewXTransform |
+  SkewYTransform
 
 export type TStyle = TExtend<CSSProperties, {
   fontSmoothing?: string,
   tapHighlightColor?: string,
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
   fontSize?: number,
+  transform?: string | TTransformObject[],
 }>
 
 type TCssProps = TExtend<CSSProperties, {
