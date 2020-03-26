@@ -1,8 +1,10 @@
-import { ReactNode } from 'react'
+import { ReactNode, Ref } from 'react'
 
 export type TSupportedRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
 
-export type TBlockCommon = {
+export type TBlockCommon<TRef, TStyles> = {
+  ref?: Ref<TRef>,
+  style?: TStyles,
   id?: string,
   width?: number,
   height?: number,
