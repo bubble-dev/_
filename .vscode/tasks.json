@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "⏬ install",
+      "type": "shell",
+      "command": "yarn install",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "🚷 lint",
+      "type": "shell",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js lint",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "✅ test",
+      "type": "shell",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js test",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "➕ commit",
+      "type": "shell",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js commit",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "📦 publish",
+      "type": "shell",
+      "command": "packages/bubble-dev/start-preset/src/cli/index.js publish",
+      "presentation": {
+        "focus": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

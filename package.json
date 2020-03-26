@@ -1,0 +1,110 @@
+{
+  "private": true,
+  "description": "_",
+  "workspaces": [
+    "packages/bubble-dev/*",
+    "packages/colorido",
+    "packages/elegir",
+    "packages/fantasy-color/*",
+    "packages/lada/*",
+    "packages/math-playground",
+    "packages/msked",
+    "packages/primitives/*",
+    "packages/sandbox/*",
+    "packages/stili",
+    "packages/themeables/*"
+  ],
+  "devDependencies": {
+    "@bubble-dev/eslint-config": "*",
+    "@bubble-dev/start-preset": "*",
+    "@bubble-dev/typescript-config": "*",
+    "@sandbox/ui": "*",
+    "@start/plugin": "*",
+    "@types/node": "^13.5.0",
+    "@x-ray/ui": "*",
+    "colorido": "*",
+    "core-js": "^3.2.1",
+    "eslint": "^6.1.0",
+    "graphiq": "*",
+    "react": "^16.8.6",
+    "react-native": "0.61.5",
+    "tsfn": "*",
+    "typescript": "bubble-dev/TypeScript#ext-3.7.3"
+  },
+  "scripts": {
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+  },
+  "start": {
+    "file": "tasks/",
+    "auto": {
+      "shouldMakeGitTags": true,
+      "shouldSendTelegramMessage": true,
+      "shouldWriteChangelogFiles": true
+    }
+  },
+  "auto": {
+    "bump": {
+      "initialType": "minor",
+      "zeroBreakingChangeType": "minor"
+    },
+    "npm": {
+      "publishSubDirectory": "build",
+      "access": "public"
+    },
+    "prefixes": {
+      "major": "💥",
+      "minor": "🌱",
+      "patch": "🐞",
+      "publish": "📦",
+      "dependencies": "♻️",
+      "initial": "🐣",
+      "lint": "🚷",
+      "test": "👾",
+      "docs": "📝",
+      "refactor": "🛠",
+      "wip": "🚧",
+      "screenshots": "📸"
+    },
+    "commit": {
+      "major": "Breaking Change",
+      "minor": "New feature",
+      "patch": "Bugfix",
+      "initial": "Initial",
+      "depepdencies": "Dependencies",
+      "lint": "Lint",
+      "test": "Test",
+      "docs": "Docs",
+      "refactor": "Refactor",
+      "wip": "WIP",
+      "screenshots": "Snapshots / Screenshots"
+    }
+  },
+  "eslintConfig": {
+    "extends": "@bubble-dev/eslint-config"
+  },
+  "eslintIgnore": [
+    "build/",
+    "coverage/",
+    "node_modules/"
+  ],
+  "renovate": {
+    "commitMessagePrefix": "♻️",
+    "commitMessageAction": "update",
+    "commitMessageTopic": "{{depName}}",
+    "ignoreDeps": [
+      "gradle",
+      "typescript"
+    ],
+    "packageRules": [
+      {
+        "packageNames": [
+          "@types/node"
+        ],
+        "allowedVersions": "<12"
+      }
+    ]
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  }
+}
