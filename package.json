@@ -62,7 +62,7 @@
     "eslint": "^6.1.0",
     "graphiq": "*",
     "react": "^16.8.6",
-    "react-native": "0.61.5",
+    "react-native": "0.62.0",
     "tsfn": "*",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
