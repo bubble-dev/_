@@ -1,10 +1,10 @@
 import React from 'react'
-import { View } from '@primitives/view'
+import { Block } from '@primitives/block'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { Surface, Shape } from '@primitives/svg'
 import { colorToString } from 'colorido'
+import { TStyle } from 'stili'
 import { TVectorShape } from './types'
-import { normalizeStyle, TStyle } from 'stili'
 
 export const VectorShape = component(
   startWithType<TVectorShape>(),
@@ -17,11 +17,7 @@ export const VectorShape = component(
     let transform = ''
 
     if (typeof scale !== 'undefined') {
-      if (transform.length > 0) {
-        transform += ' '
-      }
-
-      transform += `scale(${scale}, ${scale})`
+      transform += `scale(${scale})`
     }
 
     if (transform.length > 0) {
@@ -29,18 +25,18 @@ export const VectorShape = component(
     }
 
     return {
-      style: normalizeStyle(style),
+      style,
     }
   })
 )(({ color, height, id, path, style, width }) => (
-  <View style={style}>
+  <Block shouldIgnorePointerEvents style={style}>
     <Surface id={id} height={height} width={width}>
       <Shape
         d={path}
         fill={colorToString(color)}
       />
     </Surface>
-  </View>
+  </Block>
 ))
 
 VectorShape.displayName = 'VectorShape'

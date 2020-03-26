@@ -1,10 +1,9 @@
 import React from 'react'
-import { View } from '@primitives/view'
+import { Block } from '@primitives/block'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { Surface, Shape } from '@primitives/svg'
 import { colorToString } from 'colorido'
 import { TVectorShape } from './types'
-import { normalizeStyle } from 'stili'
 
 export const VectorShape = component(
   startWithType<TVectorShape>(),
@@ -19,20 +18,20 @@ export const VectorShape = component(
     }
 
     return {
-      style: normalizeStyle({
+      style: {
         transform,
-      }),
+      },
     }
   })
 )(({ color, height, id, path, style, width }) => (
-  <View style={style}>
+  <Block shouldIgnorePointerEvents style={style}>
     <Surface id={id} height={height} width={width}>
       <Shape
         d={path}
         fill={colorToString(color)}
       />
     </Surface>
-  </View>
+  </Block>
 ))
 
 VectorShape.displayName = 'VectorShape'
