@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/vector-shape": "^1.0.0",
+    "@primitives/vector-shape": "^1.2.0",
     "@themeables/core": "^1.0.0",
     "colorido": "^1.0.0"
   },
