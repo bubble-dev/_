@@ -1,6 +1,6 @@
 import test from 'tape'
-import { normalizeStyle as normalizeStyleWeb } from '../src/index.web'
-import { normalizeStyle as normalizeStyleNative } from '../src/index.native'
+import { normalizeStyle as normalizeStyleWeb } from '../src/Root.web'
+import { normalizeStyle as normalizeStyleNative } from '../src/Root.native'
 
 test('stili: normalizeStyle + web', (t) => {
   t.deepEqual(
