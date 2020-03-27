@@ -3,10 +3,10 @@
 - `div` in Web
 - `View` in Native
 
-All the styling options of Block are provided as props instead of as an open-ended `style` object.
-
 ```ts
-type TBlock = {
+type TBlock<TRef, TStyles> = {
+  ref?: Ref<TRef>,
+  style?: TStyles,
   id?: string,
   width?: number,
   height?: number,
@@ -24,3 +24,4 @@ type TBlock = {
 }
 ```
 
+> ⚠️`TStyles` and `TRef` differ on Native and Web given each one’s different environment-specific elements and document-models.
