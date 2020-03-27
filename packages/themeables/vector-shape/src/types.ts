@@ -4,6 +4,7 @@ export type TThemeableVectorShape = {
   color?: TColor,
   height?: number,
   path: string,
+  scale?: number,
   width?: number,
 }
 
