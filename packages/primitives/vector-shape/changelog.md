@@ -1,3 +1,15 @@
+## v1.2.0
+
+* 🌱 support optional 'scale' prop for VectorShape
+
+  ```
+  * 🚧 add 'scale' to VectorShape primitive
+  
+  * 🌱 primitives/vector-shape, themeables/vector-shape: support 'scale' prop for VectorShape
+  ```
+
+* ♻️ update dependencies `@themeables/vector-shape`
+
 ## v1.1.0
 
 * ♻️ update dependencies: `@primitives/block`
