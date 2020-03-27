@@ -10,7 +10,7 @@ The _metarepo_ is a single repository that consists of many packages and various
 
 Check the individual documentations for more details:
 
-* [@bubble-dev](packages/bubble-dev): [start](packages/start) preset and various shared configs to develop, test, build and publish packages in this metarepo
+* [@bubble-dev](packages/bubble-dev): Start preset and various shared configs to develop, test, build and publish packages in this metarepo
 * [colorido](packages/colorido): set of helpers and types to work with RGBA colors as `[number, number, number, number]` tuples
 * [elegir](packages/elegir): switch-like expressions that look good
 * [@fantasy-color](packages/fantasy-color): color manipulation functions
