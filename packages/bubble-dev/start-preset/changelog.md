@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 allow for baseDir changes in the test tasks
+
 ## v2.0.2
 
 * 🐞 fix `pkg` task to use `stroki` + `rplace`
