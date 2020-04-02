@@ -1,3 +1,11 @@
+## v3.0.0
+
+* 💥 bump `rebox` and use React Native 0.62.0
+
+* 🐞 bump X-Ray packages
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v2.1.0
 
 * 🌱 allow for baseDir changes in the test tasks

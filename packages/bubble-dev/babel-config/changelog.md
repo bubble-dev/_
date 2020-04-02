@@ -1,3 +1,7 @@
+## v0.1.6
+
+* 🐞 sync `metro-react-native-babel-preset` version with React Native 0.62.0
+
 ## v0.1.5
 
 * 🐞 fix `bin` entry points with tricky shebang for running Node.js with flags
