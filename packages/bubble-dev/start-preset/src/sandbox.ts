@@ -20,9 +20,9 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
     env({ NODE_ENV: 'development' }),
     syncState,
     platforms.includes('web') && plugin('web', ({ logMessage }) => async () => {
-      const { run } = await import('@rebox/web')
+      const { runWebApp } = await import('@rebox/web')
 
-      await run({
+      await runWebApp({
         entryPointPath,
         htmlTemplatePath,
         assetsPath,
@@ -33,23 +33,24 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
     }),
     concurrent(
       platforms.includes('ios') && plugin('ios', () => async () => {
-        const { run } = await import('@rebox/ios')
+        const { runIosApp } = await import('@rebox/ios')
 
-        await run({
+        await runIosApp({
           entryPointPath,
-          appId: 'org.bubble-next.sandbox',
+          appId: 'org.bubble-dev.sandbox',
           appName: 'Sandbox',
-          iOSVersion: '12.2',
+          iPhoneVersion: 8,
+          iOSVersion: '13.2',
           fontsDir,
           dependencyNames: ['react-native-svg'],
         })
       }),
       platforms.includes('android') && plugin('android', () => async () => {
-        const { run } = await import('@rebox/android')
+        const { runAndroidApp } = await import('@rebox/android')
 
-        await run({
+        await runAndroidApp({
           entryPointPath,
-          appId: 'org.bubble_next.sandbox',
+          appId: 'org.bubble_dev.sandbox',
           appName: 'Sandbox',
           fontsDir,
           dependencyNames: ['react-native-svg'],
@@ -65,9 +66,9 @@ export const buildSandbox = () =>
     find('.rebox/Sandbox/'),
     remove,
     plugin('web', () => async () => {
-      const { buildRelease } = await import('@rebox/web')
+      const { buildWebAppRelease } = await import('@rebox/web')
 
-      await buildRelease({
+      await buildWebAppRelease({
         entryPointPath: 'tasks/sandbox/index.tsx',
         outputPath: '.rebox/Sandbox',
         htmlTemplatePath: 'tasks/sandbox/templates/build.html',
