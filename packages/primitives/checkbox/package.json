@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/react": "^16.8.6",
     "autoprops": "^1.0.0",
-    "react": "16.11.0",
+    "react": "16.13.1",
     "react-native": "0.62.0"
   },
   "designDocsUrl": "https://google.com",
