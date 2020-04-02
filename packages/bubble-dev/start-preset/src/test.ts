@@ -20,9 +20,9 @@ import waitForChromium from './plugins/wait-for-chromium'
 import waitForFirefox from './plugins/wait-for-firefox'
 import withFirefox from './plugins/with-firefox'
 
-export const checkWebSnapshots = (component = '**') =>
+export const CheckWebSnapshots = (baseDir: string = 'packages') => (component = '**') =>
   sequence(
-    find(`packages/${component}/x-ray/snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'web',
@@ -38,9 +38,11 @@ export const checkWebSnapshots = (component = '**') =>
     })
   )
 
-export const checkNativeSnapshots = (component = '**') =>
+export const checkWebSnapshots = CheckWebSnapshots()
+
+export const CheckNativeSnapshots = (baseDir: string = 'packages') => (component = '**') =>
   sequence(
-    find(`packages/${component}/x-ray/snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'native',
@@ -63,10 +65,12 @@ export const checkNativeSnapshots = (component = '**') =>
     })
   )
 
-export const CheckChromeScreenshots = (fontsDir?: string) => (component = '**') =>
+export const checkNativeSnapshots = CheckNativeSnapshots()
+
+export const CheckChromeScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') =>
   withChromium(
     sequence(
-      find(`packages/${component}/x-ray/screenshots.tsx`),
+      find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
       waitForChromium,
       env({ NODE_ENV: 'production' }),
       xRayChromeScreenshots({
@@ -85,10 +89,10 @@ export const CheckChromeScreenshots = (fontsDir?: string) => (component = '**') 
     fontsDir
   )
 
-export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**') =>
+export const CheckFirefoxScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') =>
   withFirefox(
     sequence(
-      find(`packages/${component}/x-ray/screenshots.tsx`),
+      find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
       waitForFirefox,
       env({ NODE_ENV: 'production' }),
       xRayFirefoxScreenshots({
@@ -107,41 +111,41 @@ export const CheckFirefoxScreenshots = (fontsDir?: string) => (component = '**')
     fontsDir
   )
 
-export const CheckChromePerfSnapshots = (fontsDir?: string) => (component = '**') => {
+export const CheckChromePerfSnapshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`packages/${component}/x-ray/perf-snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/perf-snapshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayChromePerfSnapshots(fontsDir)
   )
 }
 
-export const CheckIosScreenshots = (fontsDir?: string) => (component = '**') => {
+export const CheckIosScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`packages/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayIosScreenshots(fontsDir)
   )
 }
 
-export const CheckAndroidScreenshots = (fontsDir?: string) => (component = '**') => {
+export const CheckAndroidScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`packages/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayAndroidScreenshots(fontsDir)
   )
 }
 
-export const CheckIosWebScreenshots = (fontsDir?: string) => (component = '**') => {
+export const CheckIosWebScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`packages/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayIosWebScreenshots(fontsDir)
   )
 }
 
-export const CheckAndroidWebScreenshots = (fontsDir?: string) => (component = '**') => {
+export const CheckAndroidWebScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`packages/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
     env({ NODE_ENV: 'production' }),
     xRayAndroidWebScreenshots(fontsDir)
   )
@@ -225,7 +229,7 @@ export const lint = async () => {
   )
 }
 
-export const test = async (packageDir: string = '**') => {
+export const Test = (baseDir: string = 'packages') => async (packageDir: string = '**') => {
   // @ts-ignore
   const { default: tapDiff } = await import('tap-diff')
 
@@ -233,16 +237,18 @@ export const test = async (packageDir: string = '**') => {
     env({ NODE_ENV: 'test' }),
     find(`coverage/`),
     remove,
-    find(`packages/${packageDir}/src/**/*.{ts,tsx}`),
+    find(`${baseDir}/${packageDir}/src/**/*.{ts,tsx}`),
     istanbulInstrument(['.ts', '.tsx']),
     find([
-      `packages/${packageDir}/test/**/*.{ts,tsx}`,
-      `!packages/${packageDir}/test/fixtures`,
+      `${baseDir}/${packageDir}/test/**/*.{ts,tsx}`,
+      `!${baseDir}/${packageDir}/test/fixtures`,
     ]),
     tape(tapDiff),
     istanbulReport(['lcovonly', 'html', 'text-summary'])
   )
 }
+
+export const test = Test()
 
 export const ci = () =>
   sequence(
