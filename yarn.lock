@@ -866,6 +866,15 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-syntax-typescript" "^7.8.3"
 
+"@babel/plugin-transform-typescript@^7.5.0":
+  version "7.9.4"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.9.4.tgz#4bb4dde4f10bbf2d787fce9707fb09b483e33359"
+  integrity sha512-yeWeUkKx2auDbSxRe8MusAG+n4m9BFY/v+lPjmQDgOFX5qnySkUY5oXzkp6FwPdsYqnKay6lorXYdC0n3bZO7w==
+  dependencies:
+    "@babel/helper-create-class-features-plugin" "^7.8.3"
+    "@babel/helper-plugin-utils" "^7.8.3"
+    "@babel/plugin-syntax-typescript" "^7.8.3"
+
 "@babel/plugin-transform-unicode-regex@^7.0.0", "@babel/plugin-transform-unicode-regex@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-regex/-/plugin-transform-unicode-regex-7.8.3.tgz#0cef36e3ba73e5c57273effb182f46b91a1ecaad"
@@ -1511,6 +1520,25 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@nextools/babel-config@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@nextools/babel-config/-/babel-config-0.1.2.tgz#f7eb2fc868da7ef24e1c4ee65883ed28ede85540"
+  integrity sha512-auxZwP6Q5Z2zDy87BAP8gLqS1wTwFXJO0MwCWoMer7yX0mACA8zPxwKZU3DLDwRxRuQJHwy9BONiuZLRFZvz9g==
+  dependencies:
+    "@babel/plugin-syntax-bigint" "^7.8.0"
+    "@babel/plugin-transform-runtime" "^7.8.0"
+    "@babel/preset-env" "^7.8.0"
+    "@babel/preset-react" "^7.8.0"
+    "@babel/preset-typescript" "^7.8.0"
+    "@nextools/browsers-list" "^0.1.0"
+    babel-plugin-transform-inline-environment-variables "^0.4.3"
+    metro-react-native-babel-preset "0.58.0"
+
+"@nextools/browsers-list@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@nextools/browsers-list/-/browsers-list-0.1.0.tgz#ea7874ced42126ee30a87fbeb746ce09afbe1c29"
+  integrity sha512-2gGUTiI6/EAOPnpAqmpHKVGEsFkubwxTVAGzulWV9hY/XMKafUP7sNw1JjVj7am7N5NBInD3zhy9diGeEMJRjA==
+
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.3.tgz#3a582bdb53804c6ba6d146579c46e52130cf4a3b"
@@ -1718,6 +1746,26 @@
     react-dom "^16.8.6"
     terser-webpack-plugin "^2.0.0"
     tsfn "^1.0.0"
+    webpack "^4.30.0"
+    webpack-bundle-analyzer "^3.3.2"
+    webpack-dev-server "^3.3.1"
+
+"@rebox/web@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@rebox/web/-/web-2.0.0.tgz#4d728bdbf46e424d1345b2212c41f634f07ec6f6"
+  integrity sha512-5FcFKnQns+qJLVzBlJ3Uj6Fj20dZHSkr4ojefNx8xB9E4gxkVbPYiC5Xp6YisBZGU1bp/Q4PxgX9C8tcQZCsjA==
+  dependencies:
+    "@babel/core" "^7.4.3"
+    "@nextools/babel-config" "^0.1.2"
+    babel-loader "^8.0.5"
+    core-js "^3.1.4"
+    file-loader "^5.0.2"
+    fixed-webpack4-html-webpack-inline-chunk-plugin "^2.0.2"
+    html-webpack-plugin "^3.2.0"
+    react "16.11.0"
+    react-dom "16.11.0"
+    terser-webpack-plugin "^2.0.0"
+    tsfn "^1.1.1"
     webpack "^4.30.0"
     webpack-bundle-analyzer "^3.3.2"
     webpack-dev-server "^3.3.1"
@@ -7980,6 +8028,47 @@ metro-react-native-babel-preset@0.56.4, metro-react-native-babel-preset@^0.56.4:
     "@babel/template" "^7.0.0"
     react-refresh "^0.4.0"
 
+metro-react-native-babel-preset@0.58.0:
+  version "0.58.0"
+  resolved "https://registry.yarnpkg.com/metro-react-native-babel-preset/-/metro-react-native-babel-preset-0.58.0.tgz#18f48d33fe124280ffabc000ab8b42c488d762a2"
+  integrity sha512-MRriNW+fF6jxABsgPphocUY6mIhmCm8idcrQZ58fT3Iti2vCdtkaK32TyCGUNUptzhUe2/cbE57j4aC+eaodAA==
+  dependencies:
+    "@babel/plugin-proposal-class-properties" "^7.0.0"
+    "@babel/plugin-proposal-export-default-from" "^7.0.0"
+    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.0.0"
+    "@babel/plugin-proposal-object-rest-spread" "^7.0.0"
+    "@babel/plugin-proposal-optional-catch-binding" "^7.0.0"
+    "@babel/plugin-proposal-optional-chaining" "^7.0.0"
+    "@babel/plugin-syntax-dynamic-import" "^7.0.0"
+    "@babel/plugin-syntax-export-default-from" "^7.0.0"
+    "@babel/plugin-syntax-flow" "^7.2.0"
+    "@babel/plugin-transform-arrow-functions" "^7.0.0"
+    "@babel/plugin-transform-block-scoping" "^7.0.0"
+    "@babel/plugin-transform-classes" "^7.0.0"
+    "@babel/plugin-transform-computed-properties" "^7.0.0"
+    "@babel/plugin-transform-destructuring" "^7.0.0"
+    "@babel/plugin-transform-exponentiation-operator" "^7.0.0"
+    "@babel/plugin-transform-flow-strip-types" "^7.0.0"
+    "@babel/plugin-transform-for-of" "^7.0.0"
+    "@babel/plugin-transform-function-name" "^7.0.0"
+    "@babel/plugin-transform-literals" "^7.0.0"
+    "@babel/plugin-transform-modules-commonjs" "^7.0.0"
+    "@babel/plugin-transform-object-assign" "^7.0.0"
+    "@babel/plugin-transform-parameters" "^7.0.0"
+    "@babel/plugin-transform-react-display-name" "^7.0.0"
+    "@babel/plugin-transform-react-jsx" "^7.0.0"
+    "@babel/plugin-transform-react-jsx-source" "^7.0.0"
+    "@babel/plugin-transform-regenerator" "^7.0.0"
+    "@babel/plugin-transform-runtime" "^7.0.0"
+    "@babel/plugin-transform-shorthand-properties" "^7.0.0"
+    "@babel/plugin-transform-spread" "^7.0.0"
+    "@babel/plugin-transform-sticky-regex" "^7.0.0"
+    "@babel/plugin-transform-template-literals" "^7.0.0"
+    "@babel/plugin-transform-typescript" "^7.5.0"
+    "@babel/plugin-transform-unicode-regex" "^7.0.0"
+    "@babel/template" "^7.0.0"
+    react-refresh "^0.4.0"
+
 metro-react-native-babel-transformer@^0.56.0:
   version "0.56.4"
   resolved "https://registry.yarnpkg.com/metro-react-native-babel-transformer/-/metro-react-native-babel-transformer-0.56.4.tgz#3c6e48b605c305362ee624e45ff338656e35fc1d"
@@ -9699,6 +9788,16 @@ react-devtools-core@^3.6.3:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
+react-dom@16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.11.0.tgz#7e7c4a5a85a569d565c2462f5d345da2dd849af5"
+  integrity sha512-nrRyIUE1e7j8PaXSPtyRKtz+2y9ubW/ghNgqKFHHAHaeP0fpF5uXR+sq8IMRHC+ZUxw7W9NyCDTBtwWxvkb0iA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.17.0"
+
 react-dom@^16.6.0, react-dom@^16.8.6:
   version "16.13.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.0.tgz#cdde54b48eb9e8a0ca1b3dc9943d9bb409b81866"
@@ -9784,6 +9883,15 @@ react-test-renderer@^16.6.0:
     prop-types "^15.6.2"
     react-is "^16.8.6"
     scheduler "^0.19.0"
+
+react@16.11.0:
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
+  integrity sha512-M5Y8yITaLmU0ynd0r1Yvfq98Rmll6q8AxaEe88c8e7LxO8fZ2cNgmFt0aGAS9wzf1Ao32NKXtCl+/tVVtkxq6g==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
 
 react@^16.8.0, react@^16.8.6, react@^16.9.0:
   version "16.13.0"
@@ -10267,6 +10375,14 @@ scheduler@0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.15.0.tgz#6bfcf80ff850b280fed4aeecc6513bc0b4f17f8e"
   integrity sha512-xAefmSfN6jqAa7Kuq7LIJY0bwAPG3xlCj0HMEBQk1lxYiDKZscY2xJ5U/61ZTrYbmNQbXa+gc7czPkVo11tnCg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.17.0.tgz#7c9c673e4ec781fac853927916d1c426b6f3ddfe"
+  integrity sha512-7rro8Io3tnCPuY4la/NuI5F2yfESpnfZyT6TtkXnSWVkcu0BCDJ+8gk5ozUaFaxpIyNuWAPXrH0yFcSi28fnDA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -11397,6 +11513,11 @@ tsfn@*, tsfn@^1.0.0, tsfn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-1.1.0.tgz#e54ac86432a01fce61a5a82883c3078a839f1941"
   integrity sha512-VygSUEZm+Yc6C/ZKpggDr2AAZV8QO8CS/55T7e49vnuN0U2s8PN8YQiRxHduJNsbQ31fqoJ5yWvXLWsCfAHCcw==
+
+tsfn@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-1.1.1.tgz#6b31be21ad69adb01893e8dade25cf7ef04bd578"
+  integrity sha512-ZEKJh7lmeR58fflPRW/87FCulJie8AbOLKiibRnGmhsuze0qT4uWrW8caUQUpWPTya1XWKqAR4xdJ2IYTO5bAw==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.11.1"
