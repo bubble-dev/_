@@ -25,7 +25,7 @@ export const buildAssets = async (dir: string) => {
 }
 
 export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
-  const { babelConfigWebLib } = await import('@bubble-dev/babel-config')
+  const { babelConfigWebBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -34,7 +34,7 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigWebLib),
+    babel(babelConfigWebBuild),
     rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/web/`)
   )
@@ -60,7 +60,7 @@ export const buildDtsWeb = (dir: string): StartPlugin<{}, {}> =>
   )
 
 export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>> => {
-  const { babelConfigReactNative } = await import('@bubble-dev/babel-config')
+  const { babelConfigReactNativeBuild } = await import('@bubble-dev/babel-config')
 
   return sequence(
     find([
@@ -69,7 +69,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
-    babel(babelConfigReactNative),
+    babel(babelConfigReactNativeBuild),
     rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/native/`)
   )
