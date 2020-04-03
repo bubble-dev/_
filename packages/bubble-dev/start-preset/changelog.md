@@ -1,3 +1,9 @@
+## v3.0.1
+
+* 🐞 bump `rebox/web`
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v3.0.0
 
 * 💥 bump `rebox` and use React Native 0.62.0

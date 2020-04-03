@@ -1,3 +1,7 @@
+## v0.1.7
+
+* 🐞 refactor and rename configs
+
 ## v0.1.6
 
 * 🐞 sync `metro-react-native-babel-preset` version with React Native 0.62.0
