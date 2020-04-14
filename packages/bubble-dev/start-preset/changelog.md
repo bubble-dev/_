@@ -1,3 +1,7 @@
+## v3.1.0
+
+* 🌱 support lottie and js/jsx extensions everywhere
+
 ## v3.0.2
 
 * 🐞 upgrade escape-string-regexp to v3
