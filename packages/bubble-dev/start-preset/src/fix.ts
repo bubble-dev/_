@@ -11,15 +11,15 @@ export const fixLint = async () => {
   const packageJson = await import(path.resolve('package.json'))
   const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
     acc.concat(
-      `${glob}/{src,test,x-ray}/**/*.{ts,tsx}`,
-      `${glob}/*.{ts,tsx}`
+      `${glob}/{src,test,x-ray}/**/*.{ts,tsx,js,jsx}`,
+      `${glob}/*.{ts,tsx,js,jsx}`
     )
   ), [] as string[])
 
   return sequence(
     find([
       ...globs,
-      'tasks/**/*.ts',
+      'tasks/**/*.{ts,js}',
     ]),
     read,
     eslint({
@@ -40,8 +40,8 @@ export const fixDeps = (packageDir?: string) => plugin('fixDeps', ({ logPath, lo
   const fixPackageDir = async (dir: string) => {
     const json: TPackageJson = await getPackage(dir)
     let ignoredPackages: string[] = ['@babel/runtime']
-    let dependenciesGlobs = ['src/**/*.{ts,tsx,js}']
-    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}']
+    let dependenciesGlobs = ['src/**/*.{ts,tsx,js,jsx}']
+    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js,jsx}', 'meta.{ts,tsx,js,jsx}']
 
     if (objectHas(json, 'fixdeps')) {
       const options = json.fixdeps
