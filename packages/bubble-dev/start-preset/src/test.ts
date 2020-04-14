@@ -31,6 +31,7 @@ export const CheckWebSnapshots = (baseDir: string = 'packages') => (component = 
         '.web.ts',
         '.web.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
       ],
@@ -42,7 +43,7 @@ export const checkWebSnapshots = CheckWebSnapshots()
 
 export const CheckNativeSnapshots = (baseDir: string = 'packages') => (component = '**') =>
   sequence(
-    find(`${baseDir}/${component}/x-ray/snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/snapshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'native',
@@ -58,6 +59,7 @@ export const CheckNativeSnapshots = (baseDir: string = 'packages') => (component
         '.ios.ts',
         '.ios.tsx',
         '.js',
+        '.jsx',
         '.ts',
         '.tsx',
       ],
@@ -70,7 +72,7 @@ export const checkNativeSnapshots = CheckNativeSnapshots()
 export const CheckChromeScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') =>
   withChromium(
     sequence(
-      find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+      find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
       waitForChromium,
       env({ NODE_ENV: 'production' }),
       xRayChromeScreenshots({
@@ -79,6 +81,7 @@ export const CheckChromeScreenshots = (fontsDir?: string, baseDir: string = 'pac
           '.web.js',
           '.web.ts',
           '.web.tsx',
+          '.jsx',
           '.js',
           '.ts',
           '.tsx',
@@ -92,7 +95,7 @@ export const CheckChromeScreenshots = (fontsDir?: string, baseDir: string = 'pac
 export const CheckFirefoxScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') =>
   withFirefox(
     sequence(
-      find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+      find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
       waitForFirefox,
       env({ NODE_ENV: 'production' }),
       xRayFirefoxScreenshots({
@@ -102,6 +105,7 @@ export const CheckFirefoxScreenshots = (fontsDir?: string, baseDir: string = 'pa
           '.web.ts',
           '.web.tsx',
           '.js',
+          '.jsx',
           '.ts',
           '.tsx',
         ],
@@ -113,7 +117,7 @@ export const CheckFirefoxScreenshots = (fontsDir?: string, baseDir: string = 'pa
 
 export const CheckChromePerfSnapshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`${baseDir}/${component}/x-ray/perf-snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/perf-snapshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRayChromePerfSnapshots(fontsDir)
   )
@@ -121,7 +125,7 @@ export const CheckChromePerfSnapshots = (fontsDir?: string, baseDir: string = 'p
 
 export const CheckIosScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRayIosScreenshots(fontsDir)
   )
@@ -161,8 +165,8 @@ export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () 
   const fixPackageDir = async (dir: string): Promise<boolean> => {
     const json: TPackageJson = await getPackage(dir)
     let ignoredPackages: string[] = ['@babel/runtime']
-    let dependenciesGlobs = ['src/**/*.{ts,tsx,js}']
-    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js}', 'meta.{ts,tsx}']
+    let dependenciesGlobs = ['src/**/*.{ts,tsx,js,jsx}']
+    let devDependenciesGlobs = ['{test,x-ray}/**/*.{ts,tsx,js,jsx}', 'meta.{js,jsx,ts,tsx}']
 
     if (objectHas(json, 'fixdeps')) {
       const options = json.fixdeps
@@ -202,15 +206,15 @@ export const lint = async () => {
   const packageJson = await import(path.resolve('package.json'))
   const globs = packageJson.workspaces.reduce((acc: string[], glob: string) => (
     acc.concat(
-      `${glob}/{src,test,x-ray}/**/*.{ts,tsx}`,
-      `${glob}/*.{ts,tsx}`
+      `${glob}/{src,test,x-ray}/**/*.{ts,tsx,js,jsx}`,
+      `${glob}/*.{ts,tsx,js,jsx}`
     )
   ), [] as string[])
 
   return sequence(
     find([
       ...globs,
-      'tasks/**/*.ts',
+      'tasks/**/*.{ts,js}',
     ]),
     plugin('weslint', () => async ({ files }) => {
       const result = await weslint({
@@ -237,10 +241,10 @@ export const Test = (baseDir: string = 'packages') => async (packageDir: string 
     env({ NODE_ENV: 'test' }),
     find(`coverage/`),
     remove,
-    find(`${baseDir}/${packageDir}/src/**/*.{ts,tsx}`),
-    istanbulInstrument(['.ts', '.tsx']),
+    find(`${baseDir}/${packageDir}/src/**/*.{ts,tsx,js,jsx}`),
+    istanbulInstrument(['.ts', '.tsx', '.js', '.jsx']),
     find([
-      `${baseDir}/${packageDir}/test/**/*.{ts,tsx}`,
+      `${baseDir}/${packageDir}/test/**/*.{ts,tsx,js,jsx}`,
       `!${baseDir}/${packageDir}/test/fixtures`,
     ]),
     tape(tapDiff),

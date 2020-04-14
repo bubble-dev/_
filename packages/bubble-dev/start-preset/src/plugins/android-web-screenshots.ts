@@ -17,6 +17,7 @@ export default (fontsDir?: string) => plugin<StartFilesProps, void>('x-ray', ({ 
       '.web.ts',
       '.web.tsx',
       '.js',
+      '.jsx',
       '.ts',
       '.tsx',
     ],

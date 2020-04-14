@@ -29,20 +29,20 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{node,native,ios,android}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{node,native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigWebBuild),
-    rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/(\.web)?\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/web/`)
   )
 }
 
 export const buildDtsWeb = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
+    find(`${dir}/src/index.{web.tsx,web.ts,web.js,web.jsx,tsx,ts,jsx,js}`),
     typescriptGenerate(`${dir}/build/web/`, {
       strict: true,
       jsx: JsxEmit.React,
@@ -64,20 +64,20 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
 
   return sequence(
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{node,web}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{node,web}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigReactNativeBuild),
-    rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/(\.native)?\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/native/`)
   )
 }
 
 export const buildDtsReactNative = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{native.tsx,native.ts,ios.tsx,ios.ts,android.tsx,android.ts,tsx,ts}`),
+    find(`${dir}/src/index.{native.tsx,native.ts,native.js,native.jsx,ios.tsx,ios.ts,ios.js,ios.jsx,android.tsx,android.ts,android.js,android.jsx,tsx,ts,js,jsx}`),
     typescriptGenerate(`${dir}/build/native/`, {
       strict: true,
       jsx: JsxEmit.React,
@@ -100,20 +100,20 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   return sequence(
     env({ BABEL_ENV: 'production' }),
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{web,native,ios,android}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{web,native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/(\.node)?\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/(\.node)?\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/node/`)
   )
 }
 
 export const buildDtsNode = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{node.tsx,node.ts,tsx,ts}`),
+    find(`${dir}/src/index.{node.tsx,node.ts,node.jsx,node.js,tsx,ts,jsx,js}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
       jsx: JsxEmit.React,
@@ -136,20 +136,20 @@ export const buildWebNode = async (dir: string): Promise<StartPlugin<{}, {}>> =>
   return sequence(
     env({ BABEL_ENV: 'production' }),
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/(\.web)?\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/(\.web)?\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/node/`)
   )
 }
 
 export const buildDtsWebNode = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{web.tsx,web.ts,tsx,ts}`),
+    find(`${dir}/src/index.{web.tsx,web.ts,web.jsx,web.js,tsx,ts,jsx,js}`),
     typescriptGenerate(`${dir}/build/node/`, {
       strict: true,
       jsx: JsxEmit.React,
@@ -175,7 +175,7 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
 
   if (Reflect.has(packageJson, 'main')) {
     const { default: globby } = await import('globby')
-    const nodeFiles = await globby(`${dir}/src/**/*.node.{ts,tsx}`, {
+    const nodeFiles = await globby(`${dir}/src/**/*.node.{ts,tsx,js,jsx}`, {
       ignore: ['node_modules/**'],
       deep: Infinity,
       onlyFiles: true,

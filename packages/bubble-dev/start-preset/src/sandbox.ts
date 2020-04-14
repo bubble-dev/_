@@ -42,7 +42,10 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
           iPhoneVersion: 8,
           iOSVersion: '13.2',
           fontsDir,
-          dependencyNames: ['react-native-svg'],
+          dependencyNames: [
+            'react-native-svg',
+            'lottie-react-native',
+          ],
         })
       }),
       platforms.includes('android') && plugin('android', () => async () => {
@@ -53,7 +56,10 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
           appId: 'org.bubble_dev.sandbox',
           appName: 'Sandbox',
           fontsDir,
-          dependencyNames: ['react-native-svg'],
+          dependencyNames: [
+            'react-native-svg',
+            'lottie-react-native',
+          ],
           portsToForward: [3001],
         })
       })
