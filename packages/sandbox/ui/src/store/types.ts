@@ -20,6 +20,7 @@ export type TState = Readonly<{
   width: number,
   height: number,
   hasGrid: boolean,
+  gridSize: number,
   shouldStretch: boolean,
   shouldInspect: boolean,
   isCanvasDarkMode: boolean,

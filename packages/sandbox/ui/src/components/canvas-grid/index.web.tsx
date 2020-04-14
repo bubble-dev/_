@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapWithProps, pureComponent, mapWithPropsMemo } from 'refun'
+import { startWithType, mapWithProps, pureComponent, mapWithPropsMemo, mapDefaultProps } from 'refun'
 import { elegir } from 'elegir'
 import { Surface, Group, Shape } from '@primitives/svg'
 import { PrimitiveBlock } from '../primitive-block'
@@ -10,13 +10,16 @@ const CANVAS_GRID_SIZE = 5
 
 export const CanvasGrid = pureComponent(
   startWithType<TCanvasGrid>(),
-  mapWithPropsMemo(({ width, height }) => ({
-    horizontalPositions: Array(Math.ceil(height / CANVAS_GRID_SIZE) + 1)
+  mapDefaultProps({
+    gridSize: CANVAS_GRID_SIZE,
+  }),
+  mapWithPropsMemo(({ width, height, gridSize }) => ({
+    horizontalPositions: Array(Math.ceil(height / gridSize) + 1)
       .fill(0)
-      .map((_, i) => i * CANVAS_GRID_SIZE),
-    verticalPositions: Array(Math.ceil(width / CANVAS_GRID_SIZE) + 1)
+      .map((_, i) => i * gridSize),
+    verticalPositions: Array(Math.ceil(width / gridSize) + 1)
       .fill(0)
-      .map((_, i) => i * CANVAS_GRID_SIZE),
+      .map((_, i) => i * gridSize),
   }), ['width', 'height']),
   mapWithProps(({ shouldDegrade, isCanvasDarkMode }) => ({
     color: elegir(

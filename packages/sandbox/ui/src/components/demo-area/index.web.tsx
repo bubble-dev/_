@@ -41,7 +41,7 @@ export const DemoArea = component(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
-  mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ, selectedElementPath }) => ({
+  mapStoreState(({ isCanvasDarkMode, width, gridSize, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ, selectedElementPath }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
@@ -52,6 +52,7 @@ export const DemoArea = component(
       y: transformY,
       z: transformZ,
     },
+    gridSize,
     selectedElementPath,
     isCanvasDarkMode,
   }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ', 'selectedElementPath']),
@@ -97,6 +98,7 @@ export const DemoArea = component(
   Component,
   componentProps,
   hasGrid,
+  gridSize,
   transform,
   componentWidth,
   componentLeft,
@@ -165,6 +167,7 @@ export const DemoArea = component(
 
           {hasGrid && (
             <CanvasGrid
+              gridSize={gridSize}
               width={canvasWidth}
               height={canvasHeight}
               shouldDegrade={isTransforming}

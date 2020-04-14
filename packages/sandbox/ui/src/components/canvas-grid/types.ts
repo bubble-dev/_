@@ -3,4 +3,6 @@ export type TCanvasGrid = {
   height: number,
   shouldDegrade: boolean,
   isCanvasDarkMode: boolean,
+  gridSize: number,
+
 }
