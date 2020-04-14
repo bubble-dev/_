@@ -1,3 +1,7 @@
+## v3.0.2
+
+* 🐞 upgrade escape-string-regexp to v3
+
 ## v3.0.1
 
 * 🐞 bump `rebox/web`
