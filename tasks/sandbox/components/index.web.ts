@@ -5,5 +5,6 @@ export const components: TComponents = {
   Input: () => import('@primitives/input/meta' /* webpackChunkName: "Input" */),
   Checkbox: () => import('@primitives/checkbox/meta' /* webpackChunkName: "Checkbox" */),
   VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
+  TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
 }
 

@@ -12,6 +12,7 @@
     "packages/primitives/*",
     "packages/sandbox/*",
     "packages/stili",
+    "packages/test-lottie",
     "packages/themeables/*"
   ],
   "devDependencies": {
