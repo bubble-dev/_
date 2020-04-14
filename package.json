@@ -25,8 +25,8 @@
     "core-js": "^3.2.1",
     "eslint": "^6.1.0",
     "graphiq": "^0.2.1",
-    "react-native": "0.62.0",
     "react": "16.11.0",
+    "react-native": "0.62.2",
     "tsfn": "^1.1.1",
     "typescript": "bubble-dev/TypeScript#ext-3.7.3"
   },
@@ -92,15 +92,9 @@
     "commitMessageTopic": "{{depName}}",
     "ignoreDeps": [
       "gradle",
-      "typescript"
-    ],
-    "packageRules": [
-      {
-        "packageNames": [
-          "@types/node"
-        ],
-        "allowedVersions": "<12"
-      }
+      "react",
+      "react-dom",
+      "react-test-renderer"
     ]
   },
   "engines": {
