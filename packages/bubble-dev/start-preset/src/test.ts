@@ -22,12 +22,13 @@ import withFirefox from './plugins/with-firefox'
 
 export const CheckWebSnapshots = (baseDir: string = 'packages') => (component = '**') =>
   sequence(
-    find(`${baseDir}/${component}/x-ray/snapshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/snapshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRaySnapshots({
       platform: 'web',
       extensions: [
         '.web.js',
+        '.web.jsx',
         '.web.ts',
         '.web.tsx',
         '.js',
@@ -53,9 +54,11 @@ export const CheckNativeSnapshots = (baseDir: string = 'packages') => (component
       },
       extensions: [
         '.native.js',
+        '.native.jsx',
         '.native.ts',
         '.native.tsx',
         '.ios.js',
+        '.ios.jsx',
         '.ios.ts',
         '.ios.tsx',
         '.js',
@@ -79,6 +82,7 @@ export const CheckChromeScreenshots = (fontsDir?: string, baseDir: string = 'pac
         platform: 'chrome',
         extensions: [
           '.web.js',
+          '.web.jsx',
           '.web.ts',
           '.web.tsx',
           '.jsx',
@@ -102,6 +106,7 @@ export const CheckFirefoxScreenshots = (fontsDir?: string, baseDir: string = 'pa
         platform: 'firefox',
         extensions: [
           '.web.js',
+          '.web.jsx',
           '.web.ts',
           '.web.tsx',
           '.js',
@@ -133,7 +138,7 @@ export const CheckIosScreenshots = (fontsDir?: string, baseDir: string = 'packag
 
 export const CheckAndroidScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRayAndroidScreenshots(fontsDir)
   )
@@ -141,7 +146,7 @@ export const CheckAndroidScreenshots = (fontsDir?: string, baseDir: string = 'pa
 
 export const CheckIosWebScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRayIosWebScreenshots(fontsDir)
   )
@@ -149,7 +154,7 @@ export const CheckIosWebScreenshots = (fontsDir?: string, baseDir: string = 'pac
 
 export const CheckAndroidWebScreenshots = (fontsDir?: string, baseDir: string = 'packages') => (component = '**') => {
   return sequence(
-    find(`${baseDir}/${component}/x-ray/screenshots.tsx`),
+    find(`${baseDir}/${component}/x-ray/screenshots.{jsx,tsx}`),
     env({ NODE_ENV: 'production' }),
     xRayAndroidWebScreenshots(fontsDir)
   )
