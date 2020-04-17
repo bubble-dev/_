@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "refun": "^1.0.0",
+    "refun": "^2.0.0",
     "stili": "^1.0.0",
     "tsfn": "^1.1.0"
   },

@@ -10398,6 +10398,13 @@ refun@^1.0.0:
   dependencies:
     tsfn "^1.1.1"
 
+refun@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/refun/-/refun-2.0.0.tgz#e2960d8a2b9f3432a7373aad0db41f43e06a0ffc"
+  integrity sha512-6DbXd6In5gGYfhAi/3wFBg60frESB4E/iV7ruWMUuobCs3OmsezUsNFM+QooRlx3riS7cVC6T/WTMSLuQ1OmRQ==
+  dependencies:
+    tsfn "^1.1.1"
+
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-8.2.0.tgz#e5de7111d655e7ba60c057dbe9ff37c87e65cdec"
