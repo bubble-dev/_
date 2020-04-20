@@ -7,8 +7,7 @@ import { TRadioInput } from './types'
 export const RadioInput = component(
   startWithType<TRadioInput>(),
   mapDefaultProps({
-    paddingTop: 0,
-    paddingBottom: 0,
+
   }),
   mapHandlers({
     onChange: ({ onChange, id, value }) => () => onChange(id, value),
@@ -16,14 +15,11 @@ export const RadioInput = component(
   mapWithProps(
     () => {
       const style: TStyle = {
-        paddingBottom: 0,
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 0,
         flexGrow: 1,
         flexShrink: 1,
         alignSelf: 'stretch',
         minWidth: 0,
+        justifyContent: 'space-between',
       }
 
       return {
@@ -45,9 +41,9 @@ export const RadioInput = component(
 
   return (
     <Touchable
+      style={style}
       testID={`${groupName}-${id}`}
       accessibilityLabel={accessibilityLabel}
-      style={style}
       onPress={() => {
         if (isDisabled) {
           return false

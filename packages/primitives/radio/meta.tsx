@@ -27,20 +27,12 @@ export const config: TComponentConfig<TRadioInput> = {
     groupName: ['test-group'],
     id: ['radio-test'],
     isDisabled: [true],
-    color: [[0xff, 0x00, 0x00, 1]],
-    paddingLeft: [10],
-    paddingTop: [10],
-    paddingRight: [10],
-    paddingBottom: [10],
     value: ['value'],
     onChange: [(id, value) => {
       console.log('Meta file onChange called', id, value)
     }],
   },
   required: ['value', 'onChange', 'groupName', 'id'],
-  mutin: [
-    ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'],
-  ],
 }
 
 export { default as packageJson } from './package.json'

@@ -1,8 +1,6 @@
 import React from 'react'
 import { normalizeStyle, TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { isNumber } from 'tsfn'
-import { colorToString, isColor } from 'colorido'
 import { TRadioInput } from './types'
 
 export const RadioInput = component(
@@ -11,37 +9,13 @@ export const RadioInput = component(
     onChange: ({ onChange, id, value }) => (event: any) => onChange(id, value, event),
   }),
   mapWithProps(
-    ({
-      color,
-      letterSpacing,
-      lineHeight,
-      paddingBottom,
-      paddingLeft,
-      paddingRight,
-      paddingTop,
-    }) => {
+    () => {
       const style: TStyle = {
         backgroundColor: 'rgba(0, 0, 0, 0)',
         border: 0,
         boxSizing: 'border-box',
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
-        paddingTop,
         maxWidth: '100%',
         minWidth: 0,
-      }
-
-      if (isColor(color)) {
-        style.color = colorToString(color)
-      }
-
-      if (isNumber(letterSpacing)) {
-        style.letterSpacing = `${letterSpacing}px`
-      }
-
-      if (isNumber(lineHeight)) {
-        style.lineHeight = `${lineHeight}px`
       }
 
       return {
