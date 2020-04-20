@@ -1,3 +1,7 @@
+## v1.1.0
+
+* 🌱 add support for .jsx file extension
+
 ## v1.0.8
 
 * 🐞 enable `no-floating-promises` rule
