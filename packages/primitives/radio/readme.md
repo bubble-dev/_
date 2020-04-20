@@ -1,40 +1,25 @@
-`Input` is an element that provides a space where the user can enter text. Only the text properties of it can be styled.
+`Radio` brings the equivalent of an `<input type="radio" />` to Native land.
 
-## Editing text handler
+## Handling changes
 
-- `onChange`:
-
-## Focus-like handlers
-
-- `onFocus`: triggered when the component gets the focus
-- `onBlur`: triggered when the component looses the focus
+- `onChange`: is triggered every time the element is selected. Receives `event`, `value`, `id`
 
 These map to the same corresponding props in Web and in React Native.
 
 ## Raw type definitions
 
 ```ts
-export type TInputProps = {
-  id?: string,
-  isDisabled?: boolean,
-  color?: string,
-  family?: string,
-  height?: number,
-  weight?: number,
-  size?: number,
-  lineHeight?: number,
-  letterSpacing?: number,
-  paddingBottom?: number,
-  paddingLeft?: number,
-  paddingRight?: number,
-  paddingTop?: number,
-  shouldStretch?: boolean,
+export type TRadioInputProps = {
+  id: string,
+  groupName: string,
+  groupValue: string,
   value: string,
-  width?: number,
-  onChange: (newValue: string) => void,
-  onSubmit?: () => void,
-  onFocus?: () => void,
-  onBlur?: () => void,
+  isChecked?: boolean,
+  key?: string,
+  accessibilityLabel?: string,
+  accessibilityLabelBy?: string[],
+  isDisabled?: boolean,
+  onChange: (id: string, newValue: string, event: any) => void,
 }
 ```
 

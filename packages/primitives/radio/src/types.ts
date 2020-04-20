@@ -8,9 +8,5 @@ export type TRadioInput = {
   accessibilityLabel?: string,
   accessibilityLabelBy?: string[],
   isDisabled?: boolean,
-  marginTop?: number,
-  marginLeft?: number,
-  marginBottom?: number,
-  marginRight?: number,
   onChange: (id: string, value: string, evt?: any) => void,
 }
