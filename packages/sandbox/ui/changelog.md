@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 add imported packages name getter
+
 ## v2.0.5
 
 * 🐞 fix plugin on native
