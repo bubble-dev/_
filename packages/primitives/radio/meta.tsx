@@ -1,38 +1,37 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
-import { component, startWithType, mapState, mapHandlers } from 'refun'
-import { RadioInput, TRadioInput } from './src'
+import { component, startWithType } from 'refun' // mapState,
+import { RadioInput, RadioGroup, TRadioInput } from './src'
 
 export const Component = component(
-  startWithType<TRadioInput>(),
-  mapState('groupValue', 'setGroupValue', ({ value }) => value, ['value']),
-  mapHandlers({
-    onChange: ({ onChange, setGroupValue }) => (id: string, value: string) => {
-      setGroupValue(value)
-      onChange(id, value)
-    },
-  })
-)((props) => (
-  <>
-    <RadioInput {...props}/>
-    <RadioInput {...props} id="foo" value="test-foo"/>
-  </>
-))
+  startWithType<TRadioInput>()
+)(({ groupValue, ...radioInputProps }) => {
+  console.log('meta groupValue:', groupValue)
+
+  return (
+    <RadioGroup
+      initialValue={groupValue}
+    >
+      <RadioInput {...radioInputProps}/>
+      <RadioInput {...radioInputProps} id="foo" value="test-foo"/>
+    </RadioGroup>
+  )
+})
 
 Component.displayName = 'RadioInput'
 
 export const config: TComponentConfig<TRadioInput> = {
   props: {
-    groupValue: [''],
+    groupValue: ['value'],
     groupName: ['test-group'],
     id: ['radio-test'],
     isDisabled: [true],
     value: ['value'],
-    onChange: [(id, value) => {
-      console.log('Meta file onChange called', id, value)
+    onChange: [(evt) => {
+      console.log('Meta file onChange called', evt)
     }],
   },
-  required: ['value', 'onChange', 'groupName', 'id'],
+  required: ['value', 'onChange', 'groupName', 'groupValue', 'id'],
 }
 
 export { default as packageJson } from './package.json'

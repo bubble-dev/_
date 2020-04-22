@@ -1,13 +1,11 @@
 import React from 'react'
 import { normalizeStyle, TStyle } from 'stili'
-import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
+import { component, mapWithProps, startWithType } from 'refun'
 import { TRadioInput } from './types'
+import { RadioContext } from './context'
 
 export const RadioInput = component(
   startWithType<TRadioInput>(),
-  mapHandlers({
-    onChange: ({ onChange, id, value }) => (event: any) => onChange(id, value, event),
-  }),
   mapWithProps(
     () => {
       const style: TStyle = {
@@ -25,7 +23,6 @@ export const RadioInput = component(
   )
 )(({
   id,
-  groupValue,
   groupName,
   key,
   accessibilityLabelBy = [],
@@ -34,24 +31,30 @@ export const RadioInput = component(
   value,
   isDisabled,
   onChange,
-}) => {
-  const isChecked = groupValue === value
+}) => (
+  <RadioContext.Consumer>
+    {([groupValue, setGroupValue]) => (
+      <input
+        type="radio"
+        id={id}
+        name={groupName}
+        key={key || groupName + id}
+        checked={groupValue === value}
+        value={value}
+        aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
+        aria-label={accessibilityLabel}
+        disabled={isDisabled}
+        style={style}
+        onChange={(evt) => {
+          setGroupValue(evt.currentTarget.value)
 
-  return (
-    <input
-      type="radio"
-      id={id}
-      name={groupName}
-      key={key || groupName + id}
-      checked={isChecked}
-      value={value}
-      aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
-      aria-label={accessibilityLabel}
-      disabled={isDisabled}
-      style={style}
-      onChange={onChange}
-    />
-  )
-})
+          if (typeof onChange === 'function') {
+            onChange(evt)
+          }
+        }}
+      />
+    )}
+  </RadioContext.Consumer>
+))
 
 RadioInput.displayName = 'RadioInput'
