@@ -5,6 +5,6 @@ import { components } from './components'
 export const App = () => (
   <SandboxApp
     components={components}
-    copyImportPackageName={'primitives'}
+    getImportPackageName={() => 'primitives'}
   />
 )

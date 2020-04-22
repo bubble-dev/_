@@ -8,7 +8,7 @@ import { LinesBlock } from './LinesBlock'
 import { serializeImportsLines } from './serialize-imports-lines'
 
 export type TSourceImports = {
-  importPackageName: string,
+  getImportPackageName: (symbolName: string) => string,
 }
 
 export const SourceImports = pureComponent(
@@ -17,7 +17,7 @@ export const SourceImports = pureComponent(
     Component,
     componentProps,
   }), ['Component', 'componentProps']),
-  mapWithPropsMemo(({ Component, componentProps, importPackageName }) => {
+  mapWithPropsMemo(({ Component, componentProps, getImportPackageName }) => {
     if (isUndefined(Component)) {
       return {
         lines: [],
@@ -25,9 +25,9 @@ export const SourceImports = pureComponent(
     }
 
     return {
-      lines: serializeImportsLines(Component, componentProps, importPackageName),
+      lines: serializeImportsLines(Component, componentProps, getImportPackageName),
     }
-  }, ['Component', 'componentProps', 'importPackageName'])
+  }, ['Component', 'componentProps', 'getImportPackageName'])
 )(({ lines }) => (
   <Scroll shouldScrollHorizontally shouldScrollVertically>
     <LinesBlock lines={lines}/>

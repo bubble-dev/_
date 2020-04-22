@@ -11,7 +11,7 @@ import { mapMetaStoreState } from '../../store-meta'
 import { serializeImportsToText } from './serialize-imports-to-text'
 
 export type TCopyImportsButton = {
-  importPackageName: string,
+  getImportPackageName: (symbolName: string) => string,
 }
 
 export const CopyImportsButton = pureComponent(
@@ -23,10 +23,10 @@ export const CopyImportsButton = pureComponent(
     componentProps,
   }), ['Component', 'componentProps']),
   mapHandlers({
-    onCopyImports: ({ Component, componentProps, importPackageName, sendNotification }) => async () => {
+    onCopyImports: ({ Component, componentProps, getImportPackageName, sendNotification }) => async () => {
       if (isDefined(Component) && isDefined(componentProps)) {
         await navigator.clipboard.writeText(
-          serializeImportsToText(Component, componentProps, importPackageName)
+          serializeImportsToText(Component, componentProps, getImportPackageName)
         )
         sendNotification('Copied to clipboard')
       }
