@@ -1,12 +1,15 @@
-import { ReactNode } from 'react'
+import { ReactNode, Dispatch, SetStateAction } from 'react'
+
+export type TRadioContext = [
+  string,
+  Dispatch<SetStateAction<string>>,
+]
 
 export type TRadioInput = {
+  key?: string,
   id: string,
   groupName: string,
-  groupValue: string,
   value: string,
-  isChecked?: boolean,
-  key?: string,
   accessibilityLabel?: string,
   accessibilityLabelBy?: string[],
   isDisabled?: boolean,
@@ -14,7 +17,6 @@ export type TRadioInput = {
 }
 
 export type TRadioGroup = {
-  setGroupValue: () => {},
   initialValue: string,
   children: ReactNode,
 }
