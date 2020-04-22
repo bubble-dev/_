@@ -1,16 +1,14 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
 import { component, startWithType } from 'refun' // mapState,
-import { RadioInput, RadioGroup, TRadioInput } from './src'
+import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
 
 export const Component = component(
-  startWithType<TRadioInput>()
-)(({ groupValue, ...radioInputProps }) => {
-  console.log('meta groupValue:', groupValue)
-
+  startWithType<TRadioInput & TRadioGroup>()
+)(({ initialValue, ...radioInputProps }) => {
   return (
     <RadioGroup
-      initialValue={groupValue}
+      initialValue={initialValue}
     >
       <RadioInput {...radioInputProps}/>
       <RadioInput {...radioInputProps} id="foo" value="test-foo"/>
@@ -20,9 +18,9 @@ export const Component = component(
 
 Component.displayName = 'RadioInput'
 
-export const config: TComponentConfig<TRadioInput> = {
+export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
   props: {
-    groupValue: ['value'],
+    initialValue: ['value'],
     groupName: ['test-group'],
     id: ['radio-test'],
     isDisabled: [true],

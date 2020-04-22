@@ -11,8 +11,6 @@ const RadioGroup = component(
 }) => {
   const radioState = useState(initialValue)
 
-  console.log('radiogroup:: initialValue=', initialValue)
-
   return (
     <RadioContext.Provider value={radioState}>
       {children}
