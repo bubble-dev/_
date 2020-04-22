@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type TRadioInput = {
   id: string,
   groupName: string,
@@ -8,5 +10,11 @@ export type TRadioInput = {
   accessibilityLabel?: string,
   accessibilityLabelBy?: string[],
   isDisabled?: boolean,
-  onChange: (id: string, value: string, evt?: any) => void,
+  onChange: (evt: any) => void,
+}
+
+export type TRadioGroup = {
+  setGroupValue: () => {},
+  initialValue: string,
+  children: ReactNode,
 }
