@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { startWithType, pureComponent, mapContext } from 'refun'
-import { isString } from 'tsfn'
+import { isFunction } from 'tsfn'
 import { SYMBOL_CONTROLS_SIDEBAR, LAYOUT_SIZE_FIT } from '../../symbols'
 import { Layout_Item, Layout } from '../layout'
 import { SourceCode } from '../source-code'
@@ -10,6 +10,7 @@ import { Tabs, Tabs_Item } from '../tabs'
 import { Console } from '../console'
 import { SourceImports } from '../source-imports'
 import { mapContextOverride } from '../../map/map-context-override'
+import { ImportPackageNameContext } from '../import-package-name-provider'
 import { Header } from './Header'
 import { Info } from './Info'
 import { CopySourceButton } from './CopySourceButton'
@@ -17,13 +18,12 @@ import { CopyImportsButton } from './CopyImportsButton'
 import { ClearConsoleButton } from './ClearConsoleButton'
 import { Controls } from './Controls'
 
-export type TControlsSidebar = {
-  copyImportPackageName?: string,
-}
+export type TControlsSidebar = {}
 
 export const ControlsSidebar = pureComponent(
   startWithType<TControlsSidebar>(),
   mapContext(ThemeContext),
+  mapContext(ImportPackageNameContext),
   mapContextOverride('TextThemeProvider', TextThemeContext, ({ theme }) => ({ color: theme.controlsSidebarColor })),
   mapContextOverride('ButtonIconThemeProvider', ButtonIconThemeContext, ({ theme }) => ({
     backgroundColor: theme.controlsSidebarIconBackgroundColor,
@@ -35,7 +35,7 @@ export const ControlsSidebar = pureComponent(
     focusedBorderColor: theme.controlsSidebarIconBackgroundColor,
   }))
 )(({
-  copyImportPackageName,
+  getImportPackageName,
   theme,
   TextThemeProvider,
   ButtonIconThemeProvider,
@@ -57,12 +57,12 @@ export const ControlsSidebar = pureComponent(
                 </Fragment>
               )}
             </Tabs_Item>
-            {isString(copyImportPackageName) && (
+            {isFunction(getImportPackageName) && (
               <Tabs_Item title="Imports">
                 {() => (
                   <Fragment>
-                    <SourceImports importPackageName={copyImportPackageName}/>
-                    <CopyImportsButton importPackageName={copyImportPackageName}/>
+                    <SourceImports getImportPackageName={getImportPackageName}/>
+                    <CopyImportsButton getImportPackageName={getImportPackageName}/>
                   </Fragment>
                 )}
               </Tabs_Item>

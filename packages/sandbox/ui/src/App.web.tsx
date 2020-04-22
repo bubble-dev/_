@@ -9,12 +9,13 @@ import { PortalProvider } from './components/portal-provider'
 import { setComponentsList } from './store-meta'
 import { TComponents, TTheme, TThemeIcons } from './types'
 import { PluginProvider, TPlugin } from './components/plugin-provider'
+import { ImportPackageNameProvider } from './components/import-package-name-provider'
 
 export type TApp = {
   components: TComponents,
   theme?: TTheme,
   icons?: TThemeIcons,
-  copyImportPackageName?: string,
+  getImportPackageName?: (symbolName: string) => string,
   plugin?: TPlugin,
 }
 
@@ -23,19 +24,19 @@ export const App = component(
   onChange(async ({ components }) => {
     await setComponentsList(components)
   }, ['components'])
-)(({ theme, icons, copyImportPackageName, plugin }) => (
+)(({ theme, icons, getImportPackageName, plugin }) => (
   <Root>
     <ThemeProvider theme={theme} icons={icons}>
       <PluginProvider plugin={plugin}>
-        <AlertProvider>
-          <NotificationProvider>
-            <PortalProvider>
-              <Sandbox
-                copyImportPackageName={copyImportPackageName}
-              />
-            </PortalProvider>
-          </NotificationProvider>
-        </AlertProvider>
+        <ImportPackageNameProvider getImportPackageName={getImportPackageName}>
+          <AlertProvider>
+            <NotificationProvider>
+              <PortalProvider>
+                <Sandbox/>
+              </PortalProvider>
+            </NotificationProvider>
+          </AlertProvider>
+        </ImportPackageNameProvider>
       </PluginProvider>
     </ThemeProvider>
   </Root>

@@ -16,9 +16,7 @@ const CONTROLS_SIDEBAR_MAX_WIDTH = 500
 const NAVIGATION_SIDEBAR_MIN_WIDTH = 150
 const NAVIGATION_SIDEBAR_MAX_WIDTH = 300
 
-export type TSandbox = {
-  copyImportPackageName?: string,
-}
+export type TSandbox = {}
 
 export const Sandbox = component(
   startWithType<TSandbox>(),
@@ -34,7 +32,6 @@ export const Sandbox = component(
   }))
 )(({
   theme,
-  copyImportPackageName,
   navigationSidebarWidth,
   controlsSidebarWidth,
   isNavigationSidebarVisible,
@@ -70,9 +67,7 @@ export const Sandbox = component(
             <SizeBackground color={theme.sandboxBorderColor}/>
           </Layout_Item>
           <Layout_Item id="controls" width={controlsSidebarWidth}>
-            <ControlsSidebar
-              copyImportPackageName={copyImportPackageName}
-            />
+            <ControlsSidebar/>
           </Layout_Item>
         </Fragment>
       )}
