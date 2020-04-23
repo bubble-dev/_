@@ -2,6 +2,15 @@ import { FC } from 'react'
 import { TComponentConfig } from 'autoprops'
 import { TJsonMap } from 'typeon'
 import { TColor } from './colors'
+import { TPlugin } from './components/plugin-provider/types'
+
+export type TApp = {
+  components: TComponents,
+  theme?: TTheme,
+  icons?: TThemeIcons,
+  getImportPackageName?: (symbolName: string) => string,
+  plugin?: TPlugin,
+}
 
 export type TPackageJson = {
   version: string,

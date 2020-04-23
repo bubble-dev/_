@@ -4,29 +4,19 @@ import { Root } from './components/root'
 import { ThemeProvider } from './components/theme-provider'
 import { Sandbox } from './components/sandbox'
 import { setComponentsList } from './store-meta'
-import { TComponents, TTheme, TThemeIcons } from './types'
-import { TPlugin, PluginProvider } from './components/plugin-provider'
-
-export type TApp = {
-  components: TComponents,
-  theme?: TTheme,
-  icons?: TThemeIcons,
-  copyImportPackageName?: string,
-  plugin?: TPlugin,
-}
+import { PluginProvider } from './components/plugin-provider'
+import { TApp } from './types'
 
 export const App = component(
   startWithType<TApp>(),
   onChange(async ({ components }) => {
     await setComponentsList(components)
   }, ['components'])
-)(({ theme, icons, copyImportPackageName, plugin }) => (
+)(({ theme, icons, plugin }) => (
   <Root>
     <ThemeProvider theme={theme} icons={icons}>
       <PluginProvider plugin={plugin}>
-        <Sandbox
-          copyImportPackageName={copyImportPackageName}
-        />
+        <Sandbox/>
       </PluginProvider>
     </ThemeProvider>
   </Root>
