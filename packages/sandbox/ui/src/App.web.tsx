@@ -7,17 +7,9 @@ import { NotificationProvider } from './components/notification-provider'
 import { AlertProvider } from './components/alert-provider'
 import { PortalProvider } from './components/portal-provider'
 import { setComponentsList } from './store-meta'
-import { TComponents, TTheme, TThemeIcons } from './types'
-import { PluginProvider, TPlugin } from './components/plugin-provider'
+import { PluginProvider } from './components/plugin-provider'
 import { ImportPackageNameProvider } from './components/import-package-name-provider'
-
-export type TApp = {
-  components: TComponents,
-  theme?: TTheme,
-  icons?: TThemeIcons,
-  getImportPackageName?: (symbolName: string) => string,
-  plugin?: TPlugin,
-}
+import { TApp } from './types'
 
 export const App = component(
   startWithType<TApp>(),

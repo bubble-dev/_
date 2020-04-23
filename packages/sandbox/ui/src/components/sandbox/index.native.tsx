@@ -3,12 +3,8 @@ import { component, startWithType } from 'refun'
 import { DemoArea } from '../demo-area'
 import { RootThemeProvider } from '../theme-context'
 
-export type TSandbox = {
-  copyImportPackageName?: string,
-}
-
 export const Sandbox = component(
-  startWithType<TSandbox>()
+  startWithType<{}>()
 )(() => (
   <RootThemeProvider>
     <DemoArea/>

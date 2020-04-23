@@ -16,10 +16,8 @@ const CONTROLS_SIDEBAR_MAX_WIDTH = 500
 const NAVIGATION_SIDEBAR_MIN_WIDTH = 150
 const NAVIGATION_SIDEBAR_MAX_WIDTH = 300
 
-export type TSandbox = {}
-
 export const Sandbox = component(
-  startWithType<TSandbox>(),
+  startWithType<{}>(),
   mapContext(ThemeContext),
   mapContext(RootContext),
   mapStoreState(({ isNavigationSidebarVisible, isControlsSidebarVisible }) => ({
