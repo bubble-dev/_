@@ -1,10 +1,9 @@
 import { ReactNode, Ref } from 'react'
+import { TStyle } from 'stili'
 
-export type TSupportedRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
+export type TBlockRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
 
-export type TBlockCommon<TRef, TStyles> = {
-  ref?: Ref<TRef>,
-  style?: TStyles,
+export type TBlock = {
   id?: string,
   width?: number,
   height?: number,
@@ -24,7 +23,9 @@ export type TBlockCommon<TRef, TStyles> = {
   shouldScroll?: boolean,
   shouldHideOverflow?: boolean,
   children?: ReactNode,
-  role?: TSupportedRoles,
+  role?: TBlockRoles,
+  ref?: Ref<any>,
+  style?: TStyle,
   onPointerEnter?: () => void,
   onPointerLeave?: () => void,
   onPointerDown?: () => void,

@@ -1,11 +1,8 @@
 import React, { HTMLProps } from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined } from 'tsfn'
-import { styleTransformArrayToText } from './styleTransformArrayToText'
-import { TBlockCommon, TSupportedRoles } from './types'
-
-export type TBlock = TBlockCommon<HTMLDivElement, TStyle>
+import { TBlock, TBlockRoles } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),
@@ -21,7 +18,7 @@ export const Block = component(
     ({
       id,
       ref,
-      style,
+      style: userStyle,
       width,
       height,
       minWidth,
@@ -50,25 +47,26 @@ export const Block = component(
       const styles: TStyle = {
         display: 'flex',
         flexDirection: 'row',
-        boxSizing: 'border-box',
         borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
         alignSelf: 'flex-start',
         flexGrow: 0,
         flexShrink: 0,
+        top,
+        left,
+        right,
+        bottom,
         minWidth,
         minHeight,
-        ...style,
-      }
-
-      if (isNumber(styles.lineHeight)) {
-        styles.lineHeight = `${styles.lineHeight}px`
-      }
-
-      // TODO: handle only arrays
-      if (styles.transform) {
-        styles.transform = styleTransformArrayToText(styles.transform)
+        maxWidth,
+        maxHeight,
+        opacity,
+        ...userStyle,
+        _webOnly: {
+          boxSizing: 'border-box',
+          ...userStyle?._webOnly,
+        },
       }
 
       if (isNumber(width)) {
@@ -80,30 +78,6 @@ export const Block = component(
       if (isNumber(height)) {
         styles.height = height
         styles.alignSelf = 'flex-start'
-      }
-
-      if (isNumber(maxWidth)) {
-        styles.maxWidth = maxWidth
-      }
-
-      if (isNumber(maxHeight)) {
-        styles.maxHeight = maxHeight
-      }
-
-      if (isNumber(top)) {
-        styles.top = top
-      }
-
-      if (isNumber(right)) {
-        styles.right = right
-      }
-
-      if (isNumber(bottom)) {
-        styles.bottom = bottom
-      }
-
-      if (isNumber(left)) {
-        styles.left = left
       }
 
       if (shouldStretch) {
@@ -121,7 +95,7 @@ export const Block = component(
       }
 
       if (shouldIgnorePointerEvents) {
-        styles.pointerEvents = 'none'
+        styles._webOnly!.pointerEvents = 'none'
       }
 
       if (shouldScroll) {
@@ -132,12 +106,8 @@ export const Block = component(
         styles.overflow = 'hidden'
       }
 
-      if (isNumber(opacity)) {
-        styles.opacity = opacity
-      }
-
-      const props: HTMLProps<HTMLDivElement> & { role: TSupportedRoles} = {
-        style: normalizeStyle(styles),
+      const props: HTMLProps<HTMLDivElement> & { role: TBlockRoles } = {
+        style: normalizeWebStyle(styles),
         children,
         onMouseEnter: onPointerEnter,
         onMouseLeave: onPointerLeave,
