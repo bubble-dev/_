@@ -1,7 +1,7 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
 import { TInput } from './types'
 
@@ -53,7 +53,7 @@ export const Input = component(
       }
 
       return {
-        style: normalizeStyle(style),
+        style: normalizeNativeStyle(style),
       }
     }
   )

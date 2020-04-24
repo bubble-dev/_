@@ -14,14 +14,8 @@ export const VectorShape = component(
   mapWithProps(({ scale }) => {
     const style: TStyle = {}
 
-    let transform = ''
-
     if (typeof scale !== 'undefined') {
-      transform += `scale(${scale})`
-    }
-
-    if (transform.length > 0) {
-      style.transform = transform
+      style.transform = [{ scale }]
     }
 
     return {

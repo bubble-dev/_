@@ -1,5 +1,5 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { TTransformProps } from './types'
 
@@ -11,6 +11,7 @@ export const Transform = component(
   }),
   mapWithProps(({ x, y, rotate, scale, hOrigin, vOrigin, shouldUse3d, shouldStretch }) => {
     const style: TStyle = {
+      _webOnly: {},
       display: 'flex',
       flexDirection: 'row',
       position: 'relative',
@@ -52,11 +53,11 @@ export const Transform = component(
     }
 
     if (transform.length > 0) {
-      style.transform = transform
+      style._webOnly!.transform = transform
     }
 
     if (transformOrigin.length > 0) {
-      style.transformOrigin = transformOrigin
+      style._webOnly!.transformOrigin = transformOrigin
     }
 
     if (shouldStretch) {
@@ -66,7 +67,7 @@ export const Transform = component(
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeWebStyle(style),
     }
   })
 )(({ style, children }) => (

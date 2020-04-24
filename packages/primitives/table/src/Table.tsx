@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { startWithType, component, mapWithPropsMemo, mapDefaultProps } from 'refun'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { TTableBorderStyle } from './types'
 
 export type TTable = {
@@ -19,21 +19,26 @@ export const Table = component(
     borderStyle: 'solid',
   }),
   mapWithPropsMemo(({ borderTopWidth, borderBottomWidth, borderLeftWidth, borderRightWidth, borderStyle, borderColor, backgroundColor }) => ({
-    style: normalizeStyle({
-      borderCollapse: 'collapse',
+    style: normalizeWebStyle({
+      _webOnly: {
+        width: '100%',
+        tableLayout: 'fixed',
+        borderCollapse: 'collapse',
+      },
+      borderTopWidth,
+      borderBottomWidth,
+      borderLeftWidth,
+      borderRightWidth,
       flexGrow: 1,
       flexShrink: 1,
       alignSelf: 'stretch',
-      width: '100%',
-      padding: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
       borderColor,
       backgroundColor,
-      borderTopWidth: `${borderTopWidth}px`,
-      borderBottomWidth: `${borderBottomWidth}px`,
-      borderLeftWidth: `${borderLeftWidth}px`,
-      borderRightWidth: `${borderRightWidth}px`,
       borderStyle,
-      tableLayout: 'fixed',
     }),
   }), ['borderTopWidth', 'borderLeftWidth', 'borderRightWidth', 'borderBottomWidth', 'borderStyle', 'borderColor', 'backgroundColor'])
 )(({ id, children, style }) => (

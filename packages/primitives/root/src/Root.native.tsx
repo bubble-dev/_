@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Dimensions } from 'react-native'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import {
   component,
   mapState,
@@ -35,7 +35,7 @@ export const Root = component(
     Dimensions.removeEventListener('change', setDimensions)
   }),
   mapWithProps(({ dimensions }) => ({
-    styles: normalizeStyle({
+    styles: normalizeNativeStyle({
       position: 'absolute',
       flexDirection: 'row',
       top: 0,

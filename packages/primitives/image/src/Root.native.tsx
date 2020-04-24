@@ -1,7 +1,7 @@
 import React from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
-import { Image as ImageRN } from 'react-native'
+import { Image as ImageRN, ImageStyle } from 'react-native'
 import { mapImageLoad } from './map-image-load'
 import { TImage } from './types'
 
@@ -12,12 +12,14 @@ export const Image = component(
     resizeMode: 'cover',
   }),
   mapWithProps(({ bottomLeftRadius, bottomRightRadius, topLeftRadius, topRightRadius, resizeMode }) => ({
-    style: normalizeStyle({
+    style: normalizeNativeStyle<ImageStyle>({
       borderBottomLeftRadius: bottomLeftRadius,
       borderBottomRightRadius: bottomRightRadius,
       borderTopLeftRadius: topLeftRadius,
       borderTopRightRadius: topRightRadius,
-      resizeMode,
+      _nativeOnly: {
+        resizeMode,
+      },
     }),
   }))
 )(({ source, id, height, width, style, onLoad, onError }) => (

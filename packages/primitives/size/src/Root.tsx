@@ -1,12 +1,12 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { isFunction, isNumber } from 'tsfn'
 import { round } from './round'
 import { onLayout } from './on-layout'
 import { TSize } from './types'
 
-const style = normalizeStyle({
+const style = normalizeWebStyle({
   display: 'flex',
   flexDirection: 'row',
   flexGrow: 0,

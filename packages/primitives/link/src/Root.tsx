@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { TLink, TRel, TTarget } from './types'
 
-const style = normalizeStyle({
-  textDecoration: 'none',
+const style = normalizeWebStyle({
+  textDecorationLine: 'none',
 })
 
 const getRel = (list?: TRel[], target?: TTarget) => {

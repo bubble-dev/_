@@ -1,7 +1,6 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
-import { isNumber } from 'tsfn'
 import { TImage } from './types'
 
 export const Image = component(
@@ -11,27 +10,17 @@ export const Image = component(
   }),
   mapWithProps(({ bottomLeftRadius, bottomRightRadius, topLeftRadius, topRightRadius, resizeMode }) => {
     const style: TStyle = {
-      objectFit: resizeMode,
-    }
-
-    if (isNumber(bottomLeftRadius)) {
-      style.borderBottomLeftRadius = `${bottomLeftRadius}px`
-    }
-
-    if (isNumber(bottomRightRadius)) {
-      style.borderBottomRightRadius = `${bottomRightRadius}px`
-    }
-
-    if (isNumber(topLeftRadius)) {
-      style.borderTopLeftRadius = `${topLeftRadius}px`
-    }
-
-    if (isNumber(topRightRadius)) {
-      style.borderTopRightRadius = `${topRightRadius}px`
+      _webOnly: {
+        objectFit: resizeMode,
+      },
+      borderBottomLeftRadius: bottomLeftRadius,
+      borderBottomRightRadius: bottomRightRadius,
+      borderTopLeftRadius: topLeftRadius,
+      borderTopRightRadius: topRightRadius,
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeWebStyle(style),
     }
   })
 )(({ alt, source, id, height, width, style, onLoad, onError }) => (

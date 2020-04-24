@@ -1,12 +1,11 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import {
   component,
   mapDefaultProps,
   mapWithProps,
   startWithType,
 } from 'refun'
-import { isNumber } from 'tsfn'
 import { colorToString, isColor } from 'colorido'
 import { TText } from './types'
 
@@ -37,15 +36,19 @@ export const Text = component(
     role,
   }) => {
     const style: TStyle = {
+      _webOnly: {
+        maxWidth: '100%',
+        fontSmoothing: 'antialiased',
+        textRendering: 'geometricPrecision',
+        textSizeAdjust: 'none',
+      },
       fontFamily,
       fontWeight,
       fontSize,
       fontStyle: isItalic ? 'italic' : 'normal',
-      fontSmoothing: 'antialiased',
-      textRendering: 'geometricPrecision',
-      textSizeAdjust: 'none',
       minWidth: 0,
-      maxWidth: '100%',
+      letterSpacing,
+      lineHeight,
     }
 
     if (isColor(color)) {
@@ -53,44 +56,36 @@ export const Text = component(
     }
 
     if (shouldPreserveWhitespace) {
-      style.whiteSpace = 'pre'
+      style._webOnly!.whiteSpace = 'pre'
       style.flexShrink = 0
     }
 
     if (shouldPreventWrap) {
-      style.whiteSpace = 'nowrap'
+      style._webOnly!.whiteSpace = 'nowrap'
       style.flexShrink = 0
     }
 
     if (shouldPreventSelection) {
-      style.userSelect = 'none'
+      style._webOnly!.userSelect = 'none'
     }
 
     if (shouldHideOverflow) {
-      style.whiteSpace = 'nowrap'
-      style.textOverflow = 'ellipsis'
+      style._webOnly!.whiteSpace = 'nowrap'
+      style._webOnly!.textOverflow = 'ellipsis'
       style.overflow = 'hidden'
       style.flexShrink = 0
     }
 
-    if (isNumber(letterSpacing)) {
-      style.letterSpacing = `${letterSpacing}px`
-    }
-
-    if (isNumber(lineHeight)) {
-      style.lineHeight = `${lineHeight}px`
-    }
-
     if (isUnderlined) {
-      style.textDecoration = 'underline'
+      style.textDecorationLine = 'underline'
     }
 
     if (role === 'paragraph') {
-      style.display = 'inline'
+      style._webOnly!.display = 'inline'
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeWebStyle(style),
     }
   })
 )(({ children, style, id, role }) => {

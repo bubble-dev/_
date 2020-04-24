@@ -1,5 +1,5 @@
 import React from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapWithProps } from 'refun'
 import { Block } from '@primitives/block'
 import { TCheckboxProps } from './types'
@@ -7,18 +7,26 @@ import { TCheckboxProps } from './types'
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),
   mapWithProps(({ isDisabled }) => ({
-    style: normalizeStyle({
-      position: 'absolute',
-      appearance: 'none',
-      width: '100%',
-      height: '100%',
-      margin: 0,
-      padding: 0,
-      top: 0,
+    style: normalizeWebStyle({
+      _webOnly: {
+        appearance: 'none',
+        cursor: isDisabled ? 'auto' : 'pointer',
+        height: '100%',
+        width: '100%',
+        tapHighlightColor: 'rgba(255, 255, 255, 0)',
+      },
       left: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      marginTop: 0,
       opacity: 0,
-      cursor: isDisabled ? 'auto' : 'pointer',
-      tapHighlightColor: 'rgba(255, 255, 255, 0)',
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingTop: 0,
+      position: 'absolute',
+      top: 0,
     }),
   }))
 )(({

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Picker } from 'react-native'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import { component, mapWithProps, startWithType } from 'refun'
 import { TSelect } from './types'
 
@@ -12,7 +12,7 @@ export const Select = component(
     paddingRight,
     paddingTop,
   }) => ({
-    style: normalizeStyle({
+    style: normalizeNativeStyle({
       backgroundColor: 'rgba(0, 0, 0, 0)',
       flexGrow: 1,
       flexShrink: 1,

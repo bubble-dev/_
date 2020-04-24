@@ -1,7 +1,6 @@
 import React from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
-import { View } from '@primitives/view'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { Context } from './context'
 import { TLayoutInFlow } from './types'
@@ -72,16 +71,18 @@ export const LayoutInFlow = component(
     }
 
     if (shouldIgnorePointerEvents) {
-      style.pointerEvents = 'none'
+      style._webOnly = {
+        pointerEvents: 'none',
+      }
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeWebStyle(style),
       children,
     }
   })
 )(({ style, children }) => (
-  <View style={style}>{children}</View>
+  <div style={style}>{children}</div>
 ))
 
 LayoutInFlow.displayName = 'LayoutInFlow'

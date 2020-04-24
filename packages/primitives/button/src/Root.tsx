@@ -1,17 +1,22 @@
 import React from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { TButton } from './types'
 
 export const Button = component(
   startWithType<TButton>(),
   mapWithPropsMemo(({ isDisabled }) => ({
-    styles: normalizeStyle({
-      appearance: 'none',
-      background: 'none',
-      border: 0,
-      cursor: isDisabled ? 'auto' : 'pointer',
-      boxSizing: 'border-box',
+    styles: normalizeWebStyle({
+      _webOnly: {
+        appearance: 'none',
+        backgroundColor: 'transparent',
+        boxSizing: 'border-box',
+        cursor: isDisabled ? 'auto' : 'pointer',
+        outline: 0,
+        userSelect: 'none',
+        tapHighlightColor: 'rgba(255, 255, 255, 0)',
+      },
+      borderWidth: 0,
       display: 'flex',
       flexDirection: 'row',
       position: 'relative',
@@ -19,11 +24,15 @@ export const Button = component(
       flexGrow: 1,
       flexShrink: 1,
       minWidth: 0,
-      margin: 0,
-      outline: 0,
-      padding: 0,
-      tapHighlightColor: 'rgba(255, 255, 255, 0)',
-      userSelect: 'none',
+      marginTop: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      marginBottom: 0,
+      paddingTop: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      paddingBottom: 0,
+
     }),
   }), ['isDisabled'])
 )(({

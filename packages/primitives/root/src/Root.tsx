@@ -9,7 +9,7 @@ import {
   mapWithProps,
   mapThrottledHandlerAnimationFrame,
 } from 'refun'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { TRoot } from './types'
 
 const globalObject = global as any as Window
@@ -34,7 +34,7 @@ export const Root = component(
     globalObject.removeEventListener('resize', setDimensions)
   }),
   mapWithProps(({ dimensions }) => ({
-    style: normalizeStyle({
+    style: normalizeWebStyle({
       display: 'flex',
       position: 'absolute',
       flexDirection: 'row',

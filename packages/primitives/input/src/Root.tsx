@@ -1,7 +1,6 @@
 import React, { KeyboardEvent } from 'react'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { isNumber } from 'tsfn'
 import { colorToString, isColor } from 'colorido'
 import { TInput } from './types'
 
@@ -29,41 +28,37 @@ export const Input = component(
       paddingTop,
     }) => {
       const style: TStyle = {
+        _webOnly: {
+          fontSmoothing: 'antialiased',
+          textRendering: 'geometricPrecision',
+          textSizeAdjust: 'none',
+          appearance: 'none',
+          boxSizing: 'border-box',
+          maxWidth: '100%',
+        },
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        border: 0,
+        borderWidth: 0,
         fontFamily,
         fontWeight,
         fontSize,
-        fontSmoothing: 'antialiased',
         flexGrow: 1,
         flexShrink: 1,
         alignSelf: 'stretch',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-        appearance: 'none',
-        boxSizing: 'border-box',
         paddingBottom,
         paddingLeft,
         paddingRight,
         paddingTop,
-        maxWidth: '100%',
         minWidth: 0,
+        letterSpacing,
+        lineHeight,
       }
 
       if (isColor(color)) {
         style.color = colorToString(color)
       }
 
-      if (isNumber(letterSpacing)) {
-        style.letterSpacing = `${letterSpacing}px`
-      }
-
-      if (isNumber(lineHeight)) {
-        style.lineHeight = `${lineHeight}px`
-      }
-
       return {
-        style: normalizeStyle(style),
+        style: normalizeWebStyle(style),
       }
     }
   )

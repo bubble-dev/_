@@ -1,13 +1,15 @@
 import React, { HTMLProps, MouseEvent } from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapProps, mapHandlers, mapRefLayout, mapDefaultProps } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
-const style = normalizeStyle({
+const style = normalizeWebStyle({
+  _webOnly: {
+    boxSizing: 'border-box',
+  },
   display: 'flex',
   flexDirection: 'row',
-  boxSizing: 'border-box',
   borderStyle: 'solid',
   borderWidth: 0,
   position: 'relative',

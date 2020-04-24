@@ -1,11 +1,11 @@
 import React from 'react'
 import { View, TouchableWithoutFeedback, GestureResponderEvent, TouchableWithoutFeedbackProps } from 'react-native'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import { component, startWithType, mapHandlers, mapWithProps, mapDefaultProps } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
-const style = normalizeStyle({
+const style = normalizeNativeStyle({
   flexDirection: 'row',
   flexGrow: 1,
   flexShrink: 1,

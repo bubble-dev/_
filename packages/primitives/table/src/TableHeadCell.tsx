@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { TTableBorderStyle, TTableCellPosition } from './types'
 
@@ -31,17 +31,22 @@ export const TableHeadCell = component(
     width,
     position,
   }) => ({
-    style: normalizeStyle({
-      padding: 0,
+    style: normalizeWebStyle({
+      _webOnly: {
+        position,
+      },
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
       borderColor,
       backgroundColor,
-      borderTopWidth: `${borderTopWidth}px`,
-      borderBottomWidth: `${borderBottomWidth}px`,
-      borderLeftWidth: `${borderLeftWidth}px`,
-      borderRightWidth: `${borderRightWidth}px`,
+      borderTopWidth,
+      borderBottomWidth,
+      borderLeftWidth,
+      borderRightWidth,
       borderStyle,
       width,
-      position,
     }),
   }), [
     'borderTopWidth',

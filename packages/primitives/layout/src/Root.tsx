@@ -1,8 +1,8 @@
 import React from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
-import { View } from '@primitives/view'
+import { TStyle } from 'stili'
 import { isNumber } from 'tsfn'
+import { Block } from '@primitives/block'
 import { TLayout } from './types'
 import { Context } from './context'
 
@@ -135,17 +135,17 @@ export const Layout = component(
     }
 
     return {
-      style: normalizeStyle(style),
+      style,
       direction,
       children,
     }
   })
 )(({ children, direction, style }) => (
-  <View style={style}>
+  <Block style={style}>
     <Context.Provider value={{ direction }}>
       {children}
     </Context.Provider>
-  </View>
+  </Block>
 ))
 
 Layout.displayName = 'Layout'
