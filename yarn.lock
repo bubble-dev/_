@@ -1797,6 +1797,14 @@
     "@start/plugin" "^1.0.0"
     globby "^11.0.0"
 
+"@start/plugin-input-files@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-input-files/-/plugin-input-files-1.0.0.tgz#0d22f91f4803654331504232486c2cfa8d95cf1d"
+  integrity sha512-UjBax/JkXSWcBDBcFgbPLgu2WQbLQ88ZyykqaC4BhvTU8djFt8YuAol2Zapkmkjj+8pq5Jhyea8BKs3hxai/xw==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+    "@start/plugin" "^1.0.0"
+
 "@start/plugin-lib-babel@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@start/plugin-lib-babel/-/plugin-lib-babel-1.0.0.tgz#61594bc41ef69a2adee78b7f82970831f739f771"
@@ -1852,10 +1860,10 @@
     "@start/plugin" "^1.0.0"
     execa "^4.0.0"
 
-"@start/plugin-lib-typescript-generate@^1.0.0":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-generate/-/plugin-lib-typescript-generate-1.0.1.tgz#c178ff662408be6ad521c42d22ebf44166a24d32"
-  integrity sha512-qKz8f325oFXfPLq51Eq8zmeCn6M8HL4wEEOUYkJPaewJgweLNvecaI45l6zYHkFmZCBbsslLE+E8eD73ABAkpg==
+"@start/plugin-lib-typescript-generate@^2.0.0":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-generate/-/plugin-lib-typescript-generate-2.0.2.tgz#8a074c8458087493106c5e65a4868e0e0884856e"
+  integrity sha512-dhb/mnhVzugSdAMoSVwNBYVg4O1kr8j5JPJmD8oluB6XPBvBzDpRLIilhzJ8blV4N5D+h8VoLXlq1wYDBwbiXQ==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^1.0.0"
@@ -3067,15 +3075,15 @@ atob@^2.1.2:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 autoprops@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-1.0.2.tgz#092badc55025e02a7d2d4ae284c17ea2e5aba206"
-  integrity sha512-xW/W5U65+/gc+4sgOCefagMTs8QruK5Oc9FTq4R+pZE8fALtU67kZoXujWnCesz+eELuCeemiV5H6sqXwAQrow==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-1.0.3.tgz#0248726ce22ce97cc6503c7e1bc2f6f72e4b6ad9"
+  integrity sha512-vNWQ3+WBijQrczaAF1DFLIk05gaNjunq4lTN3xf7lxM3Nf+E5av9F1ttHgJLxAlu573iLNXI9lybB0NOaqm46g==
   dependencies:
     "@babel/runtime" "^7.4.3"
     big-integer "^1.6.44"
-    iterama "^0.2.0"
+    iterama "^0.2.2"
     jssha "^3.0.0"
-    tsfn "^1.1.1"
+    tsfn "^1.1.2"
 
 available-typed-arrays@^1.0.0, available-typed-arrays@^1.0.2:
   version "1.0.2"
@@ -7472,7 +7480,7 @@ iterama@^0.1.1:
     "@psxcode/compose" "^0.1.2"
     circularr "^0.1.5"
 
-iterama@^0.2.0:
+iterama@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.2.2.tgz#573f9f44bcc46c787d3266414ab4994d4ef7ae58"
   integrity sha512-dxS/AZa43icxO3NV7qUOQsCveZ3xr88TMNWoah3DlAvvqujFVBnVsE34TFUvXz3UqsQ0g6biBn0VeEadCvdf2w==
@@ -11866,10 +11874,10 @@ tryer@^1.0.1:
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
   integrity sha512-c3zayb8/kWWpycWYg87P71E1S1ZL6b6IJxfb5fvsUgsf0S2MVGaDhDXXjDMpdCpfWXqptc+4mXwmiy1ypXqRAA==
 
-tsfn@^1.0.0, tsfn@^1.1.0, tsfn@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-1.1.1.tgz#6b31be21ad69adb01893e8dade25cf7ef04bd578"
-  integrity sha512-ZEKJh7lmeR58fflPRW/87FCulJie8AbOLKiibRnGmhsuze0qT4uWrW8caUQUpWPTya1XWKqAR4xdJ2IYTO5bAw==
+tsfn@^1.0.0, tsfn@^1.1.0, tsfn@^1.1.1, tsfn@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-1.1.2.tgz#a380490b9c0ab29e4faed8fd2240c9be576bdf7e"
+  integrity sha512-4vWn/eF+RJI/5vWqaY07hf0r6HjiMaAM+KiFHcLrTERJlGEXHsMfVCMuYDLYac3SmxdAuwkjKgmJXyvlVvPE+w==
 
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.11.1"
@@ -11950,9 +11958,10 @@ typeon@^1.0.0:
   resolved "https://registry.yarnpkg.com/typeon/-/typeon-1.0.1.tgz#52077c1cce2fc174742146acbe9adf7e28697660"
   integrity sha512-kF6itI3VwwyUON9AOY7UbklMWp9NMNTJuInQJavGtn4Na3Qfv9mk/sMfWfWgrIb3mHB3ZeFu4OXIUVhLV1FlUA==
 
-typescript@bubble-dev/TypeScript#ext-3.7.3:
-  version "3.7.3"
-  resolved "https://codeload.github.com/bubble-dev/TypeScript/tar.gz/e27f8bbeef0333d4635c9761e10308ecf2c1306f"
+typescript@^3.8.3:
+  version "3.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
+  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
