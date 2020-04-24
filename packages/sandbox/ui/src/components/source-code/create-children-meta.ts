@@ -1,9 +1,9 @@
 import { TAnyObject, TWritable, isDefined, isUndefined } from 'tsfn'
 import { TMeta } from 'syntx'
-import { isChildrenMap, getChildrenKeys, TComponentConfig } from 'autoprops'
+import { isChildrenMap, getChildrenKeys, TCommonComponentConfig } from 'autoprops'
 import { serializeElementPath } from '../../utils'
 
-export const createChildrenMeta = (componentConfig: TComponentConfig, componentPropsChildrenMap?: Readonly<TAnyObject>, metaValue: readonly string[] = []): TMeta => {
+export const createChildrenMeta = (componentConfig: TCommonComponentConfig, componentPropsChildrenMap?: Readonly<TAnyObject>, metaValue: readonly string[] = []): TMeta => {
   const resultMeta: TWritable<TMeta> = {
     value: serializeElementPath(metaValue),
   }

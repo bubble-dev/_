@@ -1,7 +1,6 @@
-import React from 'react'
-import { View, ViewProps } from 'react-native'
+import React, { HTMLProps } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
 import { TPrimitiveBorder } from './types'
@@ -12,6 +11,7 @@ export const PrimitiveBorder = component(
   startWithType<TPrimitiveBorder>(),
   mapDefaultProps({
     overflow: 0,
+    width: 0,
   }),
   mapProps(({
     color,
@@ -24,12 +24,18 @@ export const PrimitiveBorder = component(
     overflow,
   }) => {
     const styles: TStyle = {
+      _webOnly: {
+        pointerEvents: 'none',
+      },
+      display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
       top: -overflow,
       right: -overflow,
       bottom: -overflow,
+      borderColor: colorToString(color),
+      borderStyle: 'solid',
       borderTopWidth: width,
       borderLeftWidth: width,
       borderRightWidth: width,
@@ -38,7 +44,6 @@ export const PrimitiveBorder = component(
       borderTopRightRadius: radius,
       borderBottomRightRadius: radius,
       borderBottomLeftRadius: radius,
-      borderColor: colorToString(color),
     }
 
     if (isNumber(leftWidth)) {
@@ -57,15 +62,14 @@ export const PrimitiveBorder = component(
       styles.borderBottomWidth = bottomWidth
     }
 
-    const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
-      pointerEvents: 'none',
+    const props: HTMLProps<HTMLDivElement> = {
+      style: normalizeWebStyle(styles),
     }
 
     return props
   })
 )((props) => (
-  <View {...props}/>
+  <div {...props}/>
 ))
 
 PrimitiveBorder.displayName = 'PrimitiveBorder'

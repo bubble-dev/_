@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk'
 import { isUndefined, TAnyObject, isDefined, TOmitKey, TExtend } from 'tsfn'
-import { getProps, isChildrenMap, createChildren, TComponentConfig } from 'autoprops'
+import { getProps, isChildrenMap, createChildren, TCommonComponentConfig } from 'autoprops'
 import { TComponents } from '../../types'
 import { TMetaState } from '../types'
 import { importMeta } from '../utils/import-meta'
@@ -60,7 +60,7 @@ const setPropsAction: TActionWithPayloadCreator<TSetPropsAction> = (payload) => 
   payload,
 })
 
-const loadComponentProps = (componentConfig: TComponentConfig, propsIndex: string) => {
+const loadComponentProps = (componentConfig: TCommonComponentConfig, propsIndex: string) => {
   const propsChildrenMap = getProps(componentConfig, propsIndex)
 
   mutateHandlers(propsChildrenMap, '', componentConfig)

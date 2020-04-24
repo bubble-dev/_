@@ -1,17 +1,17 @@
-import { isChildrenMap, TComponentConfig } from 'autoprops'
+import { isChildrenMap, TCommonComponentConfig } from 'autoprops'
 import { isUndefined, TAnyObject } from 'tsfn'
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapWithProps } from 'refun'
 import { getComponentName, getElementPath } from '../../utils'
 
 export type TMapChildConfigByPath = {
-  componentConfig: TComponentConfig,
+  componentConfig: TCommonComponentConfig,
   componentPropsChildrenMap: Readonly<TAnyObject>,
   selectedElementPath: string,
 }
 
 export type TMapChildConfigByPathResult = {
-  childConfig: TComponentConfig,
+  childConfig: TCommonComponentConfig,
   childDisplayName: string,
   childPropsChildrenMap: Readonly<TAnyObject>,
   childPath: readonly string[],

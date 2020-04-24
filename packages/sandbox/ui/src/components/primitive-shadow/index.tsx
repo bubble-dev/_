@@ -1,7 +1,6 @@
-import React from 'react'
-import { View, ViewProps } from 'react-native'
+import React, { HTMLProps } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveShadow } from './types'
 
@@ -22,36 +21,35 @@ export const PrimitiveShadow = component(
     overflow,
     blurRadius,
     spreadRadius,
+    offsetX,
+    offsetY,
   }) => {
-    const shadowWidth = Math.max(blurRadius, spreadRadius)
-
     const styles: TStyle = {
+      _webOnly: {
+        pointerEvents: 'none',
+        boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
+      },
+      display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
       top: -overflow,
       right: -overflow,
       bottom: -overflow,
-      borderTopWidth: shadowWidth,
-      borderLeftWidth: shadowWidth,
-      borderRightWidth: shadowWidth,
-      borderBottomWidth: shadowWidth,
       borderTopLeftRadius: radius,
       borderTopRightRadius: radius,
       borderBottomRightRadius: radius,
       borderBottomLeftRadius: radius,
-      borderColor: colorToString(color),
     }
 
-    const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
-      pointerEvents: 'none',
+    const props: HTMLProps<HTMLDivElement> = {
+      style: normalizeWebStyle(styles),
     }
 
     return props
   })
 )((props) => (
-  <View {...props}/>
+  <div {...props}/>
 ))
 
 PrimitiveShadow.displayName = 'PrimitiveShadow'

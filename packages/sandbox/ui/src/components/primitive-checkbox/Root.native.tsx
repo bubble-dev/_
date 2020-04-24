@@ -1,11 +1,11 @@
 import React from 'react'
 import { Switch, TouchableWithoutFeedback } from 'react-native'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import { component, startWithType } from 'refun'
 import { PrimitiveBlock } from '../primitive-block'
 import { TPrimitiveCheckbox } from './types'
 
-const style = normalizeStyle({
+const style = normalizeNativeStyle({
   position: 'absolute',
   top: 0,
   left: 0,

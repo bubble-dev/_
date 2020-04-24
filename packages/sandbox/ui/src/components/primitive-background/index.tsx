@@ -1,7 +1,6 @@
-import React from 'react'
-import { View, ViewProps } from 'react-native'
+import React, { HTMLProps } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { normalizeWebStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveBackground } from './types'
 
@@ -18,6 +17,10 @@ export const PrimitiveBackground = component(
     overflow,
   }) => {
     const styles: TStyle = {
+      _webOnly: {
+        pointerEvents: 'none',
+      },
+      display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
@@ -31,15 +34,14 @@ export const PrimitiveBackground = component(
       backgroundColor: colorToString(color),
     }
 
-    const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
-      pointerEvents: 'none',
+    const props: HTMLProps<HTMLDivElement> = {
+      style: normalizeWebStyle(styles),
     }
 
     return props
   })
 )((props) => (
-  <View {...props}/>
+  <div {...props}/>
 ))
 
 PrimitiveBackground.displayName = 'PrimitiveBackground'
