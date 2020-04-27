@@ -29,7 +29,7 @@ export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
       console.log('Meta file onChange called', evt)
     }],
   },
-  required: ['value', 'onChange', 'groupName', 'groupValue', 'id'],
+  required: ['value', 'onChange', 'groupName', 'initialValue', 'id'],
 }
 
 export { default as packageJson } from './package.json'
