@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "src/index.node.ts",
-  "browser": "src/index.web.ts",
+  "browser": "src/index.ts",
   "react-native": "src/index.native.ts",
   "repository": "bubble-dev/_",
   "license": "MIT",

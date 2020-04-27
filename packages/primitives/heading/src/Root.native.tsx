@@ -6,7 +6,7 @@ import {
   mapDefaultProps,
 } from 'refun'
 import { Text as NativeText, TextProps } from 'react-native'
-import { TStyle, normalizeStyle } from 'stili'
+import { TStyle, normalizeNativeStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
 import { THeading } from './types'
 
@@ -49,7 +49,7 @@ export const Heading = component(
     }
 
     const props: TextProps = {
-      style: normalizeStyle(style),
+      style: normalizeNativeStyle(style),
       selectable: !shouldPreventSelection,
     }
 

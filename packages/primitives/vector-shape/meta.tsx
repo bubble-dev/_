@@ -15,7 +15,7 @@ export const config: TComponentConfig<TVectorShape> = {
     width: [100, 80],
     scale: [1, 2.2, 0.5],
   },
-  required: ['color', 'path', 'height', 'width'],
+  required: ['path'],
 }
 
 export { VectorShape as Component } from './src'

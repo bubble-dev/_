@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, ViewProps } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveShadow } from './types'
 
@@ -44,7 +44,7 @@ export const PrimitiveShadow = component(
     }
 
     const props: ViewProps = {
-      style: normalizeStyle(styles),
+      style: normalizeNativeStyle(styles),
       pointerEvents: 'none',
     }
 

@@ -11,10 +11,10 @@ const hitSlop = {
 }
 
 const style: TStyle = {
+  alignSelf: 'stretch',
   flexDirection: 'row',
   flexGrow: 1,
   flexShrink: 1,
-  alignSelf: 'stretch',
 }
 
 export const Button: FC<TButton> = ({

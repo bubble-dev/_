@@ -1,3 +1,9 @@
+## v3.1.1
+
+* 🐞 update to latest @rebox/web
+
+* 🐞 support more .jsx use cases
+
 ## v3.1.0
 
 * 🌱 support lottie and js/jsx extensions everywhere

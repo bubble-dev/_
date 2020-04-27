@@ -1,24 +1,38 @@
 import { FC } from 'react'
 import { serializeComponent, TYPE_COMPONENT_NAME, TYPE_VALUE_SYMBOL } from 'syntx'
 
-export const serializeImportsToText = (Component: FC<any>, props: any, importPackageName: string) => {
-  const imports = new Set<string>()
+export const serializeImportsToText = (Component: FC<any>, props: any, getImportPackageName: (smb: string) => string) => {
+  const allSymbols = new Set<string>()
 
-  serializeComponent(Component, props, { indent: 2 })
-    .forEach((line) => {
-      line.elements.forEach(({ type, value }) => {
-        if (type === TYPE_COMPONENT_NAME || type === TYPE_VALUE_SYMBOL) {
-          imports.add(value)
-        }
-      })
-    })
+  for (const line of serializeComponent(Component, props, { indent: 2 })) {
+    for (const { type, value } of line.elements) {
+      if (type === TYPE_COMPONENT_NAME || type === TYPE_VALUE_SYMBOL) {
+        allSymbols.add(value)
+      }
+    }
+  }
 
-  let importsStr = 'import {\n  '
+  const symbolsByPackage = new Map<string, string[]>()
 
-  importsStr += Array.from(imports)
-    .sort()
-    .join(',\n  ')
-  importsStr += `\n} from '${importPackageName}'\n\n`
+  for (const smb of allSymbols) {
+    const pkgName = getImportPackageName(smb)
+
+    if (symbolsByPackage.has(pkgName)) {
+      symbolsByPackage.get(pkgName)!.push(smb)
+    } else {
+      symbolsByPackage.set(pkgName, [smb])
+    }
+  }
+
+  let importsStr = ''
+
+  for (const [pkgName, symbolsNames] of symbolsByPackage) {
+    if (symbolsNames.length === 1) {
+      importsStr += `import { ${symbolsNames[0]} } from '${pkgName}'\n`
+    } else {
+      importsStr += `import {\n  ${symbolsNames.sort().join(',\n  ')}\n} from '${pkgName}'\n`
+    }
+  }
 
   return importsStr
 }

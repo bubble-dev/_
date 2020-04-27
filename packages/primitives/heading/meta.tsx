@@ -1,7 +1,7 @@
 import { TComponentConfig } from 'autoprops'
 import { THeading } from './src'
 
-export const config: TComponentConfig<THeading, never> = {
+export const config: TComponentConfig<THeading> = {
   props: {
     children: ['Heading'],
     level: [1, 2, 3, 4, 5, 6],

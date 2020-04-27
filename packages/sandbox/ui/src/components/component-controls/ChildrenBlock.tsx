@@ -1,5 +1,5 @@
 import React from 'react'
-import { isChildrenMap, TComponentConfig } from 'autoprops'
+import { isChildrenMap, TCommonComponentConfig } from 'autoprops'
 import { TAnyObject } from 'tsfn'
 import { component, startWithType } from 'refun'
 import { Layout, Layout_Item } from '../layout'
@@ -8,7 +8,7 @@ import { getComponentName } from '../../utils'
 import { ChildItem } from './ChildItem'
 
 export type TChildrenBlock = {
-  componentConfig: TComponentConfig,
+  componentConfig: TCommonComponentConfig,
   componentPropsChildrenMap: Readonly<TAnyObject>,
   propPath: readonly string[],
   childrenKeys: readonly string[],

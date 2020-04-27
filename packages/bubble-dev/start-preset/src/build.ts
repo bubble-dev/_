@@ -1,5 +1,6 @@
 import path from 'path'
-import { JsxEmit } from 'typescript'
+import { StartPlugin } from '@start/plugin'
+import inputFiles from '@start/plugin-input-files'
 import sequence from '@start/plugin-sequence'
 import env from '@start/plugin-env'
 import find from '@start/plugin-find'
@@ -7,14 +8,10 @@ import read from '@start/plugin-read'
 import babel from '@start/plugin-lib-babel'
 import rename from '@start/plugin-rename'
 import write from '@start/plugin-write'
-import overwrite from '@start/plugin-overwrite'
 import remove from '@start/plugin-remove'
 import copy from '@start/plugin-copy'
 import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
-import { StartPlugin } from '@start/plugin'
-import move from './plugins/move'
-import transformDts from './plugins/transform-dts'
 import copyAssets from './plugins/copy-assets'
 
 export const buildAssets = async (dir: string) => {
@@ -29,70 +26,57 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.{node,native,ios,android}.{js,jsx,ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigWebBuild),
-    rename((file) => file.replace(/(\.web)?\.(ts|tsx|jsx)$/, '.js')),
+    rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/web/`)
   )
 }
 
-export const buildDtsWeb = (dir: string): StartPlugin<{}, {}> =>
-  sequence(
-    find(`${dir}/src/index.{web.tsx,web.ts,web.js,web.jsx,tsx,ts,jsx,js}`),
-    typescriptGenerate(`${dir}/build/web/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    }),
-    find(`${dir}/src/**/*.d.ts`),
-    copy(`${dir}/build/web/`),
-    find(`${dir}/build/web/**/*.web.d.ts`),
-    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
-    find(`${dir}/build/web/**/*.d.ts`),
-    read,
-    transformDts('web'),
-    overwrite
-  )
-
 export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigReactNativeBuild } = await import('@bubble-dev/babel-config')
-
-  return sequence(
-    find([
-      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.{node,web}.{js,jsx,ts,tsx}`,
+  const { default: globby } = await import('globby')
+  const allFiles = await globby(
+    [
+      `${dir}/src/**/*.{js,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
-    ]),
-    read,
-    babel(babelConfigReactNativeBuild),
-    rename((file) => file.replace(/(\.native)?\.(ts|tsx|jsx)$/, '.js')),
-    write(`${dir}/build/native/`)
+    ],
+    {
+      ignore: ['node_modules/**'],
+      deep: Infinity,
+      onlyFiles: true,
+    }
   )
-}
+  const extRegExp = /\.(js|ts|tsx)$/
+  const nativeFiles = allFiles.filter((file) => {
+    if (allFiles.includes(file.replace(extRegExp, '.native.$1'))) {
+      return false
+    }
 
-export const buildDtsReactNative = (dir: string): StartPlugin<{}, {}> =>
-  sequence(
-    find(`${dir}/src/index.{native.tsx,native.ts,native.js,native.jsx,ios.tsx,ios.ts,ios.js,ios.jsx,android.tsx,android.ts,android.js,android.jsx,tsx,ts,js,jsx}`),
-    typescriptGenerate(`${dir}/build/native/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    }),
-    find(`${dir}/src/**/*.d.ts`),
-    copy(`${dir}/build/native/`),
-    find(`${dir}/build/native/**/*.native.d.ts`),
-    move((file) => file.replace(/\.native\.d\.ts$/, '.d.ts')),
-    find(`${dir}/build/native/**/*.d.ts`),
-    read,
-    transformDts('native'),
-    overwrite
-  )
+    if (allFiles.includes(file.replace(extRegExp, '.ios.$1'))) {
+      return false
+    }
+
+    if (allFiles.includes(file.replace(extRegExp, '.android.$1'))) {
+      return false
+    }
+
+    return true
+  })
+
+  return inputFiles(
+    sequence(
+      read,
+      babel(babelConfigReactNativeBuild),
+      rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
+      write(`${dir}/build/native/`)
+    )
+  )(...nativeFiles)
+}
 
 export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
@@ -100,70 +84,22 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   return sequence(
     env({ BABEL_ENV: 'production' }),
     find([
-      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.{web,native,ios,android}.{js,jsx,ts,tsx}`,
+      `${dir}/src/**/*.{js,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
     babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/(\.node)?\.(ts|tsx|jsx)$/, '.js')),
+    rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
     write(`${dir}/build/node/`)
   )
 }
 
-export const buildDtsNode = (dir: string): StartPlugin<{}, {}> =>
+export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
   sequence(
-    find(`${dir}/src/index.{node.tsx,node.ts,node.jsx,node.js,tsx,ts,jsx,js}`),
-    typescriptGenerate(`${dir}/build/node/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    }),
+    typescriptGenerate(`${dir}/src/`, `${dir}/build/types/`),
     find(`${dir}/src/**/*.d.ts`),
-    copy(`${dir}/build/node/`),
-    find(`${dir}/build/node/**/*.node.d.ts`),
-    move((file) => file.replace(/\.node\.d\.ts$/, '.d.ts')),
-    find(`${dir}/build/node/**/*.d.ts`),
-    read,
-    transformDts('node'),
-    overwrite
-  )
-
-export const buildWebNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
-  const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
-
-  return sequence(
-    env({ BABEL_ENV: 'production' }),
-    find([
-      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.d.ts`,
-    ]),
-    read,
-    babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/(\.web)?\.(ts|tsx|jsx)$/, '.js')),
-    write(`${dir}/build/node/`)
-  )
-}
-
-export const buildDtsWebNode = (dir: string): StartPlugin<{}, {}> =>
-  sequence(
-    find(`${dir}/src/index.{web.tsx,web.ts,web.jsx,web.js,tsx,ts,jsx,js}`),
-    typescriptGenerate(`${dir}/build/node/`, {
-      strict: true,
-      jsx: JsxEmit.React,
-      preserveSymlinks: true,
-      skipLibCheck: true,
-    }),
-    find(`${dir}/src/**/*.d.ts`),
-    copy(`${dir}/build/node/`),
-    find(`${dir}/build/node/**/*.web.d.ts`),
-    move((file) => file.replace(/\.web\.d\.ts$/, '.d.ts')),
-    find(`${dir}/build/node/**/*.d.ts`),
-    read,
-    transformDts('node'),
-    overwrite
+    copy(`${dir}/build/types/`)
   )
 
 export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, {}>> => {
@@ -174,31 +110,19 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
   const tasks = []
 
   if (Reflect.has(packageJson, 'main')) {
-    const { default: globby } = await import('globby')
-    const nodeFiles = await globby(`${dir}/src/**/*.node.{ts,tsx,js,jsx}`, {
-      ignore: ['node_modules/**'],
-      deep: Infinity,
-      onlyFiles: true,
-    })
-
-    // "node" is "web" if there are no `.node.{ts,tsx}` files
-    if (nodeFiles.length > 0) {
-      tasks.push('buildNode', 'buildDtsNode')
-    } else {
-      tasks.push('buildWebNode', 'buildDtsWebNode')
-    }
+    tasks.push('buildNode')
   }
 
   if (Reflect.has(packageJson, 'browser')) {
-    tasks.push('buildWeb', 'buildDtsWeb')
+    tasks.push('buildWeb')
   }
 
   if (Reflect.has(packageJson, 'react-native')) {
-    tasks.push('buildReactNative', 'buildDtsReactNative')
+    tasks.push('buildReactNative')
   }
 
   if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
-    tasks.push('buildNode', 'buildDtsNode')
+    tasks.push('buildNode')
   }
 
   if (Reflect.has(packageJson, 'buildAssets')) {
@@ -208,6 +132,8 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
   if (Reflect.has(packageJson, 'buildTasks')) {
     tasks.push(...packageJson.buildTasks)
   }
+
+  tasks.push('buildTypes')
 
   return sequence(
     env({ NODE_ENV: 'production' }),

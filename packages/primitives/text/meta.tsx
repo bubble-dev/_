@@ -1,7 +1,7 @@
 import { TComponentConfig } from 'autoprops'
 import { TText } from './src'
 
-export const config: TComponentConfig<TText, never> = {
+export const config: TComponentConfig<TText> = {
   props: {
     children: ['Button'],
   },
