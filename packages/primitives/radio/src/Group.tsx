@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
-import { component, startWithType } from 'refun'
+import React from 'react'
+import { component, startWithType, mapState } from 'refun'
 import { RadioContext } from './context'
 import { TRadioGroup } from './types'
 
 const RadioGroup = component(
-  startWithType<TRadioGroup>()
+  startWithType<TRadioGroup>(),
+  mapState(
+    'groupValue', 'setGroupValue', ({ initialValue }) => initialValue, []
+  )
 )(({
-  initialValue,
+  groupValue,
+  setGroupValue,
   children,
 }) => {
-  const radioState = useState(initialValue)
-
   return (
-    <RadioContext.Provider value={radioState}>
+    <RadioContext.Provider value={{ groupValue, setGroupValue }}>
       {children}
     </RadioContext.Provider>
   )

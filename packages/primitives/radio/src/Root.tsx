@@ -1,10 +1,10 @@
 import React from 'react'
-import { normalizeWebStyle, TWebStyle } from 'stili'
-import { component, startWithType } from 'refun'
+import { normalizeStyle, TStyle } from 'stili'
+import { component, startWithType, mapContext } from 'refun'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
-const styles: TWebStyle = normalizeWebStyle({
+const styles: TStyle = normalizeStyle({
   backgroundColor: 'rgba(0, 0, 0, 0)',
   borderWidth: 0,
   minWidth: 0,
@@ -14,10 +14,13 @@ const styles: TWebStyle = normalizeWebStyle({
 })
 
 export const RadioInput = component(
-  startWithType<TRadioInput>()
+  startWithType<TRadioInput>(),
+  mapContext(RadioContext)
 )(({
   id,
   groupName,
+  groupValue,
+  setGroupValue,
   key,
   accessibilityLabelBy = [],
   accessibilityLabel,
@@ -25,29 +28,27 @@ export const RadioInput = component(
   isDisabled,
   onChange,
 }) => (
-  <RadioContext.Consumer>
-    {([groupValue, setGroupValue]) => (
-      <input
-        type="radio"
-        id={id}
-        name={groupName}
-        key={key || groupName + id}
-        checked={groupValue === value}
-        value={value}
-        aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
-        aria-label={accessibilityLabel}
-        disabled={isDisabled}
-        style={styles}
-        onChange={(evt) => {
-          setGroupValue(evt.currentTarget.value)
 
-          if (typeof onChange === 'function') {
-            onChange(evt)
-          }
-        }}
-      />
-    )}
-  </RadioContext.Consumer>
+  <input
+    type="radio"
+    id={id}
+    name={groupName}
+    key={key || groupName + id}
+    checked={groupValue === value}
+    value={value}
+    aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
+    aria-label={accessibilityLabel}
+    disabled={isDisabled}
+    style={styles}
+    onChange={(evt) => {
+      setGroupValue(evt.currentTarget.value)
+
+      if (typeof onChange === 'function') {
+        onChange(evt)
+      }
+    }}
+  />
+
 ))
 
 RadioInput.displayName = 'RadioInput'

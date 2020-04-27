@@ -1,9 +1,9 @@
-import { ReactNode, Dispatch, SetStateAction } from 'react'
+import { ReactNode } from 'react'
 
-export type TRadioContext = [
-  string,
-  Dispatch<SetStateAction<string>>,
-]
+export type TRadioContext = {
+  groupValue: string,
+  setGroupValue: (arg: string) => void,
+}
 
 export type TRadioInput = {
   key?: string,
