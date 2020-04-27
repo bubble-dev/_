@@ -1,27 +1,46 @@
 import test from 'tape'
-import { normalizeStyle as normalizeStyleWeb } from '../src/index.web'
-import { normalizeStyle as normalizeStyleNative } from '../src/index.native'
+import { normalizeWebStyle, normalizeNativeStyle } from '../src'
 
 test('stili: normalizeStyle + web', (t) => {
   t.deepEqual(
-    normalizeStyleWeb({
-      userSelect: 'none',
-      tapHighlightColor: 'rgba(0, 0, 0, 0)',
-      fontSmoothing: 'antialiased',
-      appearance: 'none',
+    normalizeWebStyle({
+      _webOnly: {
+        userSelect: 'none',
+        appearance: 'unset',
+        textSizeAdjust: 'none',
+        boxSizing: 'revert',
+        textOverflow: 'clip',
+        tapHighlightColor: 'transparent',
+        fontSmoothing: 'antialiased',
+      },
       fontSize: 16,
+      lineHeight: 10,
+      letterSpacing: 10,
+      transform: [
+        { perspective: 10 },
+        { scale: 1 },
+        { rotate: '90' },
+      ],
     }),
     {
       WebkitUserSelect: 'none',
       MozUserSelect: 'none',
       msUserSelect: 'none',
       userSelect: 'none',
-      WebkitTapHighlightColor: 'rgba(0, 0, 0, 0)',
-      WebkitFontSmoothing: 'antialiased',
-      WebkitAppearance: 'none',
-      MozAppearance: 'none',
-      appearance: 'none',
+      WebkitAppearance: 'unset',
+      MozAppearance: 'unset',
+      appearance: 'unset',
+      textSizeAdjust: 'none',
+      boxSizing: 'revert',
+      textOverflow: 'clip',
+      WebkitTapHighlightColor: 'transparent',
+      tapHighlightColor: 'transparent',
+      WebkitFontSmoothing: 'antialised',
+      MozOsxFontSmoothing: 'grayscale',
       fontSize: 16,
+      lineHeight: '10px',
+      letterSpacing: '10px',
+      transform: 'perspective(10) scale(1) rotate(90)',
     },
     'should work'
   )
@@ -31,7 +50,7 @@ test('stili: normalizeStyle + web', (t) => {
 
 test('stili: normalizeStyle + native', (t) => {
   t.deepEqual(
-    normalizeStyleNative({
+    normalizeNativeStyle({
       fontWeight: 200,
       fontSize: 16,
     }),
@@ -43,11 +62,12 @@ test('stili: normalizeStyle + native', (t) => {
   )
 
   t.deepEqual(
-    normalizeStyleNative({
+    normalizeNativeStyle({
       fontWeight: undefined,
+      fontSize: 16,
     }),
     {
-      fontWeight: undefined,
+      fontSize: 16,
     },
     'should skip undefined font weight'
   )

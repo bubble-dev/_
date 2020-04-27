@@ -13,8 +13,10 @@ export const config: TComponentConfig<TImage> = {
     topRightRadius: [20],
     resizeMode: ['cover', 'contain'],
   },
-  required: ['source', 'width', 'height'],
-  mutin: [['bottomLeftRadius', 'bottomRightRadius', 'topLeftRadius', 'topRightRadius']],
+  required: ['source'],
+  mutin: [
+    ['bottomLeftRadius', 'bottomRightRadius', 'topLeftRadius', 'topRightRadius'],
+  ],
 }
 
 export { Image as Component } from './src'

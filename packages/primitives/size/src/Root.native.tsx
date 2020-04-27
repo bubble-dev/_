@@ -2,12 +2,12 @@ import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction, isUndefined, isNumber } from 'tsfn'
-import { normalizeStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
 import { mapSizeUpdate } from './map-size-update'
 import { round } from './round'
 import { TSize } from './types'
 
-const style = normalizeStyle({
+const style = normalizeNativeStyle({
   flexDirection: 'row',
   flexGrow: 0,
   flexShrink: 0,

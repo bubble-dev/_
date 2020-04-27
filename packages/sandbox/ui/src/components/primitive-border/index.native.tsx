@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, ViewProps } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
 import { TPrimitiveBorder } from './types'
@@ -58,7 +58,7 @@ export const PrimitiveBorder = component(
     }
 
     const props: ViewProps = {
-      style: normalizeStyle(styles),
+      style: normalizeNativeStyle(styles),
       pointerEvents: 'none',
     }
 

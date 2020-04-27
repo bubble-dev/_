@@ -38,7 +38,7 @@ export const printValue = (value?: ReactElement<any> | string | number | symbol)
   }
 
   if (typeof value === 'symbol') {
-    return value.description
+    return value.description ?? '[no-description]'
   }
 
   if (isObject(value)) {

@@ -3,9 +3,9 @@
   "version": "2.1.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.web.ts",
-  "browser": "src/index.web.ts",
-  "react-native": "src/index.native.ts",
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
   "files": [
     "build/"
   ],

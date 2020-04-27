@@ -2,7 +2,7 @@ import React from 'react'
 import { View, LayoutChangeEvent } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
-import { normalizeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { round } from './round'
 import { TSize } from './types'
 
@@ -35,7 +35,7 @@ export const Size = component(
     }
 
     return {
-      style: normalizeStyle(style),
+      style: normalizeNativeStyle(style),
     }
   }, ['left', 'top', 'maxWidth', 'maxHeight']),
   mapHandlers({

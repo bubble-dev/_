@@ -1,11 +1,9 @@
 import React from 'react'
 import { View, ViewProps } from 'react-native'
-import { TStyle, normalizeStyle } from 'stili'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
 import { isNumber } from 'tsfn'
-import { TBlockCommon } from './types'
-
-export type TBlock = TBlockCommon<View, TStyle>
+import { TBlock } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),
@@ -20,7 +18,7 @@ export const Block = component(
   mapProps(
     ({
       id,
-      style,
+      style: userStyle,
       width,
       height,
       minWidth,
@@ -52,7 +50,14 @@ export const Block = component(
         alignSelf: 'flex-start',
         minWidth,
         minHeight,
-        ...style,
+        maxWidth,
+        maxHeight,
+        top,
+        left,
+        right,
+        bottom,
+        opacity,
+        ...userStyle,
       }
 
       if (isNumber(width)) {
@@ -64,30 +69,6 @@ export const Block = component(
       if (isNumber(height)) {
         styles.height = height
         styles.alignSelf = 'flex-start'
-      }
-
-      if (isNumber(maxWidth)) {
-        styles.maxWidth = maxWidth
-      }
-
-      if (isNumber(maxHeight)) {
-        styles.maxHeight = maxHeight
-      }
-
-      if (isNumber(top)) {
-        styles.top = top
-      }
-
-      if (isNumber(right)) {
-        styles.right = right
-      }
-
-      if (isNumber(bottom)) {
-        styles.bottom = bottom
-      }
-
-      if (isNumber(left)) {
-        styles.left = left
       }
 
       if (shouldStretch) {
@@ -102,10 +83,6 @@ export const Block = component(
 
       if (isFloating && isNumber(floatingIndex)) {
         styles.zIndex = floatingIndex
-      }
-
-      if (isNumber(opacity)) {
-        styles.opacity = opacity
       }
 
       if (shouldScroll) {
@@ -128,7 +105,7 @@ export const Block = component(
 
       return {
         ...props,
-        style: normalizeStyle(styles),
+        style: normalizeNativeStyle(styles),
         children,
         ref,
         role,

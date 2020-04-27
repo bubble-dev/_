@@ -39,12 +39,13 @@
     "@start/plugin-copy": "^1.0.0",
     "@start/plugin-env": "^1.0.0",
     "@start/plugin-find": "^1.0.0",
+    "@start/plugin-input-files": "^1.0.0",
     "@start/plugin-lib-babel": "^1.0.0",
     "@start/plugin-lib-eslint": "^1.0.0",
     "@start/plugin-lib-istanbul": "^1.0.0",
     "@start/plugin-lib-tape": "^2.0.0",
     "@start/plugin-lib-typescript-check": "^1.0.0",
-    "@start/plugin-lib-typescript-generate": "^1.0.0",
+    "@start/plugin-lib-typescript-generate": "^2.0.0",
     "@start/plugin-overwrite": "^1.0.0",
     "@start/plugin-parallel": "^1.0.0",
     "@start/plugin-read": "^1.0.0",
@@ -70,6 +71,7 @@
     "execa": "^4.0.0",
     "fixdeps": "^1.0.0",
     "globby": "^11.0.0",
+    "lottie-react-native": "^3.3.2",
     "make-dir": "^3.0.0",
     "move-path": "^1.0.0",
     "nanomatch": "^1.2.13",
@@ -79,7 +81,6 @@
     "react": "16.11.0",
     "react-native-svg": "^11.0.1",
     "react-native-view-shot": "^3.1.1",
-    "lottie-react-native": "^3.3.2",
     "rplace": "^0.2.0",
     "rsolve": "^0.1.0",
     "stroki": "^0.1.0",
@@ -93,8 +94,7 @@
     "@types/babel__core": "^7.1.1",
     "@types/node-fetch": "^2.5.4",
     "@types/prompts": "^2.0.5",
-    "@types/ws": "^7.2.1",
-    "typescript": "bubble-dev/TypeScript#ext-3.7.3"
+    "@types/ws": "^7.2.1"
   },
   "fixdeps": {
     "ignoredPackages": [

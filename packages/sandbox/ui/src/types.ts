@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { TComponentConfig } from 'autoprops'
+import { TCommonComponentConfig } from 'autoprops'
 import { TJsonMap } from 'typeon'
 import { TColor } from './colors'
 import { TPlugin } from './components/plugin-provider/types'
@@ -22,7 +22,7 @@ export type TPackageJson = {
 
 export type TMetaFile = {
   readonly Component: FC<any>,
-  readonly config: TComponentConfig,
+  readonly config: TCommonComponentConfig,
   readonly packageJson: TPackageJson,
 }
 

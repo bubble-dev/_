@@ -1,9 +1,8 @@
 import React, { ReactNode } from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
-import { View } from '@primitives/view'
+import { normalizeNativeStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
-import { ViewProps } from 'react-native'
+import { View, ViewProps } from 'react-native'
 import { Context } from './context'
 import { TLayoutInFlow } from './types'
 
@@ -72,7 +71,7 @@ export const LayoutInFlow = component(
     }
 
     const props: ViewProps & {children: ReactNode} = {
-      style: normalizeStyle(style),
+      style: normalizeNativeStyle(style),
       children: wrappedChildren,
     }
 
@@ -83,7 +82,12 @@ export const LayoutInFlow = component(
     return props
   })
 )(({ children, pointerEvents, style }) => (
-  <View style={style} pointerEvents={pointerEvents}>{children}</View>
+  <View
+    style={style}
+    pointerEvents={pointerEvents}
+  >
+    {children}
+  </View>
 ))
 
 LayoutInFlow.displayName = 'LayoutInFlow'
