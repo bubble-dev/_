@@ -4,11 +4,10 @@ import { normalizeNativeStyle } from 'stili'
 import {
   component,
   mapState,
-  onMount,
-  onUnmount,
   startWithType,
   mapHandlers,
   mapWithProps,
+  onUpdate,
 } from 'refun'
 import { TRoot } from './types'
 
@@ -28,12 +27,13 @@ export const Root = component(
       height,
     }),
   }),
-  onMount(({ setDimensions }) => {
+  onUpdate(({ setDimensions }) => {
     Dimensions.addEventListener('change', setDimensions)
-  }),
-  onUnmount(({ setDimensions }) => {
-    Dimensions.removeEventListener('change', setDimensions)
-  }),
+
+    return () => {
+      Dimensions.removeEventListener('change', setDimensions)
+    }
+  }, []),
   mapWithProps(({ dimensions }) => ({
     styles: normalizeNativeStyle({
       position: 'absolute',

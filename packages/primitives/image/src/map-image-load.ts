@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react'
 import { pipe } from '@psxcode/compose'
 import { isFunction, TExtend } from 'tsfn'
-import { startWithType, mapContext, onMount, mapHandlers, mapRef } from 'refun'
+import { startWithType, mapContext, mapHandlers, mapRef, onUpdate } from 'refun'
 import { ImageContext, TImageContext } from './Context'
 import { TImage } from './types'
 
@@ -17,11 +17,11 @@ export const mapImageLoad = <P extends TImage> () => {
       startWithType<P & TImage>(),
       mapContext(ImageContext),
       mapRef('imageId', getId()),
-      onMount(({ imageId, onImageMount }) => {
+      onUpdate(({ imageId, onImageMount }) => {
         if (isFunction(onImageMount)) {
           onImageMount(imageId.current)
         }
-      }),
+      }, []),
       mapHandlers(({
         onLoad: ({ imageId, onLoad, onImageLoad }) => () => {
           if (isFunction(onLoad)) {

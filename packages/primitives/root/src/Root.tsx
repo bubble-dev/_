@@ -2,12 +2,11 @@ import React from 'react'
 import {
   component,
   mapState,
-  onMount,
-  onUnmount,
   startWithType,
   mapHandlers,
   mapWithProps,
   mapThrottledHandlerAnimationFrame,
+  onUpdate,
 } from 'refun'
 import { normalizeWebStyle } from 'stili'
 import { TRoot } from './types'
@@ -27,12 +26,13 @@ export const Root = component(
     }),
   }),
   mapThrottledHandlerAnimationFrame('setDimensions'),
-  onMount(({ setDimensions }) => {
+  onUpdate(({ setDimensions }) => {
     globalObject.addEventListener('resize', setDimensions)
-  }),
-  onUnmount(({ setDimensions }) => {
-    globalObject.removeEventListener('resize', setDimensions)
-  }),
+
+    return () => {
+      globalObject.removeEventListener('resize', setDimensions)
+    }
+  }, []),
   mapWithProps(({ dimensions }) => ({
     style: normalizeWebStyle({
       display: 'flex',

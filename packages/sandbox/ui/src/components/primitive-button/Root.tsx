@@ -1,6 +1,7 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
+import { TRANSPARENT, colorToString } from '../../colors'
 import { TPrimitiveButton } from './types'
 
 export const PrimitiveButton = component(
@@ -35,7 +36,7 @@ export const PrimitiveButton = component(
       paddingLeft: 0,
       paddingRight: 0,
       paddingBottom: 0,
-      backgroundColor: 'none',
+      backgroundColor: colorToString(TRANSPARENT),
     }),
   }), ['isDisabled'])
 )(({

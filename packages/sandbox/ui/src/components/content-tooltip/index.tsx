@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { createPortal } from 'react-dom'
-import { component, startWithType, mapContext, mapState, mapWithProps, mapDefaultProps, mapSafeTimeout, onMount } from 'refun'
+import { component, startWithType, mapContext, mapState, mapWithProps, mapDefaultProps, mapSafeTimeout, onUpdate } from 'refun'
 import { AnimationValue } from '../animation'
 import { PrimitiveBackground } from '../primitive-background'
 import { PortalContext } from '../portal-provider'
@@ -38,11 +38,11 @@ export const ContentTooltip = component(
   mapContext(LayoutContext),
   mapState('isOpen', 'setIsOpen', () => false, []),
   mapSafeTimeout('setSafeTimeout'),
-  onMount(({ setSafeTimeout, setIsOpen }) => {
+  onUpdate(({ setSafeTimeout, setIsOpen }) => {
     setSafeTimeout(() => {
       setIsOpen(true)
     }, TOOLTIP_TIMEOUT)
-  }),
+  }, []),
   mapState('contentWidth', 'setContentWidth', () => 0, []),
   mapState('contentHeight', 'setContentHeight', () => 0, []),
   mapWithProps(({ _x, _y, arrowPosition, _width, _height, contentWidth, contentHeight }) => {

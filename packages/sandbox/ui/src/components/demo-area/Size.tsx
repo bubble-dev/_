@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { component, startWithType, onLayout } from 'refun'
+import { component, startWithType, onLayout, mapRef } from 'refun'
 import { normalizeWebStyle } from 'stili'
 import { isNumber, isFunction } from 'tsfn'
 
@@ -19,13 +19,14 @@ export type TSize = {
 
 export const Size = component(
   startWithType<TSize>(),
-  onLayout('ref', (ref: HTMLDivElement, { width, height, onWidthChange, onHeightChange }) => {
+  mapRef('ref', null as null | HTMLDivElement),
+  onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
     const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
     const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
 
-    if (shouldMeasureWidth || shouldMeasureHeight) {
-      const measuredWidth = round(ref.offsetWidth)
-      const measuredHeight = round(ref.offsetHeight)
+    if (ref.current !== null && (shouldMeasureWidth || shouldMeasureHeight)) {
+      const measuredWidth = round(ref.current.offsetWidth)
+      const measuredHeight = round(ref.current.offsetHeight)
 
       if (shouldMeasureWidth && width !== measuredWidth) {
         onWidthChange!(measuredWidth)
@@ -35,7 +36,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  })
+  }, ['width', 'height', 'onWidthChange', 'onHeightChange'])
 )(({ ref, children }) => (
   <div ref={ref} style={parentStyle}>
     {children}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapWithPropsMemo, onLayout } from 'refun'
+import { component, startWithType, mapWithPropsMemo, onLayout, mapRef } from 'refun'
 import { normalizeWebStyle, TStyle } from 'stili'
 import { isFunction, isNumber } from 'tsfn'
 import { round } from './round'
@@ -45,12 +45,13 @@ export const Size = component(
       childStyle: normalizeWebStyle(childStyle),
     }
   }, ['maxWidth', 'maxHeight', 'left', 'top', 'shouldPreventWrap']),
-  onLayout('ref', (ref: HTMLDivElement, { width, height, onWidthChange, onHeightChange }) => {
+  mapRef('ref', null as null | HTMLDivElement),
+  onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
     const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
     const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
 
-    if (shouldMeasureWidth || shouldMeasureHeight) {
-      const rect = ref.firstElementChild!.getBoundingClientRect()
+    if (ref.current !== null && (shouldMeasureWidth || shouldMeasureHeight)) {
+      const rect = ref.current.firstElementChild!.getBoundingClientRect()
 
       const measuredWidth = round(rect.width)
       const measuredHeight = round(rect.height)
@@ -63,7 +64,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  })
+  }, ['width', 'height', 'onWidthChange', 'onHeightChange'])
 )(({ ref, parentStyle, childStyle, children }) => (
   <div style={parentStyle}>
     <div style={childStyle} ref={ref}>
