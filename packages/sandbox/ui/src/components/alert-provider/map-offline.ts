@@ -1,5 +1,5 @@
 import { pipe } from '@psxcode/compose'
-import { startWithType, onMountUnmount } from 'refun'
+import { startWithType, onUpdate } from 'refun'
 import { globalObject } from '../../utils'
 import { TAlert } from './types'
 
@@ -13,7 +13,7 @@ export type TMapOffline = {
 
 export const mapOffline = <P extends TMapOffline> () => pipe(
   startWithType<P>(),
-  onMountUnmount(({ alerts, setAlerts, onItemClose }) => {
+  onUpdate(({ alerts, setAlerts, onItemClose }) => {
     const onOfflineEvent = () => {
       setAlerts(
         alerts.concat({
@@ -38,5 +38,5 @@ export const mapOffline = <P extends TMapOffline> () => pipe(
       globalObject.removeEventListener('offline', onOfflineEvent)
       globalObject.removeEventListener('online', onOnlineEvent)
     }
-  })
+  }, [])
 )

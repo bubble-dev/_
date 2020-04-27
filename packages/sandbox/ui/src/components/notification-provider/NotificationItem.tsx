@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapHandlers, mapSafeTimeout, onMount, mapContext } from 'refun'
+import { component, startWithType, mapHandlers, mapSafeTimeout, mapContext, onUpdate } from 'refun'
 import { Layout, Layout_Item } from '../layout'
 import { SizeBackground } from '../size-background'
 import { LAYOUT_SIZE_FIT } from '../../symbols'
@@ -31,9 +31,9 @@ export const NotificationItem = component(
     },
   }),
   mapSafeTimeout('timeout'),
-  onMount(({ timeout, onClose }) => {
+  onUpdate(({ timeout, onClose }) => {
     timeout(onClose, TIMEOUT)
-  })
+  }, [])
 )(({
   theme,
   NotificationTextThemeProvider,

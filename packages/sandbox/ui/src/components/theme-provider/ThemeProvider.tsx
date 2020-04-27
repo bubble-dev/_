@@ -1,5 +1,5 @@
 import React from 'react'
-import { component, startWithType, mapState, onMount } from 'refun'
+import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { isUndefined } from 'tsfn'
 import { ThemeContext } from '../theme-context'
 import { TThemeProvider } from './types'
@@ -7,21 +7,21 @@ import { TThemeProvider } from './types'
 export const ThemeProvider = component(
   startWithType<TThemeProvider>(),
   mapState('theme', 'setTheme', ({ theme }) => theme, ['theme']),
-  onMount(async ({ theme, setTheme }) => {
-    if (isUndefined(theme)) {
-      const { defaultTheme } = await import('./default-theme' /* webpackChunkName: "defaultTheme" */)
+  onUpdateAsync((props) => function *() {
+    if (isUndefined(props.current.theme)) {
+      const { defaultTheme } = yield import('./default-theme' /* webpackChunkName: "defaultTheme" */)
 
-      setTheme(defaultTheme)
+      props.current.setTheme(defaultTheme)
     }
-  }),
+  }, []),
   mapState('icons', 'setIcons', ({ icons }) => icons, ['icons']),
-  onMount(async ({ icons, setIcons }) => {
-    if (isUndefined(icons)) {
-      const { defaultIcons } = await import('./default-icons' /* webpackChunkName: "defaultIcons" */)
+  onUpdateAsync((props) => function *() {
+    if (isUndefined(props.current.icons)) {
+      const { defaultIcons } = yield import('./default-icons' /* webpackChunkName: "defaultIcons" */)
 
-      setIcons(defaultIcons)
+      props.current.setIcons(defaultIcons)
     }
-  })
+  }, [])
 )(({ theme, icons, children }) => {
   if (isUndefined(theme) || isUndefined(icons)) {
     return null

@@ -3,10 +3,9 @@ import { Dimensions } from 'react-native'
 import {
   component,
   mapState,
-  onMount,
-  onUnmount,
   startWithType,
   mapHandlers,
+  onUpdate,
 } from 'refun'
 import { LayoutContext } from '../layout-context'
 import { RootContext } from './RootContext'
@@ -27,12 +26,13 @@ export const Root = component(
       height,
     }),
   }),
-  onMount(({ setDimensions }) => {
+  onUpdate(({ setDimensions }) => {
     Dimensions.addEventListener('change', setDimensions)
-  }),
-  onUnmount(({ setDimensions }) => {
-    Dimensions.removeEventListener('change', setDimensions)
-  })
+
+    return () => {
+      Dimensions.removeEventListener('change', setDimensions)
+    }
+  }, [])
 )(({ children, dimensions }) => (
   <RootContext.Provider
     value={{

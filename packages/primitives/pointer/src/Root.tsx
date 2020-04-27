@@ -1,6 +1,6 @@
 import React, { HTMLProps, MouseEvent } from 'react'
 import { normalizeWebStyle } from 'stili'
-import { component, startWithType, mapProps, mapHandlers, mapRefLayout, mapDefaultProps } from 'refun'
+import { component, startWithType, mapProps, mapHandlers, mapDefaultProps, mapRef, onLayout } from 'refun'
 import { isFunction } from 'tsfn'
 import { TPointer } from './types'
 
@@ -24,9 +24,10 @@ export const Pointer = component(
   mapDefaultProps({
     isDisabled: false,
   }),
-  mapRefLayout('ref', (ref: HTMLDivElement, { onWheel }) => {
-    if (ref !== null && isFunction(onWheel)) {
-      ref.addEventListener('wheel', (e) => {
+  mapRef('ref', null as null | HTMLDivElement),
+  onLayout(({ ref, onWheel }) => {
+    if (ref.current !== null && isFunction(onWheel)) {
+      ref.current.addEventListener('wheel', (e) => {
         const { deltaX, deltaY, ctrlKey, metaKey, altKey, shiftKey } = e
 
         e.preventDefault()
@@ -34,9 +35,7 @@ export const Pointer = component(
         onWheel({ x: deltaX, y: deltaY, metaKey, ctrlKey, altKey, shiftKey })
       }, { passive: false })
     }
-
-    return {}
-  }, []),
+  }, ['onWheel']),
   mapHandlers({
     onMouseDown: ({ onDown }) => (e: MouseEvent<HTMLDivElement>) => {
       if (isFunction(onDown)) {

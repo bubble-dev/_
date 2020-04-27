@@ -2,11 +2,10 @@ import React from 'react'
 import {
   component,
   mapState,
-  onMount,
-  onUnmount,
   startWithType,
   mapHandlers,
   mapThrottledHandlerAnimationFrame,
+  onUpdate,
 } from 'refun'
 import { globalObject } from '../../utils'
 import { LayoutContext } from '../layout-context'
@@ -25,12 +24,13 @@ export const Root = component(
     }),
   }),
   mapThrottledHandlerAnimationFrame('setDimensions'),
-  onMount(({ setDimensions }) => {
+  onUpdate(({ setDimensions }) => {
     globalObject.addEventListener('resize', setDimensions)
-  }),
-  onUnmount(({ setDimensions }) => {
-    globalObject.removeEventListener('resize', setDimensions)
-  })
+
+    return () => {
+      globalObject.removeEventListener('resize', setDimensions)
+    }
+  }, [])
 )(({ children, dimensions }) => (
   <RootContext.Provider
     value={{
