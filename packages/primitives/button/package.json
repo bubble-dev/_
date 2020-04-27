@@ -15,10 +15,10 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "refun": "^2.0.0",
-    "stili": "^1.0.0"
+    "stili": "^2.0.0"
   },
   "devDependencies": {
-    "@primitives/text": "^1.0.0",
+    "@primitives/text": "^2.0.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",

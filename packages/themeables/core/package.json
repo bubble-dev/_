@@ -18,9 +18,9 @@
   },
   "devDependencies": {
     "autoprops": "^1.0.0",
-    "@primitives/block": "^1.0.0",
-    "@primitives/background": "^1.0.0",
-    "@themeables/background": "^1.0.0",
+    "@primitives/block": "^2.0.0",
+    "@primitives/background": "^2.0.0",
+    "@themeables/background": "^2.0.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",

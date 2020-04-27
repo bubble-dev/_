@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "stili": "^1.0.0",
+    "stili": "^2.0.0",
     "refun": "^2.0.0",
     "tsfn": "^1.1.0"
   },
