@@ -1,6 +1,6 @@
 import React from 'react'
 import { TComponentConfig } from 'autoprops'
-import { component, startWithType } from 'refun' // mapState,
+import { component, startWithType } from 'refun'
 import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
 
 export const Component = component(
