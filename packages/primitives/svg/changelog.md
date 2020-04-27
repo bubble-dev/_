@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 rename files according to the build system
+
 ## v1.0.1
 
 * 🐞 bump `react-native-svg` to v11

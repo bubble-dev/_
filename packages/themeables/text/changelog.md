@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 rename files according to the build system
+
+* ♻️ update dependencies `@primitives/text`, `@themeables/core`, `stili`
+
 ## v1.0.1
 
 * 🐞 remove `refun` dependency

@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 update refun to v2.0.0
+
+* 💥 rename files according to the build system
+
+* ♻️ update dependencies `stili`, `@themeables/text`
+
 ## v1.1.0
 
 * 🌱 add support for fontStyle and adjust types

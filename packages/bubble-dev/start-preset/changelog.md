@@ -1,3 +1,7 @@
+## v4.0.0
+
+* 💥 change build system
+
 ## v3.1.1
 
 * 🐞 update to latest @rebox/web

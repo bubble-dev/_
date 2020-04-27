@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 rename files according to the build system
+
+* ♻️ update dependencies `@primitives/vector-shape`, `@themeables/core`
+
 ## v1.1.0
 
 * 🌱 support optional 'scale' prop for VectorShape

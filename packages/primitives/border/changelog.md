@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 update refun to v2.0.0
+
+* 💥 rename files according to the build system
+
+* ♻️ update dependencies `@primitives/block`, `@themeables/border`
+
 ## v1.0.0
 
 * 💥 drop Node.js v8 support and require >=10.13.0 (first v10 LTS)

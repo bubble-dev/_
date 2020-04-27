@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 update refun to v2.0.0
+
+* 💥 rename files according to the build system
+
+* ♻️ update dependencies `stili`
+
 ## v1.0.1
 
 * 🐞 handle promise properly

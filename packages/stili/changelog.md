@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 unify styles
+
 ## v1.1.0
 
 * 🌱 add support for fontStyle and adjust types

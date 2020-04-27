@@ -1,3 +1,11 @@
+## v2.0.0
+
+* 💥 update refun to v2.0.0
+
+* 💥 change styles and ref type
+
+* ♻️ update dependencies `stili`
+
 ## v1.1.0
 
 * 🌱 semantic tags to block primitive

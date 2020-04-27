@@ -1,3 +1,13 @@
+## v3.0.0
+
+* 💥 update refun to v2.0.0
+
+* 💥 rename files according to the build system
+
+* 🐞 fix native types
+
+* ♻️ update dependencies `@primitives/pointer`, `@primitives/transform`, `stili`, `@primitives/svg`
+
 ## v2.1.0
 
 * 🌱 add imported packages name getter
