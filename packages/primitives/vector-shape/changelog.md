@@ -1,3 +1,7 @@
+## v2.0.2
+
+* 🐞 add `^` to primitives dependency range
+
 ## v2.0.1
 
 * ♻️ update dependencies `@primitives/svg`
