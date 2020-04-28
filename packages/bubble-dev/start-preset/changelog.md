@@ -1,3 +1,16 @@
+## v4.0.1
+
+* 🐞 update dependencies
+
+  ```
+  * @rebox/android: v2.0.5
+  * @rebox/ios: v2.0.5
+  * @x-ray/native-screenshots-app: v1.0.1
+  * @x-ray/screenshot-utils: v1.0.3
+  * @x-ray/web-mobile-screenshots-app: v1.0.1
+  * react-native-svg: v12.1.0
+  ```
+
 ## v4.0.0
 
 * 💥 change build system
