@@ -17,11 +17,6 @@ export const mapSizeUpdate = <P extends TSize> () => {
       startWithType<P & TSize>(),
       mapContext(SizeContext),
       mapRef('sizeId', getId()),
-      onUpdate(({ sizeId, onSizeMount }) => {
-        if (isFunction(onSizeMount)) {
-          onSizeMount(sizeId.current)
-        }
-      }, []),
       onUpdate(({ sizeId, onSizeUpdate }) => {
         if (isFunction(onSizeUpdate)) {
           onSizeUpdate(sizeId.current)
