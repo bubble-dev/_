@@ -1,10 +1,10 @@
 import React from 'react'
-import { normalizeStyle, TStyle } from 'stili'
-import { component, startWithType, mapContext } from 'refun'
+import { normalizeWebStyle } from 'stili'
+import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
-const styles: TStyle = normalizeStyle({
+const styles = normalizeWebStyle({
   backgroundColor: 'rgba(0, 0, 0, 0)',
   borderWidth: 0,
   minWidth: 0,
@@ -15,6 +15,10 @@ const styles: TStyle = normalizeStyle({
 
 export const RadioInput = component(
   startWithType<TRadioInput>(),
+  mapDefaultProps({
+    isDisabled: false,
+    accessibilityLabelBy: [],
+  }),
   mapContext(RadioContext)
 )(({
   id,
@@ -22,13 +26,12 @@ export const RadioInput = component(
   groupValue,
   setGroupValue,
   key,
-  accessibilityLabelBy = [],
+  accessibilityLabelBy,
   accessibilityLabel,
   value,
   isDisabled,
   onChange,
 }) => (
-
   <input
     type="radio"
     id={id}
@@ -48,7 +51,6 @@ export const RadioInput = component(
       }
     }}
   />
-
 ))
 
 RadioInput.displayName = 'RadioInput'
