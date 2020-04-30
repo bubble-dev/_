@@ -12,6 +12,7 @@ export const Block = component(
     shouldIgnorePointerEvents: false,
     shouldScroll: false,
     shouldHideOverflow: false,
+    isFloating: false,
     minWidth: 0,
     minHeight: 0,
   }),

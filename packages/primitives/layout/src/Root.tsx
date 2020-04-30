@@ -35,6 +35,8 @@ export const Layout = component(
       alignSelf: 'stretch',
       minWidth,
       minHeight,
+      maxWidth,
+      maxHeight,
     }
 
     if (direction === 'horizontal') {
@@ -113,14 +115,6 @@ export const Layout = component(
           break
         }
       }
-    }
-
-    if (isNumber(maxWidth)) {
-      style.maxWidth = maxWidth
-    }
-
-    if (isNumber(maxHeight)) {
-      style.maxHeight = maxHeight
     }
 
     if (isNumber(width)) {

@@ -1,11 +1,11 @@
 import React from 'react'
 import { TouchableWithoutFeedback as Touchable, View } from 'react-native'
-import { component, startWithType, mapContext } from 'refun'
-import { normalizeStyle, TStyle } from 'stili'
+import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
+import { normalizeNativeStyle } from 'stili'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
-const styles: TStyle = normalizeStyle({
+const styles = normalizeNativeStyle({
   flexGrow: 1,
   flexShrink: 1,
   alignSelf: 'stretch',
@@ -15,6 +15,9 @@ const styles: TStyle = normalizeStyle({
 
 export const RadioInput = component(
   startWithType<TRadioInput>(),
+  mapDefaultProps({
+    isDisabled: false,
+  }),
   mapContext(RadioContext)
 )(({
   groupName,
@@ -23,7 +26,8 @@ export const RadioInput = component(
   isDisabled,
   onChange,
   value,
-  groupValue, setGroupValue,
+  groupValue,
+  setGroupValue,
 }) => (
   <Touchable
     style={styles}
@@ -50,7 +54,6 @@ export const RadioInput = component(
       borderRadius: 50,
       justifyContent: 'center',
       alignItems: 'center',
-
     }}
     >
       <View style={{

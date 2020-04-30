@@ -14,7 +14,18 @@ export const LayoutInFlow = component(
     minHeight: 0,
   }),
   mapContext(Context),
-  mapProps(({ direction, width, height, maxWidth, maxHeight, minWidth, minHeight, shouldScroll, shouldIgnorePointerEvents, children }) => {
+  mapProps(({
+    direction,
+    width,
+    height,
+    maxWidth,
+    maxHeight,
+    minWidth,
+    minHeight,
+    shouldScroll,
+    shouldIgnorePointerEvents,
+    children,
+  }) => {
     const style: TStyle = {
       display: 'flex',
       flexDirection: 'row',
@@ -24,6 +35,8 @@ export const LayoutInFlow = component(
       alignSelf: 'auto',
       minWidth,
       minHeight,
+      maxWidth,
+      maxHeight,
     }
 
     if (direction === 'horizontal') {
@@ -56,14 +69,6 @@ export const LayoutInFlow = component(
       } else if (isNumber(height)) {
         style.height = height
       }
-    }
-
-    if (isNumber(maxWidth)) {
-      style.maxWidth = maxWidth
-    }
-
-    if (isNumber(maxHeight)) {
-      style.maxHeight = maxHeight
     }
 
     if (shouldScroll) {
