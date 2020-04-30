@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 fix native props
+
+* ♻️ update dependencies `@primitives/block`
+
 ## v2.0.0
 
 * 💥 update refun to v2.0.0

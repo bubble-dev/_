@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 fix native context call
+
 ## v2.0.0
 
 * 💥 update refun to v2.0.0
