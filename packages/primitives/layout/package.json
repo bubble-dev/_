@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^2.0.0",
+    "@primitives/block": "^2.0.1",
     "refun": "^2.0.0",
     "stili": "^2.0.0",
     "tsfn": "^1.1.0"

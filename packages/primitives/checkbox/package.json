@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/block": "^2.0.0",
+    "@primitives/block": "^2.0.1",
     "refun": "^2.0.0",
     "stili": "^2.0.0"
   },
