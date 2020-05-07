@@ -19,7 +19,12 @@ export const Heading = component(
     isUnderlined: false,
   }),
   mapWithProps(({
+    align,
+    blockEnd,
+    blockStart,
     color,
+    inlineEnd,
+    inlineStart,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -44,10 +49,36 @@ export const Heading = component(
       minWidth: 0,
       letterSpacing,
       lineHeight,
+      paddingBottom: blockEnd,
+      paddingLeft: inlineStart,
+      paddingRight: inlineEnd,
+      paddingTop: blockStart,
     }
 
     if (isColor(color)) {
       style.color = colorToString(color)
+    }
+
+    if (align) {
+      switch (align) {
+        case 'start': {
+          style._webOnly!.textAlign = 'left'
+
+          break
+        }
+
+        case 'center': {
+          style._webOnly!.textAlign = 'center'
+
+          break
+        }
+
+        case 'end': {
+          style._webOnly!.textAlign = 'right'
+
+          break
+        }
+      }
     }
 
     if (shouldPreserveWhitespace) {

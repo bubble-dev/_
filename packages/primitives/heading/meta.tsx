@@ -5,6 +5,7 @@ export const config: TComponentConfig<THeading> = {
   props: {
     children: ['Heading'],
     level: [1, 2, 3, 4, 5, 6],
+    align: ['start', 'center', 'end'],
   },
   required: ['children'],
 }
