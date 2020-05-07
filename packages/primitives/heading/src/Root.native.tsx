@@ -5,7 +5,12 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { Text as NativeText, TextProps } from 'react-native'
+import {
+  Text as NativeText,
+  TextProps,
+  View as NativeView,
+  ViewProps,
+} from 'react-native'
 import { TStyle, normalizeNativeStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
 import { THeading } from './types'
@@ -20,7 +25,12 @@ export const Heading = component(
     isUnderlined: false,
   }),
   mapWithProps(({
+    align,
+    blockEnd,
+    blockStart,
     color,
+    inlineEnd,
+    inlineStart,
     letterSpacing,
     lineHeight,
     fontFamily,
@@ -31,7 +41,7 @@ export const Heading = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const style: TStyle = {
+    const textStyle: TStyle = {
       backgroundColor: 'transparent',
       lineHeight,
       fontFamily,
@@ -40,41 +50,82 @@ export const Heading = component(
       letterSpacing,
     }
 
+    const viewStyle: TStyle = {
+      paddingBottom: blockEnd,
+      paddingLeft: inlineStart,
+      paddingRight: inlineEnd,
+      paddingTop: blockStart,
+    }
+
     if (isColor(color)) {
-      style.color = colorToString(color)
+      textStyle.color = colorToString(color)
+    }
+
+    if (align) {
+      switch (align) {
+        case 'start': {
+          textStyle.textAlign = 'left'
+
+          break
+        }
+
+        case 'center': {
+          textStyle.textAlign = 'center'
+
+          break
+        }
+
+        case 'end': {
+          textStyle.textAlign = 'right'
+
+          break
+        }
+      }
     }
 
     if (isUnderlined) {
-      style.textDecorationLine = 'underline'
+      textStyle.textDecorationLine = 'underline'
     }
 
-    const props: TextProps = {
-      style: normalizeNativeStyle(style),
-      selectable: !shouldPreventSelection,
+    const props: { text: TextProps, view: ViewProps } = {
+      view: {
+        style: normalizeNativeStyle(viewStyle),
+      },
+      text: {
+        style: normalizeNativeStyle(textStyle),
+        selectable: !shouldPreventSelection,
+      },
     }
 
     if (shouldPreventWrap) {
-      props.numberOfLines = 1
+      props.text.numberOfLines = 1
     }
 
     if (shouldHideOverflow) {
-      props.numberOfLines = 1
-      props.ellipsizeMode = 'tail'
+      props.text.numberOfLines = 1
+      props.text.ellipsizeMode = 'tail'
     }
 
     return props
   })
-)(({ id, children, style, numberOfLines, ellipsizeMode, selectable }) => (
-  <NativeText
-    accessibilityRole="header"
-    testID={id}
-    selectable={selectable}
-    numberOfLines={numberOfLines}
-    ellipsizeMode={ellipsizeMode}
-    style={style}
-  >
-    {children}
-  </NativeText>
+)(({
+  children,
+  id,
+  text: { ellipsizeMode, numberOfLines, selectable, style: textStyle },
+  view: { style: viewStyle },
+}) => (
+  <NativeView style={viewStyle}>
+    <NativeText
+      accessibilityRole="header"
+      testID={id}
+      selectable={selectable}
+      numberOfLines={numberOfLines}
+      ellipsizeMode={ellipsizeMode}
+      style={textStyle}
+    >
+      {children}
+    </NativeText>
+  </NativeView>
 ))
 
 Heading.displayName = 'Heading'
