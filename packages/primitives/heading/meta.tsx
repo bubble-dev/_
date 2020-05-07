@@ -11,3 +11,5 @@ export const config: TComponentConfig<THeading> = {
 }
 
 export { Heading as Component } from './src'
+
+export { default as packageJson } from './package.json'
