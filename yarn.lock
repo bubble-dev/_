@@ -2507,14 +2507,15 @@
     rsolve "^0.1.0"
     upng-js "^2.1.0"
 
-"@x-ray/native-screenshots-app@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@x-ray/native-screenshots-app/-/native-screenshots-app-1.0.1.tgz#cbca1d992fada067f0501fd3dd8b32ec1d55bb0f"
-  integrity sha512-lKQdPNJVcE2wRc0imPyZtv+PVC5e0quBsNd3dHSvB0+XQN3D3uWUWG0p4zDTJD9jF3DKJfpR/myC5ES5mcfYmQ==
+"@x-ray/native-screenshots-app@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@x-ray/native-screenshots-app/-/native-screenshots-app-1.0.2.tgz#eefaa2cb68e85100854dcd021590f8db1f6f276c"
+  integrity sha512-7LFwU9Wq6yVtCINDHp0mFeikN2GZK7a7ZgJctEx8iL3a/aAI2V+VZczLu3Zv57UYaCw0904fC7ldLBDAI03zgQ==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@primitives/image" "^2.0.0"
     "@primitives/size" "^2.0.0"
+    react-native-exception-handler "^2.10.8"
     react-native-view-shot "^3.0.2"
 
 "@x-ray/native-screenshots@^1.0.0":
@@ -10233,6 +10234,11 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-exception-handler@^2.10.8:
+  version "2.10.8"
+  resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.8.tgz#1a7f846592d888d23adaf797e31802585f1d9ff0"
+  integrity sha512-ZN+jwpADRkCUNdad/50k0mZdMoICGrGdtaxgvRU+pNcWRRBAXJhuo4+jY0eQaoVpx1ghycGE6tBu9ka8gL2NOQ==
 
 react-native-safe-modules@^1.0.0:
   version "1.0.0"
