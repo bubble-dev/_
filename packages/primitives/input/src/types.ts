@@ -1,18 +1,16 @@
 import { TThemeableText } from '@themeables/text'
+import { TThemeableSpacer } from '@themeables/spacer'
 
 export type TInput = {
-  id?: string,
   accessibilityLabel?: string,
+  id?: string,
   isDisabled?: boolean,
-  paddingBottom?: number,
-  paddingLeft?: number,
-  paddingRight?: number,
-  paddingTop?: number,
-  value: string,
-  onChange: (newValue: string) => void,
-  onSubmit?: () => void,
-  onFocus?: () => void,
   onBlur?: () => void,
+  onChange: (newValue: string) => void,
+  onFocus?: () => void,
   onPressIn?: () => void,
   onPressOut?: () => void,
+  onSubmit?: () => void,
+  value: string,
 } & TThemeableText
+  & TThemeableSpacer

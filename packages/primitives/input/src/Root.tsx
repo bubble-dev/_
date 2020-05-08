@@ -16,16 +16,16 @@ export const Input = component(
   }),
   mapWithProps(
     ({
+      blockEnd,
+      blockStart,
       color,
-      letterSpacing,
-      lineHeight,
       fontFamily,
       fontWeight,
       fontSize,
-      paddingBottom,
-      paddingLeft,
-      paddingRight,
-      paddingTop,
+      inlineEnd,
+      inlineStart,
+      letterSpacing,
+      lineHeight,
     }) => {
       const style: TStyle = {
         _webOnly: {
@@ -44,10 +44,10 @@ export const Input = component(
         flexGrow: 1,
         flexShrink: 1,
         alignSelf: 'stretch',
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
-        paddingTop,
+        paddingBottom: blockEnd,
+        paddingLeft: inlineStart,
+        paddingRight: inlineEnd,
+        paddingTop: blockStart,
         minWidth: 0,
         letterSpacing,
         lineHeight,

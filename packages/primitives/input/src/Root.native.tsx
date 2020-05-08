@@ -8,8 +8,8 @@ import { TInput } from './types'
 export const Input = component(
   startWithType<TInput>(),
   mapDefaultProps({
-    paddingTop: 0,
-    paddingBottom: 0,
+    blockStart: 0,
+    blockEnd: 0,
   }),
   mapHandlers({
     onChangeText: ({ onChange }) => (newValue: string) => onChange(newValue),
@@ -21,16 +21,16 @@ export const Input = component(
   }),
   mapWithProps(
     ({
+      blockEnd,
+      blockStart,
       color,
-      letterSpacing,
-      lineHeight,
       fontFamily,
       fontWeight,
       fontSize,
-      paddingBottom,
-      paddingLeft,
-      paddingRight,
-      paddingTop,
+      inlineStart,
+      inlineEnd,
+      letterSpacing,
+      lineHeight,
     }) => {
       const style: TStyle = {
         letterSpacing,
@@ -38,10 +38,10 @@ export const Input = component(
         fontFamily,
         fontWeight,
         fontSize,
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
-        paddingTop,
+        paddingBottom: blockEnd,
+        paddingLeft: inlineStart,
+        paddingRight: inlineEnd,
+        paddingTop: blockStart,
         flexGrow: 1,
         flexShrink: 1,
         alignSelf: 'stretch',
