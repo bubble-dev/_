@@ -1,3 +1,7 @@
+## v4.0.2
+
+* 🐞 add `react-native-exception-handler`
+
 ## v4.0.1
 
 * 🐞 update dependencies
