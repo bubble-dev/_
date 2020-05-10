@@ -24,16 +24,16 @@ export const config: TComponentConfig<TInput> = {
     fontWeight: [700],
     lineHeight: [24],
     letterSpacing: [5],
-    paddingLeft: [10],
-    paddingTop: [10],
-    paddingRight: [10],
-    paddingBottom: [10],
+    inlineStart: [10],
+    blockStart: [10],
+    inlineEnd: [10],
+    blockEnd: [10],
     value: ['value'],
     onChange: [() => {}],
   },
   required: ['value', 'onChange'],
   mutin: [
-    ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom'],
+    ['inlineStart', 'inlineEnd', 'blockStart', 'blockEnd'],
   ],
 }
 
