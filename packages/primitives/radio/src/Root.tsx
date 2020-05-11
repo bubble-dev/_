@@ -4,7 +4,13 @@ import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
-const styles = normalizeWebStyle({
+const redirectEvent = (event) => {
+  event.preventDefault()
+  event.stopPropagation()
+  toElement.dispatchEvent(new event.constructor(event.type, event))
+}
+
+const visibleStyles = normalizeWebStyle({
   backgroundColor: 'rgba(0, 0, 0, 0)',
   borderWidth: 0,
   minWidth: 0,
@@ -13,11 +19,16 @@ const styles = normalizeWebStyle({
   },
 })
 
+const invisibleStyles = normalizeWebStyle({
+  display: 'none',
+})
+
 export const RadioInput = component(
   startWithType<TRadioInput>(),
   mapDefaultProps({
     isDisabled: false,
     accessibilityLabelBy: [],
+    isVisible: false,
   }),
   mapContext(RadioContext)
 )(({
@@ -31,7 +42,9 @@ export const RadioInput = component(
   value,
   isDisabled,
   onChange,
+  isVisible,
 }) => (
+
   <input
     type="radio"
     id={id}
@@ -42,7 +55,7 @@ export const RadioInput = component(
     aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
     aria-label={accessibilityLabel}
     disabled={isDisabled}
-    style={styles}
+    style={isVisible ? visibleStyles : invisibleStyles}
     onChange={(evt) => {
       setGroupValue(evt.currentTarget.value)
 
