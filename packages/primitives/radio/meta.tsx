@@ -25,6 +25,7 @@ export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
     id: ['radio-test'],
     isDisabled: [true],
     value: ['value'],
+    isVisible: [true],
     onChange: [(evt) => {
       console.log('Meta file onChange called', evt)
     }],

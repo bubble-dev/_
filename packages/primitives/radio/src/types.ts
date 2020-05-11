@@ -13,6 +13,7 @@ export type TRadioInput = {
   accessibilityLabel?: string,
   accessibilityLabelBy?: string[],
   isDisabled?: boolean,
+  isVisible?: boolean,
   onChange: (evt: any) => void,
 }
 
