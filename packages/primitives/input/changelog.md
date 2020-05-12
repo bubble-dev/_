@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 follow TThemeableSpacer type for spacing
+
 ## v2.0.0
 
 * 💥 update refun to v2.0.0
