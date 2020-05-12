@@ -14,6 +14,7 @@ export * from './components/size-parent-block'
 export * from './components/size-select'
 export * from './components/size-text'
 export * from './components/size'
+export * from './components/switch'
 export * from './components/icon'
 export {
   LAYOUT_SIZE_1,
