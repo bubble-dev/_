@@ -20,7 +20,7 @@
     "stili": "^2.0.0"
   },
   "devDependencies": {
-    "@primitives/input": "^2.0.0",
+    "@primitives/input": "^3.0.0",
     "@types/react": "^16.8.6",
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
