@@ -1,13 +1,13 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
-import { TRadioInput } from './types'
+import { TRadioInput, TCallbackEvent } from './types'
 import { RadioContext } from './context'
 
-const redirectEvent = (event) => {
-  event.preventDefault()
-  event.stopPropagation()
-  toElement.dispatchEvent(new event.constructor(event.type, event))
+const execCb = (cb: any, evt: TCallbackEvent) => {
+  if (typeof cb === 'function') {
+    cb(evt)
+  }
 }
 
 const visibleStyles = normalizeWebStyle({
@@ -33,6 +33,7 @@ export const RadioInput = component(
   mapContext(RadioContext)
 )(({
   id,
+  children,
   groupName,
   groupValue,
   setGroupValue,
@@ -42,28 +43,39 @@ export const RadioInput = component(
   value,
   isDisabled,
   onChange,
+  onBlur,
+  onFocus,
+  onPress,
   isVisible,
 }) => (
-
-  <input
-    type="radio"
-    id={id}
-    name={groupName}
-    key={key || groupName + id}
-    checked={groupValue === value}
-    value={value}
-    aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
-    aria-label={accessibilityLabel}
-    disabled={isDisabled}
-    style={isVisible ? visibleStyles : invisibleStyles}
-    onChange={(evt) => {
-      setGroupValue(evt.currentTarget.value)
-
-      if (typeof onChange === 'function') {
-        onChange(evt)
-      }
-    }}
-  />
+  <label htmlFor={id}>
+    {children}
+    <input
+      type="radio"
+      id={id}
+      name={groupName}
+      key={key || groupName + id}
+      checked={groupValue === value}
+      value={value}
+      aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
+      aria-label={accessibilityLabel}
+      disabled={isDisabled}
+      style={isVisible ? visibleStyles : invisibleStyles}
+      onChange={(evt) => {
+        setGroupValue(evt.currentTarget.value)
+        execCb(onChange, evt)
+      }}
+      onBlur={(evt) => {
+        execCb(onBlur, evt)
+      }}
+      onFocus={(evt) => {
+        execCb(onFocus, evt)
+      }}
+      onClick={(evt) => {
+        execCb(onPress, evt)
+      }}
+    />
+  </label>
 ))
 
 RadioInput.displayName = 'RadioInput'
