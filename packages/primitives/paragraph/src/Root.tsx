@@ -23,6 +23,7 @@ export const Paragraph = component(
     blockEnd,
     blockStart,
     color,
+    direction,
     inlineEnd,
     inlineStart,
     letterSpacing,
@@ -62,7 +63,7 @@ export const Paragraph = component(
     if (align) {
       switch (align) {
         case 'start': {
-          style._webOnly!.textAlign = 'left'
+          style.textAlign = direction === 'right-to-left' ? 'right' : 'left'
 
           break
         }
@@ -74,11 +75,15 @@ export const Paragraph = component(
         }
 
         case 'end': {
-          style._webOnly!.textAlign = 'right'
+          style.textAlign = direction === 'right-to-left' ? 'left' : 'right'
 
           break
         }
       }
+    }
+
+    if (direction) {
+      style._webOnly!.direction = direction === 'left-to-right' ? 'ltr' : 'rtl'
     }
 
     if (shouldPreserveWhitespace) {

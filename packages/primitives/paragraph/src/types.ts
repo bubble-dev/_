@@ -4,6 +4,7 @@ import { TThemeableSpacer } from '@themeables/spacer'
 
 export type TParagraph = {
   align?: 'start' | 'center' | 'end',
+  direction?: 'left-to-right' | 'right-to-left',
   id?: string,
   shouldPreserveWhitespace?: boolean,
   shouldPreventWrap?: boolean,
