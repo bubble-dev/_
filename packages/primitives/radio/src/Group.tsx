@@ -1,24 +1,16 @@
 import React from 'react'
-import { component, startWithType, mapState } from 'refun'
 import { RadioContext } from './context'
 import { TRadioGroup } from './types'
 
-const RadioGroup = component(
-  startWithType<TRadioGroup>(),
-  mapState(
-    'groupValue', 'setGroupValue', ({ initialValue }) => initialValue, []
-  )
-)(({
+const RadioGroup = ({
   groupValue,
-  setGroupValue,
+  onChange,
   children,
-}) => {
-  return (
-    <RadioContext.Provider value={{ groupValue, setGroupValue }}>
-      {children}
-    </RadioContext.Provider>
-  )
-})
+}: TRadioGroup) => (
+  <RadioContext.Provider value={{ groupValue, setGroupValue: onChange }}>
+    {children}
+  </RadioContext.Provider>
+)
 
 RadioGroup.displayName = 'RadioGroup'
 

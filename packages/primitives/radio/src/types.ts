@@ -1,4 +1,4 @@
-import { ReactNode, ChangeEvent, FocusEvent, KeyboardEvent, MouseEvent as ReactMouseEvent } from 'react'
+import { ReactNode } from 'react'
 
 export type TRadioContext = {
   groupValue: string,
@@ -22,11 +22,7 @@ export type TRadioInput = {
 }
 
 export type TRadioGroup = {
-  initialValue: string,
+  groupValue: string,
+  onChange: (arg: string) => void,
   children: ReactNode,
 }
-
-export type TCallbackEvent = ChangeEvent<HTMLInputElement>
-|FocusEvent<InputEvent>
-|KeyboardEvent<InputEvent>
-|ReactMouseEvent<HTMLInputElement>
