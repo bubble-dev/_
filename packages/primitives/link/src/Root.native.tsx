@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Linking } from 'react-native'
+import { Text, Linking, TouchableWithoutFeedback } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction } from 'tsfn'
 import { TLink } from './types'
@@ -21,10 +21,20 @@ export const Link = component(
       }
     },
   })
-)(({ children, id, onPress }) => (
-  <Text testID={id} onPress={onPress}>
-    {children}
-  </Text>
-))
+)(({ children, id, onPress }) => {
+  if (typeof children === 'string') {
+    return (
+      <Text testID={id} onPress={onPress}>
+        {children}
+      </Text>
+    )
+  }
+
+  return (
+    <Text testID={id} onPress={onPress}>
+      {children}
+    </Text>
+  )
+})
 
 Link.displayName = 'Link'
