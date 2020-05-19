@@ -29,6 +29,7 @@ export const Paragraph = component(
     blockEnd,
     blockStart,
     color,
+    direction,
     inlineEnd,
     inlineStart,
     letterSpacing,
@@ -48,6 +49,7 @@ export const Paragraph = component(
       fontWeight,
       fontSize,
       letterSpacing,
+      _nativeOnly: {},
     }
 
     const viewStyle: TStyle = {
@@ -64,7 +66,7 @@ export const Paragraph = component(
     if (align) {
       switch (align) {
         case 'start': {
-          textStyle.textAlign = 'left'
+          textStyle.textAlign = direction === 'right-to-left' ? 'right' : 'left'
 
           break
         }
@@ -76,11 +78,15 @@ export const Paragraph = component(
         }
 
         case 'end': {
-          textStyle.textAlign = 'right'
+          textStyle.textAlign = direction === 'right-to-left' ? 'left' : 'right'
 
           break
         }
       }
+    }
+
+    if (direction) {
+      textStyle._nativeOnly!.writingDirection = direction === 'right-to-left' ? 'rtl' : 'ltr'
     }
 
     if (isUnderlined) {

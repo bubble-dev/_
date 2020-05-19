@@ -1,15 +1,22 @@
+import React from 'react'
 import { TComponentConfig } from 'autoprops'
-import { THeading } from './src'
+import { Block } from '@primitives/block'
+import { THeading, Heading } from './src'
 
 export const config: TComponentConfig<THeading> = {
   props: {
-    children: ['Heading'],
-    level: [1, 2, 3, 4, 5, 6],
     align: ['start', 'center', 'end'],
+    children: ['Heading', 'בוקר טוב'],
+    direction: ['right-to-left', 'left-to-right'],
+    level: [1, 2, 3, 4, 5, 6],
   },
   required: ['children'],
 }
 
-export { Heading as Component } from './src'
+export const Component = (props: THeading) => (
+  <Block width={300} style={{ flexDirection: 'column' }}>
+    <Heading {...props}/>
+  </Block>
+)
 
 export { default as packageJson } from './package.json'
