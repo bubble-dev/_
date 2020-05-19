@@ -31,9 +31,9 @@ export const Link = component(
   }
 
   return (
-    <Text testID={id} onPress={onPress}>
+    <TouchableWithoutFeedback testID={id} onPress={onPress}>
       {children}
-    </Text>
+    </TouchableWithoutFeedback>
   )
 })
 
