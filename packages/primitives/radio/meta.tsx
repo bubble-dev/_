@@ -1,37 +1,70 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { TComponentConfig } from 'autoprops'
 import { component, startWithType } from 'refun'
+import { Block } from '@primitives/block'
 import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
-import { PresentationElement } from './src/presentation'
+import { RadioContext } from './src/context'
+
+// This Component will be passed by the consumer,
+// but without it, it's quite pointless to have
+// RadioInput on Sandbox.
+type TPresentationProps = {
+  value: string,
+  isDisabled?: boolean,
+}
+
+const PresentationElement = ({ isDisabled, value }: TPresentationProps) => (
+  <RadioContext.Consumer>
+    {({ groupValue }) => (
+      <Block style={{
+        fontFamily: 'sans-serif',
+        fontSize: 20,
+        color: isDisabled ? 'grey' : 'hotpink',
+        fontWeight: groupValue === value ? 800 : 400,
+      }}
+      >
+        {value}
+      </Block>
+    )}
+  </RadioContext.Consumer>
+)
 
 export const Component = component(
   startWithType<TRadioInput & TRadioGroup>()
-)(({ initialValue, ...radioInputProps }) => (
-  <RadioGroup
-    initialValue={initialValue}
-  >
-    <RadioInput {...radioInputProps}>
-      <PresentationElement {...radioInputProps}/>
-    </RadioInput>
-    <RadioInput {...radioInputProps} id="foo" value="test-foo">
-      <PresentationElement {...radioInputProps} value="test-foo"/>
-    </RadioInput>
-  </RadioGroup>
-))
+)(({ value, ...radioInputProps }) => {
+  const [groupValue, setGroupValue] = useState(value)
+
+  return (
+    <RadioGroup
+      groupValue={groupValue}
+      onChange={setGroupValue}
+    >
+      <Block style={{
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-around',
+      }}
+      >
+        <RadioInput value={value} {...radioInputProps}>
+          <PresentationElement value={value} {...radioInputProps}/>
+        </RadioInput>
+        <RadioInput {...radioInputProps} id="foo" value="test-foo">
+          <PresentationElement {...radioInputProps} value="test-foo"/>
+        </RadioInput>
+      </Block>
+    </RadioGroup>
+  )
+})
 
 Component.displayName = 'RadioInput'
 
 export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
   props: {
-    initialValue: ['foobar'],
+    value: ['foobar'],
     groupName: ['test-group'],
     id: ['radio-test'],
     isDisabled: [true],
-    value: ['value'],
     isVisible: [true],
-    onChange: [(evt) => {
-      console.log('Meta file onChange called', evt)
-    }],
     onFocus: [(evt) => {
       console.log('Meta file onFocus called', evt)
     }],
@@ -42,7 +75,7 @@ export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
       console.log('Meta file onPress called', evt)
     }],
   },
-  required: ['value', 'onChange', 'onPress', 'onBlur', 'onFocus', 'groupName', 'initialValue', 'id'],
+  required: ['value', 'onChange', 'onPress', 'onBlur', 'onFocus', 'groupName', 'id'],
 }
 
 export { default as packageJson } from './package.json'

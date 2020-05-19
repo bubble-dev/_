@@ -1,14 +1,8 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
-import { TRadioInput, TCallbackEvent } from './types'
+import { TRadioInput } from './types'
 import { RadioContext } from './context'
-
-const execCb = (cb: any, evt: TCallbackEvent) => {
-  if (typeof cb === 'function') {
-    cb(evt)
-  }
-}
 
 const visibleStyles = normalizeWebStyle({
   backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -42,10 +36,6 @@ export const RadioInput = component(
   accessibilityLabel,
   value,
   isDisabled,
-  onChange,
-  onBlur,
-  onFocus,
-  onPress,
   isVisible,
 }) => (
   <label htmlFor={id}>
@@ -61,19 +51,7 @@ export const RadioInput = component(
       aria-label={accessibilityLabel}
       disabled={isDisabled}
       style={isVisible ? visibleStyles : invisibleStyles}
-      onChange={(evt) => {
-        setGroupValue(evt.currentTarget.value)
-        execCb(onChange, evt)
-      }}
-      onBlur={(evt) => {
-        execCb(onBlur, evt)
-      }}
-      onFocus={(evt) => {
-        execCb(onFocus, evt)
-      }}
-      onClick={(evt) => {
-        execCb(onPress, evt)
-      }}
+      onChange={() => setGroupValue(value)}
     />
   </label>
 ))
