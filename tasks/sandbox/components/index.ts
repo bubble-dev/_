@@ -8,9 +8,9 @@ export const components: TComponents = {
   LayoutThemeable: () => import('@themeables/layout/meta' /* webpackChunkName: "LayoutThemeable" */),
   TextAlignThemeable: () => import('@themeables/text-align/meta' /* webpackChunkName: "TextAlignThemeable" */),
   Paragraph: () => import('@primitives/paragraph/meta' /* webpackChunkName: "Paragraph" */),
+  VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
+  Svg: () => import('@primitives/svg/meta' /* webpackChunkName: "Svg" */),
+  TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
   Radio: () => import('@primitives/radio/meta' /* webpackChunkName: "Radio" */),
   Spacer: () => import('@primitives/spacer/meta' /* webpackChunkName: "Spacer" */),
-  TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
-  VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
 }
-
