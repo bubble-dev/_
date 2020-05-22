@@ -26,6 +26,7 @@ export const Input = component(
       inlineStart,
       letterSpacing,
       lineHeight,
+      shouldUseNumberKeyboard,
     }) => {
       const style: TStyle = {
         _webOnly: {
@@ -57,9 +58,15 @@ export const Input = component(
         style.color = colorToString(color)
       }
 
-      return {
+      const props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> = {
         style: normalizeWebStyle(style),
       }
+
+      if (shouldUseNumberKeyboard) {
+        props.type = 'tel'
+      }
+
+      return props
     }
   )
 )(({
@@ -74,6 +81,7 @@ export const Input = component(
   onBlur,
   onPressIn,
   onPressOut,
+  type,
 }) => (
   <input
     id={id}
@@ -87,6 +95,7 @@ export const Input = component(
     onBlur={onBlur}
     onMouseDown={onPressIn}
     onMouseUp={onPressOut}
+    type={type}
   />
 ))
 
