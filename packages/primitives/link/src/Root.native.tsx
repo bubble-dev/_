@@ -22,7 +22,7 @@ export const Link = component(
     },
   })
 )(({ children, id, onPress }) => {
-  if (typeof children === 'string') {
+  if (typeof children === 'string' || typeof children === 'number') {
     return (
       <Text testID={id} onPress={onPress}>
         {children}
