@@ -24,6 +24,7 @@ export type TLink = {
   children?: ReactNode,
   rel?: TRel[],
   onPress?: () => void,
+  accessibilityLabel?: string,
 } & TIsHoveredHandlers
   & TIsPressedHandlers
   & TIsFocusedHandlers
