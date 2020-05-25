@@ -24,14 +24,14 @@ export const Link = component(
 )(({ children, id, onPress }) => {
   if (typeof children === 'string' || typeof children === 'number') {
     return (
-      <Text testID={id} onPress={onPress}>
+      <Text testID={id} onPress={onPress} accessibilityRole="link">
         {children}
       </Text>
     )
   }
 
   return (
-    <TouchableWithoutFeedback testID={id} onPress={onPress}>
+    <TouchableWithoutFeedback testID={id} onPress={onPress} accessibilityRole="link">
       {children}
     </TouchableWithoutFeedback>
   )
