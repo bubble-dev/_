@@ -21,17 +21,17 @@ export const Link = component(
       }
     },
   })
-)(({ children, id, onPress }) => {
+)(({ children, id, onPress, accessibilityLabel }) => {
   if (typeof children === 'string' || typeof children === 'number') {
     return (
-      <Text testID={id} onPress={onPress} accessibilityRole="link">
+      <Text testID={id} onPress={onPress} accessibilityRole="link" accessibilityLabel={accessibilityLabel}>
         {children}
       </Text>
     )
   }
 
   return (
-    <TouchableWithoutFeedback testID={id} onPress={onPress} accessibilityRole="link">
+    <TouchableWithoutFeedback testID={id} onPress={onPress} accessibilityRole="link" accessibilityLabel={accessibilityLabel}>
       {children}
     </TouchableWithoutFeedback>
   )
