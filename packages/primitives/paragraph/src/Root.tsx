@@ -12,6 +12,8 @@ import { TParagraph } from './types'
 export const Paragraph = component(
   startWithType<TParagraph>(),
   mapDefaultProps({
+    blockStart: 0,
+    blockEnd: 0,
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
@@ -50,10 +52,12 @@ export const Paragraph = component(
       minWidth: 0,
       letterSpacing,
       lineHeight,
-      paddingBottom: blockEnd,
+      paddingBottom: 0,
       paddingLeft: inlineStart,
       paddingRight: inlineEnd,
-      paddingTop: blockStart,
+      paddingTop: 0,
+      marginBottom: blockEnd,
+      marginTop: blockStart,
     }
 
     if (isColor(color)) {

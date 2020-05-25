@@ -53,10 +53,10 @@ export const Paragraph = component(
     }
 
     const viewStyle: TStyle = {
-      paddingBottom: blockEnd,
       paddingLeft: inlineStart,
       paddingRight: inlineEnd,
-      paddingTop: blockStart,
+      marginBottom: blockEnd,
+      marginTop: blockStart,
     }
 
     if (isColor(color)) {
