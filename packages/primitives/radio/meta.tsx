@@ -58,13 +58,16 @@ export const Component = component(
 
 Component.displayName = 'RadioInput'
 
-export const config: TComponentConfig<TRadioInput & TRadioGroup> = {
+type TRadioMetaConfig = Pick<TRadioGroup & TRadioInput, 'value' | 'groupName' | 'id' | 'isDisabled' | 'isVisible'| 'onFocus'| 'onBlur'| 'onPress' |'onChange'>
+
+export const config: TComponentConfig<TRadioMetaConfig> = {
   props: {
     value: ['foobar'],
     groupName: ['test-group'],
     id: ['radio-test'],
     isDisabled: [true],
     isVisible: [true],
+    onChange: [() => {}],
     onFocus: [(evt) => {
       console.log('Meta file onFocus called', evt)
     }],
