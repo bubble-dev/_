@@ -7,5 +7,6 @@ export const components: TComponents = {
   VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
   TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
   Radio: () => import('@primitives/radio/meta' /* webpackChunkName: "Radio" */),
+  LayoutThemeable: () => import('@themeables/layout/meta' /* webpackChunkName: "LayoutThemeable" */),
 }
 

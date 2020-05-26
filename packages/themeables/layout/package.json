@@ -1,0 +1,29 @@
+{
+  "name": "@themeables/layout",
+  "version": "2.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.ts",
+  "browser": "src/index.ts",
+  "react-native": "src/index.ts",
+  "repository": "bubble-dev/_",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "@themeables/core": "^2.0.0"
+  },
+  "devDependencies": {
+    "@primitives/block": "^2.0.1",
+    "@primitives/layout": "^2.0.1",
+    "@types/react": "^16.8.6",
+    "@x-ray/common-utils": "^1.0.0",
+    "@x-ray/screenshot-utils": "^1.0.0",
+    "@x-ray/snapshots": "^1.0.3",
+    "autoprops": "^1.0.0",
+    "react": "16.11.0"
+  }
+}
