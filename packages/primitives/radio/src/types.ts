@@ -14,7 +14,7 @@ export type TRadioInput = {
   accessibilityLabelBy?: string[],
   isDisabled?: boolean,
   isVisible?: boolean,
-  children: ReactNode,
+  children?: ReactNode,
   onChange: (evt: any) => void,
   onBlur: (evt: any) => void,
   onFocus: (evt: any) => void,
