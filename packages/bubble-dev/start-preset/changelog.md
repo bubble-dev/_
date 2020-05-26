@@ -1,3 +1,7 @@
+## v4.0.3
+
+* 🐞 build types only when package has entrypoint
+
 ## v4.0.2
 
 * 🐞 add `react-native-exception-handler`

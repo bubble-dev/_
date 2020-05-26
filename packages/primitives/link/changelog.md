@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 when link native recive children different from string render touchable
+
 ## v2.0.0
 
 * 💥 update refun to v2.0.0
