@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { TComponentConfig } from 'autoprops'
 import { component, startWithType } from 'refun'
 import { Block } from '@primitives/block'
+import { Text } from '@primitives/text'
 import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
 import { RadioContext } from './src/context'
 
@@ -23,7 +24,7 @@ const PresentationElement = ({ isDisabled, value }: TPresentationProps) => (
         fontWeight: groupValue === value ? 800 : 400,
       }}
       >
-        {value}
+        <Text> {value}</Text>
       </Block>
     )}
   </RadioContext.Consumer>
