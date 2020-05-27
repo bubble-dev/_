@@ -13,10 +13,10 @@ import {
 } from 'react-native'
 import { TStyle, normalizeNativeStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
-import { THeading } from './types'
+import { TParagraph } from './types'
 
-export const Heading = component(
-  startWithType<THeading>(),
+export const Paragraph = component(
+  startWithType<TParagraph>(),
   mapDefaultProps({
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
@@ -122,7 +122,7 @@ export const Heading = component(
 }) => (
   <NativeView style={viewStyle}>
     <NativeText
-      accessibilityRole="header"
+      accessibilityRole="text"
       testID={id}
       selectable={selectable}
       numberOfLines={numberOfLines}
@@ -134,4 +134,4 @@ export const Heading = component(
   </NativeView>
 ))
 
-Heading.displayName = 'Heading'
+Paragraph.displayName = 'Paragraph'

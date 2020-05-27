@@ -7,13 +7,13 @@ import {
   startWithType,
 } from 'refun'
 import { colorToString, isColor } from 'colorido'
-import { THeading } from './types'
+import { TParagraph } from './types'
 
-export const Heading = component(
-  startWithType<THeading>(),
+export const Paragraph = component(
+  startWithType<TParagraph>(),
   mapDefaultProps({
-    blockEnd: 0,
     blockStart: 0,
+    blockEnd: 0,
     shouldPreserveWhitespace: false,
     shouldPreventSelection: false,
     shouldPreventWrap: false,
@@ -119,22 +119,8 @@ export const Heading = component(
       style: normalizeWebStyle(style),
     }
   })
-)(({ children, level, style, id }) => {
-  switch (level) {
-    case 6:
-      return <h6 id={id} style={style}>{children}</h6>
-    case 5:
-      return <h5 id={id} style={style}>{children}</h5>
-    case 4:
-      return <h4 id={id} style={style}>{children}</h4>
-    case 3:
-      return <h3 id={id} style={style}>{children}</h3>
-    case 2:
-      return <h2 id={id} style={style}>{children}</h2>
-    case 1:
-    default:
-      return <h1 id={id} style={style}>{children}</h1>
-  }
-})
+)(({ children, style, id }) => (
+  <p id={id} style={style}>{children}</p>
+))
 
-Heading.displayName = 'Heading'
+Paragraph.displayName = 'Paragraph'

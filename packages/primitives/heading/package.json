@@ -1,6 +1,6 @@
 {
   "name": "@primitives/heading",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "keywords": [],
   "main": "src/index.ts",
@@ -13,12 +13,14 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "@themeables/spacer": "^0.2.0",
     "@themeables/text": "^2.0.0",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
     "stili": "^2.0.0"
   },
   "devDependencies": {
+    "@primitives/block": "^2.0.1",
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.62.2",
     "@x-ray/common-utils": "^1.0.0",

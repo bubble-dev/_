@@ -133,7 +133,9 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
     tasks.push(...packageJson.buildTasks)
   }
 
-  tasks.push('buildTypes')
+  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'browser') || Reflect.has(packageJson, 'react-native')) {
+    tasks.push('buildTypes')
+  }
 
   return sequence(
     env({ NODE_ENV: 'production' }),

@@ -1,3 +1,9 @@
+## v2.1.0
+
+* 🌱 support text direction
+
+* 🌱 support text alignment
+
 ## v2.0.0
 
 * 💥 update refun to v2.0.0
