@@ -15,10 +15,6 @@ export type TRadioInput = {
   isDisabled?: boolean,
   isVisible?: boolean,
   children?: ReactNode,
-  onChange: (evt?: any) => void,
-  onBlur: (evt?: any) => void,
-  onFocus: (evt?: any) => void,
-  onPress: (evt?: any) => void,
 }
 
 export type TRadioGroup = {

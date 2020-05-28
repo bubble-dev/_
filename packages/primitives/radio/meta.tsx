@@ -20,11 +20,15 @@ const PresentationElement = ({ isDisabled, value }: TPresentationProps) => (
       <Block style={{
         fontFamily: 'sans-serif',
         fontSize: 20,
-        color: isDisabled ? 'grey' : 'hotpink',
         fontWeight: groupValue === value ? 800 : 400,
       }}
       >
-        <Text> {value}</Text>
+        <Text
+          fontWeight={groupValue === value ? 800 : 400}
+          color={isDisabled ? [40, 40, 40, 1] : [197, 103, 134, 1]}
+        >
+          {value}
+        </Text>
       </Block>
     )}
   </RadioContext.Consumer>
@@ -59,7 +63,7 @@ export const Component = component(
 
 Component.displayName = 'RadioInput'
 
-type TRadioMetaConfig = Pick<TRadioGroup & TRadioInput, 'value' | 'groupName' | 'id' | 'isDisabled' | 'isVisible'| 'onFocus'| 'onBlur'| 'onPress' |'onChange'>
+type TRadioMetaConfig = Pick<TRadioGroup & TRadioInput, 'value' | 'groupName' | 'id' | 'isDisabled' | 'isVisible'>
 
 export const config: TComponentConfig<TRadioMetaConfig> = {
   props: {
@@ -68,18 +72,8 @@ export const config: TComponentConfig<TRadioMetaConfig> = {
     id: ['radio-test'],
     isDisabled: [true],
     isVisible: [true],
-    onChange: [() => {}],
-    onFocus: [(evt) => {
-      console.log('Meta file onFocus called', evt)
-    }],
-    onBlur: [(evt) => {
-      console.log('Meta file onBlur called', evt)
-    }],
-    onPress: [(evt) => {
-      console.log('Meta file onPress called', evt)
-    }],
   },
-  required: ['value', 'onChange', 'onPress', 'onBlur', 'onFocus', 'groupName', 'id'],
+  required: ['value', 'groupName', 'id'],
 }
 
 export { default as packageJson } from './package.json'
