@@ -29,7 +29,7 @@ export const Component = (props: TSpacer) => (
           inlineEnd
         </LayoutInFlow>
       </Layout>
-      </LayoutInFlow>
+    </LayoutInFlow>
     <LayoutInFlow>
       blockEnd
     </LayoutInFlow>
