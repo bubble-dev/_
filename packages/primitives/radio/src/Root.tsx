@@ -38,7 +38,7 @@ export const RadioInput = component(
   isDisabled,
   isVisible,
 }) => (
-  <label htmlFor={id}>
+  <label>
     {children}
     <input
       type="radio"

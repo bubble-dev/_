@@ -7,7 +7,7 @@ export type TRadioContext = {
 
 export type TRadioInput = {
   key?: string,
-  id: string,
+  id?: string,
   groupName: string,
   value: string,
   accessibilityLabel?: string,
