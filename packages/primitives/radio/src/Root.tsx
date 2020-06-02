@@ -14,7 +14,10 @@ const visibleStyles = normalizeWebStyle({
 })
 
 const invisibleStyles = normalizeWebStyle({
-  display: 'none',
+  opacity: 0,
+  position: 'absolute',
+  top: 0,
+  zIndex: -1,
 })
 
 export const RadioInput = component(
