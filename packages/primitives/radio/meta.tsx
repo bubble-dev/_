@@ -36,11 +36,12 @@ const PresentationElement = ({ isDisabled, value }: TPresentationProps) => (
 
 export const Component = component(
   startWithType<TRadioInput & TRadioGroup>()
-)(({ value, ...radioInputProps }) => {
+)(({ value, groupName, ...radioInputProps }) => {
   const [groupValue, setGroupValue] = useState(value)
 
   return (
     <RadioGroup
+      groupName={groupName}
       groupValue={groupValue}
       onChange={setGroupValue}
     >
@@ -73,7 +74,7 @@ export const config: TComponentConfig<TRadioMetaConfig> = {
     isDisabled: [true],
     isVisible: [true],
   },
-  required: ['value', 'groupName', 'id'],
+  required: ['value', 'groupName'],
 }
 
 export { default as packageJson } from './package.json'

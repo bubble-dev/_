@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 export type TRadioContext = {
+  groupName: string,
   groupValue: string,
   setGroupValue: (arg: string) => void,
 }
@@ -8,7 +9,6 @@ export type TRadioContext = {
 export type TRadioInput = {
   key?: string,
   id?: string,
-  groupName: string,
   value: string,
   accessibilityLabel?: string,
   accessibilityLabelBy?: string[],
@@ -19,6 +19,7 @@ export type TRadioInput = {
 
 export type TRadioGroup = {
   groupValue: string,
+  groupName: string,
   onChange: (arg: string) => void,
   children: ReactNode,
 }
