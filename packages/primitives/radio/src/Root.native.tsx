@@ -47,7 +47,6 @@ export const RadioInput = component(
   children,
   onPress,
   isVisible,
-  groupName,
   accessibilityLabel,
   id,
   value,
@@ -57,7 +56,7 @@ export const RadioInput = component(
 
   return (
     <Touchable
-      testID={`${groupName}-${id}`}
+      testID={id}
       accessibilityLabel={accessibilityLabel}
       onPress={onPress}
     >
