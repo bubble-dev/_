@@ -1,6 +1,6 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
-import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
+import { component, startWithType, mapContext, mapDefaultProps, mapHandlers } from 'refun'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
@@ -27,36 +27,42 @@ export const RadioInput = component(
     accessibilityLabelBy: [],
     isVisible: false,
   }),
-  mapContext(RadioContext)
+  mapContext(RadioContext),
+  mapHandlers({
+    onChange: ({ setGroupValue, value }) => () => setGroupValue(value),
+  })
 )(({
   id,
   children,
   groupName,
   groupValue,
-  setGroupValue,
-  key,
+  onChange,
   accessibilityLabelBy,
   accessibilityLabel,
   value,
   isDisabled,
   isVisible,
-}) => (
-  <label>
-    {children}
-    <input
-      type="radio"
-      id={id}
-      name={groupName}
-      key={key || groupName + id}
-      checked={groupValue === value}
-      value={value}
-      aria-labelledby={accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined}
-      aria-label={accessibilityLabel}
-      disabled={isDisabled}
-      style={isVisible ? visibleStyles : invisibleStyles}
-      onChange={() => setGroupValue(value)}
-    />
-  </label>
-))
+}) => {
+  const labelledBy = accessibilityLabelBy.length > 0 ? accessibilityLabelBy.join(' ') : undefined
+  const isChecked = groupValue === value
+
+  return (
+    <label>
+      {children}
+      <input
+        type="radio"
+        id={id}
+        name={groupName}
+        checked={isChecked}
+        value={value}
+        aria-labelledby={labelledBy}
+        aria-label={accessibilityLabel}
+        disabled={isDisabled}
+        style={isVisible ? visibleStyles : invisibleStyles}
+        onChange={onChange}
+      />
+    </label>
+  )
+})
 
 RadioInput.displayName = 'RadioInput'
