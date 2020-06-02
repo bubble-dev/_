@@ -5,36 +5,32 @@ import { normalizeNativeStyle } from 'stili'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
 
-const styles = normalizeNativeStyle({
+const visibleWrapperStyles = normalizeNativeStyle({
   flexGrow: 1,
   flexShrink: 1,
   alignSelf: 'stretch',
   minWidth: 0,
-  justifyContent: 'space-between',
+  width: 10,
+  height: 10,
+  borderColor: '#000',
+  borderStyle: 'solid',
+  borderWidth: 1,
+  borderRadius: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+})
+
+const visibleBullet = normalizeNativeStyle({
+  width: 2,
+  height: 2,
+  backgroundColor: '#000',
+  borderRadius: 50,
+  flexGrow: 0,
 })
 
 const VisibleRadio = ({ isChecked }: { isChecked: boolean}) => (
-  <View style={{
-    ...styles,
-    width: 10,
-    height: 10,
-    borderColor: '#000',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }}
-  >
-    <View style={{
-      opacity: isChecked ? 1 : 0,
-      width: 2,
-      height: 2,
-      backgroundColor: '#000',
-      borderRadius: 50,
-      flexGrow: 0,
-    }}
-    />
+  <View style={visibleWrapperStyles}>
+    {isChecked && <View style={visibleBullet}/>}
   </View>
 )
 
@@ -45,6 +41,7 @@ export const RadioInput = component(
     isDisabled: false,
   })
 )(({
+  children,
   isVisible,
   groupName,
   accessibilityLabel,
@@ -53,7 +50,6 @@ export const RadioInput = component(
   setGroupValue,
   value,
   isDisabled,
-  ...props
 }) => (
   <Touchable
     testID={`${groupName}-${id}`}
@@ -61,7 +57,7 @@ export const RadioInput = component(
     onPress={() => (isDisabled ? null : setGroupValue(value))}
   >
     <View>
-      {props.children}
+      {children}
       {isVisible && <VisibleRadio isChecked={groupValue === value}/> }
     </View>
   </Touchable>
