@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableWithoutFeedback as Touchable, View } from 'react-native'
-import { component, startWithType, mapContext, mapDefaultProps } from 'refun'
+import { component, startWithType, mapContext, mapDefaultProps, mapHandlers } from 'refun'
 import { normalizeNativeStyle } from 'stili'
 import { TRadioInput } from './types'
 import { RadioContext } from './context'
@@ -37,31 +37,37 @@ const VisibleRadio = ({ isChecked }: { isChecked: boolean}) => (
 export const RadioInput = component(
   startWithType<TRadioInput>(),
   mapContext(RadioContext),
+  mapHandlers({
+    onPress: ({ isDisabled, setGroupValue, value }) => () => (isDisabled ? undefined : setGroupValue(value)),
+  }),
   mapDefaultProps({
     isDisabled: false,
   })
 )(({
   children,
+  onPress,
   isVisible,
   groupName,
   accessibilityLabel,
   id,
-  groupValue,
-  setGroupValue,
   value,
-  isDisabled,
-}) => (
-  <Touchable
-    testID={`${groupName}-${id}`}
-    accessibilityLabel={accessibilityLabel}
-    onPress={() => (isDisabled ? null : setGroupValue(value))}
-  >
-    <View>
-      {children}
-      {isVisible && <VisibleRadio isChecked={groupValue === value}/> }
-    </View>
-  </Touchable>
-))
+  groupValue,
+}) => {
+  const isChecked = groupValue === value
+
+  return (
+    <Touchable
+      testID={`${groupName}-${id}`}
+      accessibilityLabel={accessibilityLabel}
+      onPress={onPress}
+    >
+      <View>
+        {children}
+        {isVisible && <VisibleRadio isChecked={isChecked}/> }
+      </View>
+    </Touchable>
+  )
+})
 
 RadioInput.displayName = 'RadioInput'
 
