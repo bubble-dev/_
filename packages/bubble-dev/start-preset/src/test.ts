@@ -49,6 +49,7 @@ export const CheckNativeSnapshots = (baseDir: string = 'packages') => (component
     xRaySnapshots({
       platform: 'native',
       mocks: {
+        'lottie-react-native': require.resolve('./mocks/lottie-react-native.js'),
         'react-native': require.resolve('./mocks/react-native.js'),
         'react-native-svg': require.resolve('./mocks/react-native-svg.js'),
       },
