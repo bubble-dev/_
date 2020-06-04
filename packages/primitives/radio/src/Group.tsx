@@ -1,5 +1,5 @@
 import React from 'react'
-import { RadioContext } from './context'
+import { RadioContext } from './Context'
 import { TRadioGroup } from './types'
 
 const RadioGroup = ({

@@ -1,4 +1,4 @@
 export * from './Root'
 export * from './Group'
-export * from './context'
+export * from './Context'
 export * from './types'

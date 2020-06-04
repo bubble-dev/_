@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback as Touchable, View } from 'react-native'
 import { component, startWithType, mapContext, mapDefaultProps, mapHandlers } from 'refun'
 import { normalizeNativeStyle } from 'stili'
 import { TRadioInput } from './types'
-import { RadioContext } from './context'
+import { RadioContext } from './Context'
 
 const visibleWrapperStyles = normalizeNativeStyle({
   flexGrow: 1,

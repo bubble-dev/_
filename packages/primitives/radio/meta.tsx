@@ -4,7 +4,7 @@ import { component, startWithType } from 'refun'
 import { Block } from '@primitives/block'
 import { Text } from '@primitives/text'
 import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
-import { RadioContext } from './src/context'
+import { RadioContext } from './src/Context'
 
 // This Component will be passed by the consumer,
 // but without it, it's quite pointless to have
