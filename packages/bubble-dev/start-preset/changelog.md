@@ -1,3 +1,7 @@
+## v4.1.0
+
+* 🌱 support lottie-react-native mocks
+
 ## v4.0.3
 
 * 🐞 build types only when package has entrypoint
