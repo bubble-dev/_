@@ -3128,10 +3128,10 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autoprops@^1.0.0:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-1.0.3.tgz#0248726ce22ce97cc6503c7e1bc2f6f72e4b6ad9"
-  integrity sha512-vNWQ3+WBijQrczaAF1DFLIk05gaNjunq4lTN3xf7lxM3Nf+E5av9F1ttHgJLxAlu573iLNXI9lybB0NOaqm46g==
+autoprops@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-2.0.0.tgz#60070e051a4b7a80830bd83940195045eaea6fa5"
+  integrity sha512-lyQK9IPRFnx8A2M0yrltjCZuI6ywDo1tkdnqFzWi8Jkav7hxxE2/T2DHdR+nqoDZm18o3zXYftaEkGBpnOTUYQ==
   dependencies:
     "@babel/runtime" "^7.4.3"
     big-integer "^1.6.44"

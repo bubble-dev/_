@@ -20,7 +20,7 @@
     "lottie-react-native": "^3.3.2"
   },
   "devDependencies": {
-    "autoprops": "^1.0.0",
+    "autoprops": "^2.0.0",
     "react": "16.11.0"
   }
 }
