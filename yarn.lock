@@ -3139,6 +3139,17 @@ autoprops@^1.0.0:
     jssha "^3.0.0"
     tsfn "^1.1.2"
 
+autoprops@^1.0.3:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-1.0.4.tgz#816eacdb281f8ca44bd3df61e0ef8a9d9dfd4161"
+  integrity sha512-EET2iXvtByDOES+/myeYy2qyaCecBR4K/L3TM5s8t3o5GF1cy6mg8LgqVJDlXlF+r6+Iu36193TAUfKdhFvHxw==
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    big-integer "^1.6.44"
+    iterama "^0.3.0"
+    jssha "^3.0.0"
+    tsfn "^1.1.2"
+
 available-typed-arrays@^1.0.0, available-typed-arrays@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.2.tgz#6b098ca9d8039079ee3f77f7b783c4480ba513f5"
@@ -7589,6 +7600,15 @@ iterama@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.2.2.tgz#573f9f44bcc46c787d3266414ab4994d4ef7ae58"
   integrity sha512-dxS/AZa43icxO3NV7qUOQsCveZ3xr88TMNWoah3DlAvvqujFVBnVsE34TFUvXz3UqsQ0g6biBn0VeEadCvdf2w==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    circularr "^0.2.2"
+    funcom "^0.1.0"
+
+iterama@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.3.0.tgz#814bac0d53920c67db62bd5b4ba5a71cbb22457e"
+  integrity sha512-MErvgynHvKYbExdQsjnJfCJjG5d41bwSDA8WDQ4zySDLqRjIEOP0QjXCikC0/hrUN0Z246SrMUA2gwGK4Pi4uw==
   dependencies:
     "@babel/runtime" "^7.3.1"
     circularr "^0.2.2"
