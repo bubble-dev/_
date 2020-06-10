@@ -3,7 +3,7 @@ import { TColor } from 'colorido'
 export type TThemeableVectorShape = {
   color?: TColor,
   height?: number,
-  path: string,
+  path?: string,
   scale?: number,
   width?: number,
 }
