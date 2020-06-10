@@ -1,3 +1,7 @@
+## v2.0.3
+
+* 🐞 fix tests after loosening types on themeable
+
 ## v2.0.2
 
 * 🐞 add `^` to primitives dependency range
