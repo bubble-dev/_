@@ -1,3 +1,7 @@
+## v2.0.1
+
+* 🐞 make `path` optional in TThemeableVectorShape
+
 ## v2.0.0
 
 * 💥 rename files according to the build system
