@@ -15,9 +15,11 @@ export const config: TComponentConfig<TVectorShape> = {
     width: [100, 80],
     scale: [1, 2.2, 0.5],
   },
-  required: ['path'],
 }
 
 export { VectorShape as Component } from './src'
 
 export { default as packageJson } from './package.json'
+
+// :exclamation: need a quick review on this one. Loosening up the type on `ThemeableVectorShape` https://github.com/bubble-dev/_/pull/392
+// This is necessary for some work on the radio component, but also it has caused Fernando (not `@` because he's off) some headaches too
