@@ -1,3 +1,7 @@
+## v2.0.3
+
+* 🐞 switch to `useEffect` if there is no `window` global object
+
 ## v2.0.2
 
 * 🐞 switch to `useEffect` if there is no `window` global object
