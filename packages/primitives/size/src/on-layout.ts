@@ -1,5 +1,7 @@
-import { useRef, useLayoutEffect, Ref } from 'react'
-import { EMPTY_OBJECT, TExtend, NOOP } from 'tsfn'
+import { useRef, useLayoutEffect, useEffect, Ref } from 'react'
+import { EMPTY_OBJECT, TExtend, NOOP, isDefined } from 'tsfn'
+
+const useActualEffect = isDefined(window) ? useLayoutEffect : useEffect
 
 export const onLayout = <P extends {}, RN extends string, REF> (refName: RN, onLayoutHandler: (ref: REF, props: P) => void) =>
   (props: P): TExtend<P, { [k in RN]: Ref<REF> }> => {
@@ -17,7 +19,7 @@ export const onLayout = <P extends {}, RN extends string, REF> (refName: RN, onL
       }
     }
 
-    useLayoutEffect(useEffectFnRef.current)
+    useActualEffect(useEffectFnRef.current)
 
     // FIXME https://github.com/microsoft/TypeScript/issues/13948
     return {
