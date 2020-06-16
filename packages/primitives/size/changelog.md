@@ -1,3 +1,11 @@
+## v2.0.2
+
+* 🐞 switch to `useEffect` if there is no `window` global object
+
+  ```
+  to work on server-side through Node.js.
+  ```
+
 ## v2.0.1
 
 * 🐞 fix native context call
