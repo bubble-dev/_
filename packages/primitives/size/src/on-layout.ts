@@ -1,7 +1,7 @@
 import { useRef, useLayoutEffect, useEffect, Ref } from 'react'
 import { EMPTY_OBJECT, TExtend, NOOP, isDefined } from 'tsfn'
 
-const useActualEffect = isDefined(window) ? useLayoutEffect : useEffect
+const useActualEffect = isDefined((global as any).window) ? useLayoutEffect : useEffect
 
 export const onLayout = <P extends {}, RN extends string, REF> (refName: RN, onLayoutHandler: (ref: REF, props: P) => void) =>
   (props: P): TExtend<P, { [k in RN]: Ref<REF> }> => {
