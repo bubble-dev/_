@@ -3,7 +3,6 @@ import { TAnyObject, isFunction } from 'tsfn'
 import { isHandler, getComponentName } from '../../utils'
 import { consoleLog } from '../../store-console'
 
-// eslint-disable-next-line max-params
 export const mutateHandlers = (props: Readonly<TAnyObject>, prefix: string, componentConfig: TCommonComponentConfig) => {
   for (const key of Object.keys(props)) {
     if (key === 'children') {
@@ -22,7 +21,7 @@ export const mutateHandlers = (props: Readonly<TAnyObject>, prefix: string, comp
 
   if (isChildrenMap(props.children)) {
     for (const key of Object.keys(props.children)) {
-      const childMeta = componentConfig.children![key]
+      const childMeta = componentConfig.children![key]!
 
       mutateHandlers(props.children[key]!, `${prefix}${getComponentName(childMeta.Component)}: `, childMeta.config)
     }

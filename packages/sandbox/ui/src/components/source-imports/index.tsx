@@ -1,6 +1,5 @@
 import React from 'react'
 import { startWithType, pureComponent, mapWithPropsMemo } from 'refun'
-import { isUndefined } from 'tsfn'
 import { SYMBOL_SOURCE_IMPORTS } from '../../symbols'
 import { Scroll } from '../scroll'
 import { mapMetaStoreState } from '../../store-meta'
@@ -17,17 +16,11 @@ export const SourceImports = pureComponent(
     Component,
     componentProps,
   }), ['Component', 'componentProps']),
-  mapWithPropsMemo(({ Component, componentProps, getImportPackageName }) => {
-    if (isUndefined(Component)) {
-      return {
-        lines: [],
-      }
-    }
-
-    return {
-      lines: serializeImportsLines(Component, componentProps, getImportPackageName),
-    }
-  }, ['Component', 'componentProps', 'getImportPackageName'])
+  mapWithPropsMemo(({ Component, componentProps, getImportPackageName }) => ({
+    lines: Component !== null
+      ? serializeImportsLines(Component, componentProps, getImportPackageName)
+      : [],
+  }), ['Component', 'componentProps', 'getImportPackageName'])
 )(({ lines }) => (
   <Scroll shouldScrollHorizontally shouldScrollVertically>
     <LinesBlock lines={lines}/>

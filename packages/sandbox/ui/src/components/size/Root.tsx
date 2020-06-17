@@ -64,7 +64,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  }, ['width', 'height', 'onWidthChange', 'onHeightChange'])
+  }, ['children'])
 )(({ ref, parentStyle, childStyle, children }) => (
   <div style={parentStyle}>
     <div style={childStyle} ref={ref}>

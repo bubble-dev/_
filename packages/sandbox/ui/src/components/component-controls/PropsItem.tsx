@@ -11,7 +11,7 @@ import { SizeBackground } from '../size-background'
 import { ValueCheckbox } from './ValueCheckbox'
 import { ValueDropdown } from './ValueDropdown'
 
-const isCheckboxValues = (propConfig: readonly any[]) => propConfig.every((c) => isUndefined(c) || typeof c === 'boolean')
+const isCheckboxValues = (propConfig: readonly any[]) => propConfig.every((c) => typeof c === 'boolean' || isUndefined(c))
 
 export type TPropsItem = {
   name: string,

@@ -1,7 +1,7 @@
 import { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
 import { TMetaState } from '../types'
-import { SET_COMPONENT_KEY_ACTION, SET_COMPONENTS_LIST_ACTION, SET_IMPORTED_META_ACTION, SET_PROPS_ACTION, RESET_COMPONENT_KEY_ACTION, TAllActions } from '../actions'
+import { SET_COMPONENT_KEY_ACTION, SET_COMPONENTS_LIST_ACTION, SET_IMPORTED_META_ACTION, SET_PROPS_ACTION, RESET_COMPONENT_KEY_ACTION, TAllActions, SELECT_ELEMENT_ACTION } from '../actions'
 import { initialState } from '../initial-state'
 
 export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
@@ -14,8 +14,8 @@ export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
       const { components } = action.payload
 
       return {
+        ...initialState,
         components,
-        componentKey: null,
       }
     }
 
@@ -23,6 +23,7 @@ export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
       const { componentKey, propsIndex } = action.payload
 
       return {
+        ...initialState,
         componentKey,
         propsIndex,
       }
@@ -30,21 +31,60 @@ export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
 
     case RESET_COMPONENT_KEY_ACTION: {
       return {
+        ...initialState,
         components: state.components,
-        componentKey: null,
+      }
+    }
+
+    case SELECT_ELEMENT_ACTION: {
+      const { selectedElementPath } = action.payload
+
+      return {
+        ...state,
+        selectedElementPath,
       }
     }
 
     case SET_IMPORTED_META_ACTION: {
+      const {
+        Component,
+        componentConfig,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        components: components,
+        packageJson,
+        propsIndex,
+        selectedElementPath,
+      } = action.payload
+
       return {
-        ...action.payload,
+        Component,
+        componentConfig,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        components,
+        packageJson,
+        propsIndex,
+        selectedElementPath,
       }
     }
 
     case SET_PROPS_ACTION: {
+      const {
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        propsIndex,
+      } = action.payload
+
       return {
         ...state,
-        ...action.payload,
+        componentKey,
+        componentProps,
+        componentPropsChildrenMap,
+        propsIndex,
       }
     }
 

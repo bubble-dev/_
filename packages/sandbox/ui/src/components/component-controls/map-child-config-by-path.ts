@@ -3,23 +3,32 @@ import { isUndefined, TAnyObject } from 'tsfn'
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapWithProps } from 'refun'
 import { getComponentName, getElementPath } from '../../utils'
-
-export type TMapChildConfigByPath = {
-  componentConfig: TCommonComponentConfig,
-  componentPropsChildrenMap: Readonly<TAnyObject>,
-  selectedElementPath: string,
-}
+import { mapMetaStoreState } from '../../store-meta'
 
 export type TMapChildConfigByPathResult = {
-  childConfig: TCommonComponentConfig,
+  childConfig: TCommonComponentConfig | null,
   childDisplayName: string,
   childPropsChildrenMap: Readonly<TAnyObject>,
   childPath: readonly string[],
 }
 
-export const mapChildConfigByPath = <P extends TMapChildConfigByPath>() => pipe(
-  startWithType<P & TMapChildConfigByPath>(),
+export const mapChildConfigByPath = <P>() => pipe(
+  startWithType<P>(),
+  mapMetaStoreState(({ componentConfig, componentPropsChildrenMap, selectedElementPath }) => ({
+    componentConfig,
+    componentPropsChildrenMap,
+    selectedElementPath,
+  }), ['componentConfig', 'componentPropsChildrenMap', 'selectedElementPath']),
   mapWithProps(({ componentConfig, componentPropsChildrenMap, selectedElementPath }): TMapChildConfigByPathResult => {
+    if (componentConfig === null) {
+      return {
+        childConfig: null,
+        childDisplayName: '',
+        childPropsChildrenMap: {},
+        childPath: [],
+      }
+    }
+
     let childDisplayName = 'RootComponent'
     let childConfig = componentConfig
     let childPropsChildrenMap = componentPropsChildrenMap
@@ -30,7 +39,9 @@ export const mapChildConfigByPath = <P extends TMapChildConfigByPath>() => pipe(
         throw new Error(`Path contains name '${name}', but '${childDisplayName}' config.children is undefined`)
       }
 
-      if (isUndefined(childConfig.children[name])) {
+      const childMeta = childConfig.children[name]
+
+      if (isUndefined(childMeta)) {
         throw new Error(`Path contains name '${name}', but '${childDisplayName}' config.children[${name}] is undefined`)
       }
 
@@ -42,8 +53,8 @@ export const mapChildConfigByPath = <P extends TMapChildConfigByPath>() => pipe(
         throw new Error(`childrenMap does not contain "${name}", path "${selectedElementPath}"`)
       }
 
-      childDisplayName = getComponentName(childConfig.children[name].Component)
-      childConfig = childConfig.children[name].config
+      childDisplayName = getComponentName(childMeta.Component)
+      childConfig = childMeta.config
       childPropsChildrenMap = childPropsChildrenMap.children[name]! // undefined checked
     }
 

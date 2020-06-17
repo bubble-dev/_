@@ -18,9 +18,9 @@ export type TRect = TPosition & {
 }
 
 export type TMapInspectRect = {
-  Component?: FC<any>,
-  componentConfig?: TCommonComponentConfig,
-  componentPropsChildrenMap?: Readonly<TAnyObject>,
+  Component: FC<any> | null,
+  componentConfig: TCommonComponentConfig | null,
+  componentPropsChildrenMap: Readonly<TAnyObject> | null,
   shouldInspect: boolean,
   selectedElementPath: string,
   componentWidth: number,

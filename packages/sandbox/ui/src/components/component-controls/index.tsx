@@ -1,8 +1,7 @@
-import React, { FC } from 'react'
-import { applyPropValue, TCommonComponentConfig, getChildrenKeys } from 'autoprops'
+import React from 'react'
+import { getChildrenKeys } from 'autoprops'
 import { startWithType, pureComponent, mapHandlers, mapDebouncedHandlerTimeout, mapWithPropsMemo } from 'refun'
-import { TAnyObject } from 'tsfn'
-import { mapStoreState, setSelectedSetIndex } from '../../store'
+import { applyPropValue } from '../../store-meta'
 import { Tabs, Tabs_Item } from '../tabs'
 import { SYMBOL_COMPONENT_CONTROLS } from '../../symbols'
 import { isHandler } from '../../utils'
@@ -12,29 +11,22 @@ import { PropsBlock } from './PropsBlock'
 import { ChildrenBlock } from './ChildrenBlock'
 import { HandlersBlock } from './HandlersBlock'
 
-export type TComponentControls = {
-  Component: FC<any>,
-  componentConfig: TCommonComponentConfig,
-  componentPropsChildrenMap: Readonly<TAnyObject>,
-}
-
 export const ComponentControls = pureComponent(
-  startWithType<TComponentControls>(),
-  mapStoreState(({ componentKey, selectedSetIndex, selectedElementPath }) => ({
-    componentKey,
-    selectedSetIndex,
-    selectedElementPath,
-  }), ['componentKey', 'selectedSetIndex', 'selectedElementPath']),
+  startWithType<{}>(),
   mapHandlers({
-    onChange: ({ componentConfig, selectedSetIndex }) => (propPath, propValue) => {
-      setSelectedSetIndex(
-        applyPropValue(componentConfig, selectedSetIndex, propPath, propValue)
-      )
-    },
+    onChange: () => applyPropValue,
   }),
   mapDebouncedHandlerTimeout('onChange', 100),
   mapChildConfigByPath(),
   mapWithPropsMemo(({ childConfig }) => {
+    if (childConfig === null) {
+      return {
+        propKeys: [],
+        handlerKeys: [],
+        childrenKeys: [],
+      }
+    }
+
     const propKeys = Object.keys(childConfig.props)
 
     return {
@@ -51,49 +43,55 @@ export const ComponentControls = pureComponent(
   handlerKeys,
   childrenKeys,
   onChange,
-}) => (
-  <Tabs>
-    <Tabs_Item title="Props" isDisabled={propKeys.length === 0}>
-      {() => (
-        <Scroll shouldScrollVertically>
-          <PropsBlock
-            componentConfig={childConfig}
-            componentPropsChildrenMap={childPropsChildrenMap}
-            propPath={childPath}
-            propKeys={propKeys}
-            onChange={onChange}
-          />
-        </Scroll>
-      )}
-    </Tabs_Item>
-    <Tabs_Item title="Children" isDisabled={childrenKeys.length === 0}>
-      {() => (
-        <Scroll shouldScrollVertically>
-          <ChildrenBlock
-            componentConfig={childConfig}
-            componentPropsChildrenMap={childPropsChildrenMap}
-            propPath={childPath}
-            childrenKeys={childrenKeys}
-            onChange={onChange}
-          />
-        </Scroll>
-      )}
-    </Tabs_Item>
-    <Tabs_Item title="Handlers" isDisabled={handlerKeys.length === 0}>
-      {() => (
-        <Scroll shouldScrollVertically>
-          <HandlersBlock
-            componentConfig={childConfig}
-            componentPropsChildrenMap={childPropsChildrenMap}
-            propPath={childPath}
-            handlerKeys={handlerKeys}
-            onChange={onChange}
-          />
-        </Scroll>
-      )}
-    </Tabs_Item>
-  </Tabs>
-))
+}) => {
+  if (childConfig === null) {
+    return null
+  }
+
+  return (
+    <Tabs>
+      <Tabs_Item title="Props" isDisabled={propKeys.length === 0}>
+        {() => (
+          <Scroll shouldScrollVertically>
+            <PropsBlock
+              componentConfig={childConfig}
+              componentPropsChildrenMap={childPropsChildrenMap}
+              propPath={childPath}
+              propKeys={propKeys}
+              onChange={onChange}
+            />
+          </Scroll>
+        )}
+      </Tabs_Item>
+      <Tabs_Item title="Children" isDisabled={childrenKeys.length === 0}>
+        {() => (
+          <Scroll shouldScrollVertically>
+            <ChildrenBlock
+              componentConfig={childConfig}
+              componentPropsChildrenMap={childPropsChildrenMap}
+              propPath={childPath}
+              childrenKeys={childrenKeys}
+              onChange={onChange}
+            />
+          </Scroll>
+        )}
+      </Tabs_Item>
+      <Tabs_Item title="Handlers" isDisabled={handlerKeys.length === 0}>
+        {() => (
+          <Scroll shouldScrollVertically>
+            <HandlersBlock
+              componentConfig={childConfig}
+              componentPropsChildrenMap={childPropsChildrenMap}
+              propPath={childPath}
+              handlerKeys={handlerKeys}
+              onChange={onChange}
+            />
+          </Scroll>
+        )}
+      </Tabs_Item>
+    </Tabs>
+  )
+})
 
 ComponentControls.displayName = 'ComponentControls'
 ComponentControls.componentSymbol = SYMBOL_COMPONENT_CONTROLS

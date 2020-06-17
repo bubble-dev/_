@@ -19,4 +19,6 @@ export const Component = (props: THeading) => (
   </Block>
 )
 
+Component.displayName = 'Heading'
+
 export { default as packageJson } from './package.json'

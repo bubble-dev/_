@@ -1,7 +1,6 @@
 import React from 'react'
 import { serializeComponent } from 'syntx'
 import { startWithType, pureComponent } from 'refun'
-import { isUndefined } from 'tsfn'
 import { SYMBOL_SOURCE_CODE } from '../../symbols'
 import { Scroll } from '../scroll'
 import { mapMetaStoreState } from '../../store-meta'
@@ -15,16 +14,16 @@ export type TSourceCode = {
 export const SourceCode = pureComponent(
   startWithType<TSourceCode>(),
   mapMetaStoreState(({ Component, componentConfig, componentProps, componentPropsChildrenMap }) => {
-    if (isUndefined(componentProps)) {
+    if (Component === null || componentConfig === null) {
       return {
         lines: [],
       }
     }
 
     return {
-      lines: serializeComponent(Component!, componentProps!, {
+      lines: serializeComponent(Component, componentProps, {
         indent: 2,
-        meta: createChildrenMeta(componentConfig!, componentPropsChildrenMap!),
+        meta: createChildrenMeta(componentConfig, componentPropsChildrenMap),
       }),
     }
   }, ['Component', 'componentConfig', 'componentProps', 'componentPropsChildrenMap'])

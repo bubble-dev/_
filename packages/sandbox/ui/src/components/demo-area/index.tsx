@@ -41,7 +41,7 @@ export const DemoArea = component(
   mapContext(ThemeContext),
   mapContext(LayoutContext),
   mapContext(PluginContext),
-  mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ, selectedElementPath }) => ({
+  mapStoreState(({ isCanvasDarkMode, width, height, hasGrid, shouldStretch, shouldInspect, transformX, transformY, transformZ }) => ({
     canvasWidth: width,
     canvasHeight: height,
     shouldStretch,
@@ -52,15 +52,15 @@ export const DemoArea = component(
       y: transformY,
       z: transformZ,
     },
-    selectedElementPath,
     isCanvasDarkMode,
-  }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ', 'selectedElementPath']),
-  mapMetaStoreState(({ Component, componentProps, componentConfig, componentPropsChildrenMap }) => ({
+  }), ['isCanvasDarkMode', 'width', 'height', 'hasGrid', 'shouldStretch', 'shouldInspect', 'transformX', 'transformY', 'transformZ']),
+  mapMetaStoreState(({ Component, componentProps, componentConfig, componentPropsChildrenMap, selectedElementPath }) => ({
     Component,
     componentProps,
     componentPropsChildrenMap,
     componentConfig,
-  }), ['Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig']),
+    selectedElementPath,
+  }), ['Component', 'componentProps', 'componentPropsChildrenMap', 'componentConfig', 'selectedElementPath']),
   mapHandlers({
     dispatchTransform: () => (transform: TTransform) => setTransform(transform),
   }),
@@ -128,7 +128,7 @@ export const DemoArea = component(
         >
           <PrimitiveBackground color={isCanvasDarkMode ? BLACK : WHITE}/>
 
-          {Component && (
+          {Component !== null && (
             <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d={!isSafari}>
               <Size
                 height={componentHeight}

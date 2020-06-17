@@ -1,7 +1,7 @@
 import React from 'react'
 import { TCommonComponentConfig } from 'autoprops'
 import { TAnyObject } from 'tsfn'
-import { component, startWithType } from 'refun'
+import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { Layout, Layout_Item } from '../layout'
 import { SYMBOL_COMPONENT_CONTROLS_BLOCK } from '../../symbols'
 import { PropsItem } from './PropsItem'
@@ -15,11 +15,14 @@ export type TPropsBlock = {
 }
 
 export const PropsBlock = component(
-  startWithType<TPropsBlock>()
+  startWithType<TPropsBlock>(),
+  mapWithPropsMemo(({ propPath, propKeys }) => ({
+    propPaths: propKeys.map((key) => [...propPath, key]),
+  }), ['propPath', 'propKeys'])
 )(({
   componentConfig,
   componentPropsChildrenMap,
-  propPath,
+  propPaths,
   propKeys,
   onChange,
 }) => (
@@ -28,10 +31,10 @@ export const PropsBlock = component(
       <Layout_Item key={rowIndex} height={40}>
         <PropsItem
           name={propName}
-          propPath={[...propPath, propName]}
+          propPath={propPaths[rowIndex]}
           possibleValues={componentConfig.props[propName]!}
           value={componentPropsChildrenMap[propName]}
-          isRequired={Array.isArray(componentConfig.required) && componentConfig.required.includes(propName)}
+          isRequired={Boolean(componentConfig.required?.includes(propName))}
           onChange={onChange}
         />
       </Layout_Item>

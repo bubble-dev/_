@@ -1,7 +1,6 @@
 import React from 'react'
 import { startWithType, mapState, mapHandlers, mapContext, pureComponent } from 'refun'
 import leven from 'leven'
-import { isUndefined } from 'tsfn'
 import { LayoutContext } from '../layout-context'
 import { Layout, Layout_Item } from '../layout'
 import { SYMBOL_NAVIGATION_SIDEBAR, LAYOUT_SIZE_FIT } from '../../symbols'
@@ -18,13 +17,18 @@ export const NavigationSidebar = pureComponent(
   startWithType<TNavigationSidebar>(),
   mapContext(ThemeContext),
   mapContext(LayoutContext),
-  mapMetaStoreState(({ components }) => ({
+  mapMetaStoreState(({ components: components }) => ({
     components,
   }), ['components']),
-  mapState('filteredComponentNames', 'setFilteredComponentNames', ({ components }) => (isUndefined(components) ? [] : Object.keys(components)), ['components']),
+  mapState(
+    'filteredComponentNames',
+    'setFilteredComponentNames',
+    ({ components }) => (components !== null ? Object.keys(components) : []),
+    ['components']
+  ),
   mapHandlers({
     onChange: ({ setFilteredComponentNames, components }) => (value: string) => {
-      if (isUndefined(components)) {
+      if (components === null) {
         return
       }
 

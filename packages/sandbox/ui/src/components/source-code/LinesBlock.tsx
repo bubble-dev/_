@@ -4,8 +4,8 @@ import { pureComponent, startWithType, mapContext, mapWithProps, mapHandlers, ma
 import { Layout, Layout_Item } from '../layout'
 import { LAYOUT_SIZE_FIT } from '../../symbols'
 import { LayoutContext } from '../layout-context'
-import { mapStoreState } from '../../store'
 import { ThemeContext } from '../theme-context'
+import { mapMetaStoreState } from '../../store-meta'
 import { Line } from './Line'
 import { collapseLines } from './collapse-lines'
 import { getCollapsibleLineIndexes } from './get-collapsible-lines'
@@ -18,7 +18,7 @@ export const LinesBlock = pureComponent(
   startWithType<TLinesBlock>(),
   mapContext(ThemeContext),
   mapContext(LayoutContext),
-  mapStoreState(({ selectedElementPath }) => ({
+  mapMetaStoreState(({ selectedElementPath }) => ({
     selectedElementPath,
   }), ['selectedElementPath']),
   mapState('collapsedMetas', 'setCollapsedMetas', () => [] as string[], []),

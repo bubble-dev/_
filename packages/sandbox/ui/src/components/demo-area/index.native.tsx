@@ -113,7 +113,7 @@ export const DemoArea = pureComponent(
       >
         <PrimitiveBackground color={isCanvasDarkMode ? BLACK : WHITE}/>
 
-        {Component && (
+        {Component !== null && (
           <PrimitiveBlock width={componentWidth}>
             <Transform x={componentLeft} y={componentTop} hOrigin="left" vOrigin="top" shouldUse3d>
               <Size

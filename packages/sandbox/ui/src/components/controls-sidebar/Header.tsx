@@ -1,6 +1,5 @@
 import React from 'react'
 import { startWithType, mapContext, mapHandlers, pureComponent } from 'refun'
-import { isUndefined } from 'tsfn'
 import { ThemeContext, ButtonIconThemeContext } from '../theme-context'
 import { Layout, Layout_Item } from '../layout'
 import { SizeText } from '../size-text'
@@ -32,7 +31,7 @@ export const Header = pureComponent(
     focusedBorderColor: theme.controlsSidebarIconBackgroundColor,
   })),
   mapMetaStoreState(({ Component }) => ({
-    componentName: isUndefined(Component) ? '' : getComponentName(Component),
+    componentName: Component !== null ? getComponentName(Component) : '',
   }), ['Component']),
   mapHandlers({
     onCopyUrl: ({ sendNotification }) => async () => {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { startWithType, pureComponent, mapHandlers, mapContext } from 'refun'
-import { isDefined } from 'tsfn'
 import { Layout, Layout_Item } from '../layout'
 import { IconCopySource } from '../icons'
 import { ButtonIcon } from '../button-icon'
@@ -22,7 +21,7 @@ export const CopySourceButton = pureComponent(
   }), ['Component', 'componentProps']),
   mapHandlers({
     onCopySource: ({ Component, componentProps, sendNotification }) => async () => {
-      if (isDefined(Component) && isDefined(componentProps)) {
+      if (Component !== null) {
         await navigator.clipboard.writeText(
           serializeComponentToText(Component, componentProps)
         )

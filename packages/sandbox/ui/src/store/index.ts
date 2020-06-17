@@ -1,10 +1,28 @@
 import { StoreContextFactory } from 'refun'
-import { TTransform } from '../types'
 import { store } from './store'
-import { injectReducerFactory, storeSubscribeFactory } from './utils'
+import { injectReducerFactory } from './utils'
 import { reducer } from './reducers'
-import { navigateAction, resetTransformAction, setWidthAction, setHeightAction, selectElementAction, setResolutionAction, setComponentAction, setSelectedSetIndexAction, setTransformAction, toggleGridAction, toggleCanvasDarkModeAction, toggleControlsSidebarAction, toggleNavigationSidebarAction, toggleInspectAction, toggleStretchAction } from './actions'
-import { TState } from './types'
+import {
+  navigateAction,
+  resetTransformAction,
+  setWidthAction,
+  setHeightAction,
+  setResolutionAction,
+  setTransformAction,
+  toggleGridAction,
+  toggleCanvasDarkModeAction,
+  toggleControlsSidebarAction,
+  toggleNavigationSidebarAction,
+  toggleInspectAction,
+  toggleStretchAction,
+  TNavigateAction,
+  TSetWidthAction,
+  TSetHeightAction,
+  TSetResolutionAction,
+  TSetTransformAction,
+} from './actions'
+// Activate middlewares
+import '../store-sync'
 
 const StoreContext = StoreContextFactory(store)
 
@@ -12,9 +30,7 @@ export const mapStoreState = StoreContext.mapStoreState
 
 export const injectReducer = injectReducerFactory(store, reducer, StoreContext.Context)
 
-export const storeSubscribe = storeSubscribeFactory(store)
-
-export const navigate = (payload: TState) => {
+export const navigate = (payload: TNavigateAction['payload']) => {
   store.dispatch(navigateAction(payload))
 }
 
@@ -22,31 +38,19 @@ export const resetTransform = () => {
   store.dispatch(resetTransformAction())
 }
 
-export const setWidth = (payload: TState['width']) => {
+export const setWidth = (payload: TSetWidthAction['payload']) => {
   store.dispatch(setWidthAction(payload))
 }
 
-export const setHeight = (payload: TState['height']) => {
+export const setHeight = (payload: TSetHeightAction['payload']) => {
   store.dispatch(setHeightAction(payload))
 }
 
-export const selectElement = (payload: TState['selectedElementPath']) => {
-  store.dispatch(selectElementAction(payload))
-}
-
-export const setResolution = (payload: TState['resolutionKey']) => {
+export const setResolution = (payload: TSetResolutionAction['payload']) => {
   store.dispatch(setResolutionAction(payload))
 }
 
-export const setComponent = (payload: TState['componentKey']) => {
-  store.dispatch(setComponentAction(payload))
-}
-
-export const setSelectedSetIndex = (payload: TState['selectedSetIndex']) => {
-  store.dispatch(setSelectedSetIndexAction(payload))
-}
-
-export const setTransform = (payload: TTransform) => {
+export const setTransform = (payload: TSetTransformAction['payload']) => {
   store.dispatch(setTransformAction(payload))
 }
 

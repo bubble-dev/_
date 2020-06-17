@@ -27,10 +27,8 @@ export {
 export {
   TState,
   TAction,
-  TActionAsync,
   TActionCreator,
   TActionWithPayload,
-  TActionWithPayloadCreator,
   TAnyAction,
 } from './store/types'
 export { TPlugin } from './components/plugin-provider'

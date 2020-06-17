@@ -1,11 +1,9 @@
-import { TActionWithPayloadCreator, TActionCreator, TState, TActionWithPayload, TAction } from '../types'
+import { TActionCreator, TState, TActionWithPayload, TAction } from '../types'
 import { TTransform } from '../../types'
 
 export const TYPE_SET_SEARCH_VALUE = 'SET_SEARCH_VALUE'
 export const TYPE_SET_WIDTH = 'SET_WIDTH'
 export const TYPE_SET_HEIGHT = 'SET_HEIGHT'
-export const TYPE_SET_COMPONENT = 'SET_COMPONENT'
-export const TYPE_SET_SELECTED_SET_INDEX = 'SET_SELECTED_SET_INDEX'
 export const TYPE_SET_RESOLUTION = 'SET_RESOLUTION'
 export const TYPE_SET_TRANSFORM = 'SET_TRANSFORM'
 export const TYPE_RESET_TRANSFORM = 'RESET_TRANSFORM'
@@ -16,7 +14,6 @@ export const TYPE_TOGGLE_CANVAS_DARK_MODE = 'TOGGLE_CANVAS_DARK_MODE'
 export const TYPE_TOGGLE_NAVIGATION_SIDEBAR = 'TOGGLE_NAVIGATION_SIDEBAR'
 export const TYPE_TOGGLE_CONTROLS_SIDEBAR = 'TOGGLE_CONTROLS_SIDEBAR'
 export const TYPE_NAVIGATE = 'NAVIGATE'
-export const TYPE_SELECT_ELEMENT = 'SELECT_ELEMENT'
 
 export type TSetWidthAction = TActionWithPayload<typeof TYPE_SET_WIDTH, TState['width']>
 export type TSetHeightAction = TActionWithPayload<typeof TYPE_SET_HEIGHT, TState['height']>
@@ -26,13 +23,10 @@ export type TToggleGridAction = TAction<typeof TYPE_TOGGLE_GRID>
 export type TToggleCanvasDarkModeAction = TAction<typeof TYPE_TOGGLE_CANVAS_DARK_MODE>
 export type TToggleNavigationSidebarAction = TAction<typeof TYPE_TOGGLE_NAVIGATION_SIDEBAR>
 export type TToggleControlsSidebarAction = TAction<typeof TYPE_TOGGLE_CONTROLS_SIDEBAR>
-export type TSetComponentAction = TActionWithPayload<typeof TYPE_SET_COMPONENT, TState['componentKey']>
-export type TSetSelectedSetIndexAction = TActionWithPayload<typeof TYPE_SET_SELECTED_SET_INDEX, TState['selectedSetIndex']>
 export type TSetResolutionAction = TActionWithPayload<typeof TYPE_SET_RESOLUTION, TState['resolutionKey']>
 export type TSetTransformAction = TActionWithPayload<typeof TYPE_SET_TRANSFORM, TTransform>
 export type TResetTransformAction = TAction<typeof TYPE_RESET_TRANSFORM>
-export type TNavigateAction = TActionWithPayload<typeof TYPE_NAVIGATE, TState>
-export type TSelectElementAction = TActionWithPayload<typeof TYPE_SELECT_ELEMENT, TState['selectedElementPath']>
+export type TNavigateAction = TActionWithPayload<typeof TYPE_NAVIGATE, Pick<TState, 'width' | 'height' | 'transformX' | 'transformY' | 'transformZ' | 'resolutionKey' | 'shouldStretch' | 'hasGrid' | 'isCanvasDarkMode'>>
 
 export type TAllActions =
   TSetWidthAction |
@@ -43,20 +37,17 @@ export type TAllActions =
   TToggleCanvasDarkModeAction |
   TToggleNavigationSidebarAction |
   TToggleControlsSidebarAction |
-  TSetComponentAction |
-  TSetSelectedSetIndexAction |
   TSetResolutionAction |
   TSetTransformAction |
   TResetTransformAction |
-  TNavigateAction |
-  TSelectElementAction
+  TNavigateAction
 
-export const setWidthAction: TActionWithPayloadCreator<TSetWidthAction> = (payload) => ({
+export const setWidthAction = (payload: TSetWidthAction['payload']): TSetWidthAction => ({
   type: TYPE_SET_WIDTH,
   payload,
 })
 
-export const setHeightAction: TActionWithPayloadCreator<TSetHeightAction> = (payload) => ({
+export const setHeightAction = (payload: TSetHeightAction['payload']): TSetHeightAction => ({
   type: TYPE_SET_HEIGHT,
   payload,
 })
@@ -85,22 +76,12 @@ export const toggleCanvasDarkModeAction = (): TToggleCanvasDarkModeAction => ({
   type: TYPE_TOGGLE_CANVAS_DARK_MODE,
 })
 
-export const setComponentAction: TActionWithPayloadCreator<TSetComponentAction> = (payload) => ({
-  type: TYPE_SET_COMPONENT,
-  payload,
-})
-
-export const setSelectedSetIndexAction: TActionWithPayloadCreator<TSetSelectedSetIndexAction> = (payload) => ({
-  type: TYPE_SET_SELECTED_SET_INDEX,
-  payload,
-})
-
-export const setResolutionAction: TActionWithPayloadCreator<TSetResolutionAction> = (payload) => ({
+export const setResolutionAction = (payload: TSetResolutionAction['payload']): TSetResolutionAction => ({
   type: TYPE_SET_RESOLUTION,
   payload,
 })
 
-export const setTransformAction: TActionWithPayloadCreator<TSetTransformAction> = (payload) => ({
+export const setTransformAction = (payload: TSetTransformAction['payload']): TSetTransformAction => ({
   type: TYPE_SET_TRANSFORM,
   payload,
 })
@@ -109,12 +90,7 @@ export const resetTransformAction: TActionCreator<TResetTransformAction> = () =>
   type: TYPE_RESET_TRANSFORM,
 })
 
-export const navigateAction: TActionWithPayloadCreator<TNavigateAction> = (payload) => ({
+export const navigateAction = (payload: TNavigateAction['payload']): TNavigateAction => ({
   type: TYPE_NAVIGATE,
-  payload,
-})
-
-export const selectElementAction: TActionWithPayloadCreator<TSelectElementAction> = (payload) => ({
-  type: TYPE_SELECT_ELEMENT,
   payload,
 })
