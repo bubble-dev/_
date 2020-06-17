@@ -32,9 +32,12 @@ export const config: TComponentConfig<TInput> = {
     onChange: [() => {}],
   },
   required: ['value', 'onChange'],
-  mutin: [
-    ['inlineStart', 'inlineEnd', 'blockStart', 'blockEnd'],
-  ],
+  deps: {
+    inlineStart: ['inlineEnd', 'blockStart', 'blockEnd'],
+    inlineEnd: ['inlineStart', 'blockStart', 'blockEnd'],
+    blockStart: ['inlineStart', 'inlineEnd', 'blockEnd'],
+    blockEnd: ['inlineStart', 'inlineEnd', 'blockStart'],
+  },
 }
 
 export { default as packageJson } from './package.json'
