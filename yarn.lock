@@ -1695,10 +1695,10 @@
     rn-fonts "^1.0.1"
     tsfn "^1.1.2"
 
-"@rebox/ios@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@rebox/ios/-/ios-2.0.5.tgz#78ef66032ecdc0a6756de98a6078c3dfa2b4f865"
-  integrity sha512-56x29o1eEo3Kv3zZriESA67afS3TBCPUv8ol++kUSl+pt0LL2H3Fzax4vum808k+12k/qJYYy/y7LQp1JGU+uA==
+"@rebox/ios@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@rebox/ios/-/ios-3.0.0.tgz#2310d449bb229dbda57c9843638439ca25d451c0"
+  integrity sha512-i6HBKVXvh1Ucx0fuDC6c7eEQwyCwPic3Z67k/Ab9TsBYBJRgwr84VnCZMltzYvJlYt1E3DdjQI+M7F10+iFK1g==
   dependencies:
     "@babel/runtime" "^7.4.3"
     "@rebox/native-utils" "^2.0.5"
