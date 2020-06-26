@@ -4,7 +4,7 @@ import { TAnyObject } from 'tsfn'
 
 export type TPureComponent = {
   Component: FC<any>,
-  props?: TAnyObject,
+  props: TAnyObject,
 }
 
 export const PureComponent = pureComponent(

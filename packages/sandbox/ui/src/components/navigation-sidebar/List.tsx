@@ -1,7 +1,7 @@
 import React from 'react'
 import { startWithType, component, mapContext } from 'refun'
 import { ThemeContext } from '../theme-context'
-import { mapStoreState, setComponent } from '../../store'
+import { mapMetaStoreState, setComponentKey } from '../../store-meta'
 import { Layout, Layout_Item } from '../layout'
 import { LayoutContext } from '../layout-context'
 import { ListItem } from './ListItem'
@@ -16,7 +16,7 @@ export const List = component(
   startWithType<TList>(),
   mapContext(LayoutContext),
   mapContext(ThemeContext),
-  mapStoreState(({ componentKey }) => ({
+  mapMetaStoreState(({ componentKey }) => ({
     componentKey,
   }), ['componentKey'])
 )(({
@@ -29,7 +29,7 @@ export const List = component(
       <Layout_Item key={item} height={ITEM_HEIGHT} vAlign="center" hPadding={_width * 0.1}>
         <ListItem
           isActive={item === componentKey}
-          onPress={setComponent}
+          onPress={setComponentKey}
         >
           {item}
         </ListItem>

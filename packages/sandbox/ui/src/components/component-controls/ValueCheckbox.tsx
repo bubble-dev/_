@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapHandlers, pureComponent, mapState } from 'refun'
+import { startWithType, mapHandlers, pureComponent, mapState, mapDebouncedHandlerTimeout } from 'refun'
 import { Switch } from '../switch'
 import { SYMBOL_SWITCH } from '../../symbols'
 
@@ -10,12 +10,25 @@ export type TValueCheckboxProps = {
   onChange: (propPath: readonly string[], propValue: any) => void,
 }
 
+const isDefined = (val: any): boolean => val !== false && val !== undefined
+
 export const ValueCheckbox = pureComponent(
   startWithType<TValueCheckboxProps>(),
-  mapState('isChecked', 'setIsChecked', ({ propValue }) => propValue !== false && propValue !== undefined, ['propValue']),
+  mapState('isChecked', 'setIsChecked', ({ propValue }) => isDefined(propValue), ['propValue']),
   mapHandlers({
-    onChange: ({ propPath, checkedPropValue, onChange, isChecked, setIsChecked }) => () => {
+    onOptimisticWait: ({ propValue, isChecked, setIsChecked }) => () => {
+      const validState = isDefined(propValue)
+
+      if (validState !== isChecked) {
+        setIsChecked(validState)
+      }
+    },
+  }),
+  mapDebouncedHandlerTimeout('onOptimisticWait', 500),
+  mapHandlers({
+    onChange: ({ propPath, checkedPropValue, onChange, isChecked, setIsChecked, onOptimisticWait }) => () => {
       setIsChecked(!isChecked)
+      onOptimisticWait()
       onChange(propPath, isChecked ? undefined : checkedPropValue)
     },
   })

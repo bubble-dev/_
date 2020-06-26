@@ -28,7 +28,7 @@ export const ChildrenBlock = component(
     {childrenKeys.map((childKey, rowIndex) => (
       <Layout_Item key={rowIndex} height={40}>
         <ChildItem
-          name={getComponentName(componentConfig.children![childKey].Component)}
+          name={getComponentName(componentConfig.children![childKey]!.Component)}
           isRequired={Array.isArray(componentConfig.required) && componentConfig.required.includes(childKey)}
           isActive={isChildrenMap(componentPropsChildrenMap.children) && Reflect.has(componentPropsChildrenMap.children, childKey)}
           propPath={[...propPath, childKey]}

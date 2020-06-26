@@ -3,7 +3,7 @@ import { TText } from './src'
 
 export const config: TComponentConfig<TText> = {
   props: {
-    children: ['Button'],
+    children: ['Button', 'Long button'],
   },
   required: ['children'],
 }

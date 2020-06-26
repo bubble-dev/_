@@ -18,4 +18,6 @@ export const Component = (props: TParagraph) => (
   </Block>
 )
 
+Component.displayName = 'Paragraph'
+
 export { default as packageJson } from './package.json'

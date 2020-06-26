@@ -15,7 +15,7 @@ export const Info = pureComponent(
   mapContext(ThemeContext),
   mapContextOverride('LinkThemeProvider', TextThemeContext, ({ theme }) => ({ color: theme.linkColor })),
   mapMetaStoreState(({ packageJson }) => {
-    if (isUndefined(packageJson)) {
+    if (packageJson === null) {
       return {}
     }
 

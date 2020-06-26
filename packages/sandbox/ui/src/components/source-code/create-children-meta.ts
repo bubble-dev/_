@@ -16,7 +16,7 @@ export const createChildrenMeta = (componentConfig: TCommonComponentConfig, comp
     const childrenKeys = getChildrenKeys(componentConfig).filter((key) => Reflect.has(componentPropsChildrenMap.children, key))
 
     if (childrenKeys.length > 0) {
-      resultMeta.children = childrenKeys.map((key) => createChildrenMeta(componentConfig.children![key].config, componentPropsChildrenMap.children[key], [...metaValue, key]))
+      resultMeta.children = childrenKeys.map((key) => createChildrenMeta(componentConfig.children![key]!.config, componentPropsChildrenMap.children[key], [...metaValue, key]))
     }
   }
 

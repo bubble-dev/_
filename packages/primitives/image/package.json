@@ -25,7 +25,7 @@
     "@x-ray/common-utils": "^1.0.0",
     "@x-ray/screenshot-utils": "^1.0.0",
     "@x-ray/snapshots": "^1.0.3",
-    "autoprops": "^1.0.0",
+    "autoprops": "^3.0.0",
     "react": "16.11.0",
     "react-native": "0.62.2"
   }

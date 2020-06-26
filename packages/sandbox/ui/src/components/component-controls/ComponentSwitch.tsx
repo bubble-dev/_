@@ -1,5 +1,5 @@
 import React from 'react'
-import { startWithType, mapHandlers, pureComponent, mapState } from 'refun'
+import { startWithType, mapHandlers, pureComponent, mapState, mapDebouncedHandlerTimeout } from 'refun'
 import { SYMBOL_CHECKBOX } from '../../symbols'
 import { Checkmark } from '../checkmark'
 
@@ -14,11 +14,20 @@ export const ComponentSwitch = pureComponent(
   startWithType<TComponentSwitchProps>(),
   mapState('value', 'setValue', ({ isChecked }) => isChecked, ['isChecked']),
   mapHandlers({
-    onToggle: ({ setValue, onChange, propPath, isChecked }) => () => {
-      setValue(!isChecked)
+    onOptimisticWait: ({ isChecked, value, setValue }) => () => {
+      if (value !== isChecked) {
+        setValue(isChecked)
+      }
+    },
+  }),
+  mapDebouncedHandlerTimeout('onOptimisticWait', 500),
+  mapHandlers({
+    onToggle: ({ value, setValue, onChange, onOptimisticWait, propPath }) => () => {
+      setValue(!value)
+      onOptimisticWait()
       onChange(
         propPath,
-        isChecked ? undefined : {}
+        value ? undefined : {}
       )
     },
   })

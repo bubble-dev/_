@@ -11,7 +11,7 @@ export const config: TComponentConfig<TButton, 'text'> = {
   children: {
     text: TextMeta,
   },
-  required: ['text'],
+  // required: ['text'],
 }
 
 export { Button as Component } from './src'

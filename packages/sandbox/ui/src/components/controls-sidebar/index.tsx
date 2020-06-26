@@ -11,12 +11,12 @@ import { Console } from '../console'
 import { SourceImports } from '../source-imports'
 import { mapContextOverride } from '../../map/map-context-override'
 import { ImportPackageNameContext } from '../import-package-name-provider'
+import { ComponentControls } from '../component-controls'
 import { Header } from './Header'
 import { Info } from './Info'
 import { CopySourceButton } from './CopySourceButton'
 import { CopyImportsButton } from './CopyImportsButton'
 import { ClearConsoleButton } from './ClearConsoleButton'
-import { Controls } from './Controls'
 
 export type TControlsSidebar = {}
 
@@ -88,7 +88,7 @@ export const ControlsSidebar = pureComponent(
         </Layout_Item>
 
         <Layout_Item>
-          <Controls/>
+          <ComponentControls/>
         </Layout_Item>
       </Layout>
     </TextThemeProvider>

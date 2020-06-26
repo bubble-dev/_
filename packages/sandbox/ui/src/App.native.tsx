@@ -9,8 +9,8 @@ import { TApp } from './types'
 
 export const App = component(
   startWithType<TApp>(),
-  onChange(async ({ components }) => {
-    await setComponentsList(components)
+  onChange(({ components }) => {
+    setComponentsList(components)
   }, ['components'])
 )(({ theme, icons, plugin }) => (
   <Root>

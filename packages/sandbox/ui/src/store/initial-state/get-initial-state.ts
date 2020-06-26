@@ -3,17 +3,10 @@ import { TState } from '../types'
 import { initialState } from './initial-state'
 
 export const getInitialState = (): TState => {
-  const currentHash = getCurrentHash()
+  const hash = getCurrentHash()
 
-  if (currentHash !== null) {
-    const decoded = decodeUrl(currentHash)
-
-    if (decoded !== null) {
-      return {
-        ...initialState,
-        ...decoded,
-      } as TState
-    }
+  if (hash !== null) {
+    return decodeUrl(hash) as TState
   }
 
   return initialState

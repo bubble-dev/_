@@ -18,9 +18,9 @@ export const getChildDisplayName = (componentConfig: TCommonComponentConfig, chi
       throw new Error(`Path contains name '${name}', but '${childDisplayName}' config.children[${name}] is undefined`)
     }
 
-    childDisplayName = getComponentName(childConfig.children[name].Component)
+    childDisplayName = getComponentName(childConfig.children[name]!.Component)
     parentConfig = childConfig
-    childConfig = childConfig.children[name].config
+    childConfig = childConfig.children[name]!.config
   }
 
   let childDisplayNameIndex = 0
@@ -30,7 +30,7 @@ export const getChildDisplayName = (componentConfig: TCommonComponentConfig, chi
       break
     }
 
-    if (getComponentName(parentConfig.children![childKey].Component) === childDisplayName) {
+    if (getComponentName(parentConfig.children![childKey]!.Component) === childDisplayName) {
       ++childDisplayNameIndex
     }
   }

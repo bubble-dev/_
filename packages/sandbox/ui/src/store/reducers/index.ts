@@ -6,8 +6,6 @@ import {
   TAllActions,
   TYPE_SET_WIDTH,
   TYPE_SET_HEIGHT,
-  TYPE_SET_COMPONENT,
-  TYPE_SET_SELECTED_SET_INDEX,
   TYPE_SET_RESOLUTION,
   TYPE_SET_TRANSFORM,
   TYPE_TOGGLE_GRID,
@@ -15,7 +13,6 @@ import {
   TYPE_TOGGLE_INSPECT,
   TYPE_TOGGLE_CANVAS_DARK_MODE,
   TYPE_NAVIGATE,
-  TYPE_SELECT_ELEMENT,
   TYPE_RESET_TRANSFORM,
   TYPE_TOGGLE_NAVIGATION_SIDEBAR,
   TYPE_TOGGLE_CONTROLS_SIDEBAR,
@@ -46,22 +43,6 @@ export const reducer: Reducer<TState, TAllActions> = (state, action): TState => 
         ...state,
         height: filterHeight(action.payload),
         resolutionKey: findResolutionKey(state.width, action.payload),
-      }
-    }
-
-    case TYPE_SET_COMPONENT: {
-      return {
-        ...state,
-        componentKey: action.payload,
-        selectedSetIndex: '0',
-        selectedElementPath: '',
-      }
-    }
-
-    case TYPE_SET_SELECTED_SET_INDEX: {
-      return {
-        ...state,
-        selectedSetIndex: action.payload,
       }
     }
 
@@ -149,13 +130,6 @@ export const reducer: Reducer<TState, TAllActions> = (state, action): TState => 
         ...action.payload,
         width: filterWidth(action.payload.width),
         height: filterHeight(action.payload.height),
-      }
-    }
-
-    case TYPE_SELECT_ELEMENT: {
-      return {
-        ...state,
-        selectedElementPath: action.payload,
       }
     }
 

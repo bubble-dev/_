@@ -1,11 +1,7 @@
 import { globalObject } from '../../utils/global-object'
 
-export const getCurrentHash = (): string | null => {
-  const currentHash = globalObject.location.hash.substr(1)
+export const EMPTY_HASH = ''
 
-  if (currentHash.length === 0) {
-    return null
-  }
-
-  return currentHash
+export const getCurrentHash = (): string => {
+  return globalObject.location.hash.substr(1)
 }
