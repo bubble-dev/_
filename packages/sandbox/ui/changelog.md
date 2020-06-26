@@ -1,3 +1,7 @@
+## v3.0.2
+
+* 🐞 fix autoprops restrictions
+
 ## v3.0.1
 
 * 🐞 export switch component
