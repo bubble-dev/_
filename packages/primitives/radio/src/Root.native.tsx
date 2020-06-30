@@ -51,13 +51,19 @@ export const RadioInput = component(
   id,
   value,
   groupValue,
+  isDisabled,
 }) => {
   const isChecked = groupValue === value
 
   return (
     <Touchable
       testID={id}
+      accessibilityRole="radio"
       accessibilityLabel={accessibilityLabel}
+      accessibilityState={{
+        checked: isChecked,
+        disabled: isDisabled,
+      }}
       onPress={onPress}
     >
       <View>
