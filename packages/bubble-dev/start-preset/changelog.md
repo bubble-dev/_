@@ -1,3 +1,7 @@
+## v5.0.0
+
+* 💥 remove X-Ray
+
 ## v4.1.0
 
 * 🌱 support lottie-react-native mocks
