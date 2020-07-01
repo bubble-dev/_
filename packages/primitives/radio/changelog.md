@@ -1,3 +1,7 @@
+## v0.2.2
+
+* 🐞 add accessibility attributes to primitive radio
+
 ## v0.2.1
 
 * 🐞 export context
