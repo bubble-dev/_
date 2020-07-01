@@ -2380,15 +2380,15 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@x-ray/native-screenshots-app@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@x-ray/native-screenshots-app/-/native-screenshots-app-1.0.2.tgz#eefaa2cb68e85100854dcd021590f8db1f6f276c"
-  integrity sha512-7LFwU9Wq6yVtCINDHp0mFeikN2GZK7a7ZgJctEx8iL3a/aAI2V+VZczLu3Zv57UYaCw0904fC7ldLBDAI03zgQ==
+"@x-ray/native-screenshots-app@^2.0.0":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@x-ray/native-screenshots-app/-/native-screenshots-app-2.0.1.tgz#c09f692aafa8e87185e064319dae1ea1e5d9ccfb"
+  integrity sha512-iVG4hBMGHylmz0xBAJ2WnJPYp08fcMikcgluSaHaxeJJLyUlIb9rEOGYJN9MqfL9iwGxnBM8T6LnJJmrneR6Jg==
   dependencies:
     "@babel/runtime" "^7.4.3"
-    "@primitives/image" "^2.0.0"
-    "@primitives/size" "^2.0.0"
-    react-native-exception-handler "^2.10.8"
+    nanoid "^3.1.4"
+    react "16.11.0"
+    react-native "0.62.2"
     react-native-view-shot "^3.0.2"
 
 "@x-ray/web-mobile-screenshots-app@^1.0.1":
@@ -7916,6 +7916,11 @@ nanoid@^2.1.7:
   version "2.1.11"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-2.1.11.tgz#ec24b8a758d591561531b4176a01e3ab4f0f0280"
   integrity sha512-s/snB+WGm6uwi0WjsZdaVcuf3KJXlfGl2LcxgwkEwJF0D/BWzVWAZW/XY4bFaiR7s0Jk3FPvlnepg1H1b1UwlA==
+
+nanoid@^3.1.4:
+  version "3.1.10"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.1.10.tgz#69a8a52b77892de0d11cede96bc9762852145bc4"
+  integrity sha512-iZFMXKeXWkxzlfmMfM91gw7YhN2sdJtixY+eZh9V6QWJWTOiurhpKhBMgr82pfzgSqglQgqYSCowEYsz8D++6w==
 
 nanomatch@^1.2.13, nanomatch@^1.2.9:
   version "1.2.13"

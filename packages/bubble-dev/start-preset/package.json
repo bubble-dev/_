@@ -54,7 +54,7 @@
     "@start/plugin-sequence": "^1.0.0",
     "@start/plugin-write": "^1.0.0",
     "@start/reporter-verbose": "^1.0.0",
-    "@x-ray/native-screenshots-app": "^1.0.2",
+    "@x-ray/native-screenshots-app": "^2.0.0",
     "@x-ray/web-mobile-screenshots-app": "^1.0.1",
     "copie": "^1.0.0",
     "dleet": "^1.0.0",
