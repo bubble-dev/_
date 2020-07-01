@@ -20,9 +20,6 @@
     "@primitives/block": "^2.0.1",
     "@primitives/layout": "^2.0.1",
     "@types/react": "^16.8.6",
-    "@x-ray/common-utils": "^1.0.0",
-    "@x-ray/screenshot-utils": "^1.0.0",
-    "@x-ray/snapshots": "^1.0.3",
     "autoprops": "^3.0.0",
     "react": "16.11.0"
   }
