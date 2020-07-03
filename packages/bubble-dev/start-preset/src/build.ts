@@ -33,7 +33,9 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     read,
     babel(babelConfigWebBuild),
     rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
-    write(`${dir}/build/web/`)
+    write(`${dir}/build/web/`),
+    find(`${dir}/src/**/*.json`),
+    copy(`${dir}/build/web/`)
   )
 }
 
@@ -73,7 +75,9 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
       read,
       babel(babelConfigReactNativeBuild),
       rename((file) => file.replace(/(\.native)?\.(ts|tsx|jsx)$/, '.js')),
-      write(`${dir}/build/native/`)
+      write(`${dir}/build/native/`),
+      find(`${dir}/src/**/*.json`),
+      copy(`${dir}/build/native/`)
     )
   )(...nativeFiles)
 }
@@ -91,7 +95,9 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     read,
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
-    write(`${dir}/build/node/`)
+    write(`${dir}/build/node/`),
+    find(`${dir}/src/**/*.json`),
+    copy(`${dir}/build/node/`)
   )
 }
 
