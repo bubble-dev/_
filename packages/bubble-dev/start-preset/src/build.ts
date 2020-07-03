@@ -32,7 +32,7 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     ]),
     read,
     babel(babelConfigWebBuild),
-    rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/web/`)
   )
 }
@@ -72,7 +72,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
     sequence(
       read,
       babel(babelConfigReactNativeBuild),
-      rename((file) => file.replace(/(\.native)?\.(ts|tsx)$/, '.js')),
+      rename((file) => file.replace(/(\.native)?\.(ts|tsx|jsx)$/, '.js')),
       write(`${dir}/build/native/`)
     )
   )(...nativeFiles)
@@ -90,7 +90,7 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     ]),
     read,
     babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/\.(ts|tsx)$/, '.js')),
+    rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/node/`)
   )
 }
