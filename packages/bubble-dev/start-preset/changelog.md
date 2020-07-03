@@ -1,3 +1,7 @@
+## v6.0.0
+
+* 💥 upgrade to ESLint v7
+
 ## v5.0.1
 
 * 🐞 fix missing `jsx` extension

@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 upgrade to ESLint v7
+
 ## v1.1.0
 
 * 🌱 add support for .jsx file extension
