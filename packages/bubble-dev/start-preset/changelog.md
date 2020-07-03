@@ -1,3 +1,9 @@
+## v6.0.2
+
+* 🐞 support JSON files in src/ folder
+
+* 🐞 ensure jsx files are renamed to js when built
+
 ## v6.0.1
 
 * 🐞 remove unnecessary deps
