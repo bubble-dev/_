@@ -41,21 +41,23 @@ type TDemoComponent = TDemo & { hasTheme: boolean}
 
 export const Component = ({ hasTheme }: TDemoComponent) => {
   return (
-    hasTheme ? (
-      <ImageTheme.Provider value={newTheme}>
+    hasTheme
+      ? (
+        <ImageTheme.Provider value={newTheme}>
+          <DemoThemeableImage
+            source="image.png"
+            height={200}
+            width={200}
+          />
+        </ImageTheme.Provider>
+      )
+      : (
         <DemoThemeableImage
           source="image.png"
           height={200}
           width={200}
         />
-      </ImageTheme.Provider>
-    ) : (
-      <DemoThemeableImage
-        source="image.png"
-        height={200}
-        width={200}
-      />
-    )
+      )
   )
 }
 

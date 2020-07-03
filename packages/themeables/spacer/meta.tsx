@@ -42,13 +42,15 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => (
     }}
   >
     {(
-      hasTheme ? (
-        <SpacerTheme.Provider value={newTheme}>
+      hasTheme
+        ? (
+          <SpacerTheme.Provider value={newTheme}>
+            <DemoThemeableSpacer status={status}/>
+          </SpacerTheme.Provider>
+        )
+        : (
           <DemoThemeableSpacer status={status}/>
-        </SpacerTheme.Provider>
-      ) : (
-        <DemoThemeableSpacer status={status}/>
-      )
+        )
     )}
   </Block>
 )
