@@ -1,3 +1,7 @@
+## v6.0.1
+
+* 🐞 remove unnecessary deps
+
 ## v6.0.0
 
 * 💥 upgrade to ESLint v7
