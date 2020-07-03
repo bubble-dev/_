@@ -26,8 +26,8 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
 
   return sequence(
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
@@ -42,7 +42,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
   const { default: globby } = await import('globby')
   const allFiles = await globby(
     [
-      `${dir}/src/**/*.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ],
     {
@@ -51,7 +51,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
       onlyFiles: true,
     }
   )
-  const extRegExp = /\.(js|ts|tsx)$/
+  const extRegExp = /\.(js|jsx|ts|tsx)$/
   const nativeFiles = allFiles.filter((file) => {
     if (allFiles.includes(file.replace(extRegExp, '.native.$1'))) {
       return false
@@ -84,8 +84,8 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   return sequence(
     env({ BABEL_ENV: 'production' }),
     find([
-      `${dir}/src/**/*.{js,ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{js,ts,tsx}`,
+      `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
@@ -109,7 +109,7 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
 
   const tasks = []
 
-  if (Reflect.has(packageJson, 'main')) {
+  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'bin')) {
     tasks.push('buildNode')
   }
 
@@ -119,10 +119,6 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
 
   if (Reflect.has(packageJson, 'react-native')) {
     tasks.push('buildReactNative')
-  }
-
-  if (Reflect.has(packageJson, 'bin') && !tasks.includes('buildNode')) {
-    tasks.push('buildNode')
   }
 
   if (Reflect.has(packageJson, 'buildAssets')) {
