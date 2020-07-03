@@ -1,3 +1,7 @@
+## v5.0.1
+
+* 🐞 fix missing `jsx` extension
+
 ## v5.0.0
 
 * 💥 remove X-Ray
