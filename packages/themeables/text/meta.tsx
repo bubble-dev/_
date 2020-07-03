@@ -62,21 +62,23 @@ type TDemoComponent = TDemo & { hasTheme: boolean}
 
 export const Component = ({ status, hasTheme }: TDemoComponent) => {
   return (
-    hasTheme ? (
-      <TextTheme.Provider value={newTheme}>
-        <DemoThemeableText status={status}>
-          Label
-        </DemoThemeableText>
-        <DemoThemeableInput status={status} value="Label"/>
-      </TextTheme.Provider>
-    ) : (
-      <>
-        <DemoThemeableText status={status}>
-          Label
-        </DemoThemeableText>
-        <DemoThemeableInput status={status} value="Label"/>
-      </>
-    )
+    hasTheme
+      ? (
+        <TextTheme.Provider value={newTheme}>
+          <DemoThemeableText status={status}>
+            Label
+          </DemoThemeableText>
+          <DemoThemeableInput status={status} value="Label"/>
+        </TextTheme.Provider>
+      )
+      : (
+        <>
+          <DemoThemeableText status={status}>
+            Label
+          </DemoThemeableText>
+          <DemoThemeableInput status={status} value="Label"/>
+        </>
+      )
   )
 }
 

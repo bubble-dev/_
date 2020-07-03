@@ -35,13 +35,15 @@ type TDemoComponent = TDemo & { hasTheme: boolean}
 
 export const Component = ({ status, hasTheme }: TDemoComponent) => {
   return (
-    hasTheme ? (
-      <VectorShapeTheme.Provider value={newTheme}>
+    hasTheme
+      ? (
+        <VectorShapeTheme.Provider value={newTheme}>
+          <DemoThemeableVectorShape status={status}/>
+        </VectorShapeTheme.Provider>
+      )
+      : (
         <DemoThemeableVectorShape status={status}/>
-      </VectorShapeTheme.Provider>
-    ) : (
-      <DemoThemeableVectorShape status={status}/>
-    )
+      )
   )
 }
 

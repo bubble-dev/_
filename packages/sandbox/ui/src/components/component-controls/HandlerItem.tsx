@@ -64,7 +64,8 @@ export const HandlerItem = pureComponent(
               <SizeText>
                 Required
               </SizeText>
-            ) : (
+            )
+            : (
               <ValueCheckbox
                 checkedPropValue={possibleValues[0]}
                 propPath={propPath}

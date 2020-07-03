@@ -36,17 +36,19 @@ type TDemoComponent = TDemo & { hasTheme: boolean }
 
 export const Component = ({ hasTheme }: TDemoComponent) => {
   return (
-    hasTheme ? (
-      <LayoutTheme.Provider value={newTheme}>
+    hasTheme
+      ? (
+        <LayoutTheme.Provider value={newTheme}>
+          <DemoThemeableLayout>
+            <DemoBackground/>
+          </DemoThemeableLayout>
+        </LayoutTheme.Provider>
+      )
+      : (
         <DemoThemeableLayout>
           <DemoBackground/>
         </DemoThemeableLayout>
-      </LayoutTheme.Provider>
-    ) : (
-      <DemoThemeableLayout>
-        <DemoBackground/>
-      </DemoThemeableLayout>
-    )
+      )
   )
 }
 

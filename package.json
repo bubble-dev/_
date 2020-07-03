@@ -24,7 +24,7 @@
     "@types/node": "^13.13.4",
     "colorido": "*",
     "core-js": "^3.2.1",
-    "eslint": "^6.1.0",
+    "eslint": "^7.3.1",
     "graphiq": "^0.2.3",
     "react": "16.11.0",
     "react-native": "0.62.2",

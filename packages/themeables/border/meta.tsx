@@ -61,13 +61,15 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => {
       }}
     >
       {(
-        hasTheme ? (
-          <BorderTheme.Provider value={newTheme}>
+        hasTheme
+          ? (
+            <BorderTheme.Provider value={newTheme}>
+              <DemoThemeableBorder status={status}/>
+            </BorderTheme.Provider>
+          )
+          : (
             <DemoThemeableBorder status={status}/>
-          </BorderTheme.Provider>
-        ) : (
-          <DemoThemeableBorder status={status}/>
-        )
+          )
       )}
     </Block>
   )

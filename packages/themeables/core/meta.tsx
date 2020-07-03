@@ -47,13 +47,15 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => (
     }}
   >
     {(
-      hasTheme ? (
-        <ThemePiece.Provider value={newTheme}>
+      hasTheme
+        ? (
+          <ThemePiece.Provider value={newTheme}>
+            <DemoThemeableBackground status={status}/>
+          </ThemePiece.Provider>
+        )
+        : (
           <DemoThemeableBackground status={status}/>
-        </ThemePiece.Provider>
-      ) : (
-        <DemoThemeableBackground status={status}/>
-      )
+        )
     )}
   </Block>
 )
