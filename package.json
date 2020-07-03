@@ -93,6 +93,7 @@
     "commitMessageTopic": "{{depName}}",
     "ignoreDeps": [
       "gradle",
+      "metro-react-native-babel-preset",
       "react",
       "react-dom",
       "react-test-renderer"
