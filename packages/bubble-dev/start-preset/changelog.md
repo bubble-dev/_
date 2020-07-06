@@ -1,3 +1,11 @@
+## v6.0.4
+
+* 🐞 update auto core
+
+## v6.0.3
+
+* 🐞 update auto core
+
 ## v6.0.2
 
 * 🐞 support JSON files in src/ folder
