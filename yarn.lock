@@ -23,20 +23,20 @@
     prompts "^2.3.0"
     tsfn "^1.1.1"
 
-"@auto/core@^0.1.0", "@auto/core@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@auto/core/-/core-0.1.6.tgz#52b4b041ec00e57039e905a969bccbf97a1ef06a"
-  integrity sha512-WkKXA6C2CHohIZAUVN1NOmjUP8QLAg2uOs4IPeCwxlbYEuLfHiCRJIbRItLza8EyUMMFZTxK6ZtL6XZWRw5ugg==
+"@auto/core@^0.1.6", "@auto/core@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@auto/core/-/core-0.1.7.tgz#79554c18d77bb42418f6e1985338dbe26ff70d6f"
+  integrity sha512-60Ksczbg/a/AZ4XH+HQO2WRy05H4RUOmmzATuele0vRw4nrFwvLFrVkhPVkpSvV8TB54j1UZBe2b6793lRRtPg==
   dependencies:
     dleet "^1.0.0"
-    escape-string-regexp "^3.0.0"
+    escape-string-regexp "^4.0.0"
     execa "^4.0.0"
     fast-glob "^3.0.0"
     p-all "^3.0.0"
     pifs "^1.0.0"
     prompts "^2.3.1"
     semver "^7.0.0"
-    tsfn "^1.1.1"
+    tsfn "^1.1.2"
 
 "@auto/fs@^1.0.0":
   version "1.0.0"
@@ -4537,6 +4537,11 @@ escape-string-regexp@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-3.0.0.tgz#1dad9cc28aed682be0de197280f79911a5fccd61"
   integrity sha512-11dXIUC3umvzEViLP117d0KN6LJzZxh5+9F4E/7WLAAw7GrHk8NpUR+g9iJi/pe9C0py4F8rs0hreyRCwlAuZg==
+
+escape-string-regexp@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
+  integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
 eslint-import-resolver-node@^0.3.3:
   version "0.3.4"

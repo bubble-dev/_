@@ -40,6 +40,7 @@ export const publish = () => plugin('publish', ({ reporter }) => async () => {
   const { makeGithubReleases } = await import('@auto/github')
   const { sendSlackMessage } = await import('@auto/slack')
   const { sendTelegramMessage } = await import('@auto/telegram')
+  const { isUndefined } = await import('tsfn')
 
   const slackConfig: TSlackConfig = {
     token: process.env.AUTO_SLACK_TOKEN as string,
@@ -61,6 +62,34 @@ export const publish = () => plugin('publish', ({ reporter }) => async () => {
   const telegramConfig: TTelegramConfig = {
     token: process.env.AUTO_TELEGRAM_TOKEN as string,
     chatId: process.env.AUTO_TELEGRAM_CHAT_ID as string,
+  }
+
+  if (shouldSendSlackMessage && (
+    isUndefined(slackConfig.token) ||
+    isUndefined(slackConfig.username) ||
+    isUndefined(slackConfig.channel) ||
+    isUndefined(slackConfig.iconEmoji) ||
+    isUndefined(slackConfig.colors.initial) ||
+    isUndefined(slackConfig.colors.major) ||
+    isUndefined(slackConfig.colors.minor) ||
+    isUndefined(slackConfig.colors.patch)
+  )) {
+    throw new Error('Slack config is invalid, see https://github.com/bubble-dev/_/tree/master/packages/bubble-dev/start-preset#errors')
+  }
+
+  if (shouldMakeGitHubReleases && (
+    isUndefined(githubConfig.token) ||
+    isUndefined(githubConfig.username) ||
+    isUndefined(githubConfig.repo)
+  )) {
+    throw new Error('GitHub config is invalid, see https://github.com/bubble-dev/_/tree/master/packages/bubble-dev/start-preset#errors')
+  }
+
+  if (shouldSendTelegramMessage && (
+    isUndefined(telegramConfig.token) ||
+    isUndefined(telegramConfig.chatId)
+  )) {
+    throw new Error('Telegram config is invalid, see https://github.com/bubble-dev/_/tree/master/packages/bubble-dev/start-preset#errors')
   }
 
   await auto({
