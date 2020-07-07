@@ -1,3 +1,7 @@
+## v6.0.5
+
+* 🐞 prevent unnecessary `types` field in prepared `package.json`
+
 ## v6.0.4
 
 * 🐞 update auto core
