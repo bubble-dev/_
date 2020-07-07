@@ -4,11 +4,19 @@ import { TJsonMap } from 'typeon'
 export default (dir: string) =>
   plugin('buildPackageJson', ({ logPath }) => async () => {
     const { resolve } = await import('path')
-    const { readFile, writeFile } = await import('pifs')
+    const { readFile, writeFile, access } = await import('pifs')
     const packageJsonPath = resolve(dir, 'package.json')
 
     const packageJson: TJsonMap = JSON.parse(await readFile(packageJsonPath, 'utf8'))
     const newPackageJsonPath = resolve(dir, 'build/package.json')
+    let hasTypes = false
+
+    try {
+      await access('types/index.d.ts')
+
+      hasTypes = true
+    } catch {}
+
     const newPackageJson = Object.entries(packageJson).reduce((result, [key, value]) => {
       switch (key) {
         case 'devDependencies':
@@ -17,7 +25,7 @@ export default (dir: string) =>
           break
         }
         case 'main': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (hasTypes && !Reflect.has(packageJson, 'types')) {
             result.types = 'types/index.d.ts'
           }
 
@@ -26,7 +34,7 @@ export default (dir: string) =>
           break
         }
         case 'browser': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (hasTypes && !Reflect.has(packageJson, 'types')) {
             result.types = 'types/index.d.ts'
           }
 
@@ -35,7 +43,7 @@ export default (dir: string) =>
           break
         }
         case 'react-native': {
-          if (!Reflect.has(packageJson, 'types')) {
+          if (hasTypes && !Reflect.has(packageJson, 'types')) {
             result.types = 'types/index.d.ts'
           }
 
