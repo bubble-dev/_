@@ -14,6 +14,8 @@ import parallel from '@start/plugin-parallel'
 import typescriptGenerate from '@start/plugin-lib-typescript-generate'
 import copyAssets from './plugins/copy-assets'
 
+export { default as preparePackage } from './plugins/prepare-package'
+
 export const buildAssets = async (dir: string) => {
   const packageJsonPath = path.resolve(dir, 'package.json')
   const { default: packageJson } = await import(packageJsonPath)
