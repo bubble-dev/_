@@ -12,7 +12,7 @@ export default (dir: string) =>
     let hasTypes = false
 
     try {
-      await access('types/index.d.ts')
+      await access(resolve(dir, 'build/types/index.d.ts'))
 
       hasTypes = true
     } catch {}
