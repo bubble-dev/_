@@ -1,3 +1,7 @@
+## v6.0.7
+
+* 🐞 remove /index.js from output package.json main, browser and react-native entries
+
 ## v6.0.6
 
 * 🐞 prevent unnecessary `types` field in prepared `package.json`
