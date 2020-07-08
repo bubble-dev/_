@@ -29,7 +29,7 @@ export default (dir: string) =>
             result.types = 'types/index.d.ts'
           }
 
-          result[key] = 'node/index.js'
+          result[key] = 'node'
 
           break
         }
@@ -38,7 +38,7 @@ export default (dir: string) =>
             result.types = 'types/index.d.ts'
           }
 
-          result[key] = 'web/index.js'
+          result[key] = 'web'
 
           break
         }
@@ -47,7 +47,7 @@ export default (dir: string) =>
             result.types = 'types/index.d.ts'
           }
 
-          result[key] = 'native/index.js'
+          result[key] = 'native'
 
           break
         }
