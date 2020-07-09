@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { globalObject } from '../utils'
 import { reducer } from './reducers'
 import { TMetaState, TMetaDispatch } from './types'
+import { getHashInitialState } from './get-hash-initial-state'
 
 export let store: Store<TMetaState> & {
   dispatch: TMetaDispatch,
@@ -20,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   store = createStore(
     reducer,
+    getHashInitialState(),
     applyMiddleware<TMetaDispatch, TMetaState>(thunk)
   )
 }

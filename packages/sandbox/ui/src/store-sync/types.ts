@@ -7,7 +7,6 @@ export type TMainSubState = Pick<TState, 'width' | 'height' | 'transformX' | 'tr
 export type TSyncState = TMainSubState & TMetaSubState
 
 export type TSyncStore = {
-  getInitialState: () => TSyncState,
-  setState: (state: any) => void,
+  setState: (state: unknown) => void,
   subscribe: (observer: (state: TSyncState) => void) => void,
 }

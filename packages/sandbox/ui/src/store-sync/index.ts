@@ -7,5 +7,8 @@ import { syncState } from './sync-state'
 const store = SyncStoreFactory(mainStore, metaStore)
 
 // Activate middlewares
-syncState(store)
+if (process.env.NODE_ENV === 'development') {
+  syncState(store)
+}
+
 locationHash(store)

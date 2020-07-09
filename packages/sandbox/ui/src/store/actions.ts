@@ -1,5 +1,5 @@
-import { TActionCreator, TState, TActionWithPayload, TAction } from '../types'
-import { TTransform } from '../../types'
+import { TTransform } from '../types'
+import { TActionCreator, TState, TActionWithPayload, TAction } from './types'
 
 export const TYPE_SET_SEARCH_VALUE = 'SET_SEARCH_VALUE'
 export const TYPE_SET_WIDTH = 'SET_WIDTH'

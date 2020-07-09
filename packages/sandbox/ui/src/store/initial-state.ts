@@ -1,5 +1,5 @@
-import { resolutions } from '../../resolutions'
-import { TState } from '../types'
+import { resolutions } from '../resolutions'
+import { TState } from './types'
 
 const initialResolutionKey = 'mobileLandscape'
 

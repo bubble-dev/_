@@ -1,5 +1,5 @@
 import { EMPTY_OBJECT } from 'tsfn'
-import { TMetaState } from '../types'
+import { TMetaState } from './types'
 
 export const initialState: TMetaState = {
   components: null,

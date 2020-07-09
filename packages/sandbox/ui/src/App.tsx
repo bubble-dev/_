@@ -6,10 +6,12 @@ import { Sandbox } from './components/sandbox'
 import { NotificationProvider } from './components/notification-provider'
 import { AlertProvider } from './components/alert-provider'
 import { PortalProvider } from './components/portal-provider'
-import { setComponentsList } from './store-meta'
 import { PluginProvider } from './components/plugin-provider'
 import { ImportPackageNameProvider } from './components/import-package-name-provider'
 import { TApp } from './types'
+import { setComponentsList } from './store-meta'
+import './store'
+import './store-sync'
 
 export const App = component(
   startWithType<TApp>(),

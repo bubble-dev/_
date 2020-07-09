@@ -1,5 +1,6 @@
 import { platformId } from '../utils/platform-id'
 import { TSyncStore } from './types'
+import { getInitialSyncState } from './get-initial-sync-state'
 
 const HOST = 'localhost'
 const PORT = 3001
@@ -25,7 +26,7 @@ export const syncState = (store: TSyncStore) => {
       store.setState(
         payload !== null
           ? payload
-          : store.getInitialState()
+          : getInitialSyncState()
       )
     }
   })

@@ -1,4 +1,4 @@
-import { globalObject } from '../../utils/global-object'
+import { globalObject } from './global-object'
 
 export const EMPTY_HASH = ''
 
