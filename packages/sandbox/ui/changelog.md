@@ -1,3 +1,7 @@
+## v3.0.3
+
+* 🐞 fix initial state in standalone build
+
 ## v3.0.2
 
 * 🐞 fix autoprops restrictions
