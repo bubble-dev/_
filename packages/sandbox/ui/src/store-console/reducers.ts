@@ -1,8 +1,8 @@
 import { AnyAction, Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
-import { TConsoleState } from '../types'
-import { LOG_ACTION, CLEAR_ACTION } from '../actions'
-import { initialState } from '../initial-state'
+import { TConsoleState } from './types'
+import { LOG_ACTION, CLEAR_ACTION } from './actions'
+import { initialState } from './initial-state'
 
 export const reducer: Reducer<TConsoleState, AnyAction> = (state, action) => {
   if (isUndefined(state)) {

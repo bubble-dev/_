@@ -21,8 +21,6 @@ import {
   TSetResolutionAction,
   TSetTransformAction,
 } from './actions'
-// Activate middlewares
-import '../store-sync'
 
 const StoreContext = StoreContextFactory(store)
 

@@ -1,7 +1,7 @@
 import { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
-import { TState } from '../types'
-import { resolutions, findResolutionKey } from '../../resolutions'
+import { resolutions, findResolutionKey } from '../resolutions'
+import { TState } from './types'
 import {
   TAllActions,
   TYPE_SET_WIDTH,
@@ -16,8 +16,8 @@ import {
   TYPE_RESET_TRANSFORM,
   TYPE_TOGGLE_NAVIGATION_SIDEBAR,
   TYPE_TOGGLE_CONTROLS_SIDEBAR,
-} from '../actions'
-import { initialState } from '../initial-state'
+} from './actions'
+import { initialState } from './initial-state'
 
 const filterWidth = (value: number) => Math.min(Math.max(value, 50), 10000)
 const filterHeight = (value: number) => Math.min(Math.max(value, 50), 10000)

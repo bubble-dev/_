@@ -2,7 +2,7 @@ import { Store, createStore } from 'redux'
 import { globalObject } from '../utils'
 import { TState } from './types'
 import { reducer } from './reducers'
-import { getInitialState } from './initial-state'
+import { getHashInitialState } from './get-hash-initial-state'
 
 export let store: Store<TState>
 
@@ -16,6 +16,6 @@ if (process.env.NODE_ENV === 'development') {
 } else {
   store = createStore(
     reducer,
-    getInitialState()
+    getHashInitialState()
   )
 }

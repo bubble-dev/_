@@ -1,18 +1,15 @@
 import { Store } from 'redux'
-import { TKeyOf, isObject } from 'tsfn'
 import { shallowEqualByKeys } from 'refun'
 import { TMetaState } from '../store-meta/types'
-import { initialState as metaInitialState } from '../store-meta/initial-state'
 import { updateComponentProps } from '../store-meta'
-import { initialState as mainInitialState } from '../store/initial-state'
-import { objectPick } from '../store/utils/object-pick'
+import { objectPick } from '../utils/object-pick'
 import { navigate } from '../store'
 import { TState as TMainState } from '../store/types'
 import { TSyncStore, TMainSubState, TMetaSubState, TSyncState } from './types'
+import { mainStateKeys, metaStateKeys } from './get-initial-sync-state'
+import { isValidSyncState } from './is-valid-sync-state'
 
 export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<TMetaState>): TSyncStore => {
-  const mainStateKeys: TKeyOf<TMainSubState>[] = ['width', 'height', 'transformX', 'transformY', 'transformZ', 'resolutionKey', 'shouldStretch', 'hasGrid', 'isCanvasDarkMode']
-  const metaStateKeys: TKeyOf<TMetaSubState>[] = ['componentKey', 'propsIndex']
   let mainKnownState: TMainSubState = objectPick(mainStore.getState(), mainStateKeys)
   let metaKnownState: TMetaSubState = objectPick(metaStore.getState(), metaStateKeys)
   let isMainStateUpdating = false
@@ -25,16 +22,14 @@ export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<
     }
   }
 
-  const isValidState = (obj: any): obj is TSyncState =>
-    isObject(obj) &&
-    mainStateKeys.every((k) => Reflect.has(obj, k)) &&
-    metaStateKeys.every((k) => Reflect.has(obj, k))
-
+  // Subscribe to Main Store
   mainStore.subscribe(() => {
+    // Do not invoke subscribers
     if (isMainStateUpdating) {
       return
     }
 
+    // Update is coming from a Store.
     const state = objectPick(mainStore.getState(), mainStateKeys)
 
     if (shallowEqualByKeys(mainKnownState, state, mainStateKeys)) {
@@ -48,11 +43,14 @@ export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<
       ...metaKnownState,
     })
   })
+  // Subscribe to Meta Store
   metaStore.subscribe(() => {
+    // Do not invoke subscribers
     if (isMetaStateUpdating) {
       return
     }
 
+    // Update is coming from a Store.
     const state = objectPick(metaStore.getState(), metaStateKeys)
 
     if (shallowEqualByKeys(metaKnownState, state, metaStateKeys)) {
@@ -68,12 +66,9 @@ export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<
   })
 
   return {
-    getInitialState: (): TSyncState => ({
-      ...objectPick(mainInitialState, mainStateKeys),
-      ...objectPick(metaInitialState, metaStateKeys),
-    }),
-    setState: async (incoming: any) => {
-      if (!isValidState(incoming)) {
+    setState: async (incoming: unknown) => {
+      // Incoming could be invalid, because of broken url hash
+      if (!isValidSyncState(incoming)) {
         return
       }
 
@@ -82,8 +77,8 @@ export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<
 
       if (!shallowEqualByKeys(incomingMainState, mainKnownState, mainStateKeys)) {
         mainKnownState = incomingMainState
-        isMainStateUpdating = true
 
+        isMainStateUpdating = true
         navigate(incomingMainState)
         isMainStateUpdating = false
       }
@@ -93,8 +88,8 @@ export const SyncStoreFactory = (mainStore: Store<TMainState>, metaStore: Store<
 
       if (!shallowEqualByKeys(incomingMetaState, metaKnownState, metaStateKeys)) {
         metaKnownState = incomingMetaState
-        isMetaStateUpdating = true
 
+        isMetaStateUpdating = true
         await updateComponentProps(incomingMetaState.componentKey, incomingMetaState.propsIndex)
         isMetaStateUpdating = false
       }

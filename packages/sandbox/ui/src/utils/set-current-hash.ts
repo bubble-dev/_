@@ -1,5 +1,5 @@
-import { globalObject } from '../../utils/global-object'
-import { onIdle } from '../../utils/on-idle'
+import { globalObject } from './global-object'
+import { onIdle } from './on-idle'
 
 let unsubscribe: (() => void) | null = null
 

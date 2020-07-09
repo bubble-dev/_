@@ -1,8 +1,8 @@
 import { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
-import { TMetaState } from '../types'
-import { SET_COMPONENT_KEY_ACTION, SET_COMPONENTS_LIST_ACTION, SET_IMPORTED_META_ACTION, SET_PROPS_ACTION, RESET_COMPONENT_KEY_ACTION, TAllActions, SELECT_ELEMENT_ACTION } from '../actions'
-import { initialState } from '../initial-state'
+import { TMetaState } from './types'
+import { SET_COMPONENT_KEY_ACTION, SET_COMPONENTS_LIST_ACTION, SET_IMPORTED_META_ACTION, SET_PROPS_ACTION, RESET_COMPONENT_KEY_ACTION, TAllActions, SELECT_ELEMENT_ACTION } from './actions'
+import { initialState } from './initial-state'
 
 export const reducer: Reducer<TMetaState, TAllActions> = (state, action) => {
   if (isUndefined(state)) {

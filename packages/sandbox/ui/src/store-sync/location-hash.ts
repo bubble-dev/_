@@ -1,29 +1,15 @@
-import { globalObject } from '../utils'
-import { getCurrentHash, decodeUrl, encodeUrl, setCurrentHash, EMPTY_HASH } from '../store/utils'
+import { globalObject, setCurrentHash, encodeUrl } from '../utils'
 import { TSyncStore } from './types'
+import { getHashState } from './get-hash-state'
 
 export const locationHash = (store: TSyncStore) => {
-  let prevHash = EMPTY_HASH
-
   globalObject.addEventListener('hashchange', () => {
-    const hash = getCurrentHash()
-
-    if (hash === prevHash) {
-      return
-    }
-
-    prevHash = hash
-
     store.setState(
-      hash === EMPTY_HASH
-        ? store.getInitialState()
-        : decodeUrl(hash)
+      getHashState()
     )
   })
 
   store.subscribe((state) => {
-    prevHash = encodeUrl(state)
-
-    setCurrentHash(prevHash)
+    setCurrentHash(encodeUrl(state))
   })
 }

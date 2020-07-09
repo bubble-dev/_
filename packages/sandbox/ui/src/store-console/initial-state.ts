@@ -1,4 +1,4 @@
-import { TConsoleState } from '../types'
+import { TConsoleState } from './types'
 
 export const initialState: TConsoleState = {
   lines: [],
