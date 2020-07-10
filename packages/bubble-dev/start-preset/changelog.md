@@ -1,3 +1,9 @@
+## v7.0.0
+
+* 💥 bump React Native to v0.63.0
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v6.0.7
 
 * 🐞 remove /index.js from output package.json main, browser and react-native entries

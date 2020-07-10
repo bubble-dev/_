@@ -1,3 +1,7 @@
+## v0.1.8
+
+* 🐞 bump `metro-react-native-babel-preset`
+
 ## v0.1.7
 
 * 🐞 refactor and rename configs
