@@ -75,9 +75,9 @@ export const buildSandbox = () =>
       const { buildWebAppRelease } = await import('@rebox/web')
 
       await buildWebAppRelease({
-        entryPointPath: 'tasks/sandbox/index.tsx',
-        outputPath: '.rebox/Sandbox',
-        htmlTemplatePath: 'tasks/sandbox/templates/build.html',
+        entryPointPath: './tasks/sandbox/index.tsx',
+        outputPath: './.rebox/Sandbox',
+        htmlTemplatePath: './tasks/sandbox/templates/build.html',
       })
     })
   )
