@@ -22,6 +22,6 @@
     "@primitives/block": "^2.0.1",
     "@types/react": "^16.8.6",
     "autoprops": "^3.0.0",
-    "react": "16.11.0"
+    "react": "16.13.1"
   }
 }
