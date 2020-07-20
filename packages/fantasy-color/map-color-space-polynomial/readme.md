@@ -50,7 +50,7 @@ const coeffiecientsToMakeColorDarker = [
   ],
 ]
 
-const mapLabToDarkerLab = (
+const mapLabToDarkerLab = mapColorSpace(
   coeffiecientsToMakeColorDarker,
   2 // degree of the polynomials
 )
