@@ -2,9 +2,12 @@ import { ReactNode } from 'react'
 import { TThemeableText } from '@themeables/text'
 import { TThemeableSpacer } from '@themeables/spacer'
 
+export type TAlign = 'start' | 'center' | 'end'
+export type TDirection = 'left-to-right' | 'right-to-left'
+
 export type TParagraph = {
-  align?: 'start' | 'center' | 'end',
-  direction?: 'left-to-right' | 'right-to-left',
+  align?: TAlign,
+  direction?: TDirection,
   id?: string,
   shouldPreserveWhitespace?: boolean,
   shouldPreventWrap?: boolean,
