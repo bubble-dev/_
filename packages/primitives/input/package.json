@@ -21,10 +21,10 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.62.2",
+    "@types/react-native": "^0.63.0",
     "autoprops": "^3.0.0",
     "react": "16.13.1",
-    "react-native": "0.63.0"
+    "react-native": "0.63.2"
   },
   "designDocsUrl": "https://google.com",
   "sourceCodeUrl": "https://google.com"

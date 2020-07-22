@@ -17,10 +17,10 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "@types/react-native": "^0.62.2",
+    "@types/react-native": "^0.63.0",
     "@types/tape": "^4.2.34",
     "react": "16.13.1",
-    "react-native": "0.63.0",
+    "react-native": "0.63.2",
     "tape": "^5.0.1"
   },
   "peerDependencies": {
