@@ -5,6 +5,7 @@ import * as Checkbox from '@primitives/checkbox/meta'
 import * as Heading from '@primitives/heading/meta'
 import * as Input from '@primitives/input/meta'
 import * as LayoutThemeable from '@themeables/layout/meta'
+import * as TextAlignThemeable from '@themeables/text-align/meta'
 import * as Paragraph from '@primitives/paragraph/meta'
 import * as Radio from '@primitives/radio/meta'
 import * as Spacer from '@primitives/spacer/meta'
@@ -17,6 +18,7 @@ export const components: TComponents = {
   Heading: () => Promise.resolve(Heading),
   Input: () => Promise.resolve(Input),
   LayoutThemeable: () => Promise.resolve(LayoutThemeable),
+  TextAlignThemeable: () => Promise.resolve(TextAlignThemeable),
   Paragraph: () => Promise.resolve(Paragraph),
   Radio: () => Promise.resolve(Radio),
   Spacer: () => Promise.resolve(Spacer),
