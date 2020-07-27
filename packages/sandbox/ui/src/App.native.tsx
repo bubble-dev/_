@@ -6,6 +6,8 @@ import { Sandbox } from './components/sandbox'
 import { setComponentsList } from './store-meta'
 import { PluginProvider } from './components/plugin-provider'
 import { TApp } from './types'
+import './store'
+import './store-sync'
 
 export const App = component(
   startWithType<TApp>(),
