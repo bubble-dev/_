@@ -1,3 +1,7 @@
+## v3.0.4
+
+* 🐞 fix native sync
+
 ## v3.0.3
 
 * 🐞 fix initial state in standalone build
