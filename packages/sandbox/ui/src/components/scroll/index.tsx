@@ -1,7 +1,6 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, CSSProperties } from 'react'
 import { component, startWithType, mapContext, mapState, mapDefaultProps, onLayout, mapHandlers, mapWithProps, mapRef } from 'refun'
 import { isNumber } from 'tsfn'
-import { TStyle, normalizeWebStyle } from 'stili'
 import { LayoutContext } from '../layout-context'
 import { SYMBOL_SCROLL } from '../../symbols'
 
@@ -33,34 +32,32 @@ export const Scroll = component(
     },
   }),
   mapWithProps(({ _left, _top, _width, _height, contentWidth, contentHeight, shouldScrollHorizontally, shouldScrollVertically }) => {
-    const wrapperStyle: TStyle = {
-      _webOnly: {
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-      },
+    const wrapperStyle: CSSProperties = {
       display: 'flex',
       position: 'absolute',
       left: _left,
       top: _top,
       width: _width,
       height: _height,
+      overflowX: 'hidden',
+      overflowY: 'hidden',
     }
-    const childStyle: TStyle = {
+    const childStyle: CSSProperties = {
       width: contentWidth,
       height: contentHeight,
     }
 
     if (shouldScrollHorizontally) {
-      wrapperStyle._webOnly!.overflowX = 'scroll'
+      wrapperStyle.overflowX = 'scroll'
     }
 
     if (shouldScrollVertically) {
-      wrapperStyle._webOnly!.overflowY = 'scroll'
+      wrapperStyle.overflowY = 'scroll'
     }
 
     return {
-      wrapperStyle: normalizeWebStyle(wrapperStyle),
-      childStyle: normalizeWebStyle(childStyle),
+      wrapperStyle,
+      childStyle,
     }
   }),
   mapRef('ref', null as null | HTMLDivElement),

@@ -1,5 +1,4 @@
-import React, { Ref, HTMLProps } from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React, { Ref, HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined, isUndefined } from 'tsfn'
 import { TPrimitiveBlockCommon } from './types'
@@ -40,10 +39,8 @@ export const PrimitiveBlock = component(
     shouldIgnorePointerEvents,
     shouldForceAcceleration,
   }) => {
-    const styles: TStyle = {
-      _webOnly: {
-        mixBlendMode: blendMode,
-      },
+    const style: CSSProperties = {
+      mixBlendMode: blendMode,
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
@@ -62,39 +59,39 @@ export const PrimitiveBlock = component(
     }
 
     if (isUndefined(top) && isUndefined(bottom)) {
-      styles.top = 0
+      style.top = 0
     }
 
     if (isUndefined(left) && isUndefined(right)) {
-      styles.left = 0
+      style.left = 0
     }
 
     if (shouldIgnorePointerEvents) {
-      styles._webOnly!.pointerEvents = 'none'
+      style.pointerEvents = 'none'
     }
 
     if (shouldHideOverflow) {
-      styles.overflow = 'hidden'
+      style.overflow = 'hidden'
     }
 
     if (shouldFlow) {
-      styles.position = 'relative'
-      styles.alignSelf = 'flex-start'
-      styles.flexGrow = 0
-      styles.flexShrink = 0
-      styles.flexBasis = 'auto'
+      style.position = 'relative'
+      style.alignSelf = 'flex-start'
+      style.flexGrow = 0
+      style.flexShrink = 0
+      style.flexBasis = 'auto'
     }
 
     if (shouldScroll) {
-      styles.overflow = 'scroll'
+      style.overflow = 'scroll'
     }
 
     if (shouldForceAcceleration) {
-      styles._webOnly!.transform = 'translateZ(0)'
+      style.transform = 'translateZ(0)'
     }
 
     const props: HTMLProps<HTMLDivElement> = {
-      style: normalizeWebStyle(styles),
+      style,
       children,
     }
 

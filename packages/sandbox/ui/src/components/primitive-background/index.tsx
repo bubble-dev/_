@@ -1,6 +1,5 @@
-import React, { HTMLProps } from 'react'
+import React, { HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveBackground } from './types'
 
@@ -16,10 +15,8 @@ export const PrimitiveBackground = component(
     radius,
     overflow,
   }) => {
-    const styles: TStyle = {
-      _webOnly: {
-        pointerEvents: 'none',
-      },
+    const style: CSSProperties = {
+      pointerEvents: 'none',
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
@@ -35,7 +32,7 @@ export const PrimitiveBackground = component(
     }
 
     const props: HTMLProps<HTMLDivElement> = {
-      style: normalizeWebStyle(styles),
+      style,
     }
 
     return props

@@ -1,5 +1,4 @@
-import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React, { CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { TPrimitiveSelect } from './types'
 
@@ -14,14 +13,7 @@ export const PrimitiveSelect = component(
     paddingRight,
     paddingTop,
   }) => {
-    const styles: TStyle = {
-      _webOnly: {
-        boxSizing: 'border-box',
-        fontSmoothing: 'antialiased',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-        appearance: 'none',
-      },
+    const styles: CSSProperties = {
       width: '100%',
       height: '100%',
       borderWidth: 0,
@@ -37,10 +29,14 @@ export const PrimitiveSelect = component(
       right: 0,
       bottom: 0,
       opacity: 0,
+      boxSizing: 'border-box',
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
+      appearance: 'none',
     }
 
     return {
-      style: normalizeWebStyle(styles),
+      style: styles,
     }
   })
 )(({

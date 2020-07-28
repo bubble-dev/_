@@ -1,11 +1,10 @@
 import { createContext } from 'react'
-import { TStyle } from 'stili'
 import { BLACK, TColor } from '../../colors'
 
 export type TTextThemeContext = {
   color: TColor,
   fontFamily: string,
-  fontWeight: TStyle['fontWeight'],
+  fontWeight: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
   fontSize: number,
   lineHeight: number,
 }

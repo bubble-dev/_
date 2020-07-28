@@ -15,7 +15,7 @@ export type TApp = {
 export type TPackageJson = {
   version: string,
   browser?: string,
-  ['react-native']?: string,
+  'react-native'?: string,
   designDocsUrl?: string,
   sourceCodeUrl?: string,
 } & TJsonMap

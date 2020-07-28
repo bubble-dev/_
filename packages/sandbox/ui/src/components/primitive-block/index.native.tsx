@@ -1,6 +1,5 @@
 import React, { Ref, ReactNode } from 'react'
-import { View, ViewProps } from 'react-native'
-import { TStyle } from 'stili'
+import { View, ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber } from 'tsfn'
 import { TPrimitiveBlockCommon } from './types'
@@ -41,7 +40,7 @@ export const PrimitiveBlock = component(
     shouldFlow,
     shouldIgnorePointerEvents,
   }) => {
-    const styles: TStyle = {
+    const styles: ViewStyle = {
       flexDirection: 'row',
       position: 'absolute',
       left,

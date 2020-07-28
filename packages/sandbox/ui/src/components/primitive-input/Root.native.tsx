@@ -1,7 +1,7 @@
 import React from 'react'
-import { TextInput } from 'react-native'
+import { TextInput, TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
 import { TPrimitiveInput } from './types'
 
@@ -29,11 +29,10 @@ export const PrimitiveInput = component(
     paddingRight,
     paddingTop,
   }) => {
-    const style: TStyle = {
+    const style: TextStyle = {
       letterSpacing,
       lineHeight,
       fontFamily,
-      fontWeight,
       fontSize,
       paddingBottom,
       paddingLeft,
@@ -48,12 +47,16 @@ export const PrimitiveInput = component(
       height: '100%',
     }
 
+    if (isNumber(fontWeight)) {
+      style.fontWeight = String(fontWeight) as TextStyle['fontWeight']
+    }
+
     if (isColor(color)) {
       style.color = colorToString(color)
     }
 
     return {
-      style: normalizeNativeStyle(style),
+      style,
     }
   })
 )(({

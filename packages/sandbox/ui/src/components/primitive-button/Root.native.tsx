@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
-import { TouchableWithoutFeedback, View } from 'react-native'
-import { TStyle } from 'stili'
+import { TouchableWithoutFeedback, View, ViewStyle } from 'react-native'
 import { TPrimitiveButton } from './types'
 
 const hitSlop = {
@@ -10,7 +9,7 @@ const hitSlop = {
   top: 5,
 }
 
-const style: TStyle = {
+const style: ViewStyle = {
   flexDirection: 'row',
   position: 'absolute',
   left: 0,

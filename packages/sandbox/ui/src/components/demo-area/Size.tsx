@@ -1,11 +1,10 @@
 import React, { ReactElement } from 'react'
 import { component, startWithType, onLayout, mapRef } from 'refun'
-import { normalizeWebStyle } from 'stili'
 import { isNumber, isFunction } from 'tsfn'
 
-const parentStyle = normalizeWebStyle({
+const parentStyle = {
   display: 'flex',
-})
+}
 
 const round = (value: number) => Math.round(value * 1000) / 1000
 

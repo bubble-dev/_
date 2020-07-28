@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo, mapContext } from 'refun'
-import { normalizeWebStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { Text } from '../text'
 import { SYMBOL_LINK } from '../../symbols'
@@ -14,12 +13,16 @@ export const SizeLink = component(
     isUnderlined: false,
   }),
   mapContext(TextThemeContext),
-  mapWithPropsMemo(({ isUnderlined, color }) => ({
-    style: normalizeWebStyle({
+  mapWithPropsMemo(({ isUnderlined, color }) => {
+    const style: CSSProperties = {
       color: colorToString(color),
       textDecorationLine: isUnderlined ? 'underlined' : 'none',
-    }),
-  }), ['isUnderlined', 'color'])
+    }
+
+    return {
+      style,
+    }
+  }, ['isUnderlined', 'color'])
 )(({
   id,
   href,

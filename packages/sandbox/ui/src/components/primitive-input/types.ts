@@ -1,4 +1,3 @@
-import { TStyle } from 'stili'
 import { TColor } from '../../colors'
 
 export type TPrimitiveInput = {
@@ -11,7 +10,7 @@ export type TPrimitiveInput = {
   paddingTop?: number,
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: TStyle['fontWeight'],
+  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,

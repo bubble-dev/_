@@ -1,14 +1,11 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { startWithType, component } from 'refun'
-import { normalizeWebStyle } from 'stili'
 import { SYMBOL_LABEL } from '../../symbols'
 import { SizeParentBlock } from '../size-parent-block'
 
-const style = normalizeWebStyle({
-  _webOnly: {
-    display: 'block',
-    userSelect: 'none',
-  },
+const style: CSSProperties = {
+  display: 'block',
+  userSelect: 'none',
   position: 'absolute',
   left: 0,
   top: 0,
@@ -16,7 +13,7 @@ const style = normalizeWebStyle({
   bottom: 0,
   width: '100%',
   height: '100%',
-})
+}
 
 export type TLabel = {}
 

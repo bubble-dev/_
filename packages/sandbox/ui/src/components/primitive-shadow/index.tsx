@@ -1,6 +1,5 @@
-import React, { HTMLProps } from 'react'
+import React, { HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveShadow } from './types'
 
@@ -24,11 +23,7 @@ export const PrimitiveShadow = component(
     offsetX,
     offsetY,
   }) => {
-    const styles: TStyle = {
-      _webOnly: {
-        pointerEvents: 'none',
-        boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
-      },
+    const style: CSSProperties = {
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
@@ -40,10 +35,12 @@ export const PrimitiveShadow = component(
       borderTopRightRadius: radius,
       borderBottomRightRadius: radius,
       borderBottomLeftRadius: radius,
+      pointerEvents: 'none',
+      boxShadow: `${offsetX}px ${offsetY}px ${blurRadius}px ${spreadRadius}px ${colorToString(color)}`,
     }
 
     const props: HTMLProps<HTMLDivElement> = {
-      style: normalizeWebStyle(styles),
+      style,
     }
 
     return props

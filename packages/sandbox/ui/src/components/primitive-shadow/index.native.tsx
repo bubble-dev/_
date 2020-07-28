@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, ViewProps } from 'react-native'
+import { View, ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveShadow } from './types'
 
@@ -25,7 +24,7 @@ export const PrimitiveShadow = component(
   }) => {
     const shadowWidth = Math.max(blurRadius, spreadRadius)
 
-    const styles: TStyle = {
+    const style: ViewStyle = {
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
@@ -44,7 +43,7 @@ export const PrimitiveShadow = component(
     }
 
     const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
+      style,
       pointerEvents: 'none',
     }
 

@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, ViewProps } from 'react-native'
+import { View, ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
 import { colorToString } from '../../colors'
 import { TPrimitiveBackground } from './types'
 
@@ -17,7 +16,7 @@ export const PrimitiveBackground = component(
     radius,
     overflow,
   }) => {
-    const styles: TStyle = {
+    const style: ViewStyle = {
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
@@ -32,7 +31,7 @@ export const PrimitiveBackground = component(
     }
 
     const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
+      style,
       pointerEvents: 'none',
     }
 

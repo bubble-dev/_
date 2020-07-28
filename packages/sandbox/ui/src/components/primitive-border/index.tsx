@@ -1,6 +1,5 @@
-import React, { HTMLProps } from 'react'
+import React, { CSSProperties, HTMLProps } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
 import { TPrimitiveBorder } from './types'
@@ -23,10 +22,8 @@ export const PrimitiveBorder = component(
     radius,
     overflow,
   }) => {
-    const styles: TStyle = {
-      _webOnly: {
-        pointerEvents: 'none',
-      },
+    const style: CSSProperties = {
+      pointerEvents: 'none',
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
@@ -47,23 +44,23 @@ export const PrimitiveBorder = component(
     }
 
     if (isNumber(leftWidth)) {
-      styles.borderLeftWidth = leftWidth
+      style.borderLeftWidth = leftWidth
     }
 
     if (isNumber(topWidth)) {
-      styles.borderTopWidth = topWidth
+      style.borderTopWidth = topWidth
     }
 
     if (isNumber(rightWidth)) {
-      styles.borderRightWidth = rightWidth
+      style.borderRightWidth = rightWidth
     }
 
     if (isNumber(bottomWidth)) {
-      styles.borderBottomWidth = bottomWidth
+      style.borderBottomWidth = bottomWidth
     }
 
     const props: HTMLProps<HTMLDivElement> = {
-      style: normalizeWebStyle(styles),
+      style,
     }
 
     return props

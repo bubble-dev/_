@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo, onLayout, mapRef } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
 import { isFunction, isNumber } from 'tsfn'
 import { round } from './round'
 import { TSize } from './types'
@@ -8,13 +7,13 @@ import { TSize } from './types'
 export const Size = component(
   startWithType<TSize>(),
   mapWithPropsMemo(({ left, top, maxWidth, maxHeight, shouldPreventWrap }) => {
-    const parentStyle: TStyle = {
+    const parentStyle: CSSProperties = {
       display: 'flex',
       left: 0,
       top: 0,
       position: 'absolute',
     }
-    const childStyle: TStyle = {
+    const childStyle: CSSProperties = {
       flexGrow: 0,
       flexShrink: 0,
       flexBasis: 'auto',
@@ -41,8 +40,8 @@ export const Size = component(
     }
 
     return {
-      parentStyle: normalizeWebStyle(parentStyle),
-      childStyle: normalizeWebStyle(childStyle),
+      parentStyle,
+      childStyle,
     }
   }, ['maxWidth', 'maxHeight', 'left', 'top', 'shouldPreventWrap']),
   mapRef('ref', null as null | HTMLDivElement),

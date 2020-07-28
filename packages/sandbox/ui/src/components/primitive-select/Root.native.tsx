@@ -1,6 +1,5 @@
 import React from 'react'
-import { Picker } from 'react-native'
-import { normalizeNativeStyle } from 'stili'
+import { Picker, ViewStyle } from 'react-native'
 import { component, mapWithProps, startWithType } from 'refun'
 import { TPrimitiveSelect } from './types'
 
@@ -11,8 +10,8 @@ export const PrimitiveSelect = component(
     paddingLeft,
     paddingRight,
     paddingTop,
-  }) => ({
-    style: normalizeNativeStyle({
+  }) => {
+    const style: ViewStyle = {
       width: '100%',
       height: '100%',
       backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -25,8 +24,12 @@ export const PrimitiveSelect = component(
       top: 0,
       right: 0,
       bottom: 0,
-    }),
-  }))
+    }
+
+    return {
+      style,
+    }
+  })
 )(({
   children,
   id,
