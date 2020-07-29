@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
-import { component, startWithType, onLayout, mapRef } from 'refun'
+import { component, startWithType, mapRef } from 'refun'
 import { isNumber, isFunction } from 'tsfn'
+import { onLayout } from '../on-layout'
 
 const parentStyle = {
   display: 'flex',
@@ -35,7 +36,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  }, ['width', 'height', 'onWidthChange', 'onHeightChange'])
+  })
 )(({ ref, children }) => (
   <div ref={ref} style={parentStyle}>
     {children}

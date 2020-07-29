@@ -1,6 +1,7 @@
 import React, { CSSProperties } from 'react'
-import { component, startWithType, mapWithPropsMemo, onLayout, mapRef } from 'refun'
+import { component, startWithType, mapWithPropsMemo, mapRef } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
+import { onLayout } from '../on-layout'
 import { round } from './round'
 import { TSize } from './types'
 
@@ -46,10 +47,14 @@ export const Size = component(
   }, ['maxWidth', 'maxHeight', 'left', 'top', 'shouldPreventWrap']),
   mapRef('ref', null as null | HTMLDivElement),
   onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
+    if (ref.current === null) {
+      return
+    }
+
     const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
     const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
 
-    if (ref.current !== null && (shouldMeasureWidth || shouldMeasureHeight)) {
+    if (shouldMeasureWidth || shouldMeasureHeight) {
       const rect = ref.current.firstElementChild!.getBoundingClientRect()
 
       const measuredWidth = round(rect.width)
@@ -63,7 +68,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  }, ['children'])
+  })
 )(({ ref, parentStyle, childStyle, children }) => (
   <div style={parentStyle}>
     <div style={childStyle} ref={ref}>

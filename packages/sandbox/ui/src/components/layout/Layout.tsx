@@ -4,9 +4,9 @@ import { isFunction } from 'tsfn'
 import { LayoutContext } from '../layout-context'
 import { mapChildren, SYMBOL_CHILDREN_REST } from '../../map/children'
 import { SYMBOL_LAYOUT, SYMBOL_LAYOUT_ITEM } from '../../symbols'
+import { onLayout } from '../on-layout'
 import { calcTotal, calcMax, calcExplicitMainAxisLayout, calcMeasureMainAxisLayout, calcMeasureCrossAxisLayout, calcExplicitCrossAxisLayout, TOnItemSizeChange, equalizeArrays, getWidth, getMinWidth, getMaxWidth, getLayoutWidth, getHeight, getMinHeight, getMaxHeight, getLayoutHeight } from './utils'
 import { LayoutItemContext } from './LayoutItemContext'
-import { onLayout } from './on-layout'
 import { TLayoutDirection } from './types'
 
 export type TLayout = {
@@ -190,7 +190,7 @@ export const Layout = component(
         )
       }
     }
-  }, ['items'])
+  })
 )(({
   _x,
   _y,
