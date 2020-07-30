@@ -3,10 +3,9 @@ import { TComponentConfig } from 'autoprops'
 import { TParagraph, Paragraph } from '@primitives/paragraph'
 import { setupTextAlignTheme, TThemeableTextAligns } from './src'
 
-type TDemo = {}
 
 type Mappings = {
-  demo: TDemo,
+  demo: {},
 }
 
 const defaultTheme: TThemeableTextAligns<Mappings> = {
@@ -29,7 +28,7 @@ const newTheme: TThemeableTextAligns<Mappings> = {
 
 const text = 'Cat is love, cat is life fall asleep on the washing machine. Gnaw the corn cob. Meow to be let in cat walks in keyboard destroy couch as revenge.'
 
-type TDemoComponent = TDemo & { hasTheme: boolean }
+type TDemoComponent = { hasTheme: boolean }
 
 export const Component = ({ hasTheme }: TDemoComponent) => {
   return (
