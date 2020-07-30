@@ -3,7 +3,6 @@ import { TComponentConfig } from 'autoprops'
 import { TParagraph, Paragraph } from '@primitives/paragraph'
 import { setupTextAlignTheme, TThemeableTextAligns } from './src'
 
-
 type Mappings = {
   demo: {},
 }
