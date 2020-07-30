@@ -1,4 +1,5 @@
-import { TAlign, TDirection } from '@primitives/paragraph'
+export type TAlign = 'start' | 'center' | 'end'
+export type TDirection = 'left-to-right' | 'right-to-left'
 
 export type TThemeableTextAlign = {
   align?: TAlign,
