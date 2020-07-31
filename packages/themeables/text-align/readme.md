@@ -5,6 +5,9 @@
 Properties that the theme function for the `@themeables/text-align` should return:
 
 ```ts
+export type TAlign = 'start' | 'center' | 'end'
+export type TDirection = 'left-to-right' | 'right-to-left'
+
 type TThemeableTextAlign = {
   align?: TAlign,
   direction?: TDirection,
