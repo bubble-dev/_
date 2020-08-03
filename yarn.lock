@@ -23,7 +23,7 @@
     prompts "^2.3.0"
     tsfn "^1.1.1"
 
-"@auto/core@^0.1.6", "@auto/core@^0.1.7":
+"@auto/core@^0.1.6":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@auto/core/-/core-0.1.7.tgz#79554c18d77bb42418f6e1985338dbe26ff70d6f"
   integrity sha512-60Ksczbg/a/AZ4XH+HQO2WRy05H4RUOmmzATuele0vRw4nrFwvLFrVkhPVkpSvV8TB54j1UZBe2b6793lRRtPg==
@@ -34,6 +34,21 @@
     fast-glob "^3.0.0"
     p-all "^3.0.0"
     pifs "^1.0.0"
+    prompts "^2.3.1"
+    semver "^7.0.0"
+    tsfn "^1.1.2"
+
+"@auto/core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@auto/core/-/core-0.2.0.tgz#56fed4e58720dcfadcccce517a761b26f8c99c29"
+  integrity sha512-i/YNaqSb5GhotYFDm9JktvNMerVeDf9Xe7fVR4iOnyoIrc5zmmfOJTfWEts+HiQfCLTGrk6+LYeWioyXepWChA==
+  dependencies:
+    dleet "^1.0.0"
+    escape-string-regexp "^4.0.0"
+    execa "^4.0.0"
+    fast-glob "^3.0.0"
+    p-all "^3.0.0"
+    pifs "^1.0.3"
     prompts "^2.3.1"
     semver "^7.0.0"
     tsfn "^1.1.2"
@@ -2041,6 +2056,13 @@
   integrity sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
   dependencies:
     "@types/minimatch" "*"
+    "@types/node" "*"
+
+"@types/graceful-fs@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@types/graceful-fs/-/graceful-fs-4.1.3.tgz#039af35fe26bec35003e8d86d2ee9c586354348f"
+  integrity sha512-AiHRaEB50LQg0pZmm659vNBb9f4SJ0qrAnteuzhSeAUcJKxoYgEnprg/83kppCnc2zvtCKbdZry1a5pVY3lOTQ==
+  dependencies:
     "@types/node" "*"
 
 "@types/html-minifier-terser@^5.0.0":
@@ -8539,6 +8561,14 @@ pifs@^1.0.0:
   resolved "https://registry.yarnpkg.com/pifs/-/pifs-1.0.2.tgz#d585046eb76d4566d66f95b3c936ad93343c1968"
   integrity sha512-vl1gvRASjDGBhUnvDTV4HujpL2e0I8FweKagHBxTe+XJoEahZyJ8HO3xX1cj++oLgpdBuMTn3vuCcH/E0FyVGg==
   dependencies:
+    graceful-fs "^4.2.0"
+
+pifs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/pifs/-/pifs-1.0.3.tgz#45d5b3d8ca8b7be0df7329648f840f99e02dcb97"
+  integrity sha512-m+3kvjiuKwoyUaUt+BiDPpoTmyurUzUM3c6XI2UwH8Rd7jPCfs8rUoo00cdimw/Mxvp6hicssM7lJd2RLh7osg==
+  dependencies:
+    "@types/graceful-fs" "^4.1.3"
     graceful-fs "^4.2.0"
 
 pify@^2.0.0:
