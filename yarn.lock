@@ -1848,10 +1848,10 @@
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^1.0.0"
 
-"@start/plugin-lib-babel@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@start/plugin-lib-babel/-/plugin-lib-babel-1.0.0.tgz#61594bc41ef69a2adee78b7f82970831f739f771"
-  integrity sha512-QZuclQuqm8ZAG6GBJvjhOebJxLPSV9cI0DfqEjkvA0rbUocsWaRYinGz/NnCvA2OiHBGNQHF+CrVY+yoUngZHQ==
+"@start/plugin-lib-babel@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-lib-babel/-/plugin-lib-babel-2.0.0.tgz#e54f5a81a64b9165237b86794b0406d3b46e6e2b"
+  integrity sha512-KKQMTwqlMEZIrmN39nQ7I4KpKrV8cdji4ixc42uNt4vsDLwHRp7t6Fp2v6v/jwPRVRCfy6RDlLFhI11DANq0jg==
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/runtime" "^7.4.2"
