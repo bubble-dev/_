@@ -5286,9 +5286,9 @@ find-up@^3.0.0:
     locate-path "^3.0.0"
 
 fixdeps@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/fixdeps/-/fixdeps-1.1.2.tgz#5085e1a6a3ccc04bad13801d74b54579445310b3"
-  integrity sha512-CoGy7zhX/6HAxaMM4KALxx/gp/tP0jzBnvOalz4eGUTzmdkdMkeQqpgjgRuaKXcH84w3HRyIit7PacceRLYUAg==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/fixdeps/-/fixdeps-1.1.3.tgz#4b2793d34c37c10d425fd65f729c2782f4ae6474"
+  integrity sha512-hUp9meVBvQx3VLpWipieNxWwjI8i3Q6IKL7wjcJXPcZ/kJ1d4pxpXH1VRdRFBneVKFy6m3joTFXVWPF0sRN1IQ==
   dependencies:
     "@babel/parser" "^7.3.1"
     "@babel/runtime" "^7.4.3"
@@ -5297,7 +5297,7 @@ fixdeps@^1.0.0:
     execa "^4.0.0"
     fast-glob "^3.0.3"
     p-all "^3.0.0"
-    pifs "^1.0.0"
+    pifs "^1.0.3"
     tsfn "^1.1.2"
 
 flat-cache@^2.0.1:
