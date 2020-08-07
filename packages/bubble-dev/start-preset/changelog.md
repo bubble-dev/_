@@ -1,3 +1,7 @@
+## v7.0.2
+
+* 🐞 fix showing `fixdeps` stacktrace on error
+
 ## v7.0.1
 
 * 🐞 update `auto/core` to v0.2.0
