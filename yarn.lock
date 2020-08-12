@@ -1744,19 +1744,19 @@
     rn-fonts "^1.0.1"
     tsfn "^1.1.2"
 
-"@rebox/ios@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@rebox/ios/-/ios-4.0.0.tgz#5bd0732a0311941007cf823d1740ca9d3ea69eed"
-  integrity sha512-RH5HlTgWNYDDDRtPUwUr6IE4SDTnxgGkb+utwLIvnmQQCLK23wMroiuXz6xjf0DMtW+sk15O236nccHDlWrueQ==
+"@rebox/ios@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@rebox/ios/-/ios-5.0.0.tgz#66ecc22014e9d04f7554df11c30d21132fad48be"
+  integrity sha512-Cg83SKy2XB5mVFtwfiqsQJtOsBksAVO9VFgMG8zgdjeLX/jTECqj6acA0rvz7zT8a3h4IK8xm2fuIzturG6/Pg==
   dependencies:
     "@babel/runtime" "^7.4.3"
-    "@rebox/native-utils" "^3.0.0"
+    "@rebox/native-utils" "^3.1.0"
     copie "^1.0.0"
     dleet "^1.0.0"
     execa "^4.0.0"
     fast-glob "^3.0.0"
     make-dir "^3.0.0"
-    pifs "^1.0.0"
+    pifs "^1.0.3"
     rn-fonts "^1.0.1"
     simple-plist "^1.0.0"
     tsfn "^1.1.2"
@@ -1765,6 +1765,33 @@
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@rebox/native-utils/-/native-utils-3.0.4.tgz#f68794f79808422e3da42a1db603d4d4c544acdb"
   integrity sha512-AJvT49e1aFPaxKU6PaAKy5en61zw+dkidpdRvM/fR6GqlDt3nLKwb0ZzRWH8O42eXf2yGMdgAgjiioeJW02Jrg==
+  dependencies:
+    "@babel/core" "^7.4.3"
+    "@babel/plugin-proposal-nullish-coalescing-operator" "^7.4.4"
+    "@babel/plugin-proposal-optional-chaining" "^7.6.0"
+    "@babel/plugin-syntax-bigint" "^7.4.4"
+    "@babel/runtime" "^7.4.3"
+    "@haul-bundler/cli" "^0.22.1"
+    "@haul-bundler/core" "^0.22.1"
+    "@haul-bundler/preset-0.60" "^0.18.0"
+    "@psxcode/wait" "^0.1.1"
+    babel-loader "^8.0.5"
+    copie "^1.0.0"
+    execa "^4.0.0"
+    fast-glob "^3.0.0"
+    is-port-reachable "^3.0.0"
+    make-dir "^3.0.0"
+    metro-react-native-babel-preset "0.59.0"
+    node-fetch "^2.6.0"
+    react "16.13.1"
+    react-native "0.63.2"
+    tsfn "^1.1.2"
+    webpack "^4.30.0"
+
+"@rebox/native-utils@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@rebox/native-utils/-/native-utils-3.1.0.tgz#220926b83b2e23e41c7fa47399dfe18d6c0a1d9d"
+  integrity sha512-o5E2QAGnO6BjKuccDIG0QQ1IDUR1knDbarHdkrtF7BNQQpGzeP5seq/Ds/RgTNFc2JRHSv8a0nbS0Rm5+U9ldA==
   dependencies:
     "@babel/core" "^7.4.3"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.4.4"
