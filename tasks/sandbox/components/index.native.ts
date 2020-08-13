@@ -7,6 +7,7 @@ import * as Input from '@primitives/input/meta'
 import * as LayoutThemeable from '@themeables/layout/meta'
 import * as TextAlignThemeable from '@themeables/text-align/meta'
 import * as Paragraph from '@primitives/paragraph/meta'
+import * as Svg from '@primitives/svg/meta'
 import * as Radio from '@primitives/radio/meta'
 import * as Spacer from '@primitives/spacer/meta'
 import * as TestLottie from 'test-lottie/meta'
@@ -20,8 +21,9 @@ export const components: TComponents = {
   LayoutThemeable: () => Promise.resolve(LayoutThemeable),
   TextAlignThemeable: () => Promise.resolve(TextAlignThemeable),
   Paragraph: () => Promise.resolve(Paragraph),
+  VectorShape: () => Promise.resolve(VectorShape),
+  Svg: () => Promise.resolve(Svg),
+  TestLottie: () => Promise.resolve(TestLottie),
   Radio: () => Promise.resolve(Radio),
   Spacer: () => Promise.resolve(Spacer),
-  TestLottie: () => Promise.resolve(TestLottie),
-  VectorShape: () => Promise.resolve(VectorShape),
 }
