@@ -5,8 +5,8 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { Text as NativeText, TextProps } from 'react-native'
-import { TStyle, normalizeNativeStyle } from 'stili'
+import { Text as NativeText, TextProps, TextStyle } from 'react-native'
+import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
 import { TPrimitiveText } from './types'
 
@@ -31,13 +31,16 @@ export const PrimitiveText = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const style: TStyle = {
+    const style: TextStyle = {
       backgroundColor: 'transparent',
       lineHeight,
       fontFamily,
-      fontWeight,
       fontSize,
       letterSpacing,
+    }
+
+    if (isNumber(fontWeight)) {
+      style.fontWeight = String(fontWeight) as TextStyle['fontWeight']
     }
 
     if (isColor(color)) {
@@ -49,7 +52,7 @@ export const PrimitiveText = component(
     }
 
     const props: TextProps = {
-      style: normalizeNativeStyle(style),
+      style,
       selectable: !shouldPreventSelection,
     }
 

@@ -1,7 +1,6 @@
 import React from 'react'
-import { View, ViewProps } from 'react-native'
+import { View, ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
 import { TPrimitiveBorder } from './types'
@@ -23,7 +22,7 @@ export const PrimitiveBorder = component(
     radius,
     overflow,
   }) => {
-    const styles: TStyle = {
+    const style: ViewStyle = {
       flexDirection: 'row',
       position: 'absolute',
       left: -overflow,
@@ -42,23 +41,23 @@ export const PrimitiveBorder = component(
     }
 
     if (isNumber(leftWidth)) {
-      styles.borderLeftWidth = leftWidth
+      style.borderLeftWidth = leftWidth
     }
 
     if (isNumber(topWidth)) {
-      styles.borderTopWidth = topWidth
+      style.borderTopWidth = topWidth
     }
 
     if (isNumber(rightWidth)) {
-      styles.borderRightWidth = rightWidth
+      style.borderRightWidth = rightWidth
     }
 
     if (isNumber(bottomWidth)) {
-      styles.borderBottomWidth = bottomWidth
+      style.borderBottomWidth = bottomWidth
     }
 
     const props: ViewProps = {
-      style: normalizeNativeStyle(styles),
+      style,
       pointerEvents: 'none',
     }
 

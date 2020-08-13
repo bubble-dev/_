@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react'
-import { component, startWithType, onLayout, mapRef } from 'refun'
-import { normalizeWebStyle } from 'stili'
+import { component, startWithType, mapRef } from 'refun'
 import { isNumber, isFunction } from 'tsfn'
+import { onLayout } from '../on-layout'
 
-const parentStyle = normalizeWebStyle({
+const parentStyle = {
   display: 'flex',
-})
+}
 
 const round = (value: number) => Math.round(value * 1000) / 1000
 
@@ -36,7 +36,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  }, ['width', 'height', 'onWidthChange', 'onHeightChange'])
+  })
 )(({ ref, children }) => (
   <div ref={ref} style={parentStyle}>
     {children}

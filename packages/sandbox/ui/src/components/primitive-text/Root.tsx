@@ -1,5 +1,4 @@
-import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React, { CSSProperties } from 'react'
 import {
   component,
   mapDefaultProps,
@@ -32,17 +31,14 @@ export const PrimitiveText = component(
     shouldPreventWrap,
     shouldHideOverflow,
   }) => {
-    const style: TStyle = {
-      _webOnly: {
-        maxWidth: '100%',
-        fontSmoothing: 'antialiased',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-      },
+    const style: CSSProperties = {
       fontFamily,
       fontWeight,
       fontSize,
       minWidth: 0,
+      maxWidth: '100%',
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
     }
 
     if (isColor(color)) {
@@ -50,22 +46,22 @@ export const PrimitiveText = component(
     }
 
     if (shouldPreserveWhitespace) {
-      style._webOnly!.whiteSpace = 'pre'
+      style.whiteSpace = 'pre'
       style.flexShrink = 0
     }
 
     if (shouldPreventWrap) {
-      style._webOnly!.whiteSpace = 'nowrap'
+      style.whiteSpace = 'nowrap'
       style.flexShrink = 0
     }
 
     if (shouldPreventSelection) {
-      style._webOnly!.userSelect = 'none'
+      style.userSelect = 'none'
     }
 
     if (shouldHideOverflow) {
-      style._webOnly!.whiteSpace = 'nowrap'
-      style._webOnly!.textOverflow = 'ellipsis'
+      style.whiteSpace = 'nowrap'
+      style.textOverflow = 'ellipsis'
       style.overflow = 'hidden'
       style.flexShrink = 0
     }
@@ -75,15 +71,15 @@ export const PrimitiveText = component(
     }
 
     if (isNumber(lineHeight)) {
-      style.lineHeight = lineHeight
+      style.lineHeight = `${lineHeight}px`
     }
 
     if (isUnderlined) {
-      style._webOnly!.textDecorationLine = 'underline'
+      style.textDecorationLine = 'underline'
     }
 
     return {
-      style: normalizeWebStyle(style),
+      style,
     }
   })
 )(({ children, style, id }) => (

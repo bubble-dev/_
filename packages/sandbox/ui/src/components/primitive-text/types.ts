@@ -1,12 +1,11 @@
 import { ReactNode } from 'react'
-import { TStyle } from 'stili'
 import { TColor } from '../../colors'
 
 export type TPrimitiveText = {
   id?: string,
   color?: TColor,
   fontFamily?: string,
-  fontWeight?: TStyle['fontWeight'],
+  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
   fontSize?: number,
   lineHeight?: number,
   letterSpacing?: number,

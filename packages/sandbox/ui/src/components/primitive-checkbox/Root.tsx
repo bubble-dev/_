@@ -1,18 +1,15 @@
-import React from 'react'
-import { normalizeWebStyle } from 'stili'
+import React, { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { PrimitiveBlock } from '../primitive-block'
 import { TPrimitiveCheckbox } from './types'
 
 export const PrimitiveCheckbox = component(
   startWithType<TPrimitiveCheckbox>(),
-  mapWithPropsMemo(({ isDisabled }) => ({
-    style: normalizeWebStyle({
-      _webOnly: {
-        appearance: 'none',
-        cursor: isDisabled ? 'auto' : 'pointer',
-        tapHighlightColor: 'rgba(255, 255, 255, 0)',
-      },
+  mapWithPropsMemo(({ isDisabled }) => {
+    const style: CSSProperties = {
+      appearance: 'none',
+      cursor: isDisabled ? 'auto' : 'pointer',
+      WebkitTapHighlightColor: 'rgba(255, 255, 255, 0)',
       position: 'absolute',
       width: '100%',
       height: '100%',
@@ -27,8 +24,12 @@ export const PrimitiveCheckbox = component(
       top: 0,
       left: 0,
       opacity: 0,
-    }),
-  }), ['isDisabled'])
+    }
+
+    return {
+      style,
+    }
+  }, ['isDisabled'])
 )(({
   id,
   accessibilityLabel,

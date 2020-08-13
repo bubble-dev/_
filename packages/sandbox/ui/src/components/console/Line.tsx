@@ -1,7 +1,6 @@
 import React from 'react'
-import { component, startWithType, mapContext } from 'refun'
+import { component, startWithType, mapContext, onLayout } from 'refun'
 import { isFunction } from 'tsfn'
-import { onLayout } from '../layout'
 import { PrimitiveBlock } from '../primitive-block'
 import { LayoutContext } from '../layout-context'
 import { Size } from '../size'

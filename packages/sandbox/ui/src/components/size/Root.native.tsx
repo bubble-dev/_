@@ -1,15 +1,14 @@
 import React from 'react'
-import { View, LayoutChangeEvent } from 'react-native'
+import { View, LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
-import { normalizeNativeStyle, TStyle } from 'stili'
 import { round } from './round'
 import { TSize } from './types'
 
 export const Size = component(
   startWithType<TSize>(),
   mapWithPropsMemo(({ left, top, maxWidth, maxHeight }) => {
-    const style: TStyle = {
+    const style: ViewStyle = {
       flexDirection: 'row',
       flexGrow: 0,
       flexShrink: 0,
@@ -35,7 +34,7 @@ export const Size = component(
     }
 
     return {
-      style: normalizeNativeStyle(style),
+      style,
     }
   }, ['left', 'top', 'maxWidth', 'maxHeight']),
   mapHandlers({

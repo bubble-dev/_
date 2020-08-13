@@ -1,7 +1,6 @@
 import React from 'react'
-import { component, startWithType, mapContext, mapWithProps, mapDefaultProps } from 'refun'
+import { component, startWithType, mapContext, mapWithProps, mapDefaultProps, onLayout } from 'refun'
 import { LayoutContext } from '../layout-context'
-import { onLayout } from '../layout'
 import { PrimitiveBlock } from '../primitive-block'
 
 export type TSizeBlock = {

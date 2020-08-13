@@ -1,22 +1,12 @@
-import React from 'react'
-import { normalizeWebStyle } from 'stili'
+import React, { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { TRANSPARENT, colorToString } from '../../colors'
 import { TPrimitiveButton } from './types'
 
 export const PrimitiveButton = component(
   startWithType<TPrimitiveButton>(),
-  mapWithPropsMemo(({ isDisabled }) => ({
-    styles: normalizeWebStyle({
-      _webOnly: {
-        textAlign: 'initial',
-        cursor: isDisabled ? 'auto' : 'pointer',
-        boxSizing: 'border-box',
-        outline: 0,
-        tapHighlightColor: 'rgba(255, 255, 255, 0)',
-        userSelect: 'none',
-        appearance: 'none',
-      },
+  mapWithPropsMemo(({ isDisabled }) => {
+    const style: CSSProperties = {
       display: 'flex',
       flexDirection: 'row',
       position: 'absolute',
@@ -37,13 +27,24 @@ export const PrimitiveButton = component(
       paddingRight: 0,
       paddingBottom: 0,
       backgroundColor: colorToString(TRANSPARENT),
-    }),
-  }), ['isDisabled'])
+      textAlign: 'initial',
+      cursor: isDisabled ? 'auto' : 'pointer',
+      boxSizing: 'border-box',
+      outline: 0,
+      WebkitTapHighlightColor: 'rgba(255, 255, 255, 0)',
+      userSelect: 'none',
+      appearance: 'none',
+    }
+
+    return {
+      style,
+    }
+  }, ['isDisabled'])
 )(({
   id,
   accessibilityLabel,
   isDisabled,
-  styles,
+  style,
   onPointerEnter,
   onPointerLeave,
   onPress,
@@ -64,7 +65,7 @@ export const PrimitiveButton = component(
     onMouseUp={onPressOut}
     onFocus={onFocus}
     onBlur={onBlur}
-    style={styles}
+    style={style}
   >
     {children}
   </button>

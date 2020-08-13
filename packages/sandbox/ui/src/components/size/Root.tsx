@@ -1,20 +1,20 @@
-import React from 'react'
-import { component, startWithType, mapWithPropsMemo, onLayout, mapRef } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React, { CSSProperties } from 'react'
+import { component, startWithType, mapWithPropsMemo, mapRef } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
+import { onLayout } from '../on-layout'
 import { round } from './round'
 import { TSize } from './types'
 
 export const Size = component(
   startWithType<TSize>(),
   mapWithPropsMemo(({ left, top, maxWidth, maxHeight, shouldPreventWrap }) => {
-    const parentStyle: TStyle = {
+    const parentStyle: CSSProperties = {
       display: 'flex',
       left: 0,
       top: 0,
       position: 'absolute',
     }
-    const childStyle: TStyle = {
+    const childStyle: CSSProperties = {
       flexGrow: 0,
       flexShrink: 0,
       flexBasis: 'auto',
@@ -41,16 +41,20 @@ export const Size = component(
     }
 
     return {
-      parentStyle: normalizeWebStyle(parentStyle),
-      childStyle: normalizeWebStyle(childStyle),
+      parentStyle,
+      childStyle,
     }
   }, ['maxWidth', 'maxHeight', 'left', 'top', 'shouldPreventWrap']),
   mapRef('ref', null as null | HTMLDivElement),
   onLayout(({ ref, width, height, onWidthChange, onHeightChange }) => {
+    if (ref.current === null) {
+      return
+    }
+
     const shouldMeasureWidth = isNumber(width) && isFunction(onWidthChange)
     const shouldMeasureHeight = isNumber(height) && isFunction(onHeightChange)
 
-    if (ref.current !== null && (shouldMeasureWidth || shouldMeasureHeight)) {
+    if (shouldMeasureWidth || shouldMeasureHeight) {
       const rect = ref.current.firstElementChild!.getBoundingClientRect()
 
       const measuredWidth = round(rect.width)
@@ -64,7 +68,7 @@ export const Size = component(
         onHeightChange!(measuredHeight)
       }
     }
-  }, ['children'])
+  })
 )(({ ref, parentStyle, childStyle, children }) => (
   <div style={parentStyle}>
     <div style={childStyle} ref={ref}>

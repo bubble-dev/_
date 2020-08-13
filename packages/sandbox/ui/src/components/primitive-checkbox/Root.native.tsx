@@ -1,18 +1,17 @@
 import React from 'react'
-import { Switch, TouchableWithoutFeedback } from 'react-native'
-import { normalizeNativeStyle } from 'stili'
+import { Switch, TouchableWithoutFeedback, ViewStyle } from 'react-native'
 import { component, startWithType } from 'refun'
 import { PrimitiveBlock } from '../primitive-block'
 import { TPrimitiveCheckbox } from './types'
 
-const style = normalizeNativeStyle({
+const style: ViewStyle = {
   position: 'absolute',
   top: 0,
   left: 0,
   right: 0,
   bottom: 0,
   opacity: 0,
-})
+}
 
 export const PrimitiveCheckbox = component(
   startWithType<TPrimitiveCheckbox>()

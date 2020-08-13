@@ -1,5 +1,4 @@
-import React, { KeyboardEvent } from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React, { KeyboardEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
@@ -27,14 +26,11 @@ export const PrimitiveInput = component(
     paddingRight,
     paddingTop,
   }) => {
-    const style: TStyle = {
-      _webOnly: {
-        fontSmoothing: 'antialiased',
-        textRendering: 'geometricPrecision',
-        textSizeAdjust: 'none',
-        appearance: 'none',
-        boxSizing: 'border-box',
-      },
+    const style: CSSProperties = {
+      textRendering: 'geometricPrecision',
+      textSizeAdjust: 'none',
+      appearance: 'none',
+      boxSizing: 'border-box',
       backgroundColor: 'rgba(0, 0, 0, 0)',
       borderWidth: 0,
       fontFamily,
@@ -62,11 +58,11 @@ export const PrimitiveInput = component(
     }
 
     if (isNumber(lineHeight)) {
-      style.lineHeight = lineHeight
+      style.lineHeight = `${lineHeight}px`
     }
 
     return {
-      style: normalizeWebStyle(style),
+      style,
     }
   })
 )(({
