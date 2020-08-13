@@ -97,7 +97,7 @@ const importMetaThunk = (components: TComponents, componentKey: string, propsInd
       components,
       Component,
       componentConfig: config,
-      packageJson,
+      packageJson: packageJson ?? null,
       componentProps: props,
       componentPropsChildrenMap: propsChildrenMap,
       componentKey,

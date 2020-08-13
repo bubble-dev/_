@@ -12,3 +12,5 @@ export const PureComponent = pureComponent(
 )(({ Component, props }) => (
   <Component {...props}/>
 ))
+
+PureComponent.displayName = 'PureComponent'
