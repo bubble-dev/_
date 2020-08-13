@@ -23,7 +23,7 @@ export type TPackageJson = {
 export type TMetaFile = {
   readonly Component: FC<any>,
   readonly config: TCommonComponentConfig,
-  readonly packageJson: TPackageJson,
+  readonly packageJson?: TPackageJson,
 }
 
 export type TComponents = {
