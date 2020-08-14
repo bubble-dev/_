@@ -25,7 +25,7 @@
     "colorido": "*",
     "core-js": "^3.2.1",
     "eslint": "^7.3.1",
-    "graphiq": "^0.2.3",
+    "graphiq": "^0.3.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "tsfn": "^1.1.0",
