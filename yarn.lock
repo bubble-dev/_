@@ -10154,10 +10154,10 @@ strip-json-comments@^3.1.0:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.0.tgz#7638d31422129ecf4457440009fba03f9f9ac180"
   integrity sha512-e6/d0eBu7gHtdCqFt0xJr642LdToM5/cN4Qb9DbHjVx1CP5RyeM+zH7pbecEmDv/lBqb0QH+6Uqq75rxFPkM0w==
 
-stroki@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/stroki/-/stroki-0.1.0.tgz#059fce00e7ada7d244aeba97aba9d07919e6bfc2"
-  integrity sha512-dMB03XEMg+0ePIFS9f4VU/HfhrwEqlnM9A6DL3piwTqFBKn8vkXygypA+AAbOG8tZBWemkEZw/HkirmcahJudA==
+stroki@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/stroki/-/stroki-0.2.0.tgz#abb46a65ad571304e41a0ebb53b69d49dfe94b22"
+  integrity sha512-uGPqsuX6K9KNScqd9Oc4tXFNNpuR6+C3o6BUg6xmJN0vJjN8AEkgQPatWB6894bwTxZc3TCxJs51ghnksh6SBA==
 
 subarg@^1.0.0:
   version "1.0.0"
