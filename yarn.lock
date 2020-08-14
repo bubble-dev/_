@@ -9376,10 +9376,10 @@ rn-fonts@^1.0.1:
     plist "^3.0.1"
     xcode "^3.0.0"
 
-rplace@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/rplace/-/rplace-0.2.0.tgz#598d8e147710e4aaccaff15b24962546cdbfe249"
-  integrity sha512-pUdEfd9b5PLyzjl1muPH3MnOto0v57PrTYWsgNBrBYS2aD7TZVyxdtX38yj39EuBVppefEnF71bHFQJisFLk7w==
+rplace@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/rplace/-/rplace-0.3.0.tgz#25f26e360798862b2294ed1d17f4b97eb8ac9b53"
+  integrity sha512-4XuXOIOvO7xB0yIeyF44u45nZrTEZMgUUJ2YOzo1Gw5QsGtMZEAjk9hSV99z4Vi8EROr4JPn712gaYJchwG+pA==
   dependencies:
     replace-string "^3.0.0"
 

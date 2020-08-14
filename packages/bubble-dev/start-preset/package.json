@@ -71,7 +71,7 @@
     "react-native-exception-handler": "^2.10.8",
     "react-native-svg": "^12.1.0",
     "react-native-view-shot": "^3.1.1",
-    "rplace": "^0.2.0",
+    "rplace": "^0.3.0",
     "stroki": "^0.1.0",
     "tap-diff": "^0.1.1",
     "tsfn": "^1.1.0",
