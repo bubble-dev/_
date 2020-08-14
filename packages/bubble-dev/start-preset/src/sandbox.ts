@@ -39,7 +39,7 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
           entryPointPath,
           appId: 'org.bubble-dev.sandbox',
           appName: 'Sandbox',
-          iPhoneVersion: 8,
+          iPhoneModel: '8',
           iOSVersion: '13.2',
           fontsDir,
           dependencyNames: [

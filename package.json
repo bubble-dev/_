@@ -20,15 +20,15 @@
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
     "@sandbox/ui": "*",
-    "@start/plugin": "^1.0.0",
+    "@start/plugin": "^2.0.0",
     "@types/node": "^14.0.0",
     "colorido": "*",
     "core-js": "^3.2.1",
     "eslint": "^7.3.1",
-    "graphiq": "^0.2.3",
+    "graphiq": "^0.3.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "tsfn": "^1.1.0",
+    "tsfn": "^2.0.0",
     "typescript": "^3.8.3"
   },
   "scripts": {

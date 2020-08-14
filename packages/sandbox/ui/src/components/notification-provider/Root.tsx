@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { component, startWithType, mapHandlers, mapState } from 'refun'
-import nanoid from 'nanoid/non-secure'
+import { nanoid } from 'nanoid/non-secure'
 import { Layout, Layout_Item, Layout_Spacer } from '../layout'
 import { LAYOUT_SIZE_FIT } from '../../symbols'
 import { NotificationContext } from './NotificationContext'

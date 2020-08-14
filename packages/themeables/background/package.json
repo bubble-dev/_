@@ -21,7 +21,7 @@
     "@primitives/background": "^2.0.0",
     "@primitives/block": "^2.0.1",
     "@types/react": "^16.8.6",
-    "autoprops": "^3.0.0",
+    "autoprops": "^4.0.0",
     "react": "16.13.1"
   }
 }
