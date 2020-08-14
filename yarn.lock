@@ -3605,6 +3605,11 @@ circularr@^0.2.2:
   resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.2.2.tgz#3dbb5b138f95ff32353a51ae352abb7cf0cb5cfd"
   integrity sha512-YTr3CGPLdpY9cBK/zyDIwRoekdiUkXqf1O+0sb76aMDCTz35vy8M2/BXoq8WagdbsfsAUqOjHqHy+indXuKwdw==
 
+circularr@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/circularr/-/circularr-0.3.0.tgz#65a5c500def4942e575b574392f9829958b01bcb"
+  integrity sha512-qBdkBmK1u7oV2lXUP5N3kP0YIeraTqZc6ZGhxdNjYjCuCXrQgHbwyF8NIa7gWbkgPnctlRWOnHZjeJKZB4XkLw==
+
 clap@^1.1.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
@@ -5457,6 +5462,11 @@ funcom@^0.1.0:
   resolved "https://registry.yarnpkg.com/funcom/-/funcom-0.1.0.tgz#208c4f662b636e5749130a5d52b60855dbba8c30"
   integrity sha512-S0Mtj2vL0kbtA/CLISiOpgsWbNCiCJ9lzKzEv+Q6R8VQmUue9b+v9yV50Sy93niBU7IwJDZnbGfmarmMp8ZvlA==
 
+funcom@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/funcom/-/funcom-0.2.0.tgz#ce78192a81b65bb9cbbd51f102bbe3396537db17"
+  integrity sha512-ysIhzlLIi46zpO9lX/ZFYoo5kdrkFgLTj1kRpkKZmdDjHlPP6EEEHDHebyjdsVYksH+1Ppo9hAMSZBJlw7HfKw==
+
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -6584,6 +6594,15 @@ iterama@^0.4.0:
     "@babel/runtime" "^7.3.1"
     circularr "^0.2.2"
     funcom "^0.1.0"
+
+iterama@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.5.0.tgz#90b2c52dc84d846291c5533bb52ccc071cb02c79"
+  integrity sha512-TrPplcKvbxA8mLe7QWAoam3JrKZmhdpvcnztQhy6WwzY8NYYqTDDW2O2Rw/o4PrkgW+ljOWmWjHe2rb7AaUKWg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    circularr "^0.3.0"
+    funcom "^0.2.0"
 
 jest-get-type@^24.9.0:
   version "24.9.0"
@@ -8534,10 +8553,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-piall@^0.1.0:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/piall/-/piall-0.1.1.tgz#35ea0d9bb60c4fd4171f7498ae9e48e04df37a2a"
-  integrity sha512-tzwAus5mbn+NsMBBuChLHvAZhsUBcaJt0SgXXh6btAuYYAtw94RyTcffCcgJ+e7QS5a5vaSyTJbPU6a2Zfv1XQ==
+piall@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/piall/-/piall-0.2.0.tgz#1703fa44450c5ae27e44e6518536a91a91eb2bd2"
+  integrity sha512-p5NPmVP6T/yH/ZJYsC0RWMemO81a15h4QI9jCnsWaWtSWH8YOeEfb6ZjN63o/deCn0ilbfKtYI5vSKi5tlqyaw==
 
 picomatch@^2.0.4, picomatch@^2.0.5, picomatch@^2.2.1:
   version "2.2.2"
@@ -10953,13 +10972,13 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
   integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
-weslint@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/weslint/-/weslint-0.3.0.tgz#904e324c03b03947ea40ca5f432acf715cc7c562"
-  integrity sha512-GJMZ4J43E9zqWQnux98u+TG1rP96hTPf+P96TnQTxadIGenKSKix1W7ngSbRitNlAuMoDrUpObBzPwLqcuEBfg==
+weslint@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/weslint/-/weslint-0.4.0.tgz#038921b113afbc99be99957110451ff979306243"
+  integrity sha512-Pfc3+KAdgbGJsXKAX7YDoM+0LLfkaPH5KCnNyzHTDqSkJNaCGrR+NiWC9RJCC8DGiExOgcw2KK5wjcTLlCjzpA==
   dependencies:
     eslint "^7.3.1"
-    workerama "^0.3.1"
+    workerama "^0.4.0"
 
 whatwg-fetch@>=0.10.0, whatwg-fetch@^3.0.0:
   version "3.1.0"
@@ -11042,14 +11061,14 @@ worker-rpc@^0.1.0:
   dependencies:
     microevent.ts "~0.1.1"
 
-workerama@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/workerama/-/workerama-0.3.1.tgz#9307d102267ae4675af1083c36421a94cada10dc"
-  integrity sha512-7iToz4DAw4aimcAEy+NPyEPdDwSz1j475JYupi1SzwY+Jk9xhoin3mw6Hqpfs0SH1BrMN1B6pW67wHvogJbprw==
+workerama@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/workerama/-/workerama-0.4.0.tgz#b79e88634b4a2229f06023b34a015383d92addba"
+  integrity sha512-iUdjeTspmJR9cD1DncCopQ13YfRkq/WTJHf1ctRaU/GCk6VbKR+7ta0GfR3jFIuoNKTtICvWJbfpjbo+ntj1SA==
   dependencies:
     get-caller-file "^2.0.5"
-    iterama "^0.4.0"
-    piall "^0.1.0"
+    iterama "^0.5.0"
+    piall "^0.2.0"
 
 wrap-ansi@^3.0.1:
   version "3.0.1"
