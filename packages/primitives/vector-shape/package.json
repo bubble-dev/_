@@ -17,12 +17,12 @@
     "@primitives/svg": "^2.0.1",
     "@themeables/vector-shape": "^2.0.1",
     "colorido": "^1.0.0",
-    "refun": "^2.0.0",
+    "refun": "^3.0.0",
     "stili": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
-    "autoprops": "^3.0.0",
+    "autoprops": "^4.0.0",
     "react": "16.13.1"
   }
 }

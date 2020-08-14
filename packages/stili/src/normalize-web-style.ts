@@ -54,7 +54,7 @@ export const normalizeWebStyle = (style: TStyle): TWebStyle =>
         }
 
         // Rest keys
-        webResult[webKey] = webValue as any
+        (webResult[webKey] as any) = webValue
 
         return webResult
       }, result)
@@ -103,7 +103,7 @@ export const normalizeWebStyle = (style: TStyle): TWebStyle =>
       return result
     }
 
-    result[key] = value as any
+    (result[key] as any) = value
 
     return result
   }, {} as TWebStyle)

@@ -15,13 +15,13 @@
   "dependencies": {
     "@themeables/text": "^2.0.0",
     "colorido": "^1.0.0",
-    "refun": "^2.0.0",
+    "refun": "^3.0.0",
     "stili": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.62.2",
-    "autoprops": "^3.0.0",
+    "autoprops": "^4.0.0",
     "react": "16.13.1",
     "react-native": "0.63.2"
   }
