@@ -1,3 +1,7 @@
+## v7.0.3
+
+* 🐞 update dependencies
+
 ## v7.0.2
 
 * 🐞 fix showing `fixdeps` stacktrace on error

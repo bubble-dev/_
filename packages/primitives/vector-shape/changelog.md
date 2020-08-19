@@ -1,3 +1,9 @@
+## v2.0.4
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `@primitives/block`, `@primitives/svg`, `stili`
+
 ## v2.0.3
 
 * 🐞 fix tests after loosening types on themeable

@@ -1,3 +1,9 @@
+## v0.2.3
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `stili`
+
 ## v0.2.2
 
 * 🐞 add accessibility attributes to primitive radio

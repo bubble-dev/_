@@ -1,3 +1,9 @@
+## v2.0.4
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `stili`
+
 ## v2.0.3
 
 * 🐞 switch to `useEffect` if there is no `window` global object

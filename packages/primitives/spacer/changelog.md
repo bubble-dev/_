@@ -1,3 +1,9 @@
+## v0.2.2
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `@primitives/block`
+
 ## v0.2.1
 
 * 🐞 add missing dependencies

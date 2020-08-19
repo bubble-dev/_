@@ -1,3 +1,9 @@
+## v2.0.2
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `stili`
+
 ## v2.0.1
 
 * 🐞 fix default value for `isFloating`

@@ -1,3 +1,9 @@
+## v2.1.0
+
+* 🌱 expose more svg components
+
+* 🐞 update dependencies
+
 ## v2.0.1
 
 * 🐞 update `react-native-svg` to v12.1.0

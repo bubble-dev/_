@@ -1,6 +1,6 @@
 {
   "name": "@primitives/radio",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Radio input for both React Native and Web",
   "keywords": [],
   "main": "src/index.ts",

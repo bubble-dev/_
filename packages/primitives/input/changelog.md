@@ -1,3 +1,9 @@
+## v3.0.1
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `stili`
+
 ## v3.0.0
 
 * 💥 follow TThemeableSpacer type for spacing

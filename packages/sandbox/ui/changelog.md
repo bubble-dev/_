@@ -1,3 +1,13 @@
+## v3.0.5
+
+* 🐞 update dependencies
+
+* 🐞 fix size measurement lag
+
+* 🐞 fix crash on missing packageJson field in meta file
+
+* ♻️ update dependencies `@primitives/pointer`, `@primitives/svg`, `@primitives/transform`
+
 ## v3.0.4
 
 * 🐞 fix native sync

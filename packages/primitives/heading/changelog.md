@@ -1,3 +1,9 @@
+## v2.1.1
+
+* 🐞 update dependencies
+
+* ♻️ update dependencies `stili`
+
 ## v2.1.0
 
 * 🌱 support text direction
