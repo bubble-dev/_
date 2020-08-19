@@ -16,7 +16,7 @@
     "@themeables/text": "^2.0.0",
     "colorido": "^1.0.0",
     "refun": "^3.0.0",
-    "stili": "^2.0.0"
+    "stili": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

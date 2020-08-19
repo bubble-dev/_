@@ -17,8 +17,8 @@
     "refun": "^3.0.0"
   },
   "devDependencies": {
-    "@primitives/background": "^2.0.0",
-    "@primitives/block": "^2.0.1",
+    "@primitives/background": "^2.0.1",
+    "@primitives/block": "^2.0.2",
     "@themeables/background": "^2.0.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
