@@ -1,3 +1,7 @@
+## v0.1.3
+
+* 🐞 downgrade `refun` and `tsfn` deps
+
 ## v0.1.2
 
 * 🐞 update dependencies

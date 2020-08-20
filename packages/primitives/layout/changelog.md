@@ -1,3 +1,9 @@
+## v2.0.3
+
+* 🐞 downgrade `refun` and `tsfn` deps
+
+* ♻️ update dependencies `@primitives/block`
+
 ## v2.0.2
 
 * 🐞 update dependencies
