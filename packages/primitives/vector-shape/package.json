@@ -13,8 +13,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^2.0.2",
-    "@primitives/svg": "^2.1.0",
+    "@primitives/block": "^2.0.3",
+    "@primitives/svg": "^2.1.1",
     "@themeables/vector-shape": "^2.0.1",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",

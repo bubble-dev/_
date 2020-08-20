@@ -14,13 +14,13 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/text": "^2.0.1",
+    "@primitives/text": "^2.0.2",
     "@themeables/core": "^2.0.1",
     "colorido": "^1.0.0",
     "stili": "^2.0.1"
   },
   "devDependencies": {
-    "@primitives/input": "^3.0.1",
+    "@primitives/input": "^3.0.2",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"
