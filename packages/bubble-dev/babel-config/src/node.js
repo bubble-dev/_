@@ -28,6 +28,10 @@ exports.babelConfigNodeBuild = {
         include: ['BABEL_ENV'],
       },
     ],
+    [
+      require.resolve('@babel/plugin-transform-modules-commonjs'),
+      { strictMode: false },
+    ],
   ],
   overrides: [
     {
