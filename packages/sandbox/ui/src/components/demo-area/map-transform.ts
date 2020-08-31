@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { NOOP } from 'tsfn'
-import { TPointer } from '@primitives/pointer'
-import { TTransform } from '../../types'
+import type { TPointer } from '@primitives/pointer'
+import type { TTransform } from '../../types'
 
 const ZOOM_SCROLL_MULT = 0.02
 const ZOOM_PINCH_MULT = 2.5

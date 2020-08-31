@@ -1,4 +1,4 @@
-import { TRgba, THsva } from '@fantasy-color/types'
+import type { TRgba, THsva } from '@fantasy-color/types'
 import normalizeRgba from '@fantasy-color/normalize-rgba'
 
 export default (color: TRgba): THsva => {

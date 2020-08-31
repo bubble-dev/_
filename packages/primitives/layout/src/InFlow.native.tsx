@@ -1,10 +1,13 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { isNumber } from 'tsfn'
-import { View, ViewProps } from 'react-native'
+import { View } from 'react-native'
+import type { ViewProps } from 'react-native'
 import { Context } from './context'
-import { TLayoutInFlow } from './types'
+import type { TLayoutInFlow } from './types'
 
 export const LayoutInFlow = component(
   startWithType<TLayoutInFlow>(),

@@ -1,5 +1,6 @@
-import React, { ReactNode, Fragment } from 'react'
-import { TComponent } from 'refun'
+import React, { Fragment } from 'react'
+import type { ReactNode } from 'react'
+import type { TComponent } from 'refun'
 import { SYMBOL_SWITCH_POPOVER_CONTENT } from '../../symbols'
 
 export type TSwitchPopover_Content = {

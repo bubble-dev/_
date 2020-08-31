@@ -1,5 +1,5 @@
-import { TColor } from 'colorido'
-import { TStyle } from 'stili'
+import type { TColor } from 'colorido'
+import type { TStyle } from 'stili'
 
 export type TThemeableText = {
   color?: TColor,

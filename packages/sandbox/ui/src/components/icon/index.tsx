@@ -8,7 +8,7 @@ import { SYMBOL_ICON } from '../../symbols'
 import { TextThemeContext } from '../theme-context'
 import { PrimitiveBlock } from '../primitive-block'
 import { orientationMap } from './orientation-map'
-import { TIconOrientation } from './types'
+import type { TIconOrientation } from './types'
 
 export * from './types'
 

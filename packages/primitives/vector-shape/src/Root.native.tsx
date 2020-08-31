@@ -3,7 +3,7 @@ import { Block } from '@primitives/block'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
 import { Surface, Shape } from '@primitives/svg'
 import { colorToString } from 'colorido'
-import { TVectorShape } from './types'
+import type { TVectorShape } from './types'
 
 export const VectorShape = component(
   startWithType<TVectorShape>(),

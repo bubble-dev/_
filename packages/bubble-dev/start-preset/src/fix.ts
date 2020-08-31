@@ -4,7 +4,7 @@ import sequence from '@start/plugin-sequence'
 import find from '@start/plugin-find'
 import read from '@start/plugin-read'
 import eslint from '@start/plugin-lib-eslint'
-import { TPackageJson } from 'fixdeps'
+import type { TPackageJson } from 'fixdeps'
 
 export const fixLint = async () => {
   const path = await import('path')

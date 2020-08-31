@@ -1,4 +1,5 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { component, startWithType, mapState, onChange, mapContext } from 'refun'
 import { SYMBOL_TABS, SYMBOL_TABS_ITEM, LAYOUT_SIZE_FIT } from '../../symbols'
 import { Layout, Layout_Item } from '../layout'

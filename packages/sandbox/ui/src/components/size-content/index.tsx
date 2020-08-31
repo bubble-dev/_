@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import type { ReactElement } from 'react'
 import { component, startWithType, mapContext } from 'refun'
 import { Size } from '../size'
 import { SYMBOL_SIZE_CONTENT } from '../../symbols'

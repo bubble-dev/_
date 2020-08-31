@@ -1,8 +1,8 @@
 /* eslint-disable max-params */
 import { isNumber, UNDEFINED } from 'tsfn'
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { LAYOUT_SIZE_1, LAYOUT_SIZE_2, LAYOUT_SIZE_3, LAYOUT_SIZE_4, LAYOUT_SIZE_FIT } from '../../symbols'
-import { TLayoutSize } from './types'
+import type { TLayoutSize } from './types'
 
 export type TOnItemSizeChange = (index: number, value: number) => void
 

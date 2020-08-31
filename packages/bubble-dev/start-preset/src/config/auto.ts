@@ -1,4 +1,4 @@
-import { TPrefixes, TPackageJson } from '@auto/core'
+import type { TPrefixes, TPackageJson } from '@auto/core'
 
 export const getPrefixes = async (): Promise<TPrefixes> => {
   const path = await import('path')

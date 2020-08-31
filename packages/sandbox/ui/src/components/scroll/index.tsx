@@ -1,4 +1,5 @@
-import React, { ReactNode, CSSProperties } from 'react'
+import React from 'react'
+import type { ReactNode, CSSProperties } from 'react'
 import { component, startWithType, mapContext, mapState, mapDefaultProps, onLayout, mapHandlers, mapWithProps, mapRef } from 'refun'
 import { isNumber } from 'tsfn'
 import { LayoutContext } from '../layout-context'

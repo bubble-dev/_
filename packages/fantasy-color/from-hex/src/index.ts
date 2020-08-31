@@ -1,4 +1,4 @@
-import { TRgb } from '@fantasy-color/types'
+import type { TRgb } from '@fantasy-color/types'
 
 export default (hex: string): TRgb | null => {
   if (hex[0] !== '#' || hex.length !== 7) {

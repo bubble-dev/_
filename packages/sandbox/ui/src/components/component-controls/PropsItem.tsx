@@ -1,5 +1,6 @@
 import React from 'react'
-import { startWithType, TMapHovered, mapHovered, mapWithProps, pureComponent, TMapPressed, mapPressed, mapContext } from 'refun'
+import { startWithType, mapHovered, mapWithProps, pureComponent, mapPressed, mapContext } from 'refun'
+import type { TMapHovered, TMapPressed } from 'refun'
 import { Pointer } from '@primitives/pointer'
 import { isUndefined } from 'tsfn'
 import { elegir } from 'elegir'

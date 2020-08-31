@@ -1,4 +1,5 @@
-import React, { ReactNode, Fragment } from 'react'
+import React, { Fragment } from 'react'
+import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { component, startWithType, mapContext, mapState, mapWithProps, mapDefaultProps } from 'refun'
 import { AnimationValue } from '../animation'

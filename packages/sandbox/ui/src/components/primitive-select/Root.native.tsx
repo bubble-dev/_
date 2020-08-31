@@ -1,7 +1,8 @@
 import React from 'react'
-import { Picker, ViewStyle } from 'react-native'
+import { Picker } from 'react-native'
+import type { ViewStyle } from 'react-native'
 import { component, mapWithProps, startWithType } from 'refun'
-import { TPrimitiveSelect } from './types'
+import type { TPrimitiveSelect } from './types'
 
 export const PrimitiveSelect = component(
   startWithType<TPrimitiveSelect>(),

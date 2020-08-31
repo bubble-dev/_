@@ -1,8 +1,9 @@
-import { createStore, applyMiddleware, compose, Store } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
+import type { Store } from 'redux'
 import thunk from 'redux-thunk'
 import { globalObject } from '../utils'
 import { reducer } from './reducers'
-import { TMetaState, TMetaDispatch } from './types'
+import type { TMetaState, TMetaDispatch } from './types'
 import { getHashInitialState } from './get-hash-initial-state'
 
 export let store: Store<TMetaState> & {

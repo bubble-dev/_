@@ -3,15 +3,13 @@ import {
   mapWithProps,
   startWithType,
   mapHovered,
-  TMapHovered,
   mapPressed,
-  TMapPressed,
   mapKeyboardFocused,
-  TMapKeyboardFocused,
   pureComponent,
   mapDefaultProps,
   mapContext,
 } from 'refun'
+import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import { elegir } from 'elegir'
 import { PrimitiveBlock } from '../primitive-block'
 import { SizeBorder } from '../size-border'

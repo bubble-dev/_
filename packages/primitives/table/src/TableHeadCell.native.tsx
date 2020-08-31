@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { View } from 'react-native'
-import { TTableBorderStyle } from './types'
+import type { TTableBorderStyle } from './types'
 
 export type TTableHeadCell = {
   id?: string,

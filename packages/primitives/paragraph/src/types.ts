@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
-import { TThemeableText } from '@themeables/text'
-import { TThemeableSpacer } from '@themeables/spacer'
-import { TThemeableTextAlign } from '@themeables/text-align'
+import type { ReactNode } from 'react'
+import type { TThemeableText } from '@themeables/text'
+import type { TThemeableSpacer } from '@themeables/spacer'
+import type { TThemeableTextAlign } from '@themeables/text-align'
 
 export type TParagraph = {
   id?: string,

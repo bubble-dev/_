@@ -1,8 +1,9 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import type { ReactElement } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
 import { Animation } from './Animation'
 import { easeInOutCubic } from './easing'
-import { TEasingFn } from './types'
+import type { TEasingFn } from './types'
 import { isValueEqual } from './is-value-equal'
 import { easeValue } from './ease-value'
 

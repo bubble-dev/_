@@ -1,4 +1,4 @@
-import { FC, ReactElement } from 'react'
+import type { FC, ReactElement } from 'react'
 
 export const getComponentName = (component: FC<any>) => {
   return component.displayName || component.name

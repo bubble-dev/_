@@ -1,4 +1,4 @@
-import { TColor } from '../../colors'
+import type { TColor } from '../../colors'
 
 export type TPrimitiveBorder = {
   color: TColor,

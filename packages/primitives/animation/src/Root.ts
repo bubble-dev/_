@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState, ReactElement } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
 import { isUndefined, isFunction } from 'tsfn'
-import { TEasingFn } from './types'
+import type { TEasingFn } from './types'
 
 export type TAnimation<T> = {
   time: number,

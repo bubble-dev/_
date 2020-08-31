@@ -1,4 +1,4 @@
-import { TLayoutDirection, TVAlign, THAlign } from '@primitives/layout'
+import type { TLayoutDirection, TVAlign, THAlign } from '@primitives/layout'
 
 export type TThemeableLayout = {
   height?: number,

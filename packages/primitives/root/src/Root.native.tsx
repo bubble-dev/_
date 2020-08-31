@@ -9,7 +9,7 @@ import {
   mapWithProps,
   onUpdate,
 } from 'refun'
-import { TRoot } from './types'
+import type { TRoot } from './types'
 
 export const Root = component(
   startWithType<TRoot>(),

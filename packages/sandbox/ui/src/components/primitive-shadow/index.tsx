@@ -1,7 +1,8 @@
-import React, { HTMLProps, CSSProperties } from 'react'
+import React from 'react'
+import type { HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
 import { colorToString } from '../../colors'
-import { TPrimitiveShadow } from './types'
+import type { TPrimitiveShadow } from './types'
 
 export * from './types'
 

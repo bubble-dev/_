@@ -1,7 +1,8 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
-import { THeading, Heading } from './src'
+import { Heading } from './src'
+import type { THeading } from './src'
 
 export const config: TComponentConfig<THeading> = {
   props: {

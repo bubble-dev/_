@@ -1,5 +1,5 @@
-import { TComponentConfig } from 'autoprops'
-import { TVectorShape } from './src/types'
+import type { TComponentConfig } from 'autoprops'
+import type { TVectorShape } from './src/types'
 
 export const config: TComponentConfig<TVectorShape> = {
   props: {

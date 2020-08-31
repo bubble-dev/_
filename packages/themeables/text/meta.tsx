@@ -1,8 +1,11 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
-import { TText, Text } from '@primitives/text'
-import { TInput, Input } from '@primitives/input'
-import { setupTextTheme, TThemeableTexts, TThemeableText } from './src'
+import type { TComponentConfig } from 'autoprops'
+import { Text } from '@primitives/text'
+import type { TText } from '@primitives/text'
+import { Input } from '@primitives/input'
+import type { TInput } from '@primitives/input'
+import { setupTextTheme } from './src'
+import type { TThemeableTexts, TThemeableText } from './src'
 
 type Mappings = {
   DemoText: { status: 'default' | 'error' },

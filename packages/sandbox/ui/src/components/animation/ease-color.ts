@@ -1,6 +1,6 @@
-import { TWritable } from 'tsfn'
-import { TColor } from '../../colors'
-import { TAnimationMapFn, TEasingFn } from './types'
+import type { TWritable } from 'tsfn'
+import type { TColor } from '../../colors'
+import type { TAnimationMapFn, TEasingFn } from './types'
 
 export const easeColor = (easingFn: TEasingFn): TAnimationMapFn<TColor> => (from, to, time) => {
   const res = from.slice() as TWritable<TColor>

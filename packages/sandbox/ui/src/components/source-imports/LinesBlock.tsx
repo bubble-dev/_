@@ -1,6 +1,6 @@
 import React from 'react'
 import { pureComponent, startWithType, mapContext, mapWithProps } from 'refun'
-import { TLine } from 'syntx'
+import type { TLine } from 'syntx'
 import { Layout, Layout_Item } from '../layout'
 import { LayoutContext } from '../layout-context'
 import { LAYOUT_SIZE_FIT } from '../../symbols'

@@ -1,8 +1,10 @@
-import React, { KeyboardEvent } from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React from 'react'
+import type { KeyboardEvent } from 'react'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { colorToString, isColor } from 'colorido'
-import { TInput } from './types'
+import type { TInput } from './types'
 
 export const Input = component(
   startWithType<TInput>(),

@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { PluginContext } from './PluginContext'
-import { TPlugin } from './types'
+import type { TPlugin } from './types'
 
 export type TPluginProvider = {
   plugin?: TPlugin,

@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { normalizeWebStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapWithPropsMemo } from 'refun'
-import { TTableBorderStyle, TTableCellPosition } from './types'
+import type { TTableBorderStyle, TTableCellPosition } from './types'
 
 export type TTableBodyCell = {
   id?: string,

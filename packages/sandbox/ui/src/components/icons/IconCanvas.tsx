@@ -3,7 +3,7 @@ import { startWithType, component, mapContext } from 'refun'
 import { SYMBOL_ICON } from '../../symbols'
 import { Icon } from '../icon'
 import { ThemeContext } from '../theme-context'
-import { TIcon } from './types'
+import type { TIcon } from './types'
 
 export const IconCanvas = component(
   startWithType<TIcon>(),

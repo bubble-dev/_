@@ -1,6 +1,7 @@
-import { Store, createStore } from 'redux'
+import { createStore } from 'redux'
+import type { Store } from 'redux'
 import { globalObject } from '../utils'
-import { TState } from './types'
+import type { TState } from './types'
 import { reducer } from './reducers'
 import { getHashInitialState } from './get-hash-initial-state'
 

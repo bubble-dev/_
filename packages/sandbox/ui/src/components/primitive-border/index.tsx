@@ -1,8 +1,9 @@
-import React, { CSSProperties, HTMLProps } from 'react'
+import React from 'react'
+import type { CSSProperties, HTMLProps } from 'react'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
-import { TPrimitiveBorder } from './types'
+import type { TPrimitiveBorder } from './types'
 
 export * from './types'
 

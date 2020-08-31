@@ -1,4 +1,4 @@
-import { TRgb } from '@fantasy-color/types/src'
+import type { TRgb } from '@fantasy-color/types/src'
 import luminanceRgb from '@fantasy-color/luminance-rgb'
 import contrastRatioLuminance from '@fantasy-color/contrast-ratio-luminance'
 

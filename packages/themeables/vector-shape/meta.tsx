@@ -1,7 +1,9 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
-import { TVectorShape, VectorShape } from '@primitives/vector-shape'
-import { setupVectorShapeTheme, TThemeableVectorShapes } from './src'
+import type { TComponentConfig } from 'autoprops'
+import { VectorShape } from '@primitives/vector-shape'
+import type { TVectorShape } from '@primitives/vector-shape'
+import { setupVectorShapeTheme } from './src'
+import type { TThemeableVectorShapes } from './src'
 
 type Mappings = {
   demo: { status: 'default' | 'error'},

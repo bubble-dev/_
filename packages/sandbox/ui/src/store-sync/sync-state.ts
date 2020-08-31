@@ -1,5 +1,5 @@
 import { platformId } from '../utils/platform-id'
-import { TSyncStore } from './types'
+import type { TSyncStore } from './types'
 import { getInitialSyncState } from './get-initial-sync-state'
 
 const HOST = 'localhost'

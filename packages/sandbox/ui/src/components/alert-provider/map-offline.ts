@@ -1,7 +1,7 @@
 import { pipe } from '@psxcode/compose'
 import { startWithType, onUpdate } from 'refun'
 import { globalObject } from '../../utils'
-import { TAlert } from './types'
+import type { TAlert } from './types'
 
 const OFFLINE_ID = 'OFFLINE'
 

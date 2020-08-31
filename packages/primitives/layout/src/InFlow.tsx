@@ -1,9 +1,10 @@
 import React from 'react'
 import { component, startWithType, mapProps, mapContext, mapDefaultProps } from 'refun'
-import { normalizeWebStyle, TStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { Context } from './context'
-import { TLayoutInFlow } from './types'
+import type { TLayoutInFlow } from './types'
 
 export const LayoutInFlow = component(
   startWithType<TLayoutInFlow>(),

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { serializeComponent, TYPE_COMPONENT_NAME, TYPE_VALUE_SYMBOL } from 'syntx'
 
 export const serializeImportsToText = (Component: FC<any>, props: any, getImportPackageName: (smb: string) => string) => {

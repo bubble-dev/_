@@ -1,7 +1,8 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
-import { TParagraph, Paragraph } from './src'
+import { Paragraph } from './src'
+import type { TParagraph } from './src'
 
 export const config: TComponentConfig<TParagraph> = {
   props: {

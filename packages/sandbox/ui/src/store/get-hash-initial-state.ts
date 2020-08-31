@@ -2,7 +2,7 @@ import { getHashState as getSyncHashState } from '../store-sync/get-hash-state'
 import { isValidSyncState } from '../store-sync/is-valid-sync-state'
 import { pickMainSubState } from '../store-sync/get-initial-sync-state'
 import { initialState } from './initial-state'
-import { TState } from './types'
+import type { TState } from './types'
 
 export const getHashInitialState = (): TState => {
   const stateObj = getSyncHashState()

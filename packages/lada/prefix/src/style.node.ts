@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react'
-import { TKeyOf } from 'tsfn'
+import type { CSSProperties } from 'react'
+import type { TKeyOf } from 'tsfn'
 
 export type TStyle = {
   fontSmoothing?: string,

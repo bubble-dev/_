@@ -1,6 +1,6 @@
 import { pipe } from '@psxcode/compose'
 import { startWithType } from 'refun'
-import { TAlert } from './types'
+import type { TAlert } from './types'
 
 export type TMapOffline = {
   alerts: TAlert[],

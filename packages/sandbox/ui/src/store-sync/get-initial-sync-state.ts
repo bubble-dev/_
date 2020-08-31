@@ -1,8 +1,8 @@
-import { TKeyOf } from 'tsfn'
+import type { TKeyOf } from 'tsfn'
 import { initialState as metaInitialState } from '../store-meta/initial-state'
 import { initialState as mainInitialState } from '../store/initial-state'
 import { objectPick } from '../utils'
-import { TSyncState, TMainSubState, TMetaSubState } from './types'
+import type { TSyncState, TMainSubState, TMetaSubState } from './types'
 
 export const mainStateKeys: TKeyOf<TMainSubState>[] = ['width', 'height', 'transformX', 'transformY', 'transformZ', 'resolutionKey', 'shouldStretch', 'hasGrid', 'isCanvasDarkMode']
 export const metaStateKeys: TKeyOf<TMetaSubState>[] = ['componentKey', 'propsIndex']

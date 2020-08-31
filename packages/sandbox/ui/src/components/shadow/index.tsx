@@ -1,6 +1,7 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { PrimitiveShadow, TPrimitiveShadow } from '../primitive-shadow'
+import { PrimitiveShadow } from '../primitive-shadow'
+import type { TPrimitiveShadow } from '../primitive-shadow'
 import { AnimationColor } from '../animation'
 
 export const Shadow = component(

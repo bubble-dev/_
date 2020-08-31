@@ -2,7 +2,7 @@ import React from 'react'
 import { Block } from '@primitives/block'
 import { component, mapDefaultProps, startWithType } from 'refun'
 import { colorToString } from 'colorido'
-import { TThemeableBorder } from '@themeables/border'
+import type { TThemeableBorder } from '@themeables/border'
 
 export type TBorder = TThemeableBorder
 

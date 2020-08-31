@@ -1,5 +1,5 @@
 import path from 'path'
-import { StartPlugin } from '@start/plugin'
+import type { StartPlugin } from '@start/plugin'
 import sequence from '@start/plugin-sequence'
 import copy from '@start/plugin-copy'
 import find from '@start/plugin-find'

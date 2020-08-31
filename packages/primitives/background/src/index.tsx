@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { Block } from '@primitives/block'
 import { colorToString } from 'colorido'
-import { TThemeableBackground } from '@themeables/background'
+import type { TThemeableBackground } from '@themeables/background'
 
 export type TBackground = TThemeableBackground
 

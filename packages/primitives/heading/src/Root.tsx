@@ -1,5 +1,6 @@
 import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import {
   component,
   mapDefaultProps,
@@ -7,7 +8,7 @@ import {
   startWithType,
 } from 'refun'
 import { colorToString, isColor } from 'colorido'
-import { THeading } from './types'
+import type { THeading } from './types'
 
 export const Heading = component(
   startWithType<THeading>(),

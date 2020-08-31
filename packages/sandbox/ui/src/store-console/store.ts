@@ -1,7 +1,8 @@
-import { createStore, Store } from 'redux'
+import { createStore } from 'redux'
+import type { Store } from 'redux'
 import { globalObject } from '../utils'
 import { reducer } from './reducers'
-import { TConsoleState } from './types'
+import type { TConsoleState } from './types'
 
 export let store: Store<TConsoleState>
 

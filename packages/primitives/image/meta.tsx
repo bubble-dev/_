@@ -1,5 +1,5 @@
-import { TComponentConfig } from 'autoprops'
-import { TImage } from './src/types'
+import type { TComponentConfig } from 'autoprops'
+import type { TImage } from './src/types'
 
 export const config: TComponentConfig<TImage> = {
   props: {

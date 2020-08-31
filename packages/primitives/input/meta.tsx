@@ -1,6 +1,7 @@
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { component, startWithType, mapState, mapHandlers } from 'refun'
-import { Input, TInput } from './src'
+import { Input } from './src'
+import type { TInput } from './src'
 
 export const Component = component(
   startWithType<TInput>(),

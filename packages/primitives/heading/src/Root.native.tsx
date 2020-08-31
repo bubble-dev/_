@@ -5,15 +5,12 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import {
-  Text as NativeText,
-  TextProps,
-  View as NativeView,
-  ViewProps,
-} from 'react-native'
-import { TStyle, normalizeNativeStyle } from 'stili'
+import { Text as NativeText, View as NativeView } from 'react-native'
+import type { TextProps, ViewProps } from 'react-native'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
-import { THeading } from './types'
+import type { THeading } from './types'
 
 export const Heading = component(
   startWithType<THeading>(),

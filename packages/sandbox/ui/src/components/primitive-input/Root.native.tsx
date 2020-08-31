@@ -1,9 +1,10 @@
 import React from 'react'
-import { TextInput, TextStyle } from 'react-native'
+import { TextInput } from 'react-native'
+import type { TextStyle } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
-import { TPrimitiveInput } from './types'
+import type { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
   startWithType<TPrimitiveInput>(),

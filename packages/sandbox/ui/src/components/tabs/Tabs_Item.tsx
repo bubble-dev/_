@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import type { ReactElement } from 'react'
 import { component, startWithType } from 'refun'
 import { SYMBOL_TABS_ITEM } from '../../symbols'
 

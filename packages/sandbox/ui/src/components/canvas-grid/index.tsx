@@ -4,7 +4,7 @@ import { elegir } from 'elegir'
 import { Surface, Group, Shape } from '@primitives/svg'
 import { PrimitiveBlock } from '../primitive-block'
 import * as Colors from './colors'
-import { TCanvasGrid } from './types'
+import type { TCanvasGrid } from './types'
 
 const CANVAS_GRID_SIZE = 5
 

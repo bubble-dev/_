@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from 'react'
+import type { ReactNode, CSSProperties } from 'react'
 
 export type TPrimitiveBlockCommon = {
   width?: number,

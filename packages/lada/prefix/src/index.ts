@@ -1,6 +1,6 @@
 import { getObjectKeys, isUndefined } from 'tsfn'
-import { TStylePrefix } from './types'
-import { TStyle, TStyleKey } from './style'
+import type { TStylePrefix } from './types'
+import type { TStyle, TStyleKey } from './style'
 
 const WINDOW = global as any as Window
 const STYLES = WINDOW.document.documentElement.style as TStyle

@@ -1,9 +1,9 @@
-import { FC } from 'react'
-import { TCommonComponentConfig } from 'autoprops'
-import { TAnyObject } from 'tsfn'
-import { ThunkDispatch } from 'redux-thunk'
-import { AnyAction } from 'redux'
-import { TComponents, TPackageJson } from '../types'
+import type { FC } from 'react'
+import type { TCommonComponentConfig } from 'autoprops'
+import type { TAnyObject } from 'tsfn'
+import type { ThunkDispatch } from 'redux-thunk'
+import type { AnyAction } from 'redux'
+import type { TComponents, TPackageJson } from '../types'
 
 export type TMetaState = {
   components: TComponents | null,

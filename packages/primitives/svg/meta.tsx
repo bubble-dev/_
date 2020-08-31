@@ -1,5 +1,5 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import {
   Defs,
   Ellipse,

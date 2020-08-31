@@ -1,4 +1,4 @@
-import { TThemeableImage } from '@themeables/image'
+import type { TThemeableImage } from '@themeables/image'
 
 export type TImage = {
   id?: string,

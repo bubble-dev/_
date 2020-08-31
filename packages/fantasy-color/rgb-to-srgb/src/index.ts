@@ -1,4 +1,4 @@
-import { TRgb } from '@fantasy-color/types/src'
+import type { TRgb } from '@fantasy-color/types/src'
 import normalizeRgb from '@fantasy-color/normalize-rgb'
 
 const NORMALIZED_BELOW_10 = 0.03928

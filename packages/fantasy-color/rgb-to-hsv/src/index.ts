@@ -1,4 +1,4 @@
-import { TRgb, THsv } from '@fantasy-color/types/src'
+import type { TRgb, THsv } from '@fantasy-color/types/src'
 import normalizeRgb from '@fantasy-color/normalize-rgb/src'
 
 export default (color: TRgb): THsv => {

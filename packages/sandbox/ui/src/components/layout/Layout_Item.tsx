@@ -1,11 +1,12 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithProps, mapHandlers, mapStateRef, mapContext } from 'refun'
 import { elegir } from 'elegir'
 import { isFunction } from 'tsfn'
 import { LayoutContext } from '../layout-context'
 import { SYMBOL_LAYOUT_ITEM } from '../../symbols'
 import { LayoutItemContext } from './LayoutItemContext'
-import { TLayoutSize } from './types'
+import type { TLayoutSize } from './types'
 import { SIZE_INITIAL } from './utils'
 
 export type TLayout_Item = {

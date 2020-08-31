@@ -3,14 +3,12 @@ import {
   mapWithProps,
   startWithType,
   mapHovered,
-  TMapHovered,
   mapPressed,
-  TMapPressed,
   mapKeyboardFocused,
-  TMapKeyboardFocused,
   pureComponent,
   mapContext,
 } from 'refun'
+import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import { Transform } from '@primitives/transform'
 import { elegir } from 'elegir'
 import { AnimationValue } from '../animation'

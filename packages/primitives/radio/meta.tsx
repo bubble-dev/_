@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { component, startWithType } from 'refun'
 import { Block } from '@primitives/block'
 import { Text } from '@primitives/text'
-import { RadioInput, RadioGroup, TRadioInput, TRadioGroup } from './src'
+import { RadioInput, RadioGroup } from './src'
+import type { TRadioInput, TRadioGroup } from './src'
 import { RadioContext } from './src/Context'
 
 // This Component will be passed by the consumer,

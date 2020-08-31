@@ -1,7 +1,8 @@
-import { setupTheme, TThemeables } from '@themeables/core'
-import { TThemeableImage } from './types'
+import { setupTheme } from '@themeables/core'
+import type { TThemeables } from '@themeables/core'
+import type { TThemeableImage } from './types'
 
-export * from './types'
+export type { TThemeImage, TThemeableImage, TThemeableImages } from './types'
 
 export const setupImageTheme = <ComponentMappings>(defaultTheme: TThemeables<TThemeableImage, ComponentMappings>) => {
   const { ThemePiece, createThemeable } = setupTheme<TThemeableImage, ComponentMappings>(defaultTheme)

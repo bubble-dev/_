@@ -5,10 +5,12 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { Text as NativeText, TextProps } from 'react-native'
-import { TStyle, normalizeNativeStyle } from 'stili'
+import { Text as NativeText } from 'react-native'
+import type { TextProps } from 'react-native'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
-import { TText } from './types'
+import type { TText } from './types'
 
 export const Text = component(
   startWithType<TText>(),

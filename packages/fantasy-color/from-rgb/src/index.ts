@@ -1,4 +1,4 @@
-import { TRgb } from '@fantasy-color/types'
+import type { TRgb } from '@fantasy-color/types'
 
 const rgbRegex = /^\s*rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/
 

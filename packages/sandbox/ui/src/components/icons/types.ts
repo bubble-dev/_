@@ -1,4 +1,4 @@
-import { TIconOrientation } from '../icon/types'
+import type { TIconOrientation } from '../icon/types'
 
 export type TIcon = {
   orientation?: TIconOrientation,

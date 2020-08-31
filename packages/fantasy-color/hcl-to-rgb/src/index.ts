@@ -1,4 +1,4 @@
-import { TRgb, THcl } from '@fantasy-color/types'
+import type { TRgb, THcl } from '@fantasy-color/types'
 import hclToLab from '@fantasy-color/hcl-to-lab'
 import labToRgb from '@fantasy-color/lab-to-rgb'
 

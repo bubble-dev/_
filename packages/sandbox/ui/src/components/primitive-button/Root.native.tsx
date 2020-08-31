@@ -1,6 +1,8 @@
-import React, { FC } from 'react'
-import { TouchableWithoutFeedback, View, ViewStyle } from 'react-native'
-import { TPrimitiveButton } from './types'
+import React from 'react'
+import type { FC } from 'react'
+import { TouchableWithoutFeedback, View } from 'react-native'
+import type { ViewStyle } from 'react-native'
+import type { TPrimitiveButton } from './types'
 
 const hitSlop = {
   bottom: 5,

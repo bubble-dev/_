@@ -1,6 +1,7 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { TPrimitiveSelect } from './types'
+import type { TPrimitiveSelect } from './types'
 
 export const PrimitiveSelect = component(
   startWithType<TPrimitiveSelect>(),

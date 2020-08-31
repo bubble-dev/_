@@ -1,5 +1,6 @@
-import { FC } from 'react'
-import { serializeComponent, TYPE_COMPONENT_NAME, TYPE_VALUE_SYMBOL, TLineElement, TYPE_WHITESPACE, TYPE_OBJECT_BRACE, TYPE_OBJECT_COMMA, TYPE_QUOTE, TYPE_VALUE_STRING, TLine } from 'syntx'
+import type { FC } from 'react'
+import { serializeComponent, TYPE_COMPONENT_NAME, TYPE_VALUE_SYMBOL, TYPE_WHITESPACE, TYPE_OBJECT_BRACE, TYPE_OBJECT_COMMA, TYPE_QUOTE, TYPE_VALUE_STRING } from 'syntx'
+import type { TLineElement, TLine } from 'syntx'
 
 export const serializeImportsLines = (Component: FC<any>, props: any, getImportPackageNameForSymbol: (smb: string) => string): TLine[] => {
   const allSymbolsNames = new Set<string>()

@@ -1,6 +1,6 @@
 import { isObject } from 'tsfn'
 import { mainStateKeys, metaStateKeys } from './get-initial-sync-state'
-import { TSyncState } from './types'
+import type { TSyncState } from './types'
 
 export const isValidSyncState = (obj: any): obj is TSyncState =>
   isObject(obj) &&

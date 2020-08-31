@@ -1,4 +1,4 @@
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 
 export const config: TComponentConfig<{}> = {
   props: {},

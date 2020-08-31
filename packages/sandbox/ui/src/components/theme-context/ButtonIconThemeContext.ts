@@ -1,5 +1,6 @@
 import { createContext } from 'react'
-import { TColor, BLACK, WHITE } from '../../colors'
+import { BLACK, WHITE } from '../../colors'
+import type { TColor } from '../../colors'
 
 export type TButtonIconThemeContext = {
   backgroundColor: TColor,

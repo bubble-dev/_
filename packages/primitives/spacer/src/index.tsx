@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { Block } from '@primitives/block'
-import { TThemeableSpacer } from '@themeables/spacer'
+import type { TThemeableSpacer } from '@themeables/spacer'
 
 export type TSpacer = TThemeableSpacer
 

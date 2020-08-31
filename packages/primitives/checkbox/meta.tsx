@@ -1,5 +1,5 @@
-import { TComponentConfig } from 'autoprops'
-import { TCheckboxProps } from './src/types'
+import type { TComponentConfig } from 'autoprops'
+import type { TCheckboxProps } from './src/types'
 
 export const config: TComponentConfig<TCheckboxProps> = {
   props: {

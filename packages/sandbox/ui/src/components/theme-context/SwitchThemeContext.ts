@@ -1,5 +1,6 @@
 import { createContext } from 'react'
-import { TColor, WHITE, BLACK } from '../../colors'
+import { WHITE, BLACK } from '../../colors'
+import type { TColor } from '../../colors'
 
 export type TSwitchThemeContext = {
   backgroundColor: TColor,

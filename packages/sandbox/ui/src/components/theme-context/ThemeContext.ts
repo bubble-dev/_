@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { TTheme, TThemeIcons } from '../../types'
+import type { TTheme, TThemeIcons } from '../../types'
 
 export type TThemeContext = {
   theme: TTheme,

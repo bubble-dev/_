@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import type { ReactElement } from 'react'
 import { component, startWithType, mapRef } from 'refun'
 import { isNumber, isFunction } from 'tsfn'
 import { onLayout } from '../on-layout'

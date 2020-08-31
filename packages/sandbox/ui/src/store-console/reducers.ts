@@ -1,6 +1,6 @@
-import { AnyAction, Reducer } from 'redux'
+import type { AnyAction, Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
-import { TConsoleState } from './types'
+import type { TConsoleState } from './types'
 import { LOG_ACTION, CLEAR_ACTION } from './actions'
 import { initialState } from './initial-state'
 

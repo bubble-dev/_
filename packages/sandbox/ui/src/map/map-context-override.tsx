@@ -1,5 +1,7 @@
-import React, { Context, useContext, useRef, FC, ExoticComponent, ReactNode } from 'react'
-import { EMPTY_OBJECT, TExtend } from 'tsfn'
+import React, { useContext, useRef } from 'react'
+import type { Context, FC, ExoticComponent, ReactNode } from 'react'
+import { EMPTY_OBJECT } from 'tsfn'
+import type { TExtend } from 'tsfn'
 
 export const mapContextOverride = <K extends string, CP, P extends {}>(providerName: K, context: Context<CP>, getValue: (props: P, contextProps: CP) => Partial<CP>) =>
   (props: P): TExtend<P, { [k in K]: FC }> => {

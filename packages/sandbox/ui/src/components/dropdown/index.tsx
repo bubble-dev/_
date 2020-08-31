@@ -2,23 +2,23 @@ import React, { Fragment } from 'react'
 import {
   pureComponent,
   startWithType,
-  TMapHovered,
   mapWithPropsMemo,
   mapContext,
-  TMapKeyboardFocused,
   mapWithProps,
   mapHovered,
   mapKeyboardFocused,
 } from 'refun'
+import type { TMapHovered, TMapKeyboardFocused } from 'refun'
 import { isUndefined } from 'tsfn'
-import { TId } from '../../types'
+import type { TId } from '../../types'
 import { IconDropdownChevronSmall } from '../icons'
 import { DropdownThemeContext, TextThemeContext } from '../theme-context'
 import { SYMBOL_DROPDOWN, LAYOUT_SIZE_FIT } from '../../symbols'
 import { Layout, Layout_Item } from '../layout'
 import { SizeText } from '../size-text'
 import { SizeContent } from '../size-content'
-import { SizeSelect, Option, TOption } from '../size-select'
+import { SizeSelect, Option } from '../size-select'
+import type { TOption } from '../size-select'
 import { SizeBorder } from '../size-border'
 import { TRANSPARENT } from '../../colors'
 import { mapContextOverride } from '../../map/map-context-override'

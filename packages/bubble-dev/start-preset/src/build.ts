@@ -1,5 +1,5 @@
 import path from 'path'
-import { StartPlugin } from '@start/plugin'
+import type { StartPlugin } from '@start/plugin'
 import inputFiles from '@start/plugin-input-files'
 import sequence from '@start/plugin-sequence'
 import env from '@start/plugin-env'

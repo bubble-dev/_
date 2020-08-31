@@ -1,6 +1,7 @@
 import { createContext } from 'react'
-import { TColor, BLACK } from '../../colors'
-import { TTextThemeContext } from './TextThemeContext'
+import { BLACK } from '../../colors'
+import type { TColor } from '../../colors'
+import type { TTextThemeContext } from './TextThemeContext'
 
 export type TDropdownThemeContext = TTextThemeContext & {
   hoveredColor: TColor,

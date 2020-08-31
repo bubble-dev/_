@@ -1,5 +1,6 @@
 import React from 'react'
-import { startWithType, TMapHovered, TMapPressed, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, TMapKeyboardFocused, mapHandlers } from 'refun'
+import { startWithType, mapHovered, mapPressed, mapKeyboardFocused, pureComponent, mapContext, mapWithProps, mapHandlers } from 'refun'
+import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import { elegir } from 'elegir'
 import { SizeBackground } from '../size-background'
 import { SizeButton } from '../size-button'

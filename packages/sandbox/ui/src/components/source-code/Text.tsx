@@ -1,5 +1,6 @@
-import React, { FC } from 'react'
-import { TColor } from '../../colors'
+import React from 'react'
+import type { FC } from 'react'
+import type { TColor } from '../../colors'
 import { PrimitiveText } from '../primitive-text'
 
 export type TText = {

@@ -5,7 +5,7 @@ import { ThemeProvider } from './components/theme-provider'
 import { Sandbox } from './components/sandbox'
 import { setComponentsList } from './store-meta'
 import { PluginProvider } from './components/plugin-provider'
-import { TApp } from './types'
+import type { TApp } from './types'
 import './store'
 import './store-sync'
 

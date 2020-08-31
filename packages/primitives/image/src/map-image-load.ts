@@ -1,9 +1,11 @@
-import { MutableRefObject } from 'react'
+import type { MutableRefObject } from 'react'
 import { pipe } from '@psxcode/compose'
-import { isFunction, TExtend } from 'tsfn'
+import { isFunction } from 'tsfn'
+import type { TExtend } from 'tsfn'
 import { startWithType, mapContext, mapHandlers, mapRef, onUpdate } from 'refun'
-import { ImageContext, TImageContext } from './Context'
-import { TImage } from './types'
+import { ImageContext } from './Context'
+import type { TImageContext } from './Context'
+import type { TImage } from './types'
 
 const getId = (() => {
   let id = 0

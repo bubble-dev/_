@@ -1,4 +1,4 @@
-import { AnyAction, Reducer, Store } from 'redux'
+import type { AnyAction, Reducer, Store } from 'redux'
 import { ReduxStateFactory, ReduxDispatchFactory } from 'refun'
 
 export const injectReducerFactory = <S extends {}, A extends AnyAction>(store: Store<S>, reducer: Reducer<S, A>, StoreContext: any) => <SS extends {}, AA extends AnyAction>(injectedReducer: Reducer<SS, AA>) => {

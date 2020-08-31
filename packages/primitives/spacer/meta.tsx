@@ -1,7 +1,8 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Layout, LayoutInFlow } from '@primitives/layout'
-import { TSpacer, Spacer } from './src'
+import { Spacer } from './src'
+import type { TSpacer } from './src'
 
 export const config: TComponentConfig<TSpacer> = {
   props: {

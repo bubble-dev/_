@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import type { ReactElement } from 'react'
 import { createPortal } from 'react-dom'
 import { component, startWithType, mapContext, mapState, mapWithProps, mapDefaultProps, mapSafeTimeout, onUpdate } from 'refun'
 import { AnimationValue } from '../animation'

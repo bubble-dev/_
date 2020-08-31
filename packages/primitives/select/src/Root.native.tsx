@@ -2,7 +2,7 @@ import React from 'react'
 import { Picker } from 'react-native'
 import { normalizeNativeStyle } from 'stili'
 import { component, mapWithProps, startWithType } from 'refun'
-import { TSelect } from './types'
+import type { TSelect } from './types'
 
 export const Select = component(
   startWithType<TSelect>(),

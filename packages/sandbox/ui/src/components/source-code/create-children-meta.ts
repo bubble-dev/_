@@ -1,6 +1,8 @@
-import { TAnyObject, TWritable, isDefined, isUndefined } from 'tsfn'
-import { TMeta } from 'syntx'
-import { isChildrenMap, getChildrenKeys, TCommonComponentConfig } from 'autoprops'
+import { isDefined, isUndefined } from 'tsfn'
+import type { TAnyObject, TWritable } from 'tsfn'
+import type { TMeta } from 'syntx'
+import { isChildrenMap, getChildrenKeys } from 'autoprops'
+import type { TCommonComponentConfig } from 'autoprops'
 import { serializeElementPath } from '../../utils'
 
 export const createChildrenMeta = (componentConfig: TCommonComponentConfig, componentPropsChildrenMap?: Readonly<TAnyObject>, metaValue: readonly string[] = []): TMeta => {

@@ -5,15 +5,12 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import {
-  Text as NativeText,
-  TextProps,
-  View as NativeView,
-  ViewProps,
-} from 'react-native'
-import { TStyle, normalizeNativeStyle } from 'stili'
+import { Text as NativeText, View as NativeView } from 'react-native'
+import type { TextProps, ViewProps } from 'react-native'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
-import { TParagraph } from './types'
+import type { TParagraph } from './types'
 
 export const Paragraph = component(
   startWithType<TParagraph>(),

@@ -2,16 +2,15 @@ import React from 'react'
 import {
   pureComponent,
   startWithType,
-  TMapHovered,
-  TMapFocused,
   mapHandlers,
   mapContext,
 } from 'refun'
+import type { TMapHovered, TMapFocused } from 'refun'
 import { isFunction, isString } from 'tsfn'
 import { PrimitiveInput } from '../primitive-input'
 import { PrimitiveText } from '../primitive-text'
 import { AnimationColor } from '../animation'
-import { TId } from '../../types'
+import type { TId } from '../../types'
 import { SYMBOL_FIELD } from '../../symbols'
 import { SizeBlock } from '../size-block'
 import { FieldThemeContext } from '../theme-context'

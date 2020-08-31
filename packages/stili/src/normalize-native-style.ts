@@ -1,6 +1,6 @@
 import { getObjectKeys, isUndefined, getObjectEntries } from 'tsfn'
-import { FlexStyle } from 'react-native'
-import { TStyle, TNativeStyle } from './types'
+import type { FlexStyle } from 'react-native'
+import type { TStyle, TNativeStyle } from './types'
 
 export const normalizeNativeStyle = <T extends FlexStyle = TNativeStyle>(style: TStyle): T =>
   getObjectKeys(style).reduce((result, key) => {

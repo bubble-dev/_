@@ -1,5 +1,6 @@
 import { createContext } from 'react'
-import { BLACK, TColor } from '../../colors'
+import { BLACK } from '../../colors'
+import type { TColor } from '../../colors'
 
 export type TTextThemeContext = {
   color: TColor,

@@ -1,4 +1,4 @@
-import { TComponents } from '@sandbox/ui'
+import type { TComponents } from '@sandbox/ui'
 
 export const components: TComponents = {
   Button: () => import('@primitives/button/meta' /* webpackChunkName: "Button" */),
