@@ -17,21 +17,6 @@ export const pkg = Pkg({
   },
 })
 
-export const graphiq = () =>
-  plugin('demo', ({ logMessage }) => async () => {
-    const { runWebApp } = await import('@rebox/web')
-    const entryPointPath = './tasks/graphiq/index.tsx'
-    const htmlTemplatePath = './tasks/graphiq/index.html'
-
-    await runWebApp({
-      entryPointPath,
-      htmlTemplatePath,
-      isQuiet: true,
-    })
-
-    logMessage('http://localhost:3000/')
-  })
-
 export const run = (file: string) =>
   plugin('main', () => async () => {
     const { resolve } = await import('path')
