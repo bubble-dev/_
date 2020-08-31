@@ -1,3 +1,9 @@
+## v3.0.6
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@primitives/pointer`, `@primitives/svg`, `@primitives/transform`
+
 ## v3.0.5
 
 * 🐞 update dependencies

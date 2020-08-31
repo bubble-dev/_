@@ -1,3 +1,9 @@
+## v0.2.4
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@primitives/block`, `@themeables/spacer`
+
 ## v0.2.3
 
 * 🐞 downgrade `refun` and `tsfn` deps

@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 add import type rule
+
 ## v2.0.0
 
 * 💥 upgrade to ESLint v7

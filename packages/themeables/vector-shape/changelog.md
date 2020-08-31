@@ -1,3 +1,9 @@
+## v2.0.2
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@primitives/vector-shape`, `@themeables/core`
+
 ## v2.0.1
 
 * 🐞 make `path` optional in TThemeableVectorShape

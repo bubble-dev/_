@@ -1,3 +1,7 @@
+## v0.2.0
+
+* 🌱 add `transform-modules-commonjs` plugin
+
 ## v0.1.8
 
 * 🐞 bump `metro-react-native-babel-preset`

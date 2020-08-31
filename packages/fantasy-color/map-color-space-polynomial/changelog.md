@@ -1,3 +1,7 @@
+## v1.0.2
+
+* 🐞 use type-only imports
+
 ## v1.0.1
 
 * 🐞 remove `fantasy-color/types` dependency

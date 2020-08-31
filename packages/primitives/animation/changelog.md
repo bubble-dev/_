@@ -1,3 +1,7 @@
+## v1.0.3
+
+* 🐞 use type-only imports
+
 ## v1.0.2
 
 * 🐞 downgrade `refun` and `tsfn` deps

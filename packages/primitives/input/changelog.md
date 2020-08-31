@@ -1,3 +1,9 @@
+## v3.0.3
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@themeables/spacer`, `@themeables/text`, `stili`
+
 ## v3.0.2
 
 * 🐞 downgrade `refun` and `tsfn` deps

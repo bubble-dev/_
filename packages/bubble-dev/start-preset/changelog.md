@@ -1,3 +1,9 @@
+## v7.1.0
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v7.0.3
 
 * 🐞 update dependencies

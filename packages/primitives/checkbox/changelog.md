@@ -1,3 +1,9 @@
+## v2.0.3
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@primitives/block`, `stili`
+
 ## v2.0.2
 
 * 🐞 downgrade `refun` and `tsfn` deps

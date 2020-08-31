@@ -1,3 +1,7 @@
+## v2.0.2
+
+* 🐞 use type-only imports
+
 ## v2.0.1
 
 * 🐞 update dependencies

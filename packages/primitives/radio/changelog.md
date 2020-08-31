@@ -1,3 +1,9 @@
+## v0.2.5
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `stili`
+
 ## v0.2.4
 
 * 🐞 downgrade `refun` and `tsfn` deps

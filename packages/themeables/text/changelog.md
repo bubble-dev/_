@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 use type-only imports
+
+* ♻️ update dependencies `@primitives/text`, `@themeables/core`, `stili`
+
 ## v2.0.0
 
 * 💥 rename files according to the build system
