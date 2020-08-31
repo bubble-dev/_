@@ -14,12 +14,12 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@themeables/core": "^2.0.1",
+    "@themeables/core": "^2.0.2",
     "colorido": "^1.0.0"
   },
   "devDependencies": {
-    "@primitives/block": "^2.0.3",
-    "@primitives/border": "^2.0.2",
+    "@primitives/block": "^2.0.4",
+    "@primitives/border": "^2.0.3",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"

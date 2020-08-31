@@ -14,13 +14,13 @@
   "sideEffects": false,
   "dependencies": {
     "refun": "^2.0.0",
-    "stili": "^2.0.1"
+    "stili": "^2.0.2"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
     "@types/react-native": "^0.63.0",
-    "@primitives/block": "2.0.3",
-    "@primitives/text": "2.0.2",
+    "@primitives/block": "2.0.4",
+    "@primitives/text": "2.0.3",
     "autoprops": "^4.0.0",
     "react": "16.13.1",
     "react-native": "0.63.2"

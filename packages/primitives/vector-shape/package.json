@@ -13,12 +13,12 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^2.0.3",
-    "@primitives/svg": "^2.1.1",
-    "@themeables/vector-shape": "^2.0.1",
+    "@primitives/block": "^2.0.4",
+    "@primitives/svg": "^2.1.2",
+    "@themeables/vector-shape": "^2.0.2",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
-    "stili": "^2.0.1"
+    "stili": "^2.0.2"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

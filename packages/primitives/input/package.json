@@ -13,11 +13,11 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/spacer": "^0.2.0",
-    "@themeables/text": "^2.0.0",
+    "@themeables/spacer": "^0.2.1",
+    "@themeables/text": "^2.0.1",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
-    "stili": "^2.0.1"
+    "stili": "^2.0.2"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
