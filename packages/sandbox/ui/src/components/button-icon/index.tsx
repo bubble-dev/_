@@ -1,18 +1,17 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { elegir } from 'elegir'
 import {
   mapDefaultProps,
   startWithType,
   mapWithProps,
   mapHovered,
-  TMapHovered,
   mapKeyboardFocused,
-  TMapKeyboardFocused,
   mapPressed,
-  TMapPressed,
   component,
   mapContext,
 } from 'refun'
+import type { TMapHovered, TMapKeyboardFocused, TMapPressed } from 'refun'
 import { PrimitiveButton } from '../primitive-button'
 import { PrimitiveBackground } from '../primitive-background'
 import { PrimitiveBorder } from '../primitive-border'

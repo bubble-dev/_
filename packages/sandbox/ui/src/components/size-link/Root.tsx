@@ -1,11 +1,12 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo, mapContext } from 'refun'
 import { colorToString } from '../../colors'
 import { Text } from '../text'
 import { SYMBOL_LINK } from '../../symbols'
 import { SizeContent } from '../size-content'
 import { TextThemeContext } from '../theme-context'
-import { TSizeLink } from './types'
+import type { TSizeLink } from './types'
 
 export const SizeLink = component(
   startWithType<TSizeLink>(),

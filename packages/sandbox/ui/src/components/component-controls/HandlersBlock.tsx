@@ -1,6 +1,6 @@
 import React from 'react'
-import { TCommonComponentConfig } from 'autoprops'
-import { TAnyObject } from 'tsfn'
+import type { TCommonComponentConfig } from 'autoprops'
+import type { TAnyObject } from 'tsfn'
 import { component, startWithType } from 'refun'
 import { Layout, Layout_Item } from '../layout'
 import { SYMBOL_COMPONENT_CONTROLS_BLOCK } from '../../symbols'

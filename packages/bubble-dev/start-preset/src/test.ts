@@ -6,7 +6,7 @@ import env from '@start/plugin-env'
 import typescriptCheck from '@start/plugin-lib-typescript-check'
 import tape from '@start/plugin-lib-tape'
 import { istanbulInstrument, istanbulReport } from '@start/plugin-lib-istanbul'
-import { TPackageJson } from 'fixdeps'
+import type { TPackageJson } from 'fixdeps'
 
 export const checkDeps = () => plugin('checkDeps', ({ logMessage }) => async () => {
   const path = await import('path')

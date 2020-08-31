@@ -1,7 +1,8 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
 import { SYMBOL_TOOLTIP } from '../../symbols'
-import { ContentTooltip, TContentTooltip } from '../content-tooltip'
+import { ContentTooltip } from '../content-tooltip'
+import type { TContentTooltip } from '../content-tooltip'
 import { SizeText } from '../size-text'
 
 export type TTooltip = {

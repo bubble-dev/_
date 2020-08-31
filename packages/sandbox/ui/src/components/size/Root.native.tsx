@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, LayoutChangeEvent, ViewStyle } from 'react-native'
+import { View } from 'react-native'
+import type { LayoutChangeEvent, ViewStyle } from 'react-native'
 import { component, mapHandlers, startWithType, mapWithPropsMemo } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
 import { round } from './round'
-import { TSize } from './types'
+import type { TSize } from './types'
 
 export const Size = component(
   startWithType<TSize>(),

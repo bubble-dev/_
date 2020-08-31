@@ -1,7 +1,7 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
-import { TSelect } from './types'
+import type { TSelect } from './types'
 
 export const Select = component(
   startWithType<TSelect>(),

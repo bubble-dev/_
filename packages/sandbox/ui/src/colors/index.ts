@@ -1,8 +1,5 @@
-import {
-  TColor as TColoridoColor,
-  isColor as coloridoIsColor,
-  colorToString as coloridoColorToString,
-} from 'colorido'
+import { isColor as coloridoIsColor, colorToString as coloridoColorToString } from 'colorido'
+import type { TColor as TColoridoColor } from 'colorido'
 
 export type TColor = Readonly<TColoridoColor>
 export const colorToString = coloridoColorToString as (color: TColor) => string

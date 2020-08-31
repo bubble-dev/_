@@ -1,5 +1,6 @@
 import { createContext } from 'react'
-import { TColor, WHITE } from '../../colors'
+import { WHITE } from '../../colors'
+import type { TColor } from '../../colors'
 
 export type TPopoverThemeContext = {
   backgroundColor: TColor,

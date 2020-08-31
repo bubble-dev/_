@@ -1,4 +1,5 @@
-import { Worker, WorkerOptions } from 'worker_threads'
+import { Worker } from 'worker_threads'
+import type { WorkerOptions } from 'worker_threads'
 
 const WORKER_PATH = require.resolve('./worker')
 

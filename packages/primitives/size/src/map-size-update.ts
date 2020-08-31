@@ -1,9 +1,11 @@
-import { MutableRefObject } from 'react'
+import type { MutableRefObject } from 'react'
 import { pipe } from '@psxcode/compose'
 import { startWithType, mapContext, onUpdate, mapRef } from 'refun'
-import { isFunction, TExtend3 } from 'tsfn'
-import { SizeContext, TSizeContext } from './Context'
-import { TSize } from './types'
+import { isFunction } from 'tsfn'
+import type { TExtend3 } from 'tsfn'
+import { SizeContext } from './Context'
+import type { TSizeContext } from './Context'
+import type { TSize } from './types'
 
 const getId = (() => {
   let id = 0

@@ -2,7 +2,7 @@ import React from 'react'
 import { component, startWithType, mapState, onUpdateAsync } from 'refun'
 import { isUndefined } from 'tsfn'
 import { ThemeContext } from '../theme-context'
-import { TThemeProvider } from './types'
+import type { TThemeProvider } from './types'
 
 export const ThemeProvider = component(
   startWithType<TThemeProvider>(),

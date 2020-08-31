@@ -1,5 +1,6 @@
 import React from 'react'
-import { component, startWithType, TMapHovered, TMapKeyboardFocused, mapHovered, mapContext, mapKeyboardFocused, mapPressed, mapWithProps } from 'refun'
+import { component, startWithType, mapHovered, mapContext, mapKeyboardFocused, mapPressed, mapWithProps } from 'refun'
+import type { TMapHovered, TMapKeyboardFocused } from 'refun'
 import { elegir } from 'elegir'
 import { SizeBlock } from '../size-block'
 import { Layout, Layout_Item } from '../layout'

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Switch, TouchableWithoutFeedback, ViewStyle } from 'react-native'
+import { Switch, TouchableWithoutFeedback } from 'react-native'
+import type { ViewStyle } from 'react-native'
 import { component, startWithType } from 'refun'
 import { PrimitiveBlock } from '../primitive-block'
-import { TPrimitiveCheckbox } from './types'
+import type { TPrimitiveCheckbox } from './types'
 
 const style: ViewStyle = {
   position: 'absolute',

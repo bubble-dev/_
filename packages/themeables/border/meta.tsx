@@ -1,8 +1,10 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
-import { TBorder, Border } from '@primitives/border'
-import { setupBorderTheme, TThemeableBorders } from './src'
+import { Border } from '@primitives/border'
+import type { TBorder } from '@primitives/border'
+import { setupBorderTheme } from './src'
+import type { TThemeableBorders } from './src'
 
 type TDemo = { status: 'default' | 'error' }
 

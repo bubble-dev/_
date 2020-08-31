@@ -1,4 +1,5 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import {
   component,
   mapDefaultProps,
@@ -7,7 +8,7 @@ import {
 } from 'refun'
 import { isNumber } from 'tsfn'
 import { isColor, colorToString } from '../../colors'
-import { TPrimitiveText } from './types'
+import type { TPrimitiveText } from './types'
 
 export const PrimitiveText = component(
   startWithType<TPrimitiveText>(),

@@ -1,17 +1,17 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { elegir } from 'elegir'
 import {
   mapDefaultProps,
   startWithType,
   mapWithProps,
   mapHovered,
-  TMapHovered,
   mapKeyboardFocused,
-  TMapKeyboardFocused,
   component,
   mapContext,
   mapPressed,
 } from 'refun'
+import type { TMapHovered, TMapKeyboardFocused } from 'refun'
 import { PrimitiveCheckbox } from '../primitive-checkbox'
 import { PrimitiveBorder } from '../primitive-border'
 import { PrimitiveBackground } from '../primitive-background'

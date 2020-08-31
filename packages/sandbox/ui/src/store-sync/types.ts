@@ -1,5 +1,5 @@
-import { TMetaState } from '../store-meta/types'
-import { TState } from '../store/types'
+import type { TMetaState } from '../store-meta/types'
+import type { TState } from '../store/types'
 
 export type TMetaSubState = Pick<TMetaState, 'componentKey' | 'propsIndex' | 'selectedElementPath'>
 export type TMainSubState = Pick<TState, 'width' | 'height' | 'transformX' | 'transformY' | 'transformZ' | 'resolutionKey' | 'shouldStretch' | 'hasGrid' | 'isCanvasDarkMode'>

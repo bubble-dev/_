@@ -1,6 +1,7 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { PrimitiveBorder, TPrimitiveBorder } from '../primitive-border'
+import { PrimitiveBorder } from '../primitive-border'
+import type { TPrimitiveBorder } from '../primitive-border'
 import { AnimationColor } from '../animation'
 import { SizeParentBlock } from '../size-parent-block'
 

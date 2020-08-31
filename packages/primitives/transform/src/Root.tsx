@@ -1,7 +1,8 @@
 import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { component, startWithType, mapWithProps, mapDefaultProps } from 'refun'
-import { TTransformProps } from './types'
+import type { TTransformProps } from './types'
 
 export const Transform = component(
   startWithType<TTransformProps>(),

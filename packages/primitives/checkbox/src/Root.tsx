@@ -2,7 +2,7 @@ import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapWithProps } from 'refun'
 import { Block } from '@primitives/block'
-import { TCheckboxProps } from './types'
+import type { TCheckboxProps } from './types'
 
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),

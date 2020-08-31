@@ -1,4 +1,4 @@
-import { TTheme, TThemeIcons } from '../../types'
+import type { TTheme, TThemeIcons } from '../../types'
 
 export type TThemeProvider = {
   theme?: TTheme,

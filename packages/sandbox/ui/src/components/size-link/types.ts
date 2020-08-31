@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import { TColor } from '../../colors'
+import type { ReactNode } from 'react'
+import type { TColor } from '../../colors'
 
 export type TIsHoveredHandlers = {
   onPointerEnter?: () => void,

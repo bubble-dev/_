@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { TEasingFn } from './types'
+import type { TEasingFn } from './types'
 
 export const easeInCubic: TEasingFn = (range, time) => {
   return range * time * time * time

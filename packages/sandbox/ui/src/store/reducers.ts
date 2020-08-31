@@ -1,9 +1,9 @@
-import { Reducer } from 'redux'
+import type { Reducer } from 'redux'
 import { isUndefined } from 'tsfn'
 import { resolutions, findResolutionKey } from '../resolutions'
-import { TState } from './types'
+import type { TState } from './types'
+import type { TAllActions } from './actions'
 import {
-  TAllActions,
   TYPE_SET_WIDTH,
   TYPE_SET_HEIGHT,
   TYPE_SET_RESOLUTION,

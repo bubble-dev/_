@@ -1,7 +1,7 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
-import { TButton } from './types'
+import type { TButton } from './types'
 
 export const Button = component(
   startWithType<TButton>(),

@@ -1,5 +1,5 @@
-import { TComponentConfig } from 'autoprops'
-import { TText } from './src'
+import type { TComponentConfig } from 'autoprops'
+import type { TText } from './src'
 
 export const config: TComponentConfig<TText> = {
   props: {

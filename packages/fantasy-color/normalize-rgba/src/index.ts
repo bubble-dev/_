@@ -1,4 +1,4 @@
-import { TRgba } from '@fantasy-color/types'
+import type { TRgba } from '@fantasy-color/types'
 
 export default ({ red, green, blue, alpha }: TRgba): TRgba => ({
   red: red / 255,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { startWithType, component } from 'refun'
-import { PrimitiveBackground, TPrimitiveBackground } from '../primitive-background'
+import { PrimitiveBackground } from '../primitive-background'
+import type { TPrimitiveBackground } from '../primitive-background'
 import { AnimationColor } from '../animation'
 import { SizeParentBlock } from '../size-parent-block'
 

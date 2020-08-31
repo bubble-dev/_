@@ -1,8 +1,10 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
-import { Spacer, TSpacer } from '@primitives/spacer'
-import { setupSpacerTheme, TThemeableSpacers } from './src'
+import { Spacer } from '@primitives/spacer'
+import type { TSpacer } from '@primitives/spacer'
+import { setupSpacerTheme } from './src'
+import type { TThemeableSpacers } from './src'
 
 type TDemo = { status: 'default' | 'error' }
 

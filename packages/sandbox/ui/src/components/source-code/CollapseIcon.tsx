@@ -1,5 +1,6 @@
 import React from 'react'
-import { startWithType, mapKeyboardFocused, TMapHovered, TMapPressed, TMapKeyboardFocused, mapHovered, mapPressed, mapContext, pureComponent, mapWithProps } from 'refun'
+import { startWithType, mapKeyboardFocused, mapHovered, mapPressed, mapContext, pureComponent, mapWithProps } from 'refun'
+import type { TMapHovered, TMapPressed, TMapKeyboardFocused } from 'refun'
 import { Transform } from '@primitives/transform'
 import { elegir } from 'elegir'
 import { AnimationValue } from '../animation'

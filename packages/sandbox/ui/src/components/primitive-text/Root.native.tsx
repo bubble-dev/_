@@ -5,10 +5,11 @@ import {
   startWithType,
   mapDefaultProps,
 } from 'refun'
-import { Text as NativeText, TextProps, TextStyle } from 'react-native'
+import { Text as NativeText } from 'react-native'
+import type { TextProps, TextStyle } from 'react-native'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
-import { TPrimitiveText } from './types'
+import type { TPrimitiveText } from './types'
 
 export const PrimitiveText = component(
   startWithType<TPrimitiveText>(),

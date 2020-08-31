@@ -1,6 +1,7 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { Text, TText } from '../text'
+import { Text } from '../text'
+import type { TText } from '../text'
 import { SYMBOL_SIZE_TEXT } from '../../symbols'
 import { SizeContent } from '../size-content'
 

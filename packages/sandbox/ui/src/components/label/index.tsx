@@ -1,4 +1,5 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { startWithType, component } from 'refun'
 import { SYMBOL_LABEL } from '../../symbols'
 import { SizeParentBlock } from '../size-parent-block'

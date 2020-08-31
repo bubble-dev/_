@@ -1,6 +1,6 @@
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import * as TextMeta from '@primitives/text/meta'
-import { TButton } from './src/types'
+import type { TButton } from './src/types'
 
 export const config: TComponentConfig<TButton, 'text'> = {
   props: {

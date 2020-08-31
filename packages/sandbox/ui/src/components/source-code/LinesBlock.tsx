@@ -1,5 +1,5 @@
 import React from 'react'
-import { TLine } from 'syntx'
+import type { TLine } from 'syntx'
 import { pureComponent, startWithType, mapContext, mapWithProps, mapHandlers, mapState } from 'refun'
 import { Layout, Layout_Item } from '../layout'
 import { LAYOUT_SIZE_FIT } from '../../symbols'

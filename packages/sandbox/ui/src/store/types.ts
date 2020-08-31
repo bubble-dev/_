@@ -1,6 +1,6 @@
-import { TJsonValue } from 'typeon'
-import { TOmitKey, TExtend } from 'tsfn'
-import { TResolutionKey } from '../resolutions'
+import type { TJsonValue } from 'typeon'
+import type { TOmitKey, TExtend } from 'tsfn'
+import type { TResolutionKey } from '../resolutions'
 
 export type TAnyAction = {
   type: string,

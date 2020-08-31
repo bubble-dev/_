@@ -1,4 +1,4 @@
-import { TLine } from 'syntx'
+import type { TLine } from 'syntx'
 
 export const getCollapsibleLineIndexes = (lines: readonly TLine[]): number[] => {
   const firstLineMeta = new Map<string, number>()

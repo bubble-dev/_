@@ -1,7 +1,9 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
-import { TImage, Image } from '@primitives/image'
-import { setupImageTheme, TThemeableImages } from './src'
+import type { TComponentConfig } from 'autoprops'
+import { Image } from '@primitives/image'
+import type { TImage } from '@primitives/image'
+import { setupImageTheme } from './src'
+import type { TThemeableImages } from './src'
 
 type TDemo = {}
 

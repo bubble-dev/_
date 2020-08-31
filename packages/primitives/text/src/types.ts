@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
-import { TThemeableText } from '@themeables/text'
+import type { ReactNode } from 'react'
+import type { TThemeableText } from '@themeables/text'
 
 type TSupportedRoles = 'paragraph' | 'important' | 'emphasis' | 'none'
 

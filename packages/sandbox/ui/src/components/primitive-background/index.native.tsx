@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, ViewProps, ViewStyle } from 'react-native'
+import { View } from 'react-native'
+import type { ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
 import { colorToString } from '../../colors'
-import { TPrimitiveBackground } from './types'
+import type { TPrimitiveBackground } from './types'
 
 export * from './types'
 

@@ -1,7 +1,8 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { PrimitiveBlock } from '../primitive-block'
-import { TPrimitiveCheckbox } from './types'
+import type { TPrimitiveCheckbox } from './types'
 
 export const PrimitiveCheckbox = component(
   startWithType<TPrimitiveCheckbox>(),

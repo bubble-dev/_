@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { pureComponent, startWithType } from 'refun'
-import { TAnyObject } from 'tsfn'
+import type { TAnyObject } from 'tsfn'
 
 export type TPureComponent = {
   Component: FC<any>,

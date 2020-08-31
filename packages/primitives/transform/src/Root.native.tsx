@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { component, startWithType, mapWithProps } from 'refun'
 import { normalizeNativeStyle } from 'stili'
-import { TTransformProps } from './types'
+import type { TTransformProps } from './types'
 
 export const Transform = component(
   startWithType<TTransformProps>(),

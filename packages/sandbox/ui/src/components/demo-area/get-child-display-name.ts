@@ -1,4 +1,5 @@
-import { TCommonComponentConfig, getChildrenKeys } from 'autoprops'
+import { getChildrenKeys } from 'autoprops'
+import type { TCommonComponentConfig } from 'autoprops'
 import { isUndefined } from 'tsfn'
 import { getComponentName } from '../../utils'
 

@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { startWithType, component, mapWithPropsMemo, mapDefaultProps } from 'refun'
 import { normalizeWebStyle } from 'stili'
-import { TTableBorderStyle } from './types'
+import type { TTableBorderStyle } from './types'
 
 export type TTable = {
   id?: string,

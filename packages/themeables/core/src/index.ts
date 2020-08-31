@@ -1,4 +1,5 @@
-import { createContext, useContext, createElement, FC } from 'react'
+import { createContext, useContext, createElement } from 'react'
+import type { FC } from 'react'
 import { component, startWithType } from 'refun'
 
 export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]: (props: ComponentMappings[key]) => ThemeType }

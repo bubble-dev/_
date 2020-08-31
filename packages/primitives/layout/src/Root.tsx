@@ -1,9 +1,9 @@
 import React from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
-import { TStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { isNumber } from 'tsfn'
 import { Block } from '@primitives/block'
-import { TLayout } from './types'
+import type { TLayout } from './types'
 import { Context } from './context'
 
 export const Layout = component(

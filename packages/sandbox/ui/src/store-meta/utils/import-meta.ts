@@ -1,4 +1,4 @@
-import { TMetaFile, TComponents } from '../../types'
+import type { TMetaFile, TComponents } from '../../types'
 
 const cache = new Map<string, Promise<TMetaFile>>()
 

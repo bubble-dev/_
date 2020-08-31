@@ -5,7 +5,7 @@ import { Layout, Layout_Item } from '../layout'
 import { LAYOUT_SIZE_FIT } from '../../symbols'
 import { AlertContext } from './AlertContext'
 import { AlertItem } from './AlertItem'
-import { TAlertProvider, TAlert } from './types'
+import type { TAlertProvider, TAlert } from './types'
 import { mapOffline } from './map-offline'
 
 export const AlertProvider = component(

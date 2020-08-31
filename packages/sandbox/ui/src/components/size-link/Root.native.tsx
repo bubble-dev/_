@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Linking } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction } from 'tsfn'
-import { TSizeLink } from './types'
+import type { TSizeLink } from './types'
 
 export const SizeLink = component(
   startWithType<TSizeLink>(),

@@ -1,5 +1,5 @@
-import { CSSProperties } from 'react'
-import { ViewStyle, TextStyle, ImageStyle } from 'react-native'
+import type { CSSProperties } from 'react'
+import type { ViewStyle, TextStyle, ImageStyle } from 'react-native'
 
 export type TTransformValue = (
   { perspective: number } |

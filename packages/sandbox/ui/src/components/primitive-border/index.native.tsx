@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, ViewProps, ViewStyle } from 'react-native'
+import { View } from 'react-native'
+import type { ViewProps, ViewStyle } from 'react-native'
 import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
-import { TPrimitiveBorder } from './types'
+import type { TPrimitiveBorder } from './types'
 
 export * from './types'
 

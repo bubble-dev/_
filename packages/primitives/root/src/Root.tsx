@@ -9,7 +9,7 @@ import {
   onUpdate,
 } from 'refun'
 import { normalizeWebStyle } from 'stili'
-import { TRoot } from './types'
+import type { TRoot } from './types'
 
 const globalObject = global as any as Window
 

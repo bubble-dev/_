@@ -1,6 +1,6 @@
 import { getObjectKeys, getObjectEntries, isUndefined } from 'tsfn'
 import { convertTransformArray } from './convert-transform-array'
-import { TStyle, TWebStyle } from './types'
+import type { TStyle, TWebStyle } from './types'
 
 export const normalizeWebStyle = (style: TStyle): TWebStyle =>
   getObjectKeys(style).reduce((result, key) => {

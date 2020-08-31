@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import {
   TYPE_ARRAY_BRACKET,
   TYPE_ARRAY_COMMA,
@@ -20,7 +21,7 @@ import {
   TYPE_VALUE_SYMBOL,
   TYPE_WHITESPACE,
 } from 'syntx'
-import { TTheme } from '../../types'
+import type { TTheme } from '../../types'
 import { Text } from './Text'
 
 export type TLineElement = {

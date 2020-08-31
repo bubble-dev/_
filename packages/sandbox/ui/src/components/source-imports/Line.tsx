@@ -1,11 +1,11 @@
 import React from 'react'
 import { component, startWithType, mapContext, onLayout } from 'refun'
 import { isFunction } from 'tsfn'
-import { TLine as TSyntxLine } from 'syntx'
+import type { TLine as TSyntxLine } from 'syntx'
 import { PrimitiveBlock } from '../primitive-block'
 import { LayoutContext } from '../layout-context'
 import { Size } from '../size'
-import { TTheme } from '../../types'
+import type { TTheme } from '../../types'
 import { Text } from './Text'
 import { LineElement } from './LineElement'
 

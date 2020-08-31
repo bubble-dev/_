@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, Linking, TouchableWithoutFeedback } from 'react-native'
 import { component, mapHandlers, startWithType } from 'refun'
 import { isFunction } from 'tsfn'
-import { TLink } from './types'
+import type { TLink } from './types'
 
 export const Link = component(
   startWithType<TLink>(),

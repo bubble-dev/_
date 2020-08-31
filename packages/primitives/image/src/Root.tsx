@@ -1,7 +1,8 @@
 import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
-import { TImage } from './types'
+import type { TImage } from './types'
 
 export const Image = component(
   startWithType<TImage>(),

@@ -1,9 +1,11 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
+import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
-import { Background, TBackground } from '@primitives/background'
-import { TThemeableBackground } from '@themeables/background'
-import { setupTheme, TThemeables } from './src'
+import { Background } from '@primitives/background'
+import type { TBackground } from '@primitives/background'
+import type { TThemeableBackground } from '@themeables/background'
+import { setupTheme } from './src'
+import type { TThemeables } from './src'
 
 type TDemo = { status: 'default' | 'error' }
 

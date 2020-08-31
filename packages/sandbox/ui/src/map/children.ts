@@ -1,5 +1,7 @@
-import { Children, ReactElement, ReactNode, isValidElement } from 'react'
-import { TExtend, isSymbol, getObjectKeys, TOmitKey, getObjectValues, isDefined } from 'tsfn'
+import { Children, isValidElement } from 'react'
+import type { ReactElement, ReactNode } from 'react'
+import { isSymbol, getObjectKeys, getObjectValues, isDefined } from 'tsfn'
+import type { TExtend, TOmitKey } from 'tsfn'
 
 export const SYMBOL_CHILDREN_REST = Symbol('CHILDREN_REST')
 

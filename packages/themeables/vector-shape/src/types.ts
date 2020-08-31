@@ -1,4 +1,4 @@
-import { TColor } from 'colorido'
+import type { TColor } from 'colorido'
 
 export type TThemeableVectorShape = {
   color?: TColor,

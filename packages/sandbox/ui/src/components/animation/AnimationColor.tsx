@@ -1,11 +1,12 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import type { ReactElement } from 'react'
 import { component, startWithType, mapDefaultProps, mapWithPropsMemo } from 'refun'
-import { TColor } from '../../colors'
+import type { TColor } from '../../colors'
 import { Animation } from './Animation'
 import { isShallowEqualArray } from './is-shallow-equal-array'
 import { easeColor } from './ease-color'
 import { easeInOutCubic } from './easing'
-import { TEasingFn } from './types'
+import type { TEasingFn } from './types'
 
 export type TAnimationColor = {
   fromColor?: TColor,

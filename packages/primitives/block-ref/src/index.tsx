@@ -1,5 +1,7 @@
-import { forwardRef, ForwardRefExoticComponent } from 'react'
-import { Block, TBlock } from '@primitives/block'
+import { forwardRef } from 'react'
+import type { ForwardRefExoticComponent } from 'react'
+import { Block } from '@primitives/block'
+import type { TBlock } from '@primitives/block'
 
 export type TBlockRef = TBlock
 

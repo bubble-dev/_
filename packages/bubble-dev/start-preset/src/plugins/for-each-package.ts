@@ -1,7 +1,8 @@
 /* eslint-disable no-throw-literal */
-import plugin, { StartPlugin } from '@start/plugin'
-import { THookProps } from '@auto/core'
-import { TReadonly } from 'tsfn'
+import plugin from '@start/plugin'
+import type { StartPlugin } from '@start/plugin'
+import type { THookProps } from '@auto/core'
+import type { TReadonly } from 'tsfn'
 
 export const forEachRelease = (task: (pkgDir: string) => StartPlugin<{}, any> | Promise<StartPlugin<{}, any>>) =>
   plugin<TReadonly<THookProps>, any>('forEachRelease', ({ reporter }) => async ({ packages }) => {

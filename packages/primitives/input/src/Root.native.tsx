@@ -1,9 +1,10 @@
 import React from 'react'
 import { TextInput } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { colorToString, isColor } from 'colorido'
-import { TInput } from './types'
+import type { TInput } from './types'
 
 export const Input = component(
   startWithType<TInput>(),

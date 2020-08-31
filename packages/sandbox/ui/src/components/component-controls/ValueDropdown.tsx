@@ -2,7 +2,7 @@ import React from 'react'
 import { startWithType, mapHandlers, mapWithProps, pureComponent, mapState, mapWithPropsMemo, mapDebouncedHandlerTimeout } from 'refun'
 import { Dropdown } from '../dropdown'
 import { SYMBOL_DROPDOWN } from '../../symbols'
-import { TOption } from '../size-select'
+import type { TOption } from '../size-select'
 import { printValue } from './print-value'
 
 export type TValueDropdownProps = {

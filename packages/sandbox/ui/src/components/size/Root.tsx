@@ -1,9 +1,10 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo, mapRef } from 'refun'
 import { isFunction, isNumber } from 'tsfn'
 import { onLayout } from '../on-layout'
 import { round } from './round'
-import { TSize } from './types'
+import type { TSize } from './types'
 
 export const Size = component(
   startWithType<TSize>(),

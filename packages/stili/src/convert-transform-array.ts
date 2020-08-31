@@ -1,4 +1,4 @@
-import { TTransformValue } from './types'
+import type { TTransformValue } from './types'
 
 export const convertTransformArray = (transform: TTransformValue): string => {
   return transform

@@ -1,4 +1,4 @@
-import { TTheme } from '../../types'
+import type { TTheme } from '../../types'
 import { WHITE, TRANSPARENT } from '../../colors'
 
 export const defaultTheme: TTheme = {

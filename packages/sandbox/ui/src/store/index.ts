@@ -15,12 +15,8 @@ import {
   toggleNavigationSidebarAction,
   toggleInspectAction,
   toggleStretchAction,
-  TNavigateAction,
-  TSetWidthAction,
-  TSetHeightAction,
-  TSetResolutionAction,
-  TSetTransformAction,
 } from './actions'
+import type { TNavigateAction, TSetWidthAction, TSetHeightAction, TSetResolutionAction, TSetTransformAction } from './actions'
 
 const StoreContext = StoreContextFactory(store)
 

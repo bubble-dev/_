@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { TouchableWithoutFeedback, View } from 'react-native'
-import { TStyle } from 'stili'
-import { TButton } from './types'
+import type { TStyle } from 'stili'
+import type { TButton } from './types'
 
 const hitSlop = {
   bottom: 5,

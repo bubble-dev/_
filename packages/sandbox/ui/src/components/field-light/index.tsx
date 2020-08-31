@@ -1,5 +1,6 @@
 import React from 'react'
-import { pureComponent, startWithType, mapState, mapContext, TMapFocused, mapWithProps, mapFocused } from 'refun'
+import { pureComponent, startWithType, mapState, mapContext, mapWithProps, mapFocused } from 'refun'
+import type { TMapFocused } from 'refun'
 import { isString } from 'tsfn'
 import { PrimitiveBorder } from '../primitive-border'
 import { Field } from '../field'

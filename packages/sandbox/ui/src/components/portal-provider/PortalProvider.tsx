@@ -2,8 +2,9 @@ import React from 'react'
 import { component, startWithType, mapContext, mapState } from 'refun'
 import { PrimitiveBlockRef } from '../primitive-block-ref'
 import { RootContext } from '../root'
-import { TPortalContext, PortalContext } from './PortalContext'
-import { TPortalProvider } from './types'
+import { PortalContext } from './PortalContext'
+import type { TPortalContext } from './PortalContext'
+import type { TPortalProvider } from './types'
 
 export const PortalProvider = component(
   startWithType<TPortalProvider>(),

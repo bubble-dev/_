@@ -1,8 +1,10 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
-import { TLayout, Layout } from '@primitives/layout'
+import type { TComponentConfig } from 'autoprops'
+import { Layout } from '@primitives/layout'
+import type { TLayout } from '@primitives/layout'
 import { Block } from '@primitives/block'
-import { setupLayoutTheme, TThemeableLayouts } from './src'
+import { setupLayoutTheme } from './src'
+import type { TThemeableLayouts } from './src'
 
 type TDemo = {}
 

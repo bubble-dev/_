@@ -1,4 +1,5 @@
-import { TAnyObject, isNumber } from 'tsfn'
+import { isNumber } from 'tsfn'
+import type { TAnyObject } from 'tsfn'
 import queryString from 'query-string'
 
 export const encodeUrl = (obj: TAnyObject): string => queryString.stringify(obj)

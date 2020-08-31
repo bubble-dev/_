@@ -1,6 +1,6 @@
 import { component, startWithType } from 'refun'
 import { SYMBOL_LAYOUT_ITEM } from '../../symbols'
-import { TLayoutSize } from './types'
+import type { TLayoutSize } from './types'
 
 export type TLayout_Spacer = {
   id?: string,

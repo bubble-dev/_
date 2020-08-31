@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState, ReactElement } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import type { ReactElement } from 'react'
 import { isDefined, EMPTY_ARRAY, NOOP } from 'tsfn'
-import { TAnimationMapFn } from './types'
+import type { TAnimationMapFn } from './types'
 
 export type TAnimation<T> = {
   time: number,

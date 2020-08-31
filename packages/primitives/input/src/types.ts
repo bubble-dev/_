@@ -1,5 +1,5 @@
-import { TThemeableText } from '@themeables/text'
-import { TThemeableSpacer } from '@themeables/spacer'
+import type { TThemeableText } from '@themeables/text'
+import type { TThemeableSpacer } from '@themeables/spacer'
 
 export type TInput = {
   accessibilityLabel?: string,

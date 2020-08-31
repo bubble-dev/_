@@ -1,8 +1,8 @@
-import { FC } from 'react'
-import { TCommonComponentConfig } from 'autoprops'
-import { TJsonMap } from 'typeon'
-import { TColor } from './colors'
-import { TPlugin } from './components/plugin-provider/types'
+import type { FC } from 'react'
+import type { TCommonComponentConfig } from 'autoprops'
+import type { TJsonMap } from 'typeon'
+import type { TColor } from './colors'
+import type { TPlugin } from './components/plugin-provider/types'
 
 export type TApp = {
   components: TComponents,

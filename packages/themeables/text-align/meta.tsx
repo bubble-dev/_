@@ -1,7 +1,9 @@
 import React from 'react'
-import { TComponentConfig } from 'autoprops'
-import { TParagraph, Paragraph } from '@primitives/paragraph'
-import { setupTextAlignTheme, TThemeableTextAligns } from './src'
+import type { TComponentConfig } from 'autoprops'
+import { Paragraph } from '@primitives/paragraph'
+import type { TParagraph } from '@primitives/paragraph'
+import { setupTextAlignTheme } from './src'
+import type { TThemeableTextAligns } from './src'
 
 type Mappings = {
   demo: {},

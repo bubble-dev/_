@@ -1,8 +1,9 @@
-import React, { HTMLProps, MouseEvent } from 'react'
+import React from 'react'
+import type { HTMLProps, MouseEvent } from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapProps, mapHandlers, mapDefaultProps, mapRef, onLayout } from 'refun'
 import { isFunction } from 'tsfn'
-import { TPointer } from './types'
+import type { TPointer } from './types'
 
 const style = normalizeWebStyle({
   _webOnly: {

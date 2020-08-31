@@ -1,5 +1,7 @@
-import { isChildrenMap, TCommonComponentConfig } from 'autoprops'
-import { TAnyObject, isFunction } from 'tsfn'
+import { isChildrenMap } from 'autoprops'
+import type { TCommonComponentConfig } from 'autoprops'
+import { isFunction } from 'tsfn'
+import type { TAnyObject } from 'tsfn'
 import { isHandler, getComponentName } from '../../utils'
 import { consoleLog } from '../../store-console'
 

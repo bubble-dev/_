@@ -1,9 +1,11 @@
 import React from 'react'
-import { View, ViewProps } from 'react-native'
-import { normalizeNativeStyle, TStyle } from 'stili'
+import { View } from 'react-native'
+import type { ViewProps } from 'react-native'
+import { normalizeNativeStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { startWithType, component, mapDefaultProps, mapProps } from 'refun'
 import { isNumber } from 'tsfn'
-import { TBlock } from './types'
+import type { TBlock } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),

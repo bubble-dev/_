@@ -1,7 +1,7 @@
 import React from 'react'
 import { normalizeWebStyle } from 'stili'
 import { component, startWithType, mapContext, mapDefaultProps, mapHandlers } from 'refun'
-import { TRadioInput } from './types'
+import type { TRadioInput } from './types'
 import { RadioContext } from './Context'
 
 const visibleStyles = normalizeWebStyle({

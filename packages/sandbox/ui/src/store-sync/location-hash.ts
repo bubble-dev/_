@@ -1,5 +1,5 @@
 import { globalObject, setCurrentHash, encodeUrl } from '../utils'
-import { TSyncStore } from './types'
+import type { TSyncStore } from './types'
 import { getHashState } from './get-hash-state'
 
 export const locationHash = (store: TSyncStore) => {

@@ -24,12 +24,12 @@ export {
   LAYOUT_SIZE_FIT,
   SYMBOL_ICON,
 } from './symbols'
-export {
+export type {
   TState,
   TAction,
   TActionCreator,
   TActionWithPayload,
   TAnyAction,
 } from './store/types'
-export { TPlugin } from './components/plugin-provider'
-export { TComponents, TTheme, TThemeIcons, TPackageJson } from './types'
+export type { TPlugin } from './components/plugin-provider'
+export type { TComponents, TTheme, TThemeIcons, TPackageJson } from './types'

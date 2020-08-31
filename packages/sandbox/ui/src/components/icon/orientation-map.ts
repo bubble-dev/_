@@ -1,4 +1,4 @@
-import { TIconOrientation } from './types'
+import type { TIconOrientation } from './types'
 
 export const orientationMap: {[k in TIconOrientation]: number} = {
   up: 0,

@@ -1,7 +1,8 @@
-import React, { CSSProperties } from 'react'
+import React from 'react'
+import type { CSSProperties } from 'react'
 import { component, startWithType, mapWithPropsMemo } from 'refun'
 import { TRANSPARENT, colorToString } from '../../colors'
-import { TPrimitiveButton } from './types'
+import type { TPrimitiveButton } from './types'
 
 export const PrimitiveButton = component(
   startWithType<TPrimitiveButton>(),

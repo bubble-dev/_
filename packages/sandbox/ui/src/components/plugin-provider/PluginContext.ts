@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import { TPlugin } from './types'
+import type { TPlugin } from './types'
 
 export type TPluginContext = {
   plugin?: TPlugin,

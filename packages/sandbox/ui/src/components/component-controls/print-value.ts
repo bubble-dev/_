@@ -1,4 +1,5 @@
-import { ReactElement, isValidElement } from 'react'
+import { isValidElement } from 'react'
+import type { ReactElement } from 'react'
 import { isUndefined, isObject, isFunction } from 'tsfn'
 import { getElementName } from '../../utils'
 

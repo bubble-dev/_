@@ -1,8 +1,9 @@
-import React, { KeyboardEvent, CSSProperties } from 'react'
+import React from 'react'
+import type { KeyboardEvent, CSSProperties } from 'react'
 import { component, mapWithProps, startWithType, mapHandlers } from 'refun'
 import { isNumber } from 'tsfn'
 import { colorToString, isColor } from '../../colors'
-import { TPrimitiveInput } from './types'
+import type { TPrimitiveInput } from './types'
 
 export const PrimitiveInput = component(
   startWithType<TPrimitiveInput>(),

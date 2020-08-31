@@ -1,7 +1,8 @@
-import React, { Ref, HTMLProps, CSSProperties } from 'react'
+import React from 'react'
+import type { Ref, HTMLProps, CSSProperties } from 'react'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined, isUndefined } from 'tsfn'
-import { TPrimitiveBlockCommon } from './types'
+import type { TPrimitiveBlockCommon } from './types'
 
 export type TPrimitiveBlock = TPrimitiveBlockCommon & {
   ref?: Ref<HTMLDivElement>,

@@ -1,9 +1,10 @@
 import React from 'react'
 import { normalizeNativeStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapWithProps } from 'refun'
-import { Image as ImageRN, ImageStyle } from 'react-native'
+import { Image as ImageRN } from 'react-native'
+import type { ImageStyle } from 'react-native'
 import { mapImageLoad } from './map-image-load'
-import { TImage } from './types'
+import type { TImage } from './types'
 
 export const Image = component(
   startWithType<TImage>(),

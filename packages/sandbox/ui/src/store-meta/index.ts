@@ -1,8 +1,8 @@
 import { StoreContextFactory } from 'refun'
-import { TComponents } from '../types'
+import type { TComponents } from '../types'
 import { setComponentListThunk, applyPropPathValue, updateComponentPropsThunk, setComponentThunk, selectElementAction } from './actions'
 import { store } from './store'
-import { TMetaState } from './types'
+import type { TMetaState } from './types'
 
 export const mapMetaStoreState = StoreContextFactory(store).mapStoreState
 

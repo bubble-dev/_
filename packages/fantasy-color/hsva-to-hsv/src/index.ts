@@ -1,4 +1,4 @@
-import { THsv, THsva } from '@fantasy-color/types'
+import type { THsv, THsva } from '@fantasy-color/types'
 
 export default ({ hue, saturation, value }: THsva): THsv => ({
   hue,

@@ -1,8 +1,10 @@
-import React, { HTMLProps } from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import React from 'react'
+import type { HTMLProps } from 'react'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined } from 'tsfn'
-import { TBlock, TBlockRoles } from './types'
+import type { TBlock, TBlockRoles } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),

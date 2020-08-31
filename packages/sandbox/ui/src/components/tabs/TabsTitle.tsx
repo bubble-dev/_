@@ -1,5 +1,6 @@
 import React from 'react'
-import { component, startWithType, mapHandlers, mapContext, mapWithProps, TMapKeyboardFocused, mapKeyboardFocused } from 'refun'
+import { component, startWithType, mapHandlers, mapContext, mapWithProps, mapKeyboardFocused } from 'refun'
+import type { TMapKeyboardFocused } from 'refun'
 import { elegir } from 'elegir'
 import { ThemeContext, TextThemeContext } from '../theme-context'
 import { SizeBorder } from '../size-border'

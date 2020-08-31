@@ -1,5 +1,5 @@
-import { ReactNode, Ref } from 'react'
-import { TStyle } from 'stili'
+import type { ReactNode, Ref } from 'react'
+import type { TStyle } from 'stili'
 
 export type TBlockRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
 

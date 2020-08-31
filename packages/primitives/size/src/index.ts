@@ -1,3 +1,3 @@
 export * from './Root'
 export * from './Context'
-export * from './types'
+export type { TDimensions, TSize } from './types'

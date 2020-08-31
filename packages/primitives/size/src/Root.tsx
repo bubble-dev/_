@@ -4,7 +4,7 @@ import { normalizeWebStyle } from 'stili'
 import { isFunction, isNumber } from 'tsfn'
 import { round } from './round'
 import { onLayout } from './on-layout'
-import { TSize } from './types'
+import type { TSize } from './types'
 
 const style = normalizeWebStyle({
   display: 'flex',

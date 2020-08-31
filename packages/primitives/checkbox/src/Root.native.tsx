@@ -3,7 +3,7 @@ import { Switch, TouchableWithoutFeedback } from 'react-native'
 import { normalizeNativeStyle } from 'stili'
 import { component, mapWithProps, startWithType } from 'refun'
 import { Block } from '@primitives/block'
-import { TCheckboxProps } from './types'
+import type { TCheckboxProps } from './types'
 
 export const Checkbox = component(
   startWithType<TCheckboxProps>(),

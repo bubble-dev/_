@@ -1,5 +1,6 @@
 import React from 'react'
-import { normalizeWebStyle, TStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
+import type { TStyle } from 'stili'
 import {
   component,
   mapDefaultProps,
@@ -7,7 +8,7 @@ import {
   startWithType,
 } from 'refun'
 import { colorToString, isColor } from 'colorido'
-import { TParagraph } from './types'
+import type { TParagraph } from './types'
 
 export const Paragraph = component(
   startWithType<TParagraph>(),

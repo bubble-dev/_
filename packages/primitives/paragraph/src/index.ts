@@ -1,2 +1,2 @@
 export * from './Root'
-export * from './types'
+export type { TParagraph } from './types'

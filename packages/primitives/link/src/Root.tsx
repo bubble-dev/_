@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
+import type { FC } from 'react'
 import { normalizeWebStyle } from 'stili'
-import { TLink, TRel, TTarget } from './types'
+import type { TLink, TRel, TTarget } from './types'
 
 const style = normalizeWebStyle({
   textDecorationLine: 'none',

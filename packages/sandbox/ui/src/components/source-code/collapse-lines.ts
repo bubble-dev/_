@@ -1,4 +1,4 @@
-import { TLine } from 'syntx'
+import type { TLine } from 'syntx'
 
 export const collapseLines = (lines: readonly TLine[], collapsedMetas: readonly string[]): (TLine | null)[] => {
   const resultLines: (TLine | null)[] = []

@@ -1,4 +1,5 @@
-import React, { ReactNode, FC } from 'react'
+import React from 'react'
+import type { ReactNode, FC } from 'react'
 
 export type TTableBody = {
   id?: string,

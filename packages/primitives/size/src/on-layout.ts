@@ -1,5 +1,7 @@
-import { useRef, useLayoutEffect, useEffect, Ref } from 'react'
-import { EMPTY_OBJECT, TExtend, NOOP, isDefined } from 'tsfn'
+import { useRef, useLayoutEffect, useEffect } from 'react'
+import type { Ref } from 'react'
+import { EMPTY_OBJECT, NOOP, isDefined } from 'tsfn'
+import type { TExtend } from 'tsfn'
 
 const useActualEffect = isDefined((global as any).window) ? useLayoutEffect : useEffect
 
