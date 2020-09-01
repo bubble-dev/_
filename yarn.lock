@@ -1947,10 +1947,10 @@
     "@start/plugin" "^2.0.0"
     execa "^4.0.0"
 
-"@start/plugin-lib-typescript-generate@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-generate/-/plugin-lib-typescript-generate-3.0.0.tgz#89d64cf2efda578cc08af02e47cc374816bb99df"
-  integrity sha512-pU8oymUNv/KuHNSIptq321rEILrzEJDC6P+MGZ0wGge/eTGVDKQCe2EsbzYOjnB8vRFavJNBjsh7GI9ehiSPwg==
+"@start/plugin-lib-typescript-generate@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-generate/-/plugin-lib-typescript-generate-4.0.0.tgz#22d1589978a4555b66ed5f16d7880aded3abd30e"
+  integrity sha512-/xLzNpx664ozXVntrwuATUOD+JPooxOLEWYU4nNZOCRcC+16EO2Wtf14AiZ4na42nmW3f22QYedM34iIMYMxlw==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^2.0.0"
