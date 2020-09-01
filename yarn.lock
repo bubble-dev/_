@@ -1938,10 +1938,10 @@
     tape "^5.0.0-next.5"
     through "^2.3.8"
 
-"@start/plugin-lib-typescript-check@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-check/-/plugin-lib-typescript-check-2.0.0.tgz#eea0eda0b60776783263dae5f3f8d1ef64a36a9d"
-  integrity sha512-13KWSMXq9BQMSbMS3/+AOyYecVqtCYNcxXdFt47g0YXnNjK4pgYdTmExaZOrPiBR0o4z7/cseAmOw4LI085IQA==
+"@start/plugin-lib-typescript-check@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@start/plugin-lib-typescript-check/-/plugin-lib-typescript-check-3.0.0.tgz#9499e664b0240629fede49b23e76269f320770ee"
+  integrity sha512-qK9scQHaa1X8J638NjNBWl3w2QzTn6NcG8LTT9L0IQWj0/0+19/udegBYuiCNlnn0JVKyV9QFCUUaLYh01MTcA==
   dependencies:
     "@babel/runtime" "^7.4.2"
     "@start/plugin" "^2.0.0"
