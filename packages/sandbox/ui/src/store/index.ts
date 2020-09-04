@@ -72,4 +72,4 @@ export const toggleStretch = () => {
   store.dispatch(toggleStretchAction())
 }
 
-export * from './types'
+export type { TAction, TActionCreator, TActionWithPayload, TAnyAction, TState } from './types'

@@ -4,7 +4,7 @@ import { component, startWithType, mapProps, mapDefaultProps } from 'refun'
 import { colorToString } from '../../colors'
 import type { TPrimitiveShadow } from './types'
 
-export * from './types'
+export type { TPrimitiveShadow } from './types'
 
 export const PrimitiveShadow = component(
   startWithType<TPrimitiveShadow>(),

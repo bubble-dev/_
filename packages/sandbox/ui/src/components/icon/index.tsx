@@ -10,7 +10,7 @@ import { PrimitiveBlock } from '../primitive-block'
 import { orientationMap } from './orientation-map'
 import type { TIconOrientation } from './types'
 
-export * from './types'
+export type { TIconOrientation } from './types'
 
 export type TIcon = {
   d: string,

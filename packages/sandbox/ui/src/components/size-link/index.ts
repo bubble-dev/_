@@ -1,2 +1,2 @@
 export * from './Root'
-export * from './types'
+export type { TIsFocusedHandlers, TIsHoveredHandlers, TIsPressedHandlers, TSizeLink } from './types'

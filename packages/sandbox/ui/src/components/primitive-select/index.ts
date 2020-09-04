@@ -1,3 +1,3 @@
 export * from './Root'
 export * from './Option'
-export * from './types'
+export type { TOption, TPrimitiveSelect } from './types'

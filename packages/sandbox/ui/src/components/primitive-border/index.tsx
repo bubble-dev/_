@@ -5,7 +5,7 @@ import { isNumber } from 'tsfn'
 import { colorToString } from '../../colors'
 import type { TPrimitiveBorder } from './types'
 
-export * from './types'
+export type { TPrimitiveBorder } from './types'
 
 export const PrimitiveBorder = component(
   startWithType<TPrimitiveBorder>(),

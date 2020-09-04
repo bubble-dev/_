@@ -1,3 +1,3 @@
 export * from './PluginProvider'
 export * from './PluginContext'
-export * from './types'
+export type { TPlugin } from './types'
