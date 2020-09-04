@@ -15,7 +15,7 @@
   "dependencies": {
     "refun": "^2.0.0",
     "stili": "^2.0.3",
-    "tsfn": "^1.1.0"
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
