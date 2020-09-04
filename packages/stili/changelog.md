@@ -1,3 +1,7 @@
+## v2.0.3
+
+* 🐞 fix types export
+
 ## v2.0.2
 
 * 🐞 use type-only imports
