@@ -1,3 +1,3 @@
 export * from './PortalProvider'
 export * from './PortalContext'
-export * from './types'
+export type { TPortalProvider } from './types'

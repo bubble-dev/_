@@ -1,3 +1,3 @@
 export * from './normalize-native-style'
 export * from './normalize-web-style'
-export * from './types'
+export type { TStyle, TNativeStyle, TTransformValue, TWebStyle } from './types'
