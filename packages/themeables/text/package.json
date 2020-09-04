@@ -17,7 +17,7 @@
     "@primitives/text": "^2.0.3",
     "@themeables/core": "^2.0.2",
     "colorido": "^1.0.0",
-    "stili": "^2.0.2"
+    "stili": "^2.0.3"
   },
   "devDependencies": {
     "@primitives/input": "^3.0.3",

@@ -18,7 +18,7 @@
     "@themeables/vector-shape": "^2.0.2",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
-    "stili": "^2.0.2"
+    "stili": "^2.0.3"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

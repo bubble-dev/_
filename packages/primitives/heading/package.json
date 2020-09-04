@@ -17,7 +17,7 @@
     "@themeables/text": "^2.0.1",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
-    "stili": "^2.0.2"
+    "stili": "^2.0.3"
   },
   "devDependencies": {
     "@primitives/block": "^2.0.4",
