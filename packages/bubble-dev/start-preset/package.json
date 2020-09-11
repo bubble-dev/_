@@ -65,7 +65,7 @@
     "make-dir": "^3.0.0",
     "move-path": "^2.0.0",
     "nanomatch": "^1.2.13",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "pifs": "^2.0.0",
     "prompts": "^2.1.0",
     "react-native-exception-handler": "^2.10.8",
