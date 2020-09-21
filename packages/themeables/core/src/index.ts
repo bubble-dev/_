@@ -4,7 +4,7 @@ import { component, startWithType } from 'refun'
 
 export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]: (props: ComponentMappings[key]) => ThemeType }
 
-export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeables<ThemeType, ComponentMappings>) => {
+export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeables<ThemeType, ComponentMappings>, overrideTheme?: any) => {
   const ThemePiece = createContext(defaultTheme)
 
   type K = keyof ComponentMappings
@@ -12,10 +12,18 @@ export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeabl
   const createThemeable = <P extends ThemeType>(name: K, Target: FC<any>) => {
     const Themeable = component(
       startWithType<Partial<P> & ComponentMappings[K]>(),
-      (props) => ({
-        ...useContext(ThemePiece)[name](props),
-        ...props,
-      })
+      (props) => {
+        const themeProps = useContext(ThemePiece)[name](props)
+
+        const overrideCtx = overrideTheme && useContext(overrideTheme) || {}
+        const overrides = overrideCtx[name] && overrideCtx[name](props) || {}
+
+        return {
+          ...themeProps,
+          ...overrides,
+          ...props,
+        }
+      }
     )((props) => createElement(Target, props))
 
     const matched = name.toString().match(/^Symbol\((.+)\)$/)
