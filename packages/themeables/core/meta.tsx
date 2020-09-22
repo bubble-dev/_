@@ -25,11 +25,13 @@ const defaultTheme: TThemeables<TThemeableBackground, Mappings> = {
   }),
 }
 
-type OverrideContext = {
-  [key: string]: any,
-};
+// this will override no matter if we pass new overrides or not :/ 
+const OverrideContext: React.Context<TThemeables<TThemeableBackground, Mappings>> = createContext({
+  [SYMBOL_DEMO]: ({ status }) => ({
+    color: status === 'default' ? [0xF0, 0xF0, 0xF0, 1] : [0xFF, 0x99, 0x99, 1],
+  }),
+})
 
-const OverrideContext = createContext<OverrideContext>({})
 const { ThemePiece, createThemeable } = setupTheme<TThemeableBackground, Mappings>(defaultTheme, OverrideContext)
 
 export const DemoThemeableBackground = createThemeable<TBackground>(SYMBOL_DEMO, Background)
