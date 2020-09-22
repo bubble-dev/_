@@ -6,7 +6,7 @@ export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof Componen
 
 export const setupTheme = <ThemeType, ComponentMappings>(
   defaultTheme: TThemeables<ThemeType, ComponentMappings>,
-  overrideTheme?: React.Context<TThemeables<ThemeType, ComponentMappings>>,
+  overrideTheme?: React.Context<TThemeables<ThemeType, ComponentMappings>>
 ) => {
   const ThemePiece = createContext(defaultTheme)
 
