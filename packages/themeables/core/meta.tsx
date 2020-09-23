@@ -5,7 +5,7 @@ import { Background } from '@primitives/background'
 import type { TBackground } from '@primitives/background'
 import type { TThemeableBackground } from '@themeables/background'
 import { setupTheme } from './src'
-import type { TThemeables } from './src'
+import type { TThemeables, TOverrideables } from './src'
 
 type TDemo = { status: 'default' | 'error' }
 
@@ -25,12 +25,7 @@ const defaultTheme: TThemeables<TThemeableBackground, Mappings> = {
   }),
 }
 
-// this will override no matter if we pass new overrides or not :/ 
-const OverrideContext: React.Context<TThemeables<TThemeableBackground, Mappings>> = createContext({
-  [SYMBOL_DEMO]: ({ status }) => ({
-    color: status === 'default' ? [0xF0, 0xF0, 0xF0, 1] : [0xFF, 0x99, 0x99, 1],
-  }),
-})
+const OverrideContext: React.Context<TOverrideables<TThemeableBackground, Mappings>> = createContext({})
 
 const { ThemePiece, createThemeable } = setupTheme<TThemeableBackground, Mappings>(defaultTheme, OverrideContext)
 
@@ -48,7 +43,7 @@ const newTheme: TThemeables<TThemeableBackground, Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean, withOverride: boolean}
 
-const overrideTheme: TThemeables<TThemeableBackground, Mappings> = {
+const overrideTheme: TOverrideables<TThemeableBackground, Mappings> = {
   [SYMBOL_DEMO]: ({ status }) => ({
     color: status === 'error' ? [144, 24, 56, 1] : [108, 105, 86, 1],
   }),
@@ -56,13 +51,16 @@ const overrideTheme: TThemeables<TThemeableBackground, Mappings> = {
 
 export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) => {
   return (
-    <OverrideContext.Provider value={withOverride ? overrideTheme : {}}>
-      <Block style={{
-        width: 100,
-        height: 100,
-      }}
-      >
-        {(
+    <>
+      { withOverride
+        ? (
+          <OverrideContext.Provider value={overrideTheme}>
+            <Block style={{
+              width: 100,
+              height: 100,
+            }}
+            >
+              {(
             hasTheme
               ? (
                 <ThemePiece.Provider value={newTheme}>
@@ -74,8 +72,30 @@ export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) =>
                 <DemoThemeableBackground status={status}/>
               )
           )}
-      </Block>
-    </OverrideContext.Provider>
+            </Block>
+          </OverrideContext.Provider>
+        )
+        : (
+          <Block style={{
+            width: 100,
+            height: 100,
+          }}
+          >
+            {(
+            hasTheme
+              ? (
+                <ThemePiece.Provider value={newTheme}>
+                  <DemoThemeableBackground status={status}/>
+                </ThemePiece.Provider>
+
+              )
+              : (
+                <DemoThemeableBackground status={status}/>
+              )
+          )}
+          </Block>
+        )}
+    </>
   )
 }
 
