@@ -4,10 +4,11 @@ import { component, startWithType } from 'refun'
 
 export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]: (props: ComponentMappings[key]) => ThemeType }
 export type TOverrideables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]?: (props: ComponentMappings[key]) => Partial<ThemeType> }
+export type TOverrideContext<ThemeType, ComponentMappings> = React.Context<TOverrideables<ThemeType, ComponentMappings>>
 
 export const setupTheme = <ThemeType, ComponentMappings>(
   defaultTheme: TThemeables<ThemeType, ComponentMappings>,
-  overrideTheme?: React.Context<TOverrideables<ThemeType, ComponentMappings>>
+  overrideTheme?: TOverrideContext<ThemeType, ComponentMappings>
 ) => {
   const ThemePiece = createContext(defaultTheme)
 
