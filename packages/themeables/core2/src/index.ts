@@ -19,11 +19,11 @@ export const createThemeable = <P extends ThemeType, ThemeType, ComponentMapping
       const themeContext = useContext(theme || {})
       const overridesContext = useContext(overrides || {})
 
-      if (typeof themeContext[name] === 'function') {
+      if (themeContext && typeof themeContext[name] === 'function') {
         themeProps = themeContext[name]!(props)
       }
 
-      if (typeof overridesContext[name] === 'function') {
+      if (overridesContext && typeof overridesContext[name] === 'function') {
         overrideProps = overridesContext[name]!(props)
       }
 
