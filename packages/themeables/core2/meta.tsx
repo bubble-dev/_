@@ -51,33 +51,17 @@ const overrideTheme: TThemeables<TThemeableBackground, Mappings> = {
 
 export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) => {
   return (
-    <>
-      { withOverride
-        ? (
-          <OverrideContext.Provider value={overrideTheme}>
-            <Block style={{
-              width: 100,
-              height: 100,
-            }}
-            >
-              <ThemeContext.Provider value={hasTheme ? newTheme : defaultTheme}>
-                <DemoThemeableBackground status={status}/>
-              </ThemeContext.Provider>
-            </Block>
-          </OverrideContext.Provider>
-        )
-        : (
-          <Block style={{
-            width: 100,
-            height: 100,
-          }}
-          >
-            <ThemeContext.Provider value={hasTheme ? newTheme : defaultTheme}>
-              <DemoThemeableBackground status={status}/>
-            </ThemeContext.Provider>
-          </Block>
-        )}
-    </>
+    <OverrideContext.Provider value={withOverride ? overrideTheme : {}}>
+      <Block style={{
+        width: 100,
+        height: 100,
+      }}
+      >
+        <ThemeContext.Provider value={hasTheme ? newTheme : defaultTheme}>
+          <DemoThemeableBackground status={status}/>
+        </ThemeContext.Provider>
+      </Block>
+    </OverrideContext.Provider>
   )
 }
 

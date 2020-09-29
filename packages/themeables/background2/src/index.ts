@@ -2,6 +2,7 @@ import { createThemeable } from '@themeables/core2'
 import type { TThemeables } from '@themeables/core2'
 import type { FC } from 'react'
 import type { TThemeableBackground } from './types'
+
 export type { TThemeBackground, TThemeableBackground, TThemeableBackgrounds } from './types'
 
 export const createThemeableBackground = <TargetProps extends TThemeableBackground, ComponentMappings>(

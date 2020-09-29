@@ -3,9 +3,9 @@ import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
 import { Background } from '@primitives/background'
 import type { TBackground } from '@primitives/background'
+import type { TThemeables } from '@themeables/core2'
 import { createThemeableBackground } from './src'
 import type { TThemeableBackgrounds, TThemeableBackground } from './src'
-import type { TThemeables } from '@themeables/core2'
 
 type TDemo = { status: 'default' | 'error' }
 

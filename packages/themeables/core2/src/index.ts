@@ -8,7 +8,7 @@ export const createThemeable = <P extends ThemeType, ThemeType, ComponentMapping
   name: keyof ComponentMappings,
   Target: FC<any>,
   theme: React.Context<TThemeables<ThemeType, ComponentMappings>>,
-  overrides?: React.Context<TThemeables<ThemeType, ComponentMappings>>
+  overrides = {} as React.Context<TThemeables<ThemeType, ComponentMappings>>
 ) => {
   const Themeable = component(
     startWithType<Partial<P> & ComponentMappings[keyof ComponentMappings]>(),
@@ -16,20 +16,15 @@ export const createThemeable = <P extends ThemeType, ThemeType, ComponentMapping
       let themeProps = {}
       let overrideProps = {}
 
-      if (theme
-        && useContext(theme)
-        && useContext(theme)[name]
-        && typeof useContext(theme)[name] === 'function'
-      ) {
-        themeProps = useContext(theme)[name]!(props)
+      const themeContext = useContext(theme || {})
+      const overridesContext = useContext(overrides || {})
+
+      if (typeof themeContext[name] === 'function') {
+        themeProps = themeContext[name]!(props)
       }
 
-      if (overrides
-        && useContext(overrides)
-        && useContext(overrides)[name]
-        && typeof useContext(overrides)[name] === 'function'
-      ) {
-        overrideProps = useContext(overrides)[name]!(props)
+      if (typeof overridesContext[name] === 'function') {
+        overrideProps = overridesContext[name]!(props)
       }
 
       return {
