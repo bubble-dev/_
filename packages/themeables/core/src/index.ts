@@ -21,7 +21,7 @@ export const setupTheme = <ThemeType, ComponentMappings>(
         const themeProps = useContext(ThemePiece)[name](props)
         const overrideCtx = useContext(overrideTheme)
 
-        if (typeof overrideCtx[name] === 'function') {
+        if (overrideCtx && typeof overrideCtx[name] === 'function') {
           return {
             ...themeProps,
             ...overrideCtx[name]!(props),
