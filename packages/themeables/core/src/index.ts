@@ -8,7 +8,7 @@ export type TOverrideContext<ThemeType, ComponentMappings> = React.Context<TOver
 
 export const setupTheme = <ThemeType, ComponentMappings>(
   defaultTheme: TThemeables<ThemeType, ComponentMappings>,
-  overrideTheme?: TOverrideContext<ThemeType, ComponentMappings>
+  overrideTheme = {} as TOverrideContext<ThemeType, ComponentMappings>
 ) => {
   const ThemePiece = createContext(defaultTheme)
 
@@ -19,19 +19,18 @@ export const setupTheme = <ThemeType, ComponentMappings>(
       startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => {
         const themeProps = useContext(ThemePiece)[name](props)
-        let overrides = {}
+        const overrideCtx = useContext(overrideTheme)
 
-        if (overrideTheme
-          && useContext(overrideTheme)
-          && useContext(overrideTheme)[name]
-          && typeof useContext(overrideTheme)[name] === 'function'
-        ) {
-          overrides = useContext(overrideTheme)[name]!(props)
+        if (typeof overrideCtx[name] === 'function') {
+          return {
+            ...themeProps,
+            ...overrideCtx[name]!(props),
+            ...props,
+          }
         }
 
         return {
           ...themeProps,
-          ...overrides,
           ...props,
         }
       }
