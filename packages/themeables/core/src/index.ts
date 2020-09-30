@@ -19,12 +19,12 @@ export const setupTheme = <ThemeType, ComponentMappings>(
       startWithType<Partial<P> & ComponentMappings[K]>(),
       (props) => {
         const themeProps = useContext(ThemePiece)[name](props)
-        const overrideCtx = useContext(overrideTheme)
+        const overrideContext = useContext(overrideTheme)
 
-        if (overrideCtx && typeof overrideCtx[name] === 'function') {
+        if (overrideContext && typeof overrideContext[name] === 'function') {
           return {
             ...themeProps,
-            ...overrideCtx[name]!(props),
+            ...overrideContext[name]!(props),
             ...props,
           }
         }

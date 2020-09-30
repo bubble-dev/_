@@ -54,12 +54,12 @@ export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) =>
     <>
       { withOverride
         ? (
-          <OverrideContext.Provider value={overrideTheme}>
-            <Block style={{
-              width: 100,
-              height: 100,
-            }}
-            >
+          <Block style={{
+            width: 100,
+            height: 100,
+          }}
+          >
+            <OverrideContext.Provider value={overrideTheme}>
               {(
             hasTheme
               ? (
@@ -72,8 +72,8 @@ export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) =>
                 <DemoThemeableBackground status={status}/>
               )
           )}
-            </Block>
-          </OverrideContext.Provider>
+            </OverrideContext.Provider>
+          </Block>
         )
         : (
           <Block style={{
