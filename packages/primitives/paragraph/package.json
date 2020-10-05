@@ -13,9 +13,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/spacer": "^0.2.1",
-    "@themeables/text": "^2.0.1",
-    "@themeables/text-align": "^0.1.1",
+    "@themeables/spacer": "^0.3.0",
+    "@themeables/text": "^2.1.0",
+    "@themeables/text-align": "^0.2.0",
     "colorido": "^1.0.0",
     "refun": "^2.0.0",
     "stili": "^2.0.3"
