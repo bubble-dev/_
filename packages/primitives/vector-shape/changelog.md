@@ -1,3 +1,7 @@
+## v2.1.0
+
+* 🌱 bump dependencies
+
 ## v2.0.6
 
 * 🐞 use type-only imports
