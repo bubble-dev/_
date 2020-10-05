@@ -1,3 +1,7 @@
+## v0.2.0
+
+* ♻️ update dependencies `@themeables/spacer`, `@themeables/text`, `@themeables/text-align`
+
 ## v0.1.4
 
 * 🐞 use type-only imports

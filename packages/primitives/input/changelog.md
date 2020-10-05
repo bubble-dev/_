@@ -1,3 +1,7 @@
+## v3.1.0
+
+* ♻️ update dependencies `@themeables/spacer`, `@themeables/text`
+
 ## v3.0.3
 
 * 🐞 use type-only imports
