@@ -17,7 +17,7 @@
     "@primitives/svg": "^2.1.2",
     "@themeables/vector-shape": "^2.1.0",
     "colorido": "^1.0.0",
-    "refun": "^2.0.0",
+    "refun": "^3.0.0",
     "stili": "^2.0.3"
   },
   "devDependencies": {

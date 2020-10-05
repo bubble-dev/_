@@ -9193,13 +9193,6 @@ redux@^4.0.4:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
 
-refun@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/refun/-/refun-2.0.1.tgz#ad6edcec0803858b49f66f375a471117bf4af928"
-  integrity sha512-xRB0ToXeuCwEkbQu0aaFCGDw6g4VyBLQcc0pHnzG4J0vtn4UegVXrTX/2En292YsLuvu2AR5cXWp4B6KMua9bw==
-  dependencies:
-    tsfn "^1.1.2"
-
 refun@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/refun/-/refun-3.0.0.tgz#1ec613a63368abf22de3f40b9727f89f167b7743"
@@ -10566,7 +10559,7 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tsfn@^1.1.0, tsfn@^1.1.2:
+tsfn@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-1.1.2.tgz#a380490b9c0ab29e4faed8fd2240c9be576bdf7e"
   integrity sha512-4vWn/eF+RJI/5vWqaY07hf0r6HjiMaAM+KiFHcLrTERJlGEXHsMfVCMuYDLYac3SmxdAuwkjKgmJXyvlVvPE+w==
