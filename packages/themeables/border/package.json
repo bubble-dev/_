@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@primitives/block": "^2.0.4",
-    "@primitives/border": "^2.0.3",
+    "@primitives/border": "^2.1.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"

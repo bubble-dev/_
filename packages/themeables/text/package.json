@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/text": "^2.0.3",
+    "@primitives/text": "^2.1.0",
     "@themeables/core": "^2.1.0",
     "colorido": "^1.0.0",
     "stili": "^2.0.3"

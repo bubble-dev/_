@@ -18,7 +18,7 @@
     "stili": "^2.0.3"
   },
   "devDependencies": {
-    "@primitives/text": "^2.0.3",
+    "@primitives/text": "^2.1.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1",
