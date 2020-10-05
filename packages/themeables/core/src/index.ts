@@ -3,8 +3,13 @@ import type { FC } from 'react'
 import { component, startWithType } from 'refun'
 
 export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]: (props: ComponentMappings[key]) => ThemeType }
+export type TOverrideables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]?: (props: ComponentMappings[key]) => Partial<ThemeType> }
+export type TOverrideContext<ThemeType, ComponentMappings> = React.Context<TOverrideables<ThemeType, ComponentMappings>>
 
-export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeables<ThemeType, ComponentMappings>) => {
+export const setupTheme = <ThemeType, ComponentMappings>(
+  defaultTheme: TThemeables<ThemeType, ComponentMappings>,
+  overrideTheme = {} as TOverrideContext<ThemeType, ComponentMappings>
+) => {
   const ThemePiece = createContext(defaultTheme)
 
   type K = keyof ComponentMappings
@@ -12,10 +17,23 @@ export const setupTheme = <ThemeType, ComponentMappings>(defaultTheme: TThemeabl
   const createThemeable = <P extends ThemeType>(name: K, Target: FC<any>) => {
     const Themeable = component(
       startWithType<Partial<P> & ComponentMappings[K]>(),
-      (props) => ({
-        ...useContext(ThemePiece)[name](props),
-        ...props,
-      })
+      (props) => {
+        const themeProps = useContext(ThemePiece)[name](props)
+        const overrideContext = useContext(overrideTheme)
+
+        if (overrideContext && typeof overrideContext[name] === 'function') {
+          return {
+            ...themeProps,
+            ...overrideContext[name]!(props),
+            ...props,
+          }
+        }
+
+        return {
+          ...themeProps,
+          ...props,
+        }
+      }
     )((props) => createElement(Target, props))
 
     const matched = name.toString().match(/^Symbol\((.+)\)$/)
