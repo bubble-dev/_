@@ -9,12 +9,12 @@
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "tsfn": "^1.1.0"
+    "tsfn": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

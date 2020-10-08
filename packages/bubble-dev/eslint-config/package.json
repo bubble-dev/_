@@ -7,18 +7,16 @@
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^3.5.0",
-    "@typescript-eslint/parser": "^3.5.0",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
     "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-react": "^7.20.3",
-    "@nextools/eslint-plugin": "^0.2.0"
+    "eslint-plugin-react": "^7.20.3"
   },
   "fixdeps": {
     "ignoredPackages": [
-      "@nextools/eslint-plugin",
       "@typescript-eslint/eslint-plugin",
       "@typescript-eslint/parser",
       "eslint-plugin-import",

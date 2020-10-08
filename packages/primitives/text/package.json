@@ -9,13 +9,13 @@
   "repository": "bubble-dev/_",
   "license": "MIT",
   "engines": {
-    "node": ">=10.13.0"
+    "node": ">=12.13.0"
   },
   "sideEffects": false,
   "dependencies": {
     "@themeables/text": "^2.1.0",
     "colorido": "^1.0.0",
-    "refun": "^2.0.0",
+    "refun": "^3.0.0",
     "stili": "^2.0.3"
   },
   "devDependencies": {
