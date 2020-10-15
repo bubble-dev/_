@@ -1,5 +1,7 @@
 import type { TComponentConfig } from 'autoprops'
 import { component, startWithType, mapState, mapHandlers } from 'refun'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { Input } from './src'
 import type { TInput } from './src'
 
@@ -42,3 +44,11 @@ export const config: TComponentConfig<TInput> = {
 }
 
 export { default as packageJson } from './package.json'
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TInput> = {
+  isDisabled: SYMBOL_CONTROL_SWITCH,
+}
+

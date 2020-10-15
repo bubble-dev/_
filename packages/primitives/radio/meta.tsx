@@ -3,6 +3,8 @@ import type { TComponentConfig } from 'autoprops'
 import { component, startWithType } from 'refun'
 import { Block } from '@primitives/block'
 import { Text } from '@primitives/text'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { RadioInput, RadioGroup } from './src'
 import type { TRadioInput, TRadioGroup } from './src'
 import { RadioContext } from './src/Context'
@@ -79,3 +81,12 @@ export const config: TComponentConfig<TRadioMetaConfig> = {
 }
 
 export { default as packageJson } from './package.json'
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TRadioMetaConfig> = {
+  isDisabled: SYMBOL_CONTROL_SWITCH,
+  isVisible: SYMBOL_CONTROL_SWITCH,
+}
+

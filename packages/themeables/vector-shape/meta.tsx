@@ -2,6 +2,8 @@ import React from 'react'
 import type { TComponentConfig } from 'autoprops'
 import { VectorShape } from '@primitives/vector-shape'
 import type { TVectorShape } from '@primitives/vector-shape'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupVectorShapeTheme } from './src'
 import type { TThemeableVectorShapes } from './src'
 
@@ -56,4 +58,11 @@ export const config: TComponentConfig<TDemoComponent> = {
     hasTheme: [true],
     status: ['default', 'error'],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
 }
