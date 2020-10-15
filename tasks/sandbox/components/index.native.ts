@@ -10,7 +10,7 @@ import * as Paragraph from '@primitives/paragraph/meta'
 import * as Svg from '@primitives/svg/meta'
 import * as Radio from '@primitives/radio/meta'
 import * as Spacer from '@primitives/spacer/meta'
-import * as TestLottie from 'test-lottie/meta'
+// import * as TestLottie from 'test-lottie/meta'
 import * as VectorShape from '@primitives/vector-shape/meta'
 
 export const components: TComponents = {
@@ -23,7 +23,7 @@ export const components: TComponents = {
   Paragraph: () => Promise.resolve(Paragraph),
   VectorShape: () => Promise.resolve(VectorShape),
   Svg: () => Promise.resolve(Svg),
-  TestLottie: () => Promise.resolve(TestLottie),
+  // TestLottie: () => Promise.resolve(TestLottie),
   Radio: () => Promise.resolve(Radio),
   Spacer: () => Promise.resolve(Spacer),
 }
