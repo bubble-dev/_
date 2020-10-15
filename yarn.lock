@@ -4617,7 +4617,7 @@ dir-glob@^3.0.1:
 
 dirdir@^0.1.0:
   version "0.1.0"
-  resolved "http://localhost:4873/dirdir/-/dirdir-0.1.0.tgz#38104875e8f9d6648b73f1e409af99208294473d"
+  resolved "https://registry.yarnpkg.com/dirdir/-/dirdir-0.1.0.tgz#38104875e8f9d6648b73f1e409af99208294473d"
   integrity sha512-vafQ/u6rdcPWrMNFCQbrXuj9wRgTXgNoY0zS8xkqaxry1wUZUjgJxl/ZIzW0qsG4I6Vsj8cQETj/62+KuvnFqg==
   dependencies:
     pifs "^2.0.0"
@@ -4631,7 +4631,7 @@ dleet@^2.0.0:
 
 dleet@^2.0.1:
   version "2.0.1"
-  resolved "http://localhost:4873/dleet/-/dleet-2.0.1.tgz#5e3ff7991538d56720b0073311eac29e5bd01733"
+  resolved "https://registry.yarnpkg.com/dleet/-/dleet-2.0.1.tgz#5e3ff7991538d56720b0073311eac29e5bd01733"
   integrity sha512-u3zsODGd/VqKRfd0A2ec8Q1W1gDSVb/EFR8NP87S+XRULAi1yy4lT214x+3H8Eb4X6iqPdHpFWhzUg+kvlFwGw==
   dependencies:
     pifs "^2.0.0"
@@ -5962,7 +5962,7 @@ globby@^6.1.0:
 
 globl@^0.1.0:
   version "0.1.0"
-  resolved "http://localhost:4873/globl/-/globl-0.1.0.tgz#40a44079191fd5b8b74085c02b645a69dd9e0b01"
+  resolved "https://registry.yarnpkg.com/globl/-/globl-0.1.0.tgz#40a44079191fd5b8b74085c02b645a69dd9e0b01"
   integrity sha512-5eI4V2J+ze69J8Lt9n3E8G1l3lcwZj3xX/TRZIEsUAV2XEcquE7Effjw71ySa7V1CoqZOtHW4iAbzblTq/CM8A==
 
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6, graceful-fs@^4.1.9, graceful-fs@^4.2.0, graceful-fs@^4.2.2:
@@ -7467,7 +7467,7 @@ map-visit@^1.0.0:
 
 marked@^1.1.1:
   version "1.2.0"
-  resolved "http://localhost:4873/marked/-/marked-1.2.0.tgz#7221ce2395fa6cf6d722e6f2871a32d3513c85ca"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.2.0.tgz#7221ce2395fa6cf6d722e6f2871a32d3513c85ca"
   integrity sha512-tiRxakgbNPBr301ihe/785NntvYyhxlqcL3YaC8CaxJQh7kiaEtrN9B/eK2I2943Yjkh5gw25chYFDQhOMCwMA==
 
 math-random@^1.0.1:
@@ -9224,7 +9224,7 @@ qs@6.7.0:
 
 query-string@^6.13.1, query-string@^6.8.3:
   version "6.13.5"
-  resolved "http://localhost:4873/query-string/-/query-string-6.13.5.tgz#99e95e2fb7021db90a6f373f990c0c814b3812d8"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.5.tgz#99e95e2fb7021db90a6f373f990c0c814b3812d8"
   integrity sha512-svk3xg9qHR39P3JlHuD7g3nRnyay5mHbrPctEBDUxUkHRifPHXJDhBUycdCC0NBjXoDf44Gb+IsOZL1Uwn8M/Q==
   dependencies:
     decode-uri-component "^0.2.0"
@@ -9293,12 +9293,12 @@ raw-body@2.4.0:
     unpipe "1.0.0"
 
 raw-loader@^4.0.1:
-  version "4.0.1"
-  resolved "http://localhost:4873/raw-loader/-/raw-loader-4.0.1.tgz#14e1f726a359b68437e183d5a5b7d33a3eba6933"
-  integrity sha512-baolhQBSi3iNh1cglJjA0mYzga+wePk7vdEX//1dTFd+v4TsQlQE0jitJSNF1OIP82rdYulH7otaVmdlDaJ64A==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-4.0.2.tgz#1aac6b7d1ad1501e66efdac1522c73e59a584eb6"
+  integrity sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==
   dependencies:
     loader-utils "^2.0.0"
-    schema-utils "^2.6.5"
+    schema-utils "^3.0.0"
 
 react-dev-utils@^10.2.1:
   version "10.2.1"
@@ -9499,7 +9499,7 @@ redux-thunk@^2.3.0:
 
 redux@^4.0.4, redux@^4.0.5:
   version "4.0.5"
-  resolved "http://localhost:4873/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
   integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
   dependencies:
     loose-envify "^1.4.0"
@@ -9507,7 +9507,7 @@ redux@^4.0.4, redux@^4.0.5:
 
 refun@^3.0.0, refun@^3.1.0:
   version "3.1.0"
-  resolved "http://localhost:4873/refun/-/refun-3.1.0.tgz#0d8a411d5aa82eaae6bb6984cbc188d86a97911b"
+  resolved "https://registry.yarnpkg.com/refun/-/refun-3.1.0.tgz#0d8a411d5aa82eaae6bb6984cbc188d86a97911b"
   integrity sha512-isuwU2UXtYziocRlIhOCHp35Vzr5PPzUps+zQBDyJkWNSnywguvHUNFW/2Xc49X/RtoSCW6JUQCgSL/6t+6SBw==
   dependencies:
     tsfn "^2.0.0"
@@ -9752,7 +9752,7 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
 
 rn-fonts@^2.0.1:
   version "2.0.1"
-  resolved "http://localhost:4873/rn-fonts/-/rn-fonts-2.0.1.tgz#19b73703273d9c8e9167ff230bfe95206f0abd11"
+  resolved "https://registry.yarnpkg.com/rn-fonts/-/rn-fonts-2.0.1.tgz#19b73703273d9c8e9167ff230bfe95206f0abd11"
   integrity sha512-KZ9P0uMoCKsVc/Wei3UPrDag44i/rTdMvU92fWhKvlxTDBbSPoNj67MP5t/7Yl6HczmZ13FPl9Pw3M+DI0fp7A==
   dependencies:
     "@types/plist" "^3.0.2"
@@ -10124,7 +10124,7 @@ slash@^3.0.0:
 
 sleap@^0.1.0:
   version "0.1.0"
-  resolved "http://localhost:4873/sleap/-/sleap-0.1.0.tgz#44d2c5039a819dbc6ae67313e348c290c3cfced4"
+  resolved "https://registry.yarnpkg.com/sleap/-/sleap-0.1.0.tgz#44d2c5039a819dbc6ae67313e348c290c3cfced4"
   integrity sha512-LSJi5BmlPFaf0yY7ETlLDF1MmYPIC0PPl+Ctz16RRlD1nAYKsUMdBc/LfMBLef2bpq3Sm5oIXdaD49RgeK5kRw==
   dependencies:
     globl "^0.1.0"
@@ -10903,9 +10903,9 @@ tsconfig-paths@^3.9.0:
     strip-bom "^3.0.0"
 
 tsfn@^2.0.0, tsfn@^2.1.0:
-  version "2.1.0"
-  resolved "http://localhost:4873/tsfn/-/tsfn-2.1.0.tgz#c119f063ab20e66b4cd3d10b24866abc57643f63"
-  integrity sha512-7b6O/A21U7cf22wqu9cLygdn5arsqxbfjgirvbNLYdRZJ84r56rsEhTwMX7ABNZ3K+1Dguvgha8DImqmw/3RUw==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-2.2.0.tgz#1578c87e47c6a6ff02adac1f5fd12b2d21bc42df"
+  integrity sha512-pCcVn4OnERvlCT547c4bJ7HTO1YMebx9Ajh+OQ9k5OdL3n+6oWj3G7fq79F9o6el3Aoe0yrXMY61YJNKwYEDRw==
 
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.0"
@@ -10989,7 +10989,7 @@ ultron@1.0.x:
 
 unchunk@^0.2.0:
   version "0.2.0"
-  resolved "http://localhost:4873/unchunk/-/unchunk-0.2.0.tgz#fc902dfcbf6b0cb75162c69971d350c515447f46"
+  resolved "https://registry.yarnpkg.com/unchunk/-/unchunk-0.2.0.tgz#fc902dfcbf6b0cb75162c69971d350c515447f46"
   integrity sha512-YCLirV/l/07kBV6yVcvenfpDVfRT/PXspzi1BsMgCLo7C8yNGEosBPdkcs3qGESoEop81G8sYXh06CcUyoTuig==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
