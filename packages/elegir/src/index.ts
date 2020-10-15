@@ -1,4 +1,4 @@
-/* eslint-disable import/export */
+/* eslint-disable no-redeclare */
 export function elegir <B0 extends boolean, T0>(b0: B0, v0: T0): B0 extends true ? T0 : undefined
 export function elegir <B0 extends boolean, T0, B1 extends boolean, T1>(b0: B0, v0: T0, b1: B1, v1: T1): B0 extends true ? T0 : B1 extends true ? T1 : undefined
 export function elegir <B0 extends boolean, T0, B1 extends boolean, T1, B2 extends boolean, T2>(b0: B0, v0: T0, b1: B1, v1: T1, b2: B2, v2: T2): B0 extends true ? T0 : B1 extends true ? T1 : B2 extends true ? T2 : undefined

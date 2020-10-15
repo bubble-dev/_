@@ -19,7 +19,6 @@
     "@bubble-dev/eslint-config": "*",
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
-    "@revert/color": "^0.1.0",
     "@sandbox/ui": "*",
     "@start/plugin": "^2.0.0",
     "@types/node": "^14.0.0",
@@ -29,7 +28,7 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "tsfn": "^2.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.3"
   },
   "scripts": {
     "start": "packages/bubble-dev/start-preset/src/cli/index.js"
