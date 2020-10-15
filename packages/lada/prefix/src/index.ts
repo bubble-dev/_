@@ -3,7 +3,7 @@ import type { TStylePrefix } from './types'
 import type { TStyle, TStyleKey } from './style'
 
 const WINDOW = global as any as Window
-const STYLES = WINDOW.document.documentElement.style as TStyle
+const STYLES = (WINDOW.document?.documentElement?.style ?? {}) as TStyle
 const PREFIXES: TStylePrefix[] = ['Webkit', 'Moz', 'ms']
 
 const cache = new Map<string, TStyleKey>()
@@ -45,5 +45,5 @@ export const prefixStyle = (styles: TStyle): TStyle =>
     return result
   }, {} as TStyle)
 
-export * from './types'
-export * from './style'
+export type { TStylePrefix } from './types'
+export type { TStyle, TStyleKey } from './style'
