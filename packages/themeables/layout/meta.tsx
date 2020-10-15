@@ -3,6 +3,8 @@ import type { TComponentConfig } from 'autoprops'
 import { Layout } from '@primitives/layout'
 import type { TLayout } from '@primitives/layout'
 import { Block } from '@primitives/block'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupLayoutTheme } from './src'
 import type { TThemeableLayouts } from './src'
 
@@ -63,3 +65,10 @@ export const config: TComponentConfig<TDemoComponent> = {
 }
 
 export { default as packageJson } from './package.json'
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
+}

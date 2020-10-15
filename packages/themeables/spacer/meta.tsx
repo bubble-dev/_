@@ -3,6 +3,8 @@ import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
 import { Spacer } from '@primitives/spacer'
 import type { TSpacer } from '@primitives/spacer'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupSpacerTheme } from './src'
 import type { TThemeableSpacers } from './src'
 
@@ -64,4 +66,11 @@ export const config: TComponentConfig<TDemoComponent> = {
     hasTheme: [true],
     status: ['default', 'error'],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
 }

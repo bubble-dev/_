@@ -11,7 +11,7 @@ export const components: TComponents = {
   Paragraph: () => import('@primitives/paragraph/meta' /* webpackChunkName: "Paragraph" */),
   VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
   Svg: () => import('@primitives/svg/meta' /* webpackChunkName: "Svg" */),
-  TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
+  // TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
   Radio: () => import('@primitives/radio/meta' /* webpackChunkName: "Radio" */),
   Spacer: () => import('@primitives/spacer/meta' /* webpackChunkName: "Spacer" */),
 }

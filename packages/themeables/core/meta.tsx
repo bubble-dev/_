@@ -4,6 +4,8 @@ import { Block } from '@primitives/block'
 import { Background } from '@primitives/background'
 import type { TBackground } from '@primitives/background'
 import type { TThemeableBackground } from '@themeables/background'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupTheme } from './src'
 import type { TThemeables, TOverrideables } from './src'
 
@@ -81,4 +83,12 @@ export const config: TComponentConfig<TDemoComponent> = {
     withOverride: [true],
     status: ['default', 'error'],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
+  withOverride: SYMBOL_CONTROL_SWITCH,
 }

@@ -23,3 +23,6 @@ export const config: TComponentConfig<TImage> = {
 }
 
 export { Image as Component } from './src'
+
+// @ts-ignore
+export { default as readme } from './readme.md'

@@ -2,6 +2,8 @@ import React from 'react'
 import type { TComponentConfig } from 'autoprops'
 import { Paragraph } from '@primitives/paragraph'
 import type { TParagraph } from '@primitives/paragraph'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupTextAlignTheme } from './src'
 import type { TThemeableTextAligns } from './src'
 
@@ -58,3 +60,10 @@ export const config: TComponentConfig<TDemoComponent> = {
 }
 
 export { default as packageJson } from './package.json'
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
+}

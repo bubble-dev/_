@@ -4,6 +4,8 @@ import { Text } from '@primitives/text'
 import type { TText } from '@primitives/text'
 import { Input } from '@primitives/input'
 import type { TInput } from '@primitives/input'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupTextTheme } from './src'
 import type { TThemeableTexts, TThemeableText } from './src'
 
@@ -92,4 +94,11 @@ export const config: TComponentConfig<TDemoComponent> = {
     hasTheme: [true],
     status: ['default', 'error'],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
 }

@@ -3,6 +3,8 @@ import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
 import { Border } from '@primitives/border'
 import type { TBorder } from '@primitives/border'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupBorderTheme } from './src'
 import type { TThemeableBorders } from './src'
 
@@ -84,4 +86,11 @@ export const config: TComponentConfig<TDemoComponent> = {
     hasTheme: [true],
     status: ['default', 'error'],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
 }

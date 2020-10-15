@@ -2,6 +2,8 @@ import React from 'react'
 import type { TComponentConfig } from 'autoprops'
 import { Image } from '@primitives/image'
 import type { TImage } from '@primitives/image'
+import type { TComponentControls } from '@revert/sandbox'
+import { SYMBOL_CONTROL_SWITCH } from '@revert/sandbox'
 import { setupImageTheme } from './src'
 import type { TThemeableImages } from './src'
 
@@ -69,4 +71,11 @@ export const config: TComponentConfig<TDemoComponent> = {
   props: {
     hasTheme: [true],
   },
+}
+
+// @ts-ignore
+export { default as readme } from './readme.md'
+
+export const controls: TComponentControls<TDemoComponent> = {
+  hasTheme: SYMBOL_CONTROL_SWITCH,
 }
