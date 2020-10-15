@@ -14,11 +14,11 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@primitives/block": "^2.0.4",
-    "@themeables/spacer": "^0.3.0"
+    "@primitives/block": "^3.0.0",
+    "@themeables/spacer": "^0.4.0"
   },
   "devDependencies": {
-    "@primitives/layout": "^2.0.4",
+    "@primitives/layout": "^3.0.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"

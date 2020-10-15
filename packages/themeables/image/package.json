@@ -14,10 +14,10 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@themeables/core": "^2.1.0"
+    "@themeables/core": "^3.0.0"
   },
   "devDependencies": {
-    "@primitives/image": "^2.1.0",
+    "@primitives/image": "^3.0.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"

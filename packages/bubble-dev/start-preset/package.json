@@ -31,7 +31,7 @@
     "@auto/telegram": "^0.2.0",
     "@babel/core": "^7.8.0",
     "@babel/register": "^7.8.0",
-    "@bubble-dev/babel-config": "^0.2.0",
+    "@bubble-dev/babel-config": "^0.3.0",
     "@rebox/android": "^4.0.0",
     "@rebox/ios": "^6.0.0",
     "@rebox/web": "^3.0.0",

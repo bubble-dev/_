@@ -14,7 +14,7 @@
   "sideEffects": false,
   "dependencies": {
     "refun": "^3.0.0",
-    "stili": "^2.0.3"
+    "stili": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^16.8.6",

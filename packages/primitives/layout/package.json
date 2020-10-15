@@ -13,9 +13,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^2.0.4",
+    "@primitives/block": "^3.0.0",
     "refun": "^3.0.0",
-    "stili": "^2.0.3",
+    "stili": "^3.0.0",
     "tsfn": "^2.0.0"
   },
   "devDependencies": {
