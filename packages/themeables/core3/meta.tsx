@@ -5,7 +5,7 @@ import { Background } from '@primitives/background'
 import type { TBackground } from '@primitives/background'
 import type { TThemeableBackground } from '@themeables/background'
 import { setupTheme } from './src'
-import type { TThemeables, TOverrideables } from './src'
+import type { TThemeables } from './src'
 
 type TDemo = { status: 'default' | 'error' }
 
@@ -25,11 +25,11 @@ const defaultTheme: TThemeables<TThemeableBackground, Mappings> = {
   }),
 }
 
-const OverrideContext: React.Context<TOverrideables<TThemeableBackground, Mappings>> = createContext({})
+const OverrideContext: React.Context<TThemeables<TThemeableBackground, Mappings>> = createContext({})
 
-const { ThemePiece, createThemeable } = setupTheme<TThemeableBackground, Mappings>(defaultTheme, OverrideContext)
+const { ThemePiece, createThemeable } = setupTheme()
 
-export const DemoThemeableBackground = createThemeable<TBackground>(SYMBOL_DEMO, Background)
+export const DemoThemeableBackground = createThemeable<TBackground, TThemeableBackground, Mappings>(SYMBOL_DEMO, Background, OverrideContext)
 
 const newTheme: TThemeables<TThemeableBackground, Mappings> = {
   [SYMBOL_DEMO]: ({ status }) => ({
@@ -43,7 +43,7 @@ const newTheme: TThemeables<TThemeableBackground, Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean, withOverride: boolean}
 
-const overrideTheme: TOverrideables<TThemeableBackground, Mappings> = {
+const overrideTheme: TThemeables<TThemeableBackground, Mappings> = {
   [SYMBOL_DEMO]: ({ status }) => ({
     color: status === 'error' ? [144, 24, 56, 1] : [108, 105, 86, 1],
   }),
@@ -51,51 +51,17 @@ const overrideTheme: TOverrideables<TThemeableBackground, Mappings> = {
 
 export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) => {
   return (
-    <>
-      { withOverride
-        ? (
-          <OverrideContext.Provider value={overrideTheme}>
-            <Block style={{
-              width: 100,
-              height: 100,
-            }}
-            >
-              {(
-            hasTheme
-              ? (
-                <ThemePiece.Provider value={newTheme}>
-                  <DemoThemeableBackground status={status}/>
-                </ThemePiece.Provider>
-
-              )
-              : (
-                <DemoThemeableBackground status={status}/>
-              )
-          )}
-            </Block>
-          </OverrideContext.Provider>
-        )
-        : (
-          <Block style={{
-            width: 100,
-            height: 100,
-          }}
-          >
-            {(
-            hasTheme
-              ? (
-                <ThemePiece.Provider value={newTheme}>
-                  <DemoThemeableBackground status={status}/>
-                </ThemePiece.Provider>
-
-              )
-              : (
-                <DemoThemeableBackground status={status}/>
-              )
-          )}
-          </Block>
-        )}
-    </>
+    <OverrideContext.Provider value={withOverride ? overrideTheme : {}}>
+      <Block style={{
+        width: 100,
+        height: 100,
+      }}
+      >
+        <ThemePiece.Provider value={hasTheme ? newTheme : defaultTheme}>
+          <DemoThemeableBackground status={status}/>
+        </ThemePiece.Provider>
+      </Block>
+    </OverrideContext.Provider>
   )
 }
 

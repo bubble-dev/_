@@ -8,6 +8,7 @@ export const components: TComponents = {
   LayoutThemeable: () => import('@themeables/layout/meta' /* webpackChunkName: "LayoutThemeable" */),
   OverideDemo: () => import('@themeables/core/meta' /* webpackChunkName: "CoreThemable" */),
   OverideDemo2: () => import('@themeables/core2/meta' /* webpackChunkName: "CoreThemable2" */),
+  OverideDemo3: () => import('@themeables/core3/meta' /* webpackChunkName: "CoreThemable3" */),
   Paragraph: () => import('@primitives/paragraph/meta' /* webpackChunkName: "Paragraph" */),
   Radio: () => import('@primitives/radio/meta' /* webpackChunkName: "Radio" */),
   Spacer: () => import('@primitives/spacer/meta' /* webpackChunkName: "Spacer" */),

@@ -4,8 +4,7 @@ import { component, startWithType } from 'refun'
 
 export type TThemeables<ThemeType, ComponentMappings> = { [key in keyof ComponentMappings]?: (props: ComponentMappings[key]) => Partial<ThemeType> }
 
-export const setupTheme = <ThemeType>(
-) => {
+export const setupTheme = <ThemeType>() => {
   const ThemePiece = createContext({})
 
   const createThemeable = <P extends ThemeType, ThemeType, ComponentMappings>(
@@ -19,7 +18,8 @@ export const setupTheme = <ThemeType>(
         let themeProps = {}
         let overrideProps = {}
 
-        const themeContext = useContext(ThemePiece || {})
+
+        const themeContext = useContext(ThemePiece as React.Context<TThemeables<ThemeType, ComponentMappings>>)
         const overridesContext = useContext(overrideTheme || {})
 
         if (themeContext && typeof themeContext[name] === 'function') {

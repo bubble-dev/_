@@ -1,5 +1,5 @@
 {
-  "name": "@themeables/core3",
+  "name": "@themeables/background3",
   "version": "0.0.0",
   "description": "",
   "keywords": [],
@@ -14,12 +14,12 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "refun": "^2.0.0"
+    "@themeables/core": "^2.0.2",
+    "colorido": "^1.0.0"
   },
   "devDependencies": {
     "@primitives/background": "^2.0.3",
     "@primitives/block": "^2.0.4",
-    "@themeables/background": "^2.0.1",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"
