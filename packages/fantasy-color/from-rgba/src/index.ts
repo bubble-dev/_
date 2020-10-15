@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import type { TRgba } from '@fantasy-color/types'
 
 const rgbaRegex = /^\s*rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d?\.?\d+)\s*\)\s*$/

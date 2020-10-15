@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import type { TRgb } from '@fantasy-color/types'
 
 export default ({ red, green, blue }: TRgb): TRgb => ({

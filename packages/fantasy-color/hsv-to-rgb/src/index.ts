@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import type { TRgb, THsv } from '@fantasy-color/types'
 
 export default ({ hue, saturation, value }: THsv): TRgb => {

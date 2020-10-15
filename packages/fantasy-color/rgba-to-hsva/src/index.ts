@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import type { TRgba, THsva } from '@fantasy-color/types'
 import normalizeRgba from '@fantasy-color/normalize-rgba'
 

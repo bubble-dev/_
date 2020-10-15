@@ -1,4 +1,5 @@
-import type { TRgb } from '@fantasy-color/types/src'
+// eslint-disable-next-line import/no-unresolved
+import type { TRgb } from '@fantasy-color/types'
 import normalizeRgb from '@fantasy-color/normalize-rgb'
 
 const NORMALIZED_BELOW_10 = 0.03928

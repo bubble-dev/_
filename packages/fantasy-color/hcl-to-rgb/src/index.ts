@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import type { TRgb, THcl } from '@fantasy-color/types'
 import hclToLab from '@fantasy-color/hcl-to-lab'
 import labToRgb from '@fantasy-color/lab-to-rgb'

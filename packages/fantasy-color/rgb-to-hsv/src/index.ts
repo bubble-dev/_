@@ -1,5 +1,6 @@
-import type { TRgb, THsv } from '@fantasy-color/types/src'
-import normalizeRgb from '@fantasy-color/normalize-rgb/src'
+// eslint-disable-next-line import/no-unresolved
+import type { TRgb, THsv } from '@fantasy-color/types'
+import normalizeRgb from '@fantasy-color/normalize-rgb'
 
 export default (color: TRgb): THsv => {
   const { red, green, blue } = normalizeRgb(color)
