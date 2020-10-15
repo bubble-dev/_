@@ -101,9 +101,18 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     write(`${dir}/build/node/`),
     plugin('test', () => async () => {
       const path = await import('path')
+      const { access } = await import('pifs')
       const fullPath = path.resolve(`${dir}/build/node/index.js`)
+      let hasFile = false
 
-      await import(fullPath)
+      try {
+        await access(fullPath)
+        hasFile = true
+      } catch {}
+
+      if (hasFile) {
+        await import(fullPath)
+      }
     }),
     find(`${dir}/src/**/*.json`),
     copy(`${dir}/build/node/`)
@@ -144,7 +153,7 @@ export const buildPackage = async (packageDir: string): Promise<StartPlugin<{}, 
     tasks.push(...packageJson.buildTasks)
   }
 
-  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'browser') || Reflect.has(packageJson, 'react-native')) {
+  if (Reflect.has(packageJson, 'main') || Reflect.has(packageJson, 'browser') || Reflect.has(packageJson, 'react-native') || Reflect.has(packageJson, 'types')) {
     tasks.push('buildTypes')
   }
 
