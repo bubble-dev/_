@@ -3,7 +3,7 @@ import type { TSyncStore } from './types'
 import { getHashState } from './get-hash-state'
 
 export const locationHash = (store: TSyncStore) => {
-  globalObject.addEventListener('hashchange', () => {
+  globalObject.addEventListener?.('hashchange', () => {
     store.setState(
       getHashState()
     )
