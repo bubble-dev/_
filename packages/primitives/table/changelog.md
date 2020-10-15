@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `stili`
+
 ## v2.0.3
 
 * 🐞 use type-only imports

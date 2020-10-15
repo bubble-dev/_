@@ -1,3 +1,9 @@
+## v2.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `@fantasy-color/normalize-rgba`, `@fantasy-color/types`
+
 ## v1.0.1
 
 * 🐞 use type-only imports

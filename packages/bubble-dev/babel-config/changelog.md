@@ -1,3 +1,9 @@
+## v0.3.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `@bubble-dev/browsers-list`
+
 ## v0.2.0
 
 * 🌱 add `transform-modules-commonjs` plugin

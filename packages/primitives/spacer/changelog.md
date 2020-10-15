@@ -1,3 +1,9 @@
+## v0.4.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `@primitives/block`, `@themeables/spacer`
+
 ## v0.3.0
 
 * ♻️ update dependencies `@themeables/spacer`

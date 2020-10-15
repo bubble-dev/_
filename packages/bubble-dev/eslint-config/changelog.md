@@ -1,3 +1,7 @@
+## v3.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
 ## v2.1.0
 
 * 🌱 add import type rule

@@ -1,3 +1,11 @@
+## v4.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* 🐞 fix sandbox build
+
+* ♻️ update dependencies `colorido`, `elegir`, `@primitives/pointer`, `@primitives/svg`, `@primitives/transform`
+
 ## v3.0.7
 
 * 🐞 fix types export

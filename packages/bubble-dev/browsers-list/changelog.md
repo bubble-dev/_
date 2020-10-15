@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
 ## v1.0.1
 
 * 🐞 refactor using JS instead of TS to be able to require on low-levels

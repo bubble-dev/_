@@ -1,3 +1,9 @@
+## v3.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `colorido`, `@primitives/block`, `@themeables/background`
+
 ## v2.1.0
 
 * 🌱 bump dependencies

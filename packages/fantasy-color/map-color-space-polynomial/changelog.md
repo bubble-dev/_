@@ -1,3 +1,7 @@
+## v2.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
 ## v1.0.2
 
 * 🐞 use type-only imports

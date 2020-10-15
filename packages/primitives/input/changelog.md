@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* ♻️ update dependencies `colorido`, `stili`, `@themeables/spacer`, `@themeables/text`
+
 ## v3.1.0
 
 * ♻️ update dependencies `@themeables/spacer`, `@themeables/text`

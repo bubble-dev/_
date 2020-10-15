@@ -1,3 +1,11 @@
+## v8.0.0
+
+* 💥 upgrade deps and use Node.js >= 12.13.0
+
+* 🐞 tweak build task
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v7.1.0
 
 * 🐞 use type-only imports
