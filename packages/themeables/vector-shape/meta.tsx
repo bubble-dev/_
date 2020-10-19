@@ -20,9 +20,9 @@ const defaultTheme: TThemeableVectorShapes<Mappings> = {
   }),
 }
 
-const { VectorShapeTheme, createThemeableVectorShape } = setupVectorShapeTheme<Mappings>(defaultTheme)
+const { VectorShapeTheme, createThemeableVectorShape } = setupVectorShapeTheme()
 
-const DemoThemeableVectorShape = createThemeableVectorShape<TVectorShape>('demo', VectorShape)
+const DemoThemeableVectorShape = createThemeableVectorShape<TVectorShape, Mappings>('demo', VectorShape)
 
 type TDemo = { status: 'default' | 'error' }
 
@@ -37,19 +37,11 @@ const newTheme: TThemeableVectorShapes<Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean}
 
-export const Component = ({ status, hasTheme }: TDemoComponent) => {
-  return (
-    hasTheme
-      ? (
-        <VectorShapeTheme.Provider value={newTheme}>
-          <DemoThemeableVectorShape status={status}/>
-        </VectorShapeTheme.Provider>
-      )
-      : (
-        <DemoThemeableVectorShape status={status}/>
-      )
-  )
-}
+export const Component = ({ status, hasTheme }: TDemoComponent) => (
+  <VectorShapeTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+    <DemoThemeableVectorShape status={status}/>
+  </VectorShapeTheme.Provider>
+)
 
 Component.displayName = 'ThemeableVectorShape'
 
