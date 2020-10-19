@@ -1,6 +1,7 @@
 import type { TComponents } from '@sandbox/ui'
 
 export const components: TComponents = {
+  Background: () => import('@themeables/background/meta' /* webpackChunkName: "Background" */),
   Button: () => import('@primitives/button/meta' /* webpackChunkName: "Button" */),
   Checkbox: () => import('@primitives/checkbox/meta' /* webpackChunkName: "Checkbox" */),
   Heading: () => import('@primitives/heading/meta' /* webpackChunkName: "Heading" */),
