@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import type { TComponentConfig } from 'autoprops'
 import { Block } from '@primitives/block'
 import { Background } from '@primitives/background'
 import type { TBackground } from '@primitives/background'
 import { setupBackgroundTheme } from './src'
-import type { TThemeableBackgrounds } from './src'
+import type { TThemeableBackgrounds, TThemeableBackground } from './src'
+import { TThemeables } from '@themeables/core3'
 
 type TDemo = { status: 'default' | 'error' }
 
 type Mappings = {
   demo: TDemo,
 }
+
+const OverrideContext: React.Context<TThemeables<TThemeableBackground, Mappings>> = createContext({})
+const { BackgroundTheme, createThemeableBackground } = setupBackgroundTheme(OverrideContext)
+export const DemoThemeableBackground = createThemeableBackground<TBackground, TThemeableBackground, Mappings>('demo', Background)
 
 const defaultTheme: TThemeableBackgrounds<Mappings> = {
   demo: ({ status }) => ({
@@ -22,10 +27,6 @@ const defaultTheme: TThemeableBackgrounds<Mappings> = {
   }),
 }
 
-const { BackgroundTheme, createThemeableBackground } = setupBackgroundTheme<Mappings>(defaultTheme)
-
-export const DemoThemeableBackground = createThemeableBackground<TBackground>('demo', Background)
-
 const newTheme: TThemeableBackgrounds<Mappings> = {
   demo: ({ status }) => ({
     color: status === 'default' ? [0x00, 0x00, 0x00, 1] : [0xFF, 0x00, 0x00, 1],
@@ -36,27 +37,30 @@ const newTheme: TThemeableBackgrounds<Mappings> = {
   }),
 }
 
-type TDemoComponent = TDemo & { hasTheme: boolean}
+const overrideTheme: TThemeables<TThemeableBackground, Mappings> = {
+  demo: ({ status }) => ({
+    color: status === 'error' ? [144, 24, 56, 1] : [108, 105, 86, 1],
+  }),
+}
 
-export const Component = ({ status, hasTheme }: TDemoComponent) => (
-  <Block
-    style={{
-      width: 100,
-      height: 100,
-    }}
-  >
-    {(
-      hasTheme
-        ? (
-          <BackgroundTheme.Provider value={newTheme}>
-            <DemoThemeableBackground status={status}/>
-          </BackgroundTheme.Provider>
-        )
-        : (
-          <DemoThemeableBackground status={status}/>
-        )
-    )}
-  </Block>
+type TDemoComponent = {
+  hasTheme: boolean,
+  withOverride: boolean
+} & TDemo
+
+export const Component = ({ status, hasTheme, withOverride }: TDemoComponent) => (
+  <OverrideContext.Provider value={withOverride ? overrideTheme : {}}>
+    <Block
+      style={{
+        width: 100,
+        height: 100,
+      }}
+    >
+      <BackgroundTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+        <DemoThemeableBackground status={status}/>
+      </BackgroundTheme.Provider>
+    </Block>
+  </OverrideContext.Provider>
 )
 
 Component.displayName = 'ThemeableBackground'
@@ -64,6 +68,7 @@ Component.displayName = 'ThemeableBackground'
 export const config: TComponentConfig<TDemoComponent> = {
   props: {
     hasTheme: [true],
+    withOverride: [true],
     status: ['default', 'error'],
   },
 }

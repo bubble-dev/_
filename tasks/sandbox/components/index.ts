@@ -16,5 +16,6 @@ export const components: TComponents = {
   TestLottie: () => import('test-lottie/meta' /* webpackChunkName: "TestLottie" */),
   TextAlignThemeable: () => import('@themeables/text-align/meta' /* webpackChunkName: "TextAlignThemeable" */),
   ThemeableBackground2: () => import('@themeables/background2/meta' /* webpackChunkName: "ThemeableBackground2" */),
+  ThemeableBackground3: () => import('@themeables/background3/meta' /* webpackChunkName: "ThemeableBackground3" */),
   VectorShape: () => import('@primitives/vector-shape/meta' /* webpackChunkName: "VectorShape" */),
 }

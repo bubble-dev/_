@@ -14,6 +14,7 @@ import * as Svg from '@primitives/svg/meta'
 import * as TestLottie from 'test-lottie/meta'
 import * as TextAlignThemeable from '@themeables/text-align/meta'
 import * as ThemeableBackground2 from '@themeables/background2/meta'
+import * as ThemeableBackground3 from '@themeables/background3/meta'
 import * as VectorShape from '@primitives/vector-shape/meta'
 
 export const components: TComponents = {
@@ -31,5 +32,6 @@ export const components: TComponents = {
   TestLottie: () => Promise.resolve(TestLottie),
   TextAlignThemeable: () => Promise.resolve(TextAlignThemeable),
   ThemeableBackground2: () => Promise.resolve(ThemeableBackground2),
+  ThemeableBackground3: () => Promise.resolve(ThemeableBackground3),
   VectorShape: () => Promise.resolve(VectorShape),
 }

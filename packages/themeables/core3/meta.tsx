@@ -27,9 +27,9 @@ const defaultTheme: TThemeables<TThemeableBackground, Mappings> = {
 
 const OverrideContext: React.Context<TThemeables<TThemeableBackground, Mappings>> = createContext({})
 
-const { ThemePiece, createThemeable } = setupTheme()
+const { ThemePiece, createThemeable } = setupTheme<TThemeableBackground>(OverrideContext)
 
-export const DemoThemeableBackground = createThemeable<TBackground, TThemeableBackground, Mappings>(SYMBOL_DEMO, Background, OverrideContext)
+export const DemoThemeableBackground = createThemeable<TBackground, TThemeableBackground, Mappings>(SYMBOL_DEMO, Background)
 
 const newTheme: TThemeables<TThemeableBackground, Mappings> = {
   [SYMBOL_DEMO]: ({ status }) => ({
@@ -40,6 +40,7 @@ const newTheme: TThemeables<TThemeableBackground, Mappings> = {
     topRightRadius: 5,
   }),
 }
+
 
 type TDemoComponent = TDemo & { hasTheme: boolean, withOverride: boolean}
 
