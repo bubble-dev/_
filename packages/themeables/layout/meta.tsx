@@ -21,9 +21,9 @@ const defaultTheme: TThemeableLayouts<Mappings> = {
   }),
 }
 
-const { LayoutTheme, createThemeableLayout } = setupLayoutTheme<Mappings>(defaultTheme)
+const { LayoutTheme, createThemeableLayout } = setupLayoutTheme()
 
-const DemoThemeableLayout = createThemeableLayout<TLayout>('demo', Layout)
+const DemoThemeableLayout = createThemeableLayout<TLayout, Mappings>('demo', Layout)
 
 const newTheme: TThemeableLayouts<Mappings> = {
   demo: () => ({
@@ -38,23 +38,13 @@ const DemoBackground = () => (
 
 type TDemoComponent = TDemo & { hasTheme: boolean }
 
-export const Component = ({ hasTheme }: TDemoComponent) => {
-  return (
-    hasTheme
-      ? (
-        <LayoutTheme.Provider value={newTheme}>
-          <DemoThemeableLayout>
-            <DemoBackground/>
-          </DemoThemeableLayout>
-        </LayoutTheme.Provider>
-      )
-      : (
-        <DemoThemeableLayout>
-          <DemoBackground/>
-        </DemoThemeableLayout>
-      )
-  )
-}
+export const Component = ({ hasTheme }: TDemoComponent) => (
+  <LayoutTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+    <DemoThemeableLayout>
+      <DemoBackground/>
+    </DemoThemeableLayout>
+  </LayoutTheme.Provider>
+)
 
 Component.displayName = 'ThemeableLayout'
 
