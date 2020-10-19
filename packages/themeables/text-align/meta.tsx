@@ -18,9 +18,9 @@ const defaultTheme: TThemeableTextAligns<Mappings> = {
   }),
 }
 
-const { TextAlignTheme, createThemeableTextAlign } = setupTextAlignTheme<Mappings>(defaultTheme)
+const { TextAlignTheme, createThemeableTextAlign } = setupTextAlignTheme()
 
-const DemoThemeableTextAlign = createThemeableTextAlign<TParagraph>('demo', Paragraph)
+const DemoThemeableTextAlign = createThemeableTextAlign<TParagraph, Mappings>('demo', Paragraph)
 
 const newTheme: TThemeableTextAligns<Mappings> = {
   demo: () => ({
@@ -33,23 +33,13 @@ const text = 'Cat is love, cat is life fall asleep on the washing machine. Gnaw 
 
 type TDemoComponent = { hasTheme: boolean }
 
-export const Component = ({ hasTheme }: TDemoComponent) => {
-  return (
-    hasTheme
-      ? (
-        <TextAlignTheme.Provider value={newTheme}>
-          <DemoThemeableTextAlign>
-            { text }
-          </DemoThemeableTextAlign>
-        </TextAlignTheme.Provider>
-      )
-      : (
-        <DemoThemeableTextAlign>
-          { text }
-        </DemoThemeableTextAlign>
-      )
-  )
-}
+export const Component = ({ hasTheme }: TDemoComponent) => (
+  <TextAlignTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+    <DemoThemeableTextAlign>
+      { text }
+    </DemoThemeableTextAlign>
+  </TextAlignTheme.Provider>
+)
 
 Component.displayName = 'ThemeableTextAlign'
 
