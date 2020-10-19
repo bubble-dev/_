@@ -32,9 +32,9 @@ const defaultTheme: TThemeableBorders<Mappings> = {
   }),
 }
 
-const { BorderTheme, createThemeableBorder } = setupBorderTheme<Mappings>(defaultTheme)
+const { BorderTheme, createThemeableBorder } = setupBorderTheme()
 
-const DemoThemeableBorder = createThemeableBorder<TBorder>('demo', Border)
+const DemoThemeableBorder = createThemeableBorder<TBorder, Mappings>('demo', Border)
 
 const newTheme: TThemeableBorders<Mappings> = {
   demo: ({ status }) => ({
@@ -56,28 +56,18 @@ const newTheme: TThemeableBorders<Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean}
 
-export const Component = ({ status, hasTheme }: TDemoComponent) => {
-  return (
-    <Block
-      style={{
-        width: 100,
-        height: 100,
-      }}
-    >
-      {(
-        hasTheme
-          ? (
-            <BorderTheme.Provider value={newTheme}>
-              <DemoThemeableBorder status={status}/>
-            </BorderTheme.Provider>
-          )
-          : (
-            <DemoThemeableBorder status={status}/>
-          )
-      )}
-    </Block>
-  )
-}
+export const Component = ({ status, hasTheme }: TDemoComponent) => (
+  <Block
+    style={{
+      width: 100,
+      height: 100,
+    }}
+  >
+    <BorderTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+      <DemoThemeableBorder status={status}/>
+    </BorderTheme.Provider>
+  </Block>
+)
 
 Component.displayName = 'ThemeableBorder'
 
