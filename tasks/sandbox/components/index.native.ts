@@ -1,5 +1,6 @@
 import type { TComponents } from '@sandbox/ui'
 /* eslint-disable import/no-extraneous-dependencies */
+import * as Background from '@themeables/background/meta'
 import * as Button from '@primitives/button/meta'
 import * as Checkbox from '@primitives/checkbox/meta'
 import * as Heading from '@primitives/heading/meta'
@@ -14,6 +15,7 @@ import * as Spacer from '@primitives/spacer/meta'
 import * as VectorShape from '@primitives/vector-shape/meta'
 
 export const components: TComponents = {
+  Background: () => Promise.resolve(Background),
   Button: () => Promise.resolve(Button),
   Checkbox: () => Promise.resolve(Checkbox),
   Heading: () => Promise.resolve(Heading),
