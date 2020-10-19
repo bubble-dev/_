@@ -23,9 +23,9 @@ const defaultTheme: TThemeableSpacers<Mappings> = {
   }),
 }
 
-const { SpacerTheme, createThemeableSpacer } = setupSpacerTheme<Mappings>(defaultTheme)
+const { SpacerTheme, createThemeableSpacer } = setupSpacerTheme()
 
-export const DemoThemeableSpacer = createThemeableSpacer<TSpacer>('demo', Spacer)
+export const DemoThemeableSpacer = createThemeableSpacer<TSpacer, Mappings>('demo', Spacer)
 
 const newTheme: TThemeableSpacers<Mappings> = {
   demo: ({ status }) => ({
@@ -45,17 +45,9 @@ export const Component = ({ status, hasTheme }: TDemoComponent) => (
       height: 100,
     }}
   >
-    {(
-      hasTheme
-        ? (
-          <SpacerTheme.Provider value={newTheme}>
-            <DemoThemeableSpacer status={status}/>
-          </SpacerTheme.Provider>
-        )
-        : (
-          <DemoThemeableSpacer status={status}/>
-        )
-    )}
+    <SpacerTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+      <DemoThemeableSpacer status={status}/>
+    </SpacerTheme.Provider>
   </Block>
 )
 
