@@ -35,10 +35,10 @@ const defaultTheme: TThemeableTexts<Mappings> = {
   }),
 }
 
-const { TextTheme, createThemeableText } = setupTextTheme<Mappings>(defaultTheme)
+const { TextTheme, createThemeableText } = setupTextTheme()
 
-const DemoThemeableText = createThemeableText<TText>('DemoText', Text)
-const DemoThemeableInput = createThemeableText<TInput>('DemoInput', Input)
+const DemoThemeableText = createThemeableText<TText, Mappings>('DemoText', Text)
+const DemoThemeableInput = createThemeableText<TInput, Mappings>('DemoInput', Input)
 
 type TDemo = { status: 'default' | 'error' }
 
@@ -65,27 +65,14 @@ const newTheme: TThemeableTexts<Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean}
 
-export const Component = ({ status, hasTheme }: TDemoComponent) => {
-  return (
-    hasTheme
-      ? (
-        <TextTheme.Provider value={newTheme}>
-          <DemoThemeableText status={status}>
-            Label
-          </DemoThemeableText>
-          <DemoThemeableInput status={status} value="Label"/>
-        </TextTheme.Provider>
-      )
-      : (
-        <>
-          <DemoThemeableText status={status}>
-            Label
-          </DemoThemeableText>
-          <DemoThemeableInput status={status} value="Label"/>
-        </>
-      )
-  )
-}
+export const Component = ({ status, hasTheme }: TDemoComponent) => (
+  <TextTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+    <DemoThemeableText status={status}>
+      Label
+    </DemoThemeableText>
+    <DemoThemeableInput status={status} value="Label"/>
+  </TextTheme.Provider>
+)
 
 Component.displayName = 'ThemeableText'
 
