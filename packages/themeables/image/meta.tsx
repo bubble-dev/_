@@ -25,9 +25,9 @@ const defaultTheme: TThemeableImages<Mappings> = {
   }),
 }
 
-const { ImageTheme, createThemeableImage } = setupImageTheme<Mappings>(defaultTheme)
+const { ImageTheme, createThemeableImage } = setupImageTheme()
 
-const DemoThemeableImage = createThemeableImage<TImage>('demo', Image)
+const DemoThemeableImage = createThemeableImage<TImage, Mappings>('demo', Image)
 
 const newTheme: TThemeableImages<Mappings> = {
   demo: () => ({
@@ -43,27 +43,15 @@ const newTheme: TThemeableImages<Mappings> = {
 
 type TDemoComponent = TDemo & { hasTheme: boolean}
 
-export const Component = ({ hasTheme }: TDemoComponent) => {
-  return (
-    hasTheme
-      ? (
-        <ImageTheme.Provider value={newTheme}>
-          <DemoThemeableImage
-            source="image.png"
-            height={200}
-            width={200}
-          />
-        </ImageTheme.Provider>
-      )
-      : (
-        <DemoThemeableImage
-          source="image.png"
-          height={200}
-          width={200}
-        />
-      )
-  )
-}
+export const Component = ({ hasTheme }: TDemoComponent) => (
+  <ImageTheme.Provider value={hasTheme ? newTheme : defaultTheme}>
+    <DemoThemeableImage
+      source="image.png"
+      height={200}
+      width={200}
+    />
+  </ImageTheme.Provider>
+)
 
 Component.displayName = 'ThemeableImage'
 
