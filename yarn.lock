@@ -1821,9 +1821,9 @@
     tsfn "^2.1.0"
 
 "@rebox/native-utils@^4.0.2":
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/@rebox/native-utils/-/native-utils-4.0.3.tgz#d3b3951eecd6a47a4fadadd9ff495924da2cc246"
-  integrity sha512-Y2IdPjxj+24lLLSQ8ZkQCFfvKVTK18GcbzIZ8CLv6q7ZTVyLPCyDi3ySGsHhY/GQXm7T9d3Q6gA2Wha0rAI0bg==
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@rebox/native-utils/-/native-utils-4.0.4.tgz#03d5e6d4185e382b07ac009ba768091600af87f3"
+  integrity sha512-rIqsZdsf0fSm811tW6Pdsr+nSRP76z4pbRD7PrPLAjUOfpqGqycyKWcuh8BRUr1jWwhlzCnNNdGj5MC8w4tepA==
   dependencies:
     "@babel/core" "^7.4.3"
     "@babel/plugin-proposal-nullish-coalescing-operator" "^7.4.4"
@@ -1838,13 +1838,14 @@
     copie "^2.0.0"
     dirdir "^0.1.0"
     fast-glob "^3.0.0"
-    is-port-reachable "^3.0.0"
     metro-react-native-babel-preset "0.59.0"
     node-fetch "^2.6.0"
+    portu "^0.2.0"
+    raw-loader "^4.0.1"
     react "16.13.1"
     react-native "0.63.2"
-    spown "^0.1.1"
-    tsfn "^2.1.0"
+    spown "^0.1.2"
+    tsfn "^2.2.0"
     webpack "^4.30.0"
 
 "@rebox/web@^3.0.0":
@@ -2021,9 +2022,9 @@
     refun "^3.1.0"
 
 "@revert/sandbox@^0.3.0":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@revert/sandbox/-/sandbox-0.3.1.tgz#685d427bc8a5c85d1051f5cdb81e1873bb908484"
-  integrity sha512-hplnR3/Fc9bsI7DMHA4TAF7Y1BLAN3bWwRzdrAXfmzP7B0lQ4GUWFQW1n1H5+PYTjZIGLiyZ0T5AcO3yWRQupg==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@revert/sandbox/-/sandbox-0.3.2.tgz#a9b2b95f370567e2aa0a65d78af9731836a0687c"
+  integrity sha512-xWbwiQTKEDgzZh4CS4RfXjGWVgjt0zYubvLhvzIAujWEVKjfHsC2RAbvaZ8eLb4mEGeg2DHWOaCZDs0DswW43Q==
   dependencies:
     "@revert/animation" "^0.2.1"
     "@revert/background" "^0.3.0"
@@ -2045,8 +2046,7 @@
     "@revert/svg" "^0.1.0"
     "@revert/text" "^0.3.1"
     "@revert/transform" "^0.2.0"
-    autoprops "^4.0.0"
-    elegir "^1.0.0"
+    autoprops "^4.0.1"
     funcom "^0.2.0"
     leven "^3.1.0"
     nanoid "^3.1.11"
@@ -2056,7 +2056,7 @@
     redux-thunk "^2.3.0"
     refun "^3.1.0"
     syntx "^2.0.0"
-    tsfn "^2.1.0"
+    tsfn "^2.2.0"
     typeon "^2.0.0"
 
 "@revert/scroll@^0.2.0":
@@ -2077,14 +2077,14 @@
     refun "^3.1.0"
 
 "@revert/size@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@revert/size/-/size-0.2.0.tgz#6137219513bf794d5519d69b0a483d91270eff64"
-  integrity sha512-FvDXAwK91m0vqtLpKPVct0omTAR3rtIbkv1qkyvk9Lcz/kLDU+D6F5IlBUopEnBRLXhZB6MNGcV7sx3aVvzzMQ==
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@revert/size/-/size-0.2.1.tgz#4faf7b806e378d46ae551a91b084b1838bbdb664"
+  integrity sha512-hJFDISxFPri7ZdVmEqZUmvBLMo0BmQ83+Djaf4KhI6mH7e5RIaygNNH2DwwjBFtuNaTnyycX7aWyGPrycFggOw==
   dependencies:
     "@revert/layout" "^0.2.0"
     "@revert/transform" "^0.2.0"
     refun "^3.1.0"
-    tsfn "^2.1.0"
+    tsfn "^2.2.0"
 
 "@revert/svg@^0.1.0":
   version "0.1.0"
@@ -3198,6 +3198,17 @@ autoprops@^4.0.0:
     iterama "^0.5.0"
     jssha "^3.0.0"
     tsfn "^2.0.0"
+
+autoprops@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-4.0.1.tgz#bb1e3b37081b38f6f4b6c375185afc4928a12dcf"
+  integrity sha512-xiUpIFFww9snFNCjoSTFFMFe35d5jW4+AVb1T+abJ/BwMOx53RSx6SrIw8/jOCFAm+p9tcsTF2FUK3TwN/PQaQ==
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    big-integer "^1.6.44"
+    iterama "^0.6.1"
+    jssha "^3.0.0"
+    tsfn "^2.2.0"
 
 available-typed-arrays@^1.0.0, available-typed-arrays@^1.0.2:
   version "1.0.2"
@@ -6757,11 +6768,6 @@ is-plain-object@^2.0.3, is-plain-object@^2.0.4:
   dependencies:
     isobject "^3.0.1"
 
-is-port-reachable@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-port-reachable/-/is-port-reachable-3.0.0.tgz#edf721e7d354e6e00cbeb0fc174ad89bdf6056b3"
-  integrity sha512-056IzLiWHdgVd6Eq1F9HtJl+cIkvi5X2MJ/A1fjQtByHkzQE1wGardnPhqrarOGDF88BOW+297X7PDvZ2vcyVg==
-
 is-posix-bracket@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/is-posix-bracket/-/is-posix-bracket-0.1.1.tgz#3334dc79774368e92f016e6fbc0a88f5cd6e6bc4"
@@ -6935,6 +6941,15 @@ iterama@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.5.0.tgz#90b2c52dc84d846291c5533bb52ccc071cb02c79"
   integrity sha512-TrPplcKvbxA8mLe7QWAoam3JrKZmhdpvcnztQhy6WwzY8NYYqTDDW2O2Rw/o4PrkgW+ljOWmWjHe2rb7AaUKWg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    circularr "^0.3.0"
+    funcom "^0.2.0"
+
+iterama@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/iterama/-/iterama-0.6.1.tgz#2d2576b0076fe7c2df839b4fb740713e985591e7"
+  integrity sha512-QIxXxIngF9fXXqcYzo8MyDYOSYT2pfj8vPgLC/WVlVStx56pqwJdP5bnyht/3YSX8oPTX85D0mWa2+BzwML+gg==
   dependencies:
     "@babel/runtime" "^7.3.1"
     circularr "^0.3.0"
@@ -9036,6 +9051,14 @@ portfinder@^1.0.26:
     debug "^3.1.1"
     mkdirp "^0.5.5"
 
+portu@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/portu/-/portu-0.2.0.tgz#c2c3240ae2cb3568ee5b7927de3b693afdcea582"
+  integrity sha512-hg6jv0XQmr8nq88BELN+OGNPI6qTj5yp5YlwwaDNQ7cY//4FTIx1WoowBITpfKWDeMA2WY1aeuGSJ+16giYtPA==
+  dependencies:
+    sleap "^0.1.0"
+    spown "^0.1.2"
+
 posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
@@ -10329,6 +10352,15 @@ spown@^0.1.0, spown@^0.1.1:
     signal-exit "^3.0.3"
     unchunk "^0.2.0"
 
+spown@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/spown/-/spown-0.1.2.tgz#a43da72ae7dbfc730509db17f6ea649218a7b67c"
+  integrity sha512-rVzTTpKA4lRV9cciiupjNeOab4e18r55iJ0lKoExig97+x0iibQYrJsmDWHMcxHU2KrZKibDco7jRGwAOPP9gA==
+  dependencies:
+    cross-spawn "^7.0.3"
+    signal-exit "^3.0.3"
+    unchunk "^0.2.0"
+
 sprintf-js@~1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/sprintf-js/-/sprintf-js-1.0.3.tgz#04e6926f662895354f3dd015203633b857297e2c"
@@ -10902,7 +10934,7 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-tsfn@^2.0.0, tsfn@^2.1.0:
+tsfn@^2.0.0, tsfn@^2.1.0, tsfn@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/tsfn/-/tsfn-2.2.0.tgz#1578c87e47c6a6ff02adac1f5fd12b2d21bc42df"
   integrity sha512-pCcVn4OnERvlCT547c4bJ7HTO1YMebx9Ajh+OQ9k5OdL3n+6oWj3G7fq79F9o6el3Aoe0yrXMY61YJNKwYEDRw==
