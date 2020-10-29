@@ -1977,7 +1977,7 @@
     refun "^3.1.0"
     tsfn "^2.1.0"
 
-"@revert/link@^0.3.0", "@revert/link@^0.3.1":
+"@revert/link@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@revert/link/-/link-0.3.1.tgz#4dac50f4dbc5e8784a6adc895d8bb623d05386d2"
   integrity sha512-iYIsL01zTrXmIA7N0dFy6a54uu4fQNoZ0WJ03evPVYNjDAn3CQkurqTj5pZlWsOTqdD4uNtpGIxKIULNmEq+wQ==
@@ -1987,9 +1987,9 @@
     tsfn "^2.1.0"
 
 "@revert/markdown@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@revert/markdown/-/markdown-0.2.0.tgz#b6a3675bdd429a08f0b96410dd8ca25edecb4903"
-  integrity sha512-gNEWr2zG0NzngTFd395yf4c4+YU7yVqrc6/O9zRF+/r7x7l5FxAFlap9Ax53ikS3aBJzZBW51aWWMSyEcwR/Yg==
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@revert/markdown/-/markdown-0.2.1.tgz#2667417bd68e5bd8b8ce4dfa6de6985e72441079"
+  integrity sha512-BKdFutUyIN2HHvK188jLFaWBsqqsqBDcxqaTMBeH/vHherQGpczsUCOkGpnMT3PSGrrMo9pKudh2wiZ6kR4tuw==
   dependencies:
     "@revert/background" "^0.3.0"
     "@revert/block" "^0.3.0"
@@ -1997,13 +1997,13 @@
     "@revert/color" "^0.1.0"
     "@revert/image" "^0.3.0"
     "@revert/layout" "^0.2.0"
-    "@revert/link" "^0.3.0"
-    "@revert/size" "^0.2.0"
-    "@revert/text" "^0.3.0"
+    "@revert/link" "^0.3.1"
+    "@revert/size" "^0.2.1"
+    "@revert/text" "^0.3.2"
     "@revert/text-align" "^0.2.0"
     mdown "^0.1.2"
     refun "^3.1.0"
-    tsfn "^2.1.0"
+    tsfn "^2.2.0"
 
 "@revert/pointer@^0.1.1":
   version "0.1.1"
@@ -2076,7 +2076,7 @@
     "@revert/block" "^0.3.0"
     refun "^3.1.0"
 
-"@revert/size@^0.2.0":
+"@revert/size@^0.2.0", "@revert/size@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@revert/size/-/size-0.2.1.tgz#4faf7b806e378d46ae551a91b084b1838bbdb664"
   integrity sha512-hJFDISxFPri7ZdVmEqZUmvBLMo0BmQ83+Djaf4KhI6mH7e5RIaygNNH2DwwjBFtuNaTnyycX7aWyGPrycFggOw==
@@ -2100,15 +2100,15 @@
   dependencies:
     refun "^3.1.0"
 
-"@revert/text@^0.3.0", "@revert/text@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@revert/text/-/text-0.3.1.tgz#781bbf1341a58eb3691b69b9830ac46160a9b593"
-  integrity sha512-VIAyacjbG75fDZqT8Qmc9SS1nK2XXaPAYt/M4YYHXkVekCvqfXDYIOcHbTFL4tysochtI5ObVOBjRh+5FCwh1w==
+"@revert/text@^0.3.0", "@revert/text@^0.3.1", "@revert/text@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@revert/text/-/text-0.3.2.tgz#e7bcf9c96db9c411f61182a8a2921f206168040d"
+  integrity sha512-e2xD0I9TcLKdvxO6MLMK0dxzkpn8u1G2zfL7wdgW53gQzxP+JhfUbZBj3rUZBrwYdXDp9xkZRCWp989C+Z/lcw==
   dependencies:
     "@revert/color" "^0.1.0"
-    "@revert/size" "^0.2.0"
+    "@revert/size" "^0.2.1"
     refun "^3.1.0"
-    tsfn "^2.1.0"
+    tsfn "^2.2.0"
 
 "@revert/transform@^0.2.0":
   version "0.2.0"
