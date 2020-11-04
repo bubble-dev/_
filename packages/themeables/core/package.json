@@ -17,10 +17,10 @@
     "refun": "^3.0.0"
   },
   "devDependencies": {
-    "@primitives/background": "^3.0.0",
+    "@primitives/background": "^3.0.1",
     "@primitives/block": "^3.0.0",
     "@revert/sandbox": "^0.3.0",
-    "@themeables/background": "^3.0.0",
+    "@themeables/background": "^4.0.0",
     "@types/react": "^16.8.6",
     "autoprops": "^4.0.0",
     "react": "16.13.1"
