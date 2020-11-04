@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 rewrite @themeables/layout API
+
+* ♻️ update dependencies `@themeables/core`
+
 ## v0.3.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

@@ -1,3 +1,9 @@
+## v4.0.0
+
+* 💥 rewrite @themeables/image API
+
+* ♻️ update dependencies `@themeables/core`
+
 ## v3.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

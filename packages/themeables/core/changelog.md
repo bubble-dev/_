@@ -1,3 +1,7 @@
+## v4.0.0
+
+* 💥 rewrite @themeable/core API
+
 ## v3.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

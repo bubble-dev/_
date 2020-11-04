@@ -1,3 +1,9 @@
+## v4.0.1
+
+* 🐞 bump dependencies
+
+* ♻️ update dependencies `@themeables/text`, `@themeables/spacer`
+
 ## v4.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

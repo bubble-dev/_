@@ -1,3 +1,9 @@
+## v1.0.0
+
+* 💥 rewrite @themeables/spacer API
+
+* ♻️ update dependencies `@themeables/core`
+
 ## v0.4.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0
