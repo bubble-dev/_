@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/text": "^3.0.0",
+    "@themeables/text": "^4.0.0",
     "colorido": "^2.0.0",
     "refun": "^3.0.0",
     "stili": "^3.0.0"

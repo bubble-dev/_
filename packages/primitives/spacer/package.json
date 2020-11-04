@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@primitives/block": "^3.0.0",
-    "@themeables/spacer": "^0.4.0"
+    "@themeables/spacer": "^1.0.0"
   },
   "devDependencies": {
     "@primitives/layout": "^3.0.0",

@@ -15,7 +15,7 @@
   "dependencies": {
     "@primitives/block": "^3.0.0",
     "@primitives/svg": "^3.0.0",
-    "@themeables/vector-shape": "^3.0.0",
+    "@themeables/vector-shape": "^4.0.0",
     "colorido": "^2.0.0",
     "refun": "^3.0.0",
     "stili": "^3.0.0"
