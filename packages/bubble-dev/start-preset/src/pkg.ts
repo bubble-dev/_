@@ -24,7 +24,7 @@ export type TReplacers = {
   },
 }
 
-export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
+export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true) =>
   plugin('template', ({ logPath, logMessage }) => async () => {
     const { isString } = await import('tsfn')
 
@@ -197,7 +197,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
     const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf8'))
     const pkgWorkspacePath = `packages/${packagePath}`
 
-    if (!nanomatch.some(pkgWorkspacePath, pkgJson.workspaces)) {
+    if (shouldAddMissingWorkspace && !nanomatch.some(pkgWorkspacePath, pkgJson.workspaces)) {
       pkgJson.workspaces.push(pkgWorkspacePath)
       pkgJson.workspaces.sort()
 
