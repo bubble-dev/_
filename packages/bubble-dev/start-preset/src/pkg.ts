@@ -133,6 +133,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string) =>
 
     const templatePath = path.join(templatesPath, type)
     const pkgPath = path.resolve(`./packages/${packagePath}/`)
+    await makeDir(pkgPath)
 
     const files = await globby(
       `${TEMPLATES_PATH}${type}/**/*`,
