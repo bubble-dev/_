@@ -1,3 +1,9 @@
+## v8.1.0
+
+* 🌱 opt out of adding missing workspaces when creating a new package
+
+* 🐞 fix adding packages without a folder in their template
+
 ## v8.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0
