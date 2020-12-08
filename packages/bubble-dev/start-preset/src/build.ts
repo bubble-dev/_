@@ -101,7 +101,7 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     write(`${dir}/build/node/`),
     find(`${dir}/src/**/*.json`),
     copy(`${dir}/build/node/`),
-    plugin('test', ({ logMessage }) => async () => {
+    plugin('test', () => async () => {
       const path = await import('path')
       const { access } = await import('pifs')
       const fullPath = path.resolve(`${dir}/build/node/index.js`)
