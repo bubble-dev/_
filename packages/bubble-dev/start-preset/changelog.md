@@ -1,3 +1,13 @@
+## v8.1.1
+
+* 🐞 bring up copying json files in node build before test plugin
+
+  ```
+  * 🐞 bubble-dev/start-preset: bring up copying json files in node build before test plugin
+  
+  * 🛠 remove unused logMessage
+  ```
+
 ## v8.1.0
 
 * 🌱 opt out of adding missing workspaces when creating a new package
