@@ -99,6 +99,8 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
     babel(babelConfigNodeBuild),
     rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
     write(`${dir}/build/node/`),
+    find(`${dir}/src/**/*.json`),
+    copy(`${dir}/build/node/`),
     plugin('test', () => async () => {
       const path = await import('path')
       const { access } = await import('pifs')
@@ -113,9 +115,7 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
       if (hasFile) {
         await import(fullPath)
       }
-    }),
-    find(`${dir}/src/**/*.json`),
-    copy(`${dir}/build/node/`)
+    })
   )
 }
 
