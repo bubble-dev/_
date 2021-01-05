@@ -24,7 +24,7 @@ export type TReplacers = {
   },
 }
 
-export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true) =>
+export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true, templateName: (string) = '') =>
   plugin('template', ({ logPath, logMessage }) => async () => {
     const { isString } = await import('tsfn')
 
@@ -62,43 +62,50 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMi
     }
 
     let type = null
+    let name = null
 
-    if (templateNames.length === 1) {
-      type = templateNames[0]
+    if (Boolean(templateName) && templateNames.includes(templateName)) {
+      type = templateName
     } else {
-      const result = await prompts(
+      if (templateNames.length === 1) {
+        type = templateNames[0]
+      } else {
+        const result = await prompts(
+          {
+            type: 'select',
+            name: 'type',
+            message: 'Choose package type',
+            choices: templateNames.map((templateName) => ({
+              title: templateName,
+              value: templateName,
+            })),
+          },
+          {
+            onCancel: () => {
+              throw 'canceled'
+            },
+          }
+        ) as { type: string }
+
+        type = result.type
+      }
+
+      const packageNameResult = await prompts(
         {
-          type: 'select',
-          name: 'type',
-          message: 'Choose package type',
-          choices: templateNames.map((templateName) => ({
-            title: templateName,
-            value: templateName,
-          })),
+          type: 'text',
+          name: 'name',
+          message: 'Enter package name',
+          validate: (value) => value.length > 0,
         },
         {
           onCancel: () => {
             throw 'canceled'
           },
         }
-      ) as { type: string }
+      ) as { name: string }
 
-      type = result.type
+      name = packageNameResult.name
     }
-
-    const { name } = await prompts(
-      {
-        type: 'text',
-        name: 'name',
-        message: 'Enter package name',
-        validate: (value) => value.length > 0,
-      },
-      {
-        onCancel: () => {
-          throw 'canceled'
-        },
-      }
-    ) as { name: string }
 
     const userReplacers = {} as { [k: string]: string }
 
