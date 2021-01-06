@@ -135,7 +135,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMi
 
     const allReplacers = {
       ...userReplacers,
-      $name$: name,
+      ...(Boolean(name) && { $name$: name }),
     }
 
     const templatePath = path.join(templatesPath, type)
