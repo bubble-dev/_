@@ -24,7 +24,7 @@ export type TReplacers = {
   },
 }
 
-export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true, templateName: (string) = '') =>
+export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true, templateName: string = '') =>
   plugin('template', ({ logPath, logMessage }) => async () => {
     const { isString } = await import('tsfn')
 
