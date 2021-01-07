@@ -24,6 +24,10 @@ export type TReplacers = {
   },
 }
 
+const isThereOnlyOneOption = (options: any[]) => {
+  return (options.length === 1)
+}
+
 export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMissingWorkspace: boolean = true, templateName: string = '') =>
   plugin('template', ({ logPath, logMessage }) => async () => {
     const { isString } = await import('tsfn')
@@ -67,7 +71,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMi
     if (Boolean(templateName) && templateNames.includes(templateName)) {
       type = templateName
     } else {
-      if (templateNames.length === 1) {
+      if (isThereOnlyOneOption(templateNames)) {
         type = templateNames[0]
       } else {
         const result = await prompts(
