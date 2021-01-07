@@ -1,3 +1,7 @@
+## v8.2.0
+
+* 🌱 support passing template name to the pkg task
+
 ## v8.1.1
 
 * 🐞 bring up copying json files in node build before test plugin
