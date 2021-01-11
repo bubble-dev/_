@@ -13,6 +13,7 @@ import * as Radio from '@primitives/radio/meta'
 import * as Spacer from '@primitives/spacer/meta'
 // import * as TestLottie from 'test-lottie/meta'
 import * as VectorShape from '@primitives/vector-shape/meta'
+import * as List from '@primitives/list/meta'
 
 export const components: TComponents = {
   Background: () => Promise.resolve(Background),
@@ -28,4 +29,5 @@ export const components: TComponents = {
   // TestLottie: () => Promise.resolve(TestLottie),
   Radio: () => Promise.resolve(Radio),
   Spacer: () => Promise.resolve(Spacer),
+  List: () => Promise.resolve(List),
 }
