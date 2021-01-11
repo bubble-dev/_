@@ -19,6 +19,7 @@ export type TTransformValue = (
 export type TWebStyle = CSSProperties & {
   fontSmoothing?: 'antialiased',
   tapHighlightColor?: string,
+  listStyleType?: string,
 }
 
 export type TNativeStyle = {
