@@ -8,9 +8,15 @@ export const List = component(
   startWithType<TList>(),
   mapWithProps(() => {
     const style: TStyle = {
-      listStyleType: 'none',
-      margin: 0,
-      padding: 0,
+      _webOnly: { listStyleType: 'none' },
+      marginTop: 0,
+      marginBottom: 0,
+      marginLeft: 0,
+      marginRight: 0,
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
     }
 
     return {
