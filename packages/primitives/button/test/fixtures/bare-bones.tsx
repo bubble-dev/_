@@ -1,7 +1,5 @@
 import * as React from 'react'
-import { Button } from '../..'
-
-/* <input id="foo" value="Foo bar"/> */
+import { Button } from '../../src'
 
 const App = () => (
   <Button
