@@ -1,16 +1,16 @@
 import React from 'react'
 import { component, startWithType } from 'refun'
-import { View } from 'react-native'
+import { Block } from '@primitives/block'
 import type { TListItem } from './types'
 
 export const ListItem = component(
   startWithType<TListItem>()
 )(({ children, id }) => (
-  <View
-    testID={id}
+  <Block
+    id={id}
   >
     {children}
-  </View>
+  </Block>
 ))
 
 ListItem.displayName = 'ListItem'
