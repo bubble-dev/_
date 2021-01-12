@@ -23,8 +23,11 @@ export const List = component(
       style: normalizeWebStyle(style),
     }
   })
-)(({ id, children, style }) => (
-  <ul id={id} style={style}>{children}</ul>
+)(({ id, children, style, type }) => (
+  type === 'orderedList' ?
+    <ol id={id} style={style}>{children}</ol>
+    :
+    <ul id={id} style={style}>{children}</ul>
 ))
 
 List.displayName = 'List'
