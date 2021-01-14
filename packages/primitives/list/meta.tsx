@@ -5,6 +5,7 @@ import type { TList } from './src'
 export const config: TComponentConfig<TList, 'items'> = {
   props: {
     id: ['list'],
+    type: ['orderedList', 'unorderedList'],
   },
   children: {
     items: List_ItemsMeta,
