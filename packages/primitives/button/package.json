@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "refun": "^3.0.0",
-    "stili": "^3.0.0"
+    "stili": "^3.0.1"
   },
   "devDependencies": {
     "@primitives/text": "^3.0.1",

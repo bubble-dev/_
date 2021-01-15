@@ -16,7 +16,7 @@
     "@babel/runtime": "^7.1.2",
     "@primitives/block": "^3.0.0",
     "refun": "^3.0.0",
-    "stili": "^3.0.0"
+    "stili": "^3.0.1"
   },
   "devDependencies": {
     "@revert/sandbox": "^0.3.0",
