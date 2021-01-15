@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.8.6",
+    "@primitives/text": "3.0.1",
     "autoprops": "^4.0.1",
     "react": "16.13.1"
   }
