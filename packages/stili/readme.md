@@ -1,6 +1,6 @@
 # stili
 
-Universal React/React Native styles normalizer.
+Style normalizer for creating universal React/React Native components.
 
 ## Install
 
@@ -11,16 +11,26 @@ $ yarn add stili
 ## Usage
 
 ```ts
-normalizeStyle(style: TStyle) => TCssProps
+normalizeWebStyle(style: TStyle) => TCssWebProps
+normalizeNativeStyle(style: TStyle) => TCssNativeProps
 ```
 
 * `TStyle` – normalized styles
-* `TCssProps` – platform-specific styles
+* `TCssWebProps` – web specific styles
+* `TCssNativeProps` – native specific styles
 
+In web file
 ```ts
-import { normalizeStyle } from 'stili'
+import { normalizeWebStyle } from 'stili'
 
-normalizeStyle({ lineHeight: 16 })
-// `browser` package.json field target: { lineHeight: '16px' }
-// `react-native` package.json field target: { lineHeight: 16 }
+normalizeWebStyle({ lineHeight: 16 })
+// field target: { lineHeight: '16px' }
+```
+
+In native file
+```ts
+import { normalizeNativeStyle } from 'stili'
+
+normalizeNativeStyle({ lineHeight: 16 })
+// field target: { lineHeight: 16 }
 ```
