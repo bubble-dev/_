@@ -4,7 +4,7 @@ import { normalizeWebStyle } from 'stili'
 import type { TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined } from 'tsfn'
-import type { TBlock, TBlockRoles } from './types'
+import type { TBlock, TBlockRoles, TProgressBar } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),
@@ -46,6 +46,9 @@ export const Block = component(
       onPointerUp,
       onPointerMove,
       role,
+      ariaValuemin,
+      ariaValuenow,
+      ariaValuemax,
     }) => {
       const styles: TStyle = {
         display: 'flex',
@@ -109,7 +112,7 @@ export const Block = component(
         styles.overflow = 'hidden'
       }
 
-      const props: HTMLProps<HTMLDivElement> & { role: TBlockRoles } = {
+      const props: HTMLProps<HTMLDivElement> & { role: TBlockRoles } & TProgressBar = {
         style: normalizeWebStyle(styles),
         children,
         onMouseEnter: onPointerEnter,
@@ -118,6 +121,9 @@ export const Block = component(
         onMouseUp: onPointerUp,
         onMouseMove: onPointerMove,
         role: 'none',
+        ariaValuemin,
+        ariaValuenow,
+        ariaValuemax,
       }
 
       if (typeof id === 'string') {
@@ -135,7 +141,7 @@ export const Block = component(
       return props
     }
   )
-)(({ role, ...props }) => {
+)(({ role, ariaValuenow, ariaValuemax, ariaValuemin, ...props }) => {
   switch (role) {
     case 'main':
       return <main {...props}/>
@@ -151,6 +157,16 @@ export const Block = component(
       return <aside {...props}/>
     case 'primary':
       return <article {...props}/>
+    case 'progressbar':
+      return (
+        <div
+          role={'progressbar'}
+          {...ariaValuenow ? { 'aria-valuenow': ariaValuenow } : {}}
+          {...ariaValuemax ? { 'aria-valuemax': ariaValuemax } : {}}
+          {...ariaValuemin ? { 'aria-valuemin': ariaValuemin } : {}}
+          {...props}
+        />
+      )
     case 'none':
     default:
       return <div {...props}/>

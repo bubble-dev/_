@@ -1,7 +1,13 @@
 import type { ReactNode, Ref } from 'react'
 import type { TStyle } from 'stili'
 
-export type TBlockRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none'
+export type TProgressBar = {
+  ariaValuemin?: number,
+  ariaValuenow?: number,
+  ariaValuemax?: number,
+}
+
+export type TBlockRoles = 'main' | 'header' | 'footer' | 'navigation' | 'section' | 'secondary' | 'primary' | 'none' | 'progressbar'
 
 export type TBlock = {
   id?: string,
@@ -31,4 +37,4 @@ export type TBlock = {
   onPointerDown?: () => void,
   onPointerUp?: () => void,
   onPointerMove?: () => void,
-}
+} & TProgressBar
