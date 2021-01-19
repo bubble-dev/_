@@ -16,4 +16,5 @@ export const components: TComponents = {
   Radio: () => import('@primitives/radio/meta' /* webpackChunkName: "Radio" */),
   Spacer: () => import('@primitives/spacer/meta' /* webpackChunkName: "Spacer" */),
   List: () => import('@primitives/list/meta' /* webpackChunkName: "List" */),
+  Block: () => import('@primitives/block/meta' /* webpackChunkName: "List" */),
 }
