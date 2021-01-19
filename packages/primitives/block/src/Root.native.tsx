@@ -42,6 +42,9 @@ export const Block = component(
       shouldIgnorePointerEvents,
       ref,
       role,
+      ariaValuemin,
+      ariaValuenow,
+      ariaValuemax,
     }) => {
       const styles: TStyle = {
         borderStyle: 'solid',
@@ -106,6 +109,15 @@ export const Block = component(
         props.testID = id
       }
 
+      if (ariaValuenow) {
+        props.accessibilityValue = {
+          ...(ariaValuemin ? { min: ariaValuemin } : {}),
+          now: ariaValuenow,
+          ...(ariaValuemax ? { max: ariaValuemax } : {}),
+        }
+        props.accessible = true
+      }
+
       return {
         ...props,
         style: normalizeNativeStyle(styles),
@@ -122,6 +134,9 @@ export const Block = component(
 
     case 'header':
       return <View accessibilityRole="header" {...props}/>
+
+    case 'progressbar':
+      return <View accessibilityRole="progressbar" {...props}/>
 
     default:
       return <View {...props}/>
