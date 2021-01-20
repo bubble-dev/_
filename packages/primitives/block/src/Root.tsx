@@ -161,9 +161,9 @@ export const Block = component(
       return (
         <div
           role={'progressbar'}
-          {...ariaValuenow ? { 'aria-valuenow': ariaValuenow } : {}}
-          {...ariaValuemax ? { 'aria-valuemax': ariaValuemax } : {}}
-          {...ariaValuemin ? { 'aria-valuemin': ariaValuemin } : {}}
+          {...isNumber(ariaValuenow) ? { 'aria-valuenow': ariaValuenow } : {}}
+          {...isNumber(ariaValuemin) ? { 'aria-valuemin': ariaValuemin } : {}}
+          {...isNumber(ariaValuemax) ? { 'aria-valuemax': ariaValuemax } : {}}
           {...props}
         />
       )

@@ -109,11 +109,11 @@ export const Block = component(
         props.testID = id
       }
 
-      if (ariaValuenow) {
+      if (isNumber(ariaValuenow)) {
         props.accessibilityValue = {
-          ...(ariaValuemin ? { min: ariaValuemin } : {}),
+          ...(isNumber(ariaValuemin) ? { min: ariaValuemin } : {}),
           now: ariaValuenow,
-          ...(ariaValuemax ? { max: ariaValuemax } : {}),
+          ...(isNumber(ariaValuemax) ? { max: ariaValuemax } : {}),
         }
         props.accessible = true
       }
