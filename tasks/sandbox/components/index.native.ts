@@ -15,6 +15,7 @@ import * as Spacer from '@primitives/spacer/meta'
 import * as VectorShape from '@primitives/vector-shape/meta'
 import * as List from '@primitives/list/meta'
 import * as Block from '@primitives/block/meta'
+import * as ProgressBar from '@primitives/progress-bar/meta'
 
 export const components: TComponents = {
   Background: () => Promise.resolve(Background),
@@ -32,4 +33,5 @@ export const components: TComponents = {
   Spacer: () => Promise.resolve(Spacer),
   List: () => Promise.resolve(List),
   Block: () => Promise.resolve(Block),
+  ProgressBar: () => Promise.resolve(ProgressBar),
 }

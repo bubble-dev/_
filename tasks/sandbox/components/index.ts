@@ -17,4 +17,5 @@ export const components: TComponents = {
   Spacer: () => import('@primitives/spacer/meta' /* webpackChunkName: "Spacer" */),
   List: () => import('@primitives/list/meta' /* webpackChunkName: "List" */),
   Block: () => import('@primitives/block/meta' /* webpackChunkName: "List" */),
+  ProgressBar: () => import('@primitives/progress-bar/meta' /* webpackChunkName: "ProgressBar" */),
 }
