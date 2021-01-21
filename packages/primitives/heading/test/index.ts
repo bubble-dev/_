@@ -1,18 +1,14 @@
 import test from 'tape'
-import { getAppPage } from 'foreal'
+import { renderApp } from '../../shared/test-utils'
 
-const PACKAGE = '@primitives/heading'
 type TFixtures = 'h1'
-const getFixture = (filename: TFixtures) => `./fixtures/${filename}.tsx`
+
+const renderHeading = (filename: TFixtures) => renderApp(require.resolve(`./fixtures/${filename}.tsx`))
+const PACKAGE = '@primitives/heading'
 
 test(`${PACKAGE} outputs children properly`, async (t) => {
-  const entryPointPath = require.resolve(getFixture('h1'))
-
-  const page = await getAppPage({
-    entryPointPath,
-  })
-
-  const h1Content = await page.$eval('#foo', (el: any) => el.textContent)
+  const page = await renderHeading('h1')
+  const h1Content = await page.$eval('h1', (el: any) => el.textContent)
 
   t.equal(h1Content, 'Foo bar', 'strings match')
 
@@ -20,12 +16,8 @@ test(`${PACKAGE} outputs children properly`, async (t) => {
 })
 
 test(`${PACKAGE} as h1 has proper level`, async (t) => {
-  const entryPointPath = require.resolve(getFixture('h1'))
-
-  const page = await getAppPage({
-    entryPointPath,
-  })
-  const h1El = await page.$('#foo')
+  const page = await renderHeading('h1')
+  const h1El = await page.$('h1')
 
   const a11ySnap = await page.accessibility.snapshot({ root: h1El })
 
@@ -35,12 +27,8 @@ test(`${PACKAGE} as h1 has proper level`, async (t) => {
 })
 
 test('Heading needs to have role="heading"', async (t) => {
-  const entryPointPath = require.resolve(getFixture('h1'))
-
-  const page = await getAppPage({
-    entryPointPath,
-  })
-  const h1El = await page.$('#foo')
+  const page = await renderHeading('h1')
+  const h1El = await page.$('h1')
 
   const a11ySnap = await page.accessibility.snapshot({ root: h1El })
 

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Heading } from '../../src/index'
 
 const App = () => (
-  <Heading id="foo">
+  <Heading>
     Foo bar
   </Heading>
 )

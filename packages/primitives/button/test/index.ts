@@ -1,38 +1,30 @@
 import test from 'tape'
-import { getAppPage } from 'foreal'
+import { renderApp, getA11yReport } from '../../shared/test-utils'
 
 type TFixtures = 'bare-bones' | 'disabled'
-const getFixture = (filename: TFixtures) => `./fixtures/${filename}.tsx`
+const renderButton = (filename: TFixtures) => renderApp(require.resolve(`./fixtures/${filename}.tsx`))
+const a11yReport = (filename: TFixtures) => getA11yReport(require.resolve(`./fixtures/${filename}.tsx`))
 
 const PACKAGE = '@primitives/button'
 
 test(`${PACKAGE} has proper role`, async (t) => {
-  const entryPointPath = require.resolve(getFixture('bare-bones'))
+  // const page = await renderButton('bare-bones')
+  // const btnEl = await page.$('button')
+  // const a11ySnapBtn = await page.accessibility.snapshot({ interestingOnly: false, root: btnEl })
+  const report = await a11yReport('bare-bones')
 
-  const page = await getAppPage({
-    entryPointPath,
-  })
+  console.log(report)
+  // t.equal(a11ySnapBtn.role, 'button', 'button role is `button`')
+  t.ok(true)
 
-  const el = await page.$('#btn')
-
-  const a11ySnapBtn = await page.accessibility.snapshot({ interestingOnly: false, root: el })
-
-  console.log(a11ySnapBtn)
-  t.equal(a11ySnapBtn.role, 'button', 'button role is `button`')
-
-  await page.close()
+  // await page.close()
 })
 
 test(`${PACKAGE} can be focused`, async (t) => {
-  const entryPointPath = require.resolve(getFixture('bare-bones'))
+  const page = await renderButton('bare-bones')
+  const btnEl = await page.$('button')
 
-  const page = await getAppPage({
-    entryPointPath,
-  })
-
-  const btnEl = await page.$('#btn')
-
-  await page.focus('#btn')
+  await page.focus('button')
 
   const a11ySnap = await page.accessibility.snapshot({ root: btnEl })
 
@@ -41,13 +33,9 @@ test(`${PACKAGE} can be focused`, async (t) => {
 })
 
 test(`${PACKAGE} can be disabled`, async (t) => {
-  const entryPointPath = require.resolve(getFixture('disabled'))
+  const page = await renderButton('disabled')
+  const btnEl = await page.$('button')
 
-  const page = await getAppPage({
-    entryPointPath,
-  })
-
-  const btnEl = await page.$('#btn')
   const a11ySnapBtn = await page.accessibility.snapshot({ root: btnEl })
 
   t.ok(a11ySnapBtn.disabled)
