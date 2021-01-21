@@ -4,7 +4,7 @@
 - `View` in Native
 
 ```ts
-type TBlock<TStyles> = {
+type TProgressBar<TStyles> = {
   id?: string,
   ariaValuemin?: number,
   ariaValuenow?: number,
