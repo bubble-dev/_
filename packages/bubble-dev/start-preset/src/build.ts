@@ -88,36 +88,54 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
 
 export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   const { babelConfigNodeBuild } = await import('@bubble-dev/babel-config')
-
-  return sequence(
-    env({ BABEL_ENV: 'production' }),
-    find([
+  const { default: globby } = await import('globby')
+  const allFiles = await globby(
+    [
       `${dir}/src/**/*.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
-    ]),
-    read,
-    babel(babelConfigNodeBuild),
-    rename((file) => file.replace(/\.(ts|tsx|jsx)$/, '.js')),
-    write(`${dir}/build/node/`),
-    find(`${dir}/src/**/*.json`),
-    copy(`${dir}/build/node/`),
-    plugin('test', () => async () => {
-      const path = await import('path')
-      const { access } = await import('pifs')
-      const fullPath = path.resolve(`${dir}/build/node/index.js`)
-      let hasFile = false
-
-      try {
-        await access(fullPath)
-        hasFile = true
-      } catch {}
-
-      if (hasFile) {
-        await import(fullPath)
-      }
-    })
+    ],
+    {
+      ignore: ['node_modules/**'],
+      deep: Infinity,
+      onlyFiles: true,
+    }
   )
+  const extRegExp = /\.(js|jsx|ts|tsx)$/
+  const nodeFiles = allFiles.filter((file) => {
+    if (allFiles.includes(file.replace(extRegExp, '.node.$1'))) {
+      return false
+    }
+
+    return true
+  })
+
+  return inputFiles(
+    sequence(
+      read,
+      env({ BABEL_ENV: 'production' }),
+      babel(babelConfigNodeBuild),
+      rename((file) => file.replace(/(\.node)?\.(ts|tsx|jsx)$/, '.js')),
+      write(`${dir}/build/node/`),
+      find(`${dir}/src/**/*.json`),
+      copy(`${dir}/build/node/`),
+      plugin('test', () => async () => {
+        const path = await import('path')
+        const { access } = await import('pifs')
+        const fullPath = path.resolve(`${dir}/build/node/index.js`)
+        let hasFile = false
+
+        try {
+          await access(fullPath)
+          hasFile = true
+        } catch {}
+
+        if (hasFile) {
+          await import(fullPath)
+        }
+      })
+    )
+  )(...nodeFiles)
 }
 
 export const buildTypes = (dir: string): StartPlugin<{}, {}> =>
