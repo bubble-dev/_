@@ -6,11 +6,8 @@ import type { TBlock } from './src'
 export const config: TComponentConfig<TBlock, 'items'> = {
   props: {
     style: [{ minWidth: 100, minHeight: 40, backgroundColor: '#ffb3c7' }],
-    role: ['main', 'header', 'footer', 'navigation', 'section', 'secondary', 'primary', 'none', 'progressbar'],
+    role: ['main', 'header', 'footer', 'navigation', 'section', 'secondary', 'primary', 'none'],
     children: [<Text key="first">Me... a Block</Text>],
-    ariaValuemin: [0, 15],
-    ariaValuenow: [80, 47],
-    ariaValuemax: [100, 150],
   },
   required: ['style', 'children'],
 }
