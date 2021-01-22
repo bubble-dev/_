@@ -14,13 +14,10 @@ export const ProgressBar = component(
       style, id, ariaValuenow, ariaValuemin, ariaValuemax, accessibilityLabel, children,
     }) => {
       const styles: TStyle = {
-        borderStyle: 'solid',
         borderWidth: 0,
         position: 'relative',
-        flexDirection: 'row',
         flexGrow: 0,
         flexShrink: 0,
-        alignSelf: 'flex-start',
         ...style,
       }
       const props: ViewProps = {
