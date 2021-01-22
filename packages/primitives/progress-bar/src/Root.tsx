@@ -11,11 +11,8 @@ export const ProgressBar = component(
   mapProps(({ style, id, ariaValuenow, ariaValuemin, ariaValuemax, accessibilityLabel, children }) => {
     const styles: TStyle = {
       display: 'flex',
-      flexDirection: 'row',
-      borderStyle: 'solid',
       borderWidth: 0,
       position: 'relative',
-      alignSelf: 'flex-start',
       flexGrow: 0,
       flexShrink: 0,
       _webOnly: {

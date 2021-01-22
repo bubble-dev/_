@@ -6,6 +6,7 @@ export type TProgressBar = {
   ariaValuemin?: number,
   ariaValuenow?: number,
   ariaValuemax?: number,
+  accessibilityLabel?: string,
   children?: ReactNode,
   style?: TStyle,
 }
