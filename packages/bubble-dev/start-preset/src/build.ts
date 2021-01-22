@@ -48,6 +48,7 @@ export const buildReactNative = async (dir: string): Promise<StartPlugin<{}, {}>
   const allFiles = await globby(
     [
       `${dir}/src/**/*.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.node.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ],
     {
