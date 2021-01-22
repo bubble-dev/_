@@ -4,7 +4,7 @@ import { normalizeWebStyle } from 'stili'
 import type { TStyle } from 'stili'
 import { component, startWithType, mapDefaultProps, mapProps } from 'refun'
 import { isNumber, isDefined } from 'tsfn'
-import type { TBlock, TBlockRoles, TProgressBar } from './types'
+import type { TBlock, TBlockRoles } from './types'
 
 export const Block = component(
   startWithType<TBlock>(),
@@ -46,9 +46,6 @@ export const Block = component(
       onPointerUp,
       onPointerMove,
       role,
-      ariaValuemin,
-      ariaValuenow,
-      ariaValuemax,
     }) => {
       const styles: TStyle = {
         display: 'flex',
@@ -112,7 +109,7 @@ export const Block = component(
         styles.overflow = 'hidden'
       }
 
-      const props: HTMLProps<HTMLDivElement> & { role: TBlockRoles } & TProgressBar = {
+      const props: HTMLProps<HTMLDivElement> & { role: TBlockRoles } = {
         style: normalizeWebStyle(styles),
         children,
         onMouseEnter: onPointerEnter,
@@ -121,9 +118,6 @@ export const Block = component(
         onMouseUp: onPointerUp,
         onMouseMove: onPointerMove,
         role: 'none',
-        ariaValuemin,
-        ariaValuenow,
-        ariaValuemax,
       }
 
       if (typeof id === 'string') {
@@ -141,7 +135,7 @@ export const Block = component(
       return props
     }
   )
-)(({ role, ariaValuenow, ariaValuemax, ariaValuemin, ...props }) => {
+)(({ role, ...props }) => {
   switch (role) {
     case 'main':
       return <main {...props}/>
@@ -157,16 +151,6 @@ export const Block = component(
       return <aside {...props}/>
     case 'primary':
       return <article {...props}/>
-    case 'progressbar':
-      return (
-        <div
-          role={'progressbar'}
-          {...isNumber(ariaValuenow) ? { 'aria-valuenow': ariaValuenow } : {}}
-          {...isNumber(ariaValuemin) ? { 'aria-valuemin': ariaValuemin } : {}}
-          {...isNumber(ariaValuemax) ? { 'aria-valuemax': ariaValuemax } : {}}
-          {...props}
-        />
-      )
     case 'none':
     default:
       return <div {...props}/>
