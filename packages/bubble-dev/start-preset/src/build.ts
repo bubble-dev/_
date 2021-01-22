@@ -30,7 +30,7 @@ export const buildWeb = async (dir: string): Promise<StartPlugin<{}, {}>> => {
   return sequence(
     find([
       `${dir}/src/**/*.{js,jsx,ts,tsx}`,
-      `!${dir}/src/**/*.{native,ios,android}.{js,jsx,ts,tsx}`,
+      `!${dir}/src/**/*.{node,native,ios,android}.{js,jsx,ts,tsx}`,
       `!${dir}/src/**/*.d.ts`,
     ]),
     read,
