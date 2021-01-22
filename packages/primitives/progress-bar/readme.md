@@ -10,6 +10,7 @@ type TProgressBar<TStyles> = {
   ariaValuenow?: number,
   ariaValuemax?: number,
   children?: ReactNode,
+  accessibilityLabel?: string,
   style?: TStyle,
 }
 ```
