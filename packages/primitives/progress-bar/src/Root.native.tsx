@@ -11,7 +11,7 @@ export const ProgressBar = component(
   startWithType<TProgressBar>(),
   mapProps(
     ({
-      style, id, ariaValuenow, ariaValuemin, ariaValuemax, children,
+      style, id, ariaValuenow, ariaValuemin, ariaValuemax, accessibilityLabel, children,
     }) => {
       const styles: TStyle = {
         borderStyle: 'solid',
@@ -42,6 +42,7 @@ export const ProgressBar = component(
       return {
         ...props,
         style: normalizeNativeStyle(styles),
+        accessibilityLabel,
         children,
       }
     }

@@ -1,14 +1,14 @@
 import React from 'react'
 import type { HTMLProps } from 'react'
 import { normalizeWebStyle } from 'stili'
-import { component, startWithType, mapWithProps } from 'refun'
-import { isNumber } from 'tsfn'
+import { component, startWithType, mapProps } from 'refun'
+import { isDefined, isNumber } from 'tsfn'
 import type { TStyle } from 'stili'
 import type { TProgressBar } from './types'
 
 export const ProgressBar = component(
   startWithType<TProgressBar>(),
-  mapWithProps(({ style, id, ariaValuenow, ariaValuemin, ariaValuemax, children }) => {
+  mapProps(({ style, id, ariaValuenow, ariaValuemin, ariaValuemax, accessibilityLabel, children }) => {
     const styles: TStyle = {
       display: 'flex',
       flexDirection: 'row',
@@ -39,6 +39,10 @@ export const ProgressBar = component(
 
     if (isNumber(ariaValuemax)) {
       props['aria-valuemax'] = ariaValuemax
+    }
+
+    if (isDefined(accessibilityLabel)) {
+      props['aria-label'] = accessibilityLabel
     }
 
     return {
