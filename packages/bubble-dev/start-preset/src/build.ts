@@ -115,7 +115,7 @@ export const buildNode = async (dir: string): Promise<StartPlugin<{}, {}>> => {
       read,
       env({ BABEL_ENV: 'production' }),
       babel(babelConfigNodeBuild),
-      rename((file) => file.replace(/(\.node)?\.(ts|tsx|jsx)$/, '.js')),
+      rename((file) => file.replace(/(\.node)?\.(ts|tsx|jsx|js)$/, '.js')),
       write(`${dir}/build/node/`),
       find(`${dir}/src/**/*.json`),
       copy(`${dir}/build/node/`),
