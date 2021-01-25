@@ -31,11 +31,11 @@
     "@types/nanoid": "^2.1.0",
     "@types/react-dom": "^16.9.5",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.63.4",
     "typeon": "^2.0.0"
   },
   "peerDependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.2"
+    "react-native": "0.63.4"
   }
 }
