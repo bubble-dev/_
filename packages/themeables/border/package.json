@@ -18,7 +18,7 @@
     "colorido": "^2.0.0"
   },
   "devDependencies": {
-    "@primitives/block": "^3.0.0",
+    "@primitives/block": "^3.0.1",
     "@primitives/border": "^3.0.1",
     "@revert/sandbox": "^0.3.0",
     "@types/react": "^16.8.6",

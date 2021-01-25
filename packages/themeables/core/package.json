@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@primitives/background": "^3.0.1",
-    "@primitives/block": "^3.0.0",
+    "@primitives/block": "^3.0.1",
     "@revert/sandbox": "^0.3.0",
     "@themeables/background": "^4.0.0",
     "@types/react": "^16.8.6",
