@@ -1,3 +1,17 @@
+## v8.2.1
+
+* 🐞 make build task handle files with 'node' extension properly
+
+  ```
+  * 🐞 bubble-dev/start-preset: make web build ignore files with 'node' extension
+  
+  * 🐞 bubble-dev/start-preset: make native build ignore files with 'node' extension
+  
+  * 🐞 bubble-dev/start-preset: make node build use files with 'node' extension
+  
+  * 🐞 add missing 'js' extension
+  ```
+
 ## v8.2.0
 
 * 🌱 support passing template name to the pkg task
