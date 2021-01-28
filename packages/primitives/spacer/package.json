@@ -13,13 +13,13 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.1.2",
+    "@babel/runtime": "^7.12.5",
     "@primitives/block": "^3.0.1",
     "@themeables/spacer": "^1.0.0"
   },
   "devDependencies": {
     "@primitives/layout": "^3.0.0",
-    "@types/react": "^16.8.6",
+    "@types/react": "^16.14.2",
     "autoprops": "^4.0.0",
     "react": "16.13.1"
   }
