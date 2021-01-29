@@ -1,23 +1,23 @@
 import test from 'tape'
-import { renderApp, getA11yReport } from '../../shared/test-utils'
+import { renderApp } from '../../shared/test-utils'
 
 type TFixtures = 'bare-bones' | 'disabled'
 const renderButton = (filename: TFixtures) => renderApp(require.resolve(`./fixtures/${filename}.tsx`))
-const a11yReport = (filename: TFixtures) => getA11yReport(require.resolve(`./fixtures/${filename}.tsx`))
+// const a11yReport = (filename: TFixtures) => getA11yReport(require.resolve(`./fixtures/${filename}.tsx`))
 
 const PACKAGE = '@primitives/button'
 
 test(`${PACKAGE} has proper role`, async (t) => {
-  // const page = await renderButton('bare-bones')
-  // const btnEl = await page.$('button')
-  // const a11ySnapBtn = await page.accessibility.snapshot({ interestingOnly: false, root: btnEl })
-  const report = await a11yReport('bare-bones')
+  const page = await renderButton('bare-bones')
+  const btnEl = await page.$('button')
+  const a11ySnapBtn = await page.accessibility.snapshot({ interestingOnly: false, root: btnEl })
+  // Waiting for a fix on r11y side so we can refactor this test
+  // https://github.com/nextools/metarepo/issues/233
+  // const report = await a11yReport('bare-bones')
 
-  console.log(report)
-  // t.equal(a11ySnapBtn.role, 'button', 'button role is `button`')
-  t.ok(true)
+  t.equal(a11ySnapBtn.role, 'button', 'button role is `button`')
 
-  // await page.close()
+  await page.close()
 })
 
 test(`${PACKAGE} can be focused`, async (t) => {
