@@ -28,7 +28,7 @@ test(`${PACKAGE} can be focused`, async (t) => {
 
   const a11ySnap = await page.accessibility.snapshot({ root: btnEl })
 
-  t.ok(a11ySnap.focused)
+  t.ok(a11ySnap.focused, 'button can be focused')
   await page.close()
 })
 
@@ -38,7 +38,7 @@ test(`${PACKAGE} can be disabled`, async (t) => {
 
   const a11ySnapBtn = await page.accessibility.snapshot({ root: btnEl })
 
-  t.ok(a11ySnapBtn.disabled)
+  t.ok(a11ySnapBtn.disabled, 'button can be disabled')
 
   await page.close()
 })
