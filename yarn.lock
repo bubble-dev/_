@@ -9401,9 +9401,9 @@ queue@6.0.1:
     inherits "~2.0.3"
 
 r11y@^0.1.3:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/r11y/-/r11y-0.1.3.tgz#fac4d9c0a179c69c40e28a51a1a972f0128242d8"
-  integrity sha512-KN8AjIB3n7pUMOl3Y/+f5GwegXNDPeIoqzLZ8/3fCYP2XLucbY/j0S9Vom7+Qx/3vY/rTYsdra+euBXGQN5klw==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/r11y/-/r11y-0.1.4.tgz#6c9559bc810f98ad26112c8168b63b14de11de59"
+  integrity sha512-DqZTzVx+gE0eZCBzeEF7L/LCir5vedFFndCm+SvoHvs2ZznA5JXGfULEc2/H06OPjZADOwxJd7HeuYmbUcj17Q==
   dependencies:
     axe-core "^4.0.1"
     foreal "^0.1.0"
