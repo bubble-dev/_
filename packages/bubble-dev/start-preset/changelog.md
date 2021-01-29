@@ -1,3 +1,7 @@
+## v8.2.2
+
+* 🐞 fix typescript
+
 ## v8.2.1
 
 * 🐞 make build task handle files with 'node' extension properly
