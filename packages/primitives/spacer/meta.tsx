@@ -1,6 +1,7 @@
 import React from 'react'
 import type { TComponentConfig } from 'autoprops'
 import { Layout, LayoutInFlow } from '@primitives/layout'
+import { Text } from '@primitives/text'
 import { Spacer } from './src'
 import type { TSpacer } from './src'
 
@@ -16,23 +17,31 @@ export const config: TComponentConfig<TSpacer> = {
 export const Component = (props: TSpacer) => (
   <Layout direction="vertical" hAlign="center">
     <LayoutInFlow>
-      blockStart
+      <Text>
+        blockStart
+      </Text>
     </LayoutInFlow>
     <LayoutInFlow>
       <Layout direction="horizontal" vAlign="center">
         <LayoutInFlow>
-          inlineStart
+          <Text>
+            inlineStart
+          </Text>
         </LayoutInFlow>
         <LayoutInFlow>
           <Spacer {...props}/>
         </LayoutInFlow>
         <LayoutInFlow>
-          inlineEnd
+          <Text>
+            inlineEnd
+          </Text>
         </LayoutInFlow>
       </Layout>
     </LayoutInFlow>
     <LayoutInFlow>
-      blockEnd
+      <Text>
+        blockEnd
+      </Text>
     </LayoutInFlow>
   </Layout>
 )
