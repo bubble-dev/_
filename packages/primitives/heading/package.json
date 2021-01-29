@@ -24,7 +24,6 @@
     "@types/react": "^16.14.2",
     "@types/react-native": "^0.63.46",
     "autoprops": "^4.0.0",
-    "foreal": "^0.1.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "tape": "^5.0.1"
