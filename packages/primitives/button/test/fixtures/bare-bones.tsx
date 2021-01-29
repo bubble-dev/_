@@ -3,7 +3,7 @@ import { Button } from '../../src'
 
 const App = () => (
   <Button
-    aria-label={'accessibilityLabel'}
+    accessibilityLabel={'accessibilityLabel'}
     isDisabled={false}
     id={'btn'}
     onPress={() => {}}
