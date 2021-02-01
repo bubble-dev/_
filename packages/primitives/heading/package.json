@@ -13,14 +13,14 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/spacer": "^1.0.0",
-    "@themeables/text": "^4.0.0",
-    "colorido": "^2.0.0",
+    "@themeables/spacer": "^1.0.1",
+    "@themeables/text": "^4.0.1",
+    "colorido": "^2.0.1",
     "refun": "^3.0.0",
-    "stili": "^3.0.1"
+    "stili": "^3.0.2"
   },
   "devDependencies": {
-    "@primitives/block": "^3.0.1",
+    "@primitives/block": "^3.0.2",
     "@types/react": "^16.14.2",
     "@types/react-native": "^0.63.46",
     "autoprops": "^4.0.0",

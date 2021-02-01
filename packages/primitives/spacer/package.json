@@ -14,12 +14,12 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@primitives/block": "^3.0.1",
-    "@themeables/spacer": "^1.0.0"
+    "@primitives/block": "^3.0.2",
+    "@themeables/spacer": "^1.0.1"
   },
   "devDependencies": {
-    "@primitives/layout": "^3.0.0",
-    "@primitives/text": "^3.0.1",
+    "@primitives/layout": "^3.0.1",
+    "@primitives/text": "^3.0.2",
     "@types/react": "^16.14.2",
     "autoprops": "^4.0.0",
     "react": "16.13.1"

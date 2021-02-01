@@ -13,13 +13,13 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@primitives/block": "^3.0.1",
+    "@primitives/block": "^3.0.2",
     "refun": "^3.0.0",
-    "stili": "^3.0.1"
+    "stili": "^3.0.2"
   },
   "devDependencies": {
     "@types/react": "^16.14.2",
-    "@primitives/text": "3.0.1",
+    "@primitives/text": "3.0.2",
     "autoprops": "^4.0.1",
     "react": "16.13.1"
   }

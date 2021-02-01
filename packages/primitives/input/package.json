@@ -13,11 +13,11 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/spacer": "^1.0.0",
-    "@themeables/text": "^4.0.0",
-    "colorido": "^2.0.0",
+    "@themeables/spacer": "^1.0.1",
+    "@themeables/text": "^4.0.1",
+    "colorido": "^2.0.1",
     "refun": "^3.0.0",
-    "stili": "^3.0.1"
+    "stili": "^3.0.2"
   },
   "devDependencies": {
     "@revert/sandbox": "^0.3.0",

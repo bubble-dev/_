@@ -15,7 +15,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "refun": "^3.0.0",
-    "stili": "^3.0.1",
+    "stili": "^3.0.2",
     "tsfn": "^2.0.0"
   },
   "devDependencies": {
