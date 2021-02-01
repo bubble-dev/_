@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@primitives/block": "^3.0.2",
-    "@types/react": "^16.14.2",
+    "@types/react": "^17.0.0",
     "@types/react-native": "^0.63.46",
     "autoprops": "^4.0.0",
     "react": "16.13.1",

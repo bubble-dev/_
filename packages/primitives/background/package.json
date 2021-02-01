@@ -19,7 +19,7 @@
     "colorido": "^2.0.1"
   },
   "devDependencies": {
-    "@types/react": "^16.14.2",
+    "@types/react": "^17.0.0",
     "react": "16.13.1"
   }
 }
