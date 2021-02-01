@@ -1,3 +1,7 @@
+## v3.0.2
+
+* 🐞 update all deps
+
 ## v3.0.1
 
 * 🐞 add web list style to stili

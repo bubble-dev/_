@@ -1,3 +1,9 @@
+## v8.2.3
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v8.2.2
 
 * 🐞 fix typescript

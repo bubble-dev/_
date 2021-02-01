@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@fantasy-color/contrast-ratio-luminance`, `@fantasy-color/luminance-rgb`, `@fantasy-color/types`
+
 ## v2.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

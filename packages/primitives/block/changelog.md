@@ -1,3 +1,9 @@
+## v3.0.2
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `stili`, `@primitives/text`
+
 ## v3.0.1
 
 * 🐞 block have meta file

@@ -1,3 +1,9 @@
+## v4.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `colorido`, `elegir`, `@primitives/pointer`, `@primitives/svg`, `@primitives/transform`
+
 ## v4.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

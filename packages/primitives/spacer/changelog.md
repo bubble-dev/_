@@ -1,3 +1,11 @@
+## v0.4.2
+
+* 🐞 fix spacer meta
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@primitives/block`, `@themeables/spacer`
+
 ## v0.4.1
 
 * 🐞 bump dependencies

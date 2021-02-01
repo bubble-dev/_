@@ -1,3 +1,9 @@
+## v3.0.2
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `colorido`, `@primitives/block`, `@themeables/background`
+
 ## v3.0.1
 
 * 🐞 bump dependencies

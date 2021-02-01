@@ -1,3 +1,9 @@
+## v2.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@fantasy-color/hcl-to-lab`, `@fantasy-color/lab-to-rgb`, `@fantasy-color/types`
+
 ## v2.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0

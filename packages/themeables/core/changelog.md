@@ -1,3 +1,7 @@
+## v4.0.1
+
+* 🐞 update all deps
+
 ## v4.0.0
 
 * 💥 rewrite @themeable/core API

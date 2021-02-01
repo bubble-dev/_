@@ -1,3 +1,9 @@
+## v4.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `colorido`, `@primitives/vector-shape`, `@themeables/core`
+
 ## v4.0.0
 
 * 💥 rewrite @themeables/vector-shape API

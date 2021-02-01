@@ -1,3 +1,9 @@
+## v4.0.2
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `colorido`, `stili`, `@themeables/text`, `@themeables/spacer`
+
 ## v4.0.1
 
 * 🐞 bump dependencies

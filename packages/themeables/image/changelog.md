@@ -1,3 +1,9 @@
+## v4.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@themeables/core`
+
 ## v4.0.0
 
 * 💥 rewrite @themeables/image API

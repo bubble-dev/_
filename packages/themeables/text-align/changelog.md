@@ -1,3 +1,9 @@
+## v1.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `@themeables/core`
+
 ## v1.0.0
 
 * 💥 rewrite @themeables/text-aling API

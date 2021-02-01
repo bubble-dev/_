@@ -1,3 +1,9 @@
+## v3.0.2
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `stili`, `@themeables/image`
+
 ## v3.0.1
 
 * 🐞 bump dependencies

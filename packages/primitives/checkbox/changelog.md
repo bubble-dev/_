@@ -1,3 +1,9 @@
+## v3.0.1
+
+* 🐞 update all deps
+
+* ♻️ update dependencies `stili`, `@primitives/block`
+
 ## v3.0.0
 
 * 💥 upgrade deps and use Node.js >= 12.13.0
