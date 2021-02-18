@@ -34,7 +34,7 @@
     "@bubble-dev/babel-config": "^0.3.1",
     "@rebox/android": "^4.0.5",
     "@rebox/ios": "^6.0.4",
-    "@rebox/web": "^3.2.1",
+    "@rebox/web": "^4.0.0",
     "@start/plugin": "^2.0.0",
     "@start/plugin-copy": "^2.0.0",
     "@start/plugin-env": "^2.0.0",
