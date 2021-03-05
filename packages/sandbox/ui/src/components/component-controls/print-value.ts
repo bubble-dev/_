@@ -23,8 +23,14 @@ export const printValue = (value?: ReactElement<any> | string | number | symbol 
   }
 
   if (isFunction(value)) {
-    if (value.displayName) return value.displayName
-    if (value.name) return value.name
+    if (value.displayName) {
+      return value.displayName
+    }
+
+    if (value.name) {
+      return value.name
+    }
+
     return '{() => {}}'
   }
 
