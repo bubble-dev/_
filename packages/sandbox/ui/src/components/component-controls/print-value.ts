@@ -5,7 +5,7 @@ import { getElementName } from '../../utils'
 
 const REACT_FRAGMENT_TYPE = Symbol.for('react.fragment')
 
-export const printValue = (value?: ReactElement<any> | string | number | symbol): string => {
+export const printValue = (value?: ReactElement<any> | string | number | symbol | React.FC): string => {
   if (isUndefined(value)) {
     return '{undefined}'
   }
@@ -23,7 +23,7 @@ export const printValue = (value?: ReactElement<any> | string | number | symbol)
   }
 
   if (isFunction(value)) {
-    return '{() => {}}'
+    return value.displayName ? value.displayName : (value.name ? value.name : '{() => {}}')
   }
 
   if (isValidElement(value) && value.type as any === REACT_FRAGMENT_TYPE) {
