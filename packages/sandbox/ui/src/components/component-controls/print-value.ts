@@ -23,7 +23,9 @@ export const printValue = (value?: ReactElement<any> | string | number | symbol 
   }
 
   if (isFunction(value)) {
-    return value.displayName ? value.displayName : (value.name ? value.name : '{() => {}}')
+    if (value.displayName) return value.displayName
+    if (value.name) return value.name
+    return '{() => {}}'
   }
 
   if (isValidElement(value) && value.type as any === REACT_FRAGMENT_TYPE) {
