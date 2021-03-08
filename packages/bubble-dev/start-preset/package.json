@@ -58,7 +58,7 @@
     "dleet": "^2.0.0",
     "dotenv": "^8.0.0",
     "escape-string-regexp": "^4.0.0",
-    "execa": "^4.1.0",
+    "execa": "^5.0.0",
     "fixdeps": "^2.0.0",
     "globby": "^11.0.2",
     "lottie-react-native": "^3.3.2",
