@@ -38,7 +38,18 @@ export const ValueCheckbox = pureComponent(
     onChange: ({ propPath, checkedPropValue, onChange, isChecked, setIsChecked, onOptimisticWait, shouldShowFalseValue }) => () => {
       setIsChecked(!isChecked)
       onOptimisticWait()
-      onChange(propPath, isChecked ? shouldShowFalseValue? false : undefined : checkedPropValue)
+
+      let onChangeValue = checkedPropValue
+
+      if (isChecked) {
+        if (shouldShowFalseValue) {
+          onChangeValue = false
+        } else {
+          onChangeValue = undefined
+        }
+      }
+
+      onChange(propPath, onChangeValue)
     },
   })
 )(({ isChecked, onChange }) => (
