@@ -65,6 +65,7 @@ export const PropsItem = pureComponent(
           {isCheckboxValues(possibleValues)
             ? (
               <ValueCheckbox
+                propPossibleValues={possibleValues}
                 propPath={propPath}
                 propValue={value}
                 checkedPropValue
