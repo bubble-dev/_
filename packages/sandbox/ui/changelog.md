@@ -1,3 +1,7 @@
+## v4.0.2
+
+* 🐞 show function name in sandbox dropdown
+
 ## v4.0.1
 
 * 🐞 update all deps
