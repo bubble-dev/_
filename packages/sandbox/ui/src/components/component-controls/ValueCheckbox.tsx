@@ -13,12 +13,12 @@ export type TValueCheckboxProps = {
 
 const isDefined = (val: any): boolean => val !== false && val !== undefined
 
-const hasFalseInPosiibleValues = (propPossibleValues: readonly any[]): boolean => propPossibleValues.length === 2 && propPossibleValues.includes(true) && propPossibleValues.includes(false)
+const hasBothTrueAndFalseValues = (propPossibleValues: readonly any[]): boolean => propPossibleValues.length === 2 && propPossibleValues.includes(true) && propPossibleValues.includes(false)
 
 export const ValueCheckbox = pureComponent(
   startWithType<TValueCheckboxProps>(),
   mapWithProps(({ propPossibleValues, propValue }) => {
-    const valueCanBeFalse = propPossibleValues && hasFalseInPosiibleValues(propPossibleValues)
+    const valueCanBeFalse = propPossibleValues && hasBothTrueAndFalseValues(propPossibleValues)
 
     return (
       {
