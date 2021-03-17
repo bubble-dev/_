@@ -1,3 +1,7 @@
+## v4.1.0
+
+* 🌱 show false values in sandbox
+
 ## v4.0.2
 
 * 🐞 show function name in sandbox dropdown
