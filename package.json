@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "packages/bubble-dev/start-preset/src/cli/index.js",
-    "postinstall": "perl -pi -e \"s/'React'/'React-Core'/g\" ./node_modules/react-native-svg/RNSVG.podspec ./node_modules/lottie-react-native/lottie-react-native.podspec"
+    "postinstall": "perl -pi -e \"s/'React'/'React-Core'/g\" ./node_modules/react-native-svg/RNSVG.podspec ./node_modules/lottie-react-native/lottie-react-native.podspec ./node_modules/react-native-view-shot/react-native-view-shot.podspec"
   },
   "start": {
     "file": "tasks/",
