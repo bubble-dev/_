@@ -32,7 +32,8 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "start": "packages/bubble-dev/start-preset/src/cli/index.js"
+    "start": "packages/bubble-dev/start-preset/src/cli/index.js",
+    "postinstall": "perl -pi -e \"s/'React'/'React-Core'/g\" ./node_modules/react-native-svg/RNSVG.podspec ./node_modules/lottie-react-native/lottie-react-native.podspec"
   },
   "start": {
     "file": "tasks/",
