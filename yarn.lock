@@ -3189,7 +3189,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autoprops@^4.0.0, autoprops@^4.0.1:
+autoprops@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/autoprops/-/autoprops-4.0.1.tgz#bb1e3b37081b38f6f4b6c375185afc4928a12dcf"
   integrity sha512-xiUpIFFww9snFNCjoSTFFMFe35d5jW4+AVb1T+abJ/BwMOx53RSx6SrIw8/jOCFAm+p9tcsTF2FUK3TwN/PQaQ==

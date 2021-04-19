@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.14.2",
-    "autoprops": "^4.0.0",
+    "autoprops": "^4.0.1",
     "react": "16.13.1"
   }
 }
