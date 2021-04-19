@@ -19,7 +19,7 @@
     "stili": "^3.0.2"
   },
   "devDependencies": {
-    "@revert/sandbox": "^0.3.0",
+    "@revert/sandbox": "^0.3.3",
     "@types/react": "^16.14.2",
     "autoprops": "^4.0.0",
     "react": "16.13.1",

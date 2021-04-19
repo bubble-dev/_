@@ -19,7 +19,7 @@
     "@bubble-dev/start-preset": "*",
     "@bubble-dev/typescript-config": "*",
     "@revert/color": "^0.1.0",
-    "@revert/sandbox": "^0.3.0",
+    "@revert/sandbox": "^0.3.3",
     "@start/plugin": "^2.0.0",
     "@types/node": "^14.14.22",
     "colorido": "*",
