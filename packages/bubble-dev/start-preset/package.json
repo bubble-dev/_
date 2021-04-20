@@ -33,7 +33,7 @@
     "@babel/register": "^7.12.10",
     "@bubble-dev/babel-config": "^0.3.1",
     "@rebox/android": "^4.0.5",
-    "@rebox/ios": "^6.0.4",
+    "@rebox/ios": "^7.0.0",
     "@rebox/web": "^3.2.1",
     "@start/plugin": "^2.0.0",
     "@start/plugin-copy": "^2.0.0",
