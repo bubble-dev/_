@@ -25,7 +25,7 @@
     "colorido": "*",
     "core-js": "^3.8.3",
     "eslint": "^7.18.0",
-    "foreal": "^0.1.0",
+    "foreal": "^0.2.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "tsfn": "^2.0.0",
