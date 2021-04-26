@@ -13,15 +13,15 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.13.17",
     "@themeables/core": "^4.0.1"
   },
   "devDependencies": {
     "@primitives/block": "^3.0.2",
     "@primitives/spacer": "^0.4.2",
-    "@revert/sandbox": "^0.3.0",
-    "@types/react": "^16.14.2",
-    "autoprops": "^4.0.0",
-    "react": "16.13.1"
+    "@revert/sandbox": "^0.3.4",
+    "@types/react": "^17.0.4",
+    "autoprops": "^4.0.2",
+    "react": "17.0.1"
   }
 }
