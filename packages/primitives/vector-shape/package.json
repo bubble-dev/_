@@ -21,8 +21,8 @@
     "stili": "^3.0.2"
   },
   "devDependencies": {
-    "@types/react": "^16.14.2",
-    "autoprops": "^4.0.0",
-    "react": "16.13.1"
+    "@types/react": "^17.0.4",
+    "autoprops": "^4.0.2",
+    "react": "17.0.1"
   }
 }

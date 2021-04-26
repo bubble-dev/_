@@ -16,14 +16,14 @@
     "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.14.2",
-    "@types/react-native": "^0.63.46",
+    "@types/react": "^17.0.4",
+    "@types/react-native": "^0.64.4",
     "@types/tape": "^4.2.34",
-    "react": "16.13.1",
-    "react-native": "0.63.4",
-    "tape": "^5.1.1"
+    "react": "17.0.1",
+    "react-native": "0.64.0",
+    "tape": "^5.2.2"
   },
   "peerDependencies": {
-    "react": "16.13.1"
+    "react": "17.0.1"
   }
 }

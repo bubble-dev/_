@@ -16,9 +16,9 @@
     "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^16.14.2",
-    "@types/react-native": "^0.63.46",
-    "react": "16.13.1",
-    "react-native": "0.63.4"
+    "@types/react": "^17.0.4",
+    "@types/react-native": "^0.64.4",
+    "react": "17.0.1",
+    "react-native": "0.64.0"
   }
 }

@@ -15,6 +15,6 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/tape": "^4.2.34",
-    "tape": "^5.1.1"
+    "tape": "^5.2.2"
   }
 }
