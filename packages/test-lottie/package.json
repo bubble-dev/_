@@ -17,7 +17,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "lottie-react-native": "^3.3.2"
+    "lottie-react-native": "^4.0.0"
   },
   "devDependencies": {
     "@revert/sandbox": "^0.3.0",
