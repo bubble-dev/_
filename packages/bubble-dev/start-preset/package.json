@@ -61,7 +61,7 @@
     "execa": "^4.1.0",
     "fixdeps": "^2.0.0",
     "globby": "^11.0.3",
-    "lottie-react-native": "^3.3.2",
+    "lottie-react-native": "^4.0.2",
     "make-dir": "^3.0.0",
     "move-path": "^2.0.0",
     "nanomatch": "^1.2.13",
@@ -83,7 +83,7 @@
     "@types/babel__core": "^7.1.14",
     "@types/node-fetch": "^2.5.10",
     "@types/prompts": "^2.0.10",
-    "@types/ws": "^7.4.1"
+    "@types/ws": "^7.4.2"
   },
   "fixdeps": {
     "ignoredPackages": [
