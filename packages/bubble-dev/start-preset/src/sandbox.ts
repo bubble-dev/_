@@ -39,8 +39,8 @@ export const Sandbox = ({ entryPointPath, htmlTemplatePath, assetsPath, fontsDir
           entryPointPath,
           appId: 'org.bubble-dev.sandbox',
           appName: 'Sandbox',
-          iPhoneModel: '8',
-          iOSVersion: '13.2',
+          iPhoneModel: '12',
+          iOSVersion: '14',
           fontsDir,
           dependencyNames: [
             'react-native-svg',
