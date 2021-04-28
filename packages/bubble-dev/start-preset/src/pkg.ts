@@ -137,7 +137,7 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMi
       }
     }
 
-    const allReplacers = {
+    const allReplacers: { [k: string]: string } = {
       ...userReplacers,
       ...(name !== null && { $name$: name }),
     }
@@ -192,7 +192,6 @@ export const Pkg = (replacers?: TReplacers) => (packagePath: string, shouldAddMi
         for (const [key, value] of Object.entries(allReplacers)) {
           stream = stream
             .pipe(lineStream())
-            // @ts-ignore
             .pipe(replaceStream(key, value))
             .on('error', reject)
         }
