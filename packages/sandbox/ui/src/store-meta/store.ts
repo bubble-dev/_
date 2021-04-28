@@ -20,6 +20,7 @@ if (process.env.NODE_ENV === 'development') {
     )
   )
 } else {
+  // @ts-ignore
   store = createStore(
     reducer,
     getHashInitialState(),
