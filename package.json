@@ -21,7 +21,7 @@
     "@revert/color": "^0.1.1",
     "@revert/sandbox": "^0.3.4",
     "@start/plugin": "^2.0.0",
-    "@types/node": "^14.14.41",
+    "@types/node": "^15.0.0",
     "colorido": "*",
     "core-js": "^3.11.0",
     "eslint": "^7.25.0",
