@@ -14,9 +14,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@fantasy-color/types": "^2.0.1",
-    "@fantasy-color/hcl-to-lab": "^2.0.1",
-    "@fantasy-color/lab-to-rgb": "^2.0.1"
+    "@fantasy-color/types": "^2.1.0",
+    "@fantasy-color/hcl-to-lab": "^2.1.0",
+    "@fantasy-color/lab-to-rgb": "^2.1.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",

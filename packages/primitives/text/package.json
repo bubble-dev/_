@@ -13,10 +13,10 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@themeables/text": "^4.0.1",
-    "colorido": "^2.0.1",
+    "@themeables/text": "^4.1.0",
+    "colorido": "^2.1.0",
     "refun": "^3.0.0",
-    "stili": "^3.0.2"
+    "stili": "^3.1.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.4",

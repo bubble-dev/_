@@ -14,9 +14,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@fantasy-color/types": "^2.0.1",
-    "@fantasy-color/rgb-to-srgb": "^2.0.1",
-    "@fantasy-color/luminance-srgb": "^2.0.1"
+    "@fantasy-color/types": "^2.1.0",
+    "@fantasy-color/rgb-to-srgb": "^2.1.0",
+    "@fantasy-color/luminance-srgb": "^2.1.0"
   },
   "devDependencies": {
     "@types/tape": "^4.2.34",
