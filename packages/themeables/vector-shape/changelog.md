@@ -1,3 +1,9 @@
+## v4.1.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `colorido`, `@primitives/vector-shape`, `@themeables/core`
+
 ## v4.0.1
 
 * 🐞 update all deps

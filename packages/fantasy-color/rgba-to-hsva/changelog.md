@@ -1,3 +1,9 @@
+## v2.1.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `@fantasy-color/normalize-rgba`, `@fantasy-color/types`
+
 ## v2.0.1
 
 * 🐞 update all deps

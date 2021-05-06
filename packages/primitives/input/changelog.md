@@ -1,3 +1,9 @@
+## v4.1.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `colorido`, `stili`, `@themeables/text`, `@themeables/spacer`
+
 ## v4.0.2
 
 * 🐞 update all deps

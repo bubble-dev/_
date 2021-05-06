@@ -1,3 +1,9 @@
+## v0.5.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `@primitives/block`, `@themeables/spacer`
+
 ## v0.4.2
 
 * 🐞 fix spacer meta

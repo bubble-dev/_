@@ -1,3 +1,9 @@
+## v0.2.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `@primitives/block`, `stili`
+
 ## v0.1.2
 
 * 🐞 update all deps

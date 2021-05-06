@@ -1,3 +1,13 @@
+## v9.0.0
+
+* 💥 update simulator to use iOS v14 and iPhone v12
+
+* 🌱 update lottie-react-native
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
+* ♻️ update dependencies `@bubble-dev/babel-config`
+
 ## v8.2.3
 
 * 🐞 update all deps

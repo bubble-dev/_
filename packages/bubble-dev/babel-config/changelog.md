@@ -1,3 +1,7 @@
+## v0.4.0
+
+* 🌱 update dependencies: React to v17.0.1 & React Native to v0.64.0
+
 ## v0.3.1
 
 * 🐞 update all deps
