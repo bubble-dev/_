@@ -1,5 +1,5 @@
 import React from 'react'
-import { TextInput } from 'react-native'
+import { TextInput, TextInputProps } from 'react-native'
 import { component, mapWithProps, startWithType, mapHandlers, mapDefaultProps } from 'refun'
 import { normalizeNativeStyle } from 'stili'
 import type { TStyle } from 'stili'
@@ -32,6 +32,7 @@ export const Input = component(
       inlineEnd,
       letterSpacing,
       lineHeight,
+      shouldUseNumberKeyboard,
     }) => {
       const style: TStyle = {
         letterSpacing,
@@ -53,35 +54,43 @@ export const Input = component(
         style.color = colorToString(color)
       }
 
-      return {
+      const props: TextInputProps = {
         style: normalizeNativeStyle(style),
       }
+
+      if (shouldUseNumberKeyboard) {
+        props.keyboardType = 'numeric'
+      }
+
+      return props
     }
   )
 )(({
   id,
   accessibilityLabel,
   isDisabled,
-  style,
-  value,
+  keyboardType,
   onChangeText,
   onSubmitEditing,
   onFocus,
   onBlur,
+  style,
+  value,
 }) => (
   <TextInput
-    testID={id}
     accessibilityLabel={accessibilityLabel}
-    underlineColorAndroid="rgba(0,0,0,0)"
-    textAlignVertical="center"
     caretHidden={isDisabled}
     editable={!isDisabled}
-    style={style}
-    value={value}
+    keyboardType={keyboardType}
     onFocus={onFocus}
     onBlur={onBlur}
     onChangeText={onChangeText}
     onSubmitEditing={onSubmitEditing}
+    style={style}
+    testID={id}
+    textAlignVertical="center"
+    underlineColorAndroid="rgba(0,0,0,0)"
+    value={value}
   />
 ))
 
