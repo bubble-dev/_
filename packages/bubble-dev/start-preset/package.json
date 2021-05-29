@@ -77,7 +77,7 @@
     "tsfn": "^2.0.0",
     "typeon": "^2.0.0",
     "weslint": "^0.4.0",
-    "ws": "^7.4.5"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
