@@ -20,7 +20,7 @@
     "@types/react-native": "^0.64.4",
     "@types/tape": "^4.2.34",
     "react": "17.0.1",
-    "react-native": "0.64.0",
+    "react-native": "0.64.1",
     "tape": "^5.2.2"
   },
   "peerDependencies": {
