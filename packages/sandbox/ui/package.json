@@ -17,7 +17,7 @@
     "autoprops": "^4.0.2",
     "colorido": "^2.1.0",
     "elegir": "^2.1.0",
-    "leven": "^3.1.0",
+    "leven": "^4.0.0",
     "nanoid": "^3.1.22",
     "query-string": "^6.13.8",
     "react-dom": "17.0.1",
