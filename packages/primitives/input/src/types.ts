@@ -11,6 +11,7 @@ export type TInput = {
   onPressIn?: () => void,
   onPressOut?: () => void,
   onSubmit?: () => void,
+  shouldUseNumberKeyboard?: boolean,
   value: string,
 } & TThemeableText
   & TThemeableSpacer
