@@ -65,7 +65,7 @@
     "make-dir": "^3.0.0",
     "move-path": "^2.0.0",
     "nanomatch": "^1.2.13",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.0.0",
     "pifs": "^2.0.0",
     "prompts": "^2.4.1",
     "react-native-exception-handler": "^2.10.10",
@@ -81,7 +81,7 @@
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
-    "@types/node-fetch": "^2.5.10",
+    "@types/node-fetch": "^3.0.0",
     "@types/prompts": "^2.0.10",
     "@types/ws": "^7.4.2"
   },
