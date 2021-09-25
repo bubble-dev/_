@@ -77,13 +77,13 @@
     "tsfn": "^2.0.0",
     "typeon": "^2.0.0",
     "weslint": "^0.4.0",
-    "ws": "^7.4.5"
+    "ws": "^8.0.0"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.14",
     "@types/node-fetch": "^2.5.10",
     "@types/prompts": "^2.0.10",
-    "@types/ws": "^7.4.2"
+    "@types/ws": "^8.0.0"
   },
   "fixdeps": {
     "ignoredPackages": [
