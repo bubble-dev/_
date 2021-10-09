@@ -24,7 +24,7 @@
     "@types/node": "^14.14.41",
     "colorido": "*",
     "core-js": "^3.11.0",
-    "eslint": "^7.25.0",
+    "eslint": "^8.0.0",
     "foreal": "^0.2.0",
     "react": "17.0.1",
     "react-native": "0.64.0",
