@@ -18,7 +18,7 @@
     "colorido": "^2.1.0",
     "elegir": "^2.1.0",
     "leven": "^3.1.0",
-    "nanoid": "^3.1.22",
+    "nanoid": "^3.1.31",
     "query-string": "^6.13.8",
     "react-dom": "17.0.1",
     "redux": "^4.1.0",
