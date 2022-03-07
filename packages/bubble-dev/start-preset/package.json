@@ -61,7 +61,7 @@
     "execa": "^4.1.0",
     "fixdeps": "^2.0.0",
     "globby": "^11.0.3",
-    "lottie-react-native": "^4.0.2",
+    "lottie-react-native": "^5.0.0",
     "make-dir": "^3.0.0",
     "move-path": "^2.0.0",
     "nanomatch": "^1.2.13",
