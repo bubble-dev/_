@@ -17,7 +17,7 @@
     "tsfn": "^2.0.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.4",
+    "@types/react": "^18.0.0",
     "react": "17.0.1"
   }
 }

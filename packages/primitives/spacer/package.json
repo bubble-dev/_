@@ -20,7 +20,7 @@
   "devDependencies": {
     "@primitives/layout": "^3.1.0",
     "@primitives/text": "^3.1.0",
-    "@types/react": "^17.0.4",
+    "@types/react": "^18.0.0",
     "autoprops": "^4.0.2",
     "react": "17.0.1"
   }
