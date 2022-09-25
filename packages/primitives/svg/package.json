@@ -13,7 +13,7 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "react-native-svg": "^12.1.1"
+    "react-native-svg": "^13.0.0"
   },
   "devDependencies": {
     "@types/react": "^17.0.4",
