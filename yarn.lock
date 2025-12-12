@@ -2477,9 +2477,17 @@
   integrity sha512-0VBprVqfgFD7Ehb2vd8Lh9TG3jP98gvr8rgehQqzztZNI7o8zS8Ad4jyZneKELphpuE212D8J70LnSNQSyO6bQ==
 
 "@types/tape@^4.2.34":
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.13.0.tgz#7a3f656f78a7eeee962fe4c8bedf016061e2d0ea"
-  integrity sha512-0V8cKowBdsiA9nbxAg7531sF2cdPZNiUogcfIUeUGm+bejUBE/bvibz3rH36iQP9bQjO/sOzFwU97/uC5mCyoA==
+  version "4.13.4"
+  resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.13.4.tgz#2fe220e9040c1721e5b1af6cd71e9e018d07cafb"
+  integrity sha512-0Mw8/FAMheD2MvyaFYDaAix7X5GfNjl/XI+zvqJdzC6N05BmHKz6Hwn+r7+8PEXDEKrC3V/irC9z7mrl5a130g==
+  dependencies:
+    "@types/node" "*"
+    "@types/through" "*"
+
+"@types/through@*":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@types/through/-/through-0.0.33.tgz#14ebf599320e1c7851e7d598149af183c6b9ea56"
+  integrity sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==
   dependencies:
     "@types/node" "*"
 
