@@ -2427,11 +2427,12 @@
     xmlbuilder ">=11.0.1"
 
 "@types/prompts@^2.0.10":
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/@types/prompts/-/prompts-2.0.10.tgz#48cf7b5a5bf31723beb804f3927e510af1a96a27"
-  integrity sha512-W3PEl3l4vmxdgfY6LUG7ysh+mLJOTOFYmSpiLe6MCo1OdEm8b5s6ZJfuTQgEpYNwcMiiaRzJespPS5Py2tqLlQ==
+  version "2.4.9"
+  resolved "https://registry.yarnpkg.com/@types/prompts/-/prompts-2.4.9.tgz#8775a31e40ad227af511aa0d7f19a044ccbd371e"
+  integrity sha512-qTxFi6Buiu8+50/+3DGIWLHM6QuWsEKugJnnP6iv2Mc4ncxE4A/OJkjuVOA+5X0X1S/nq5VJRa8Lu+nwcvbrKA==
   dependencies:
     "@types/node" "*"
+    kleur "^3.0.3"
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -9077,9 +9078,9 @@ promise@^8.0.3:
     asap "~2.0.6"
 
 prompts@^2.3.0, prompts@^2.3.1, prompts@^2.4.0, prompts@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.1.tgz#befd3b1195ba052f9fd2fde8a486c4e82ee77f61"
-  integrity sha512-EQyfIuO2hPDsX1L/blblV+H7I0knhgAd82cVneCwcdND9B8AuCDuRcBH6yIcG4dFzlOUqbazQqwGjx5xmsNLuQ==
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.2.tgz#7b57e73b3a48029ad10ebd44f74b01722a4cb069"
+  integrity sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==
   dependencies:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
